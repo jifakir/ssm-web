@@ -1,4 +1,12 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+
+
+
+
+
+// importing components;
+
 import Orientation from '../components/Ques/Orientation';
 import Religion from '../components/Ques/Religion';
 import Language from '../components/Ques/Language';
@@ -11,83 +19,128 @@ import OtherLang from '../components/Ques/OtherLang';
 import Personality from '../components/Ques/Personality';
 import RelSess from '../components/Ques/RelSess';
 import SpritPerson from '../components/Ques/SpritPerson';
+import Submitted from '../components/Ques/Submitted';
 
 
 
 
 const Questionnaire = () => {
 
-    const [serial, setSerial] = React.useState(null);
+    const [step, setStep] = React.useState(null);
+    const [ progress, setProgress ] = React.useState(0);
 
-    const handleNext = () => {
-        if(serial === 13) return;
-        setSerial(serial + 1);
-    };
+    const {register, trigger, formState: { errors }, watch, handleSubmit} = useForm({mode: 'all'});
 
-    const handleBack = () => {
-        if(serial === 1) return;
-        setSerial(serial - 1);
-    };
-
-    React.useEffect(() => {
-        setSerial(1);
-    },[]);
 
 
     const components = [
         {
             sr: 1,
-            cp: <button onClick={handleNext} className="btn bg-primary border-none font-medium px-8">Get Started</button>
+            cp: <button onClick={() => setStep(2)} className="btn bg-primary border-none px-8 mt-10 text-white">Get Started</button>
         },
         {
             sr: 2,
-            cp: <Name />
+            cp: <Name register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} required />,
         },
         {
             sr: 3,
-            cp: <Email />
+            cp: <Email register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />,
         },
         {
             sr: 4,
-            cp: <Orientation />
+            cp: <Orientation register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />,
         },
         {
             sr: 5,
-            cp: <Education />
+            cp: <Education register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 6,
-            cp: <Personality />
+            cp: <Personality register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 7,
-            cp: <Religion />
+            cp: <Religion register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 8,
-            cp: <RelSess />
+            cp: <RelSess register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 9,
-            cp: <SpritPerson />
+            cp: <SpritPerson register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 10,
-            cp: <Language />
+            cp: <Language register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 11,
-            cp: <OtherLang />
+            cp: <OtherLang register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 12,
-            cp: <Insurance />
+            cp: <Insurance register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
         },
         {
             sr: 13,
-            cp: <Availability />
+            cp: <Availability register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+        },
+        {
+            sr: 14,
+            cp: <Submitted />
         },
     ];
+
+
+    React.useEffect(() => {
+        setStep(1);
+    },[]);
+
+    React.useEffect(() => {
+
+        switch(step){
+            case 2 :
+                setProgress(5);
+                break;
+            case 3 :
+                setProgress(10);
+                break;
+            case 4 :
+                setProgress(20);
+                break;
+            case 5 :
+                setProgress(25);
+                break;
+            case 6 :
+                setProgress(30);
+                break;
+            case 7 :
+                setProgress(40);
+                break;
+            case 8 :
+                setProgress(50);
+                break;
+            case 9 :
+                setProgress(55);
+                break;
+            case 10 :
+                setProgress(65);
+                break;
+            case 11 :
+                setProgress(80);
+                break;
+            case 12 :
+                setProgress(90);
+                break;
+            case 13 :
+                setProgress(100);
+                break;
+            default:
+                setProgress(0);
+        };
+
+    },[step]);
 
     return (
         <div className="px-10 pt-5">
@@ -99,28 +152,19 @@ const Questionnaire = () => {
             </div>
             {/* Slide section */}
             <div className="mt-10">
-                <progress className="progress w-full bg-neutral1 progress-primary" value="10" max="100"></progress>
+                <progress className={`progress w-full bg-neutral1 progress-secondary ${step === 14 ? 'hidden' : 'block'}`} value={`${progress}`} max="100"></progress>
                 {/* Form Inner */}
                 <div className="text-center">
                     {
-                        components.map((cp, idx) => {
+                        components.map((comp, idx) => {
 
                             return (
-                                <div className={serial === cp.sr ? 'block' : 'hidden'} key={idx}>
-                                    {cp.cp}
+                                <div className={step === comp.sr ? 'block' : 'hidden'} key={idx}>
+                                    {comp.cp}
                                 </div>
                             )
                         })
                     }
-                </div>
-                {/* Handle Form */}
-                <div className={`space-x-5 py-2 ${serial === 1 ? 'hidden' : 'block'}`}>
-                    <button onClick={handleBack} className="btn btn-outline btn-primary">
-                        Back
-                    </button>
-                    <button onClick={handleNext} className="btn btn-primary" >
-                        Next
-                    </button>
                 </div>
             </div>
         </div>

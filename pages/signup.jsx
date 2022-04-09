@@ -12,7 +12,7 @@ const Signup = () => {
     return (
         <div className="w-full min-h-full flex justify-center items-center">
             {
-                submitted ? <Success /> : <Form />
+                submitted ? <Success /> : <Form setSubmitted={setSubmitted} />
             }
         </div>
     )

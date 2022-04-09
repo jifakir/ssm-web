@@ -2,15 +2,24 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineClose } from 'react-icons/md';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
+import { useForm } from 'react-hook-form';
 
 
-const Form = () => {
+const Form = ({ setSubmitted }) => {
 
     const [showPass, setShowPass] = React.useState(false);
 
+    const { register, errors} = useForm();
+
+    const onSubmitHandler = () => {
+
+        setSubmitted(true);
+
+    }
+
     return (
         <div className="w-full min-h-full flex justify-center items-center">
-            <div className="card w-[415px] bg-neutral shadow-xl px-5 py-3">
+            <form className="card w-[415px] bg-neutral shadow-xl px-5 py-3">
                 <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                     <MdOutlineClose />
                 </div>
@@ -26,20 +35,20 @@ const Form = () => {
                         <label className="label">
                             <span className="label-text text-lg">Name</span>
                         </label>
-                        <input type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs" />
+                        <input {...register('name', {required: true})} type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs" />
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text text-lg">Email</span>
                         </label>
-                        <input type="email" placeholder="Email" className="input input-bordered w-full max-w-xs" />
+                        <input {...register('email', {required: true})} type="email" placeholder="Email" className="input input-bordered w-full max-w-xs" />
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text text-lg">Password</span>
                         </label>
                         <label className="input-group">
-                            <input type={`${showPass ? 'text' : 'password'}`} placeholder="Strong password" className="input input-bordered w-full max-w-xs" />
+                            <input {...register('password', {required: true})} type={`${showPass ? 'text' : 'password'}`} placeholder="Strong password" className="input input-bordered w-full max-w-xs" />
                             <button onClick={() => setShowPass(!showPass)} className="btn btn-square bg-white hover:bg-white/90 text-black focus:bg-white text-lg px-3 border-none">
                                 {
                                     !showPass ? <BsEye /> : <BsEyeSlash/>
@@ -59,7 +68,7 @@ const Form = () => {
                         </p>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }
