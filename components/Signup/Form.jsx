@@ -18,7 +18,7 @@ const Form = ({ setSubmitted }) => {
     }
     console.log(errors);
     return (
-        <div className="w-full min-h-full flex justify-center items-center">
+        <div className="w-full min-h-full flex justify-center items-center py-5">
             <form onSubmit={handleSubmit(onSubmitHandler)} className="card w-[415px] bg-neutral shadow-xl px-5 py-3">
                 <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                     <MdOutlineClose />
@@ -43,7 +43,7 @@ const Form = ({ setSubmitted }) => {
                             <span className="label-text text-lg">Email</span>
                         </label>
                         <input {...register('email', {required: true, pattern:  /^\S+@\S+$/i})} type="email" placeholder="Email" className={`input input-bordered w-full max-w-xs ${ errors && errors.email && 'input-accent'}`} />
-                        <p className="text-xs text-red-500 pt-2">{ errors && errors.name && 'Please, enter Full Name'}</p>
+                        <p className="text-xs text-red-500 pt-2">{ errors && errors.name && 'Please, Enter email'}</p>
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
@@ -57,6 +57,7 @@ const Form = ({ setSubmitted }) => {
                                 }
                             </button>
                         </label>
+                        <p className="text-xs text-red-500 pt-2">{ errors && errors.name && 'Please, Enter a valid password'}</p>
                     </div>
                     <div className="w-full card-actions pt-5">
                         <button type='submit' className="w-full btn btn-primary">create account</button>
