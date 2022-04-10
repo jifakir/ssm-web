@@ -136,10 +136,10 @@ const Insurance = ({register, errors, watch, trigger, step, setStep}) => {
                 </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
+                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`btn text-white ${!watch().insurance || watch().insurance.length === 0 ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button onClick={handleNext} className={`w-28 btn text-white ${!watch().insurance || watch().insurance.length === 0 ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
