@@ -22,7 +22,6 @@ const Orientation = ({ step, setStep}) => {
 
     };
 
-
     const handleBack = () => {
         setStep(step - 1);
     };

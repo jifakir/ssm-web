@@ -50,7 +50,7 @@ const Form = ({ setSubmitted }) => {
                     </div>
                     <div className="">
                         {
-                            isError && <p className="text-xs text-accent font-bold">{error.data.message}</p>
+                            isError && <p className="text-xs text-accent font-bold">{error.data?.message}</p>
                         }
                     </div>
                     <div className="form-control w-full max-w-xs -mt-3">
