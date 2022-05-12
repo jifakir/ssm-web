@@ -1,13 +1,22 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
 
-const Orientation = ({register, errors, watch, trigger, step, setStep}) => {
+const Orientation = ({ step, setStep}) => {
 
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = await trigger('orientation');
-        if(!trig) return;
+    const handleNext = async (data) => {
+
+
+        await updateTherapist({ ...data, registration_status: 'entered-orientaton' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -18,7 +27,7 @@ const Orientation = ({register, errors, watch, trigger, step, setStep}) => {
     };
 
     return (
-        <div className="text-left text-sm">
+        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
             <h1 className="text-lg mt-2">Which do you identify as?</h1>
             <div className="form-control">
                 <label className="label cursor-pointer justify-start">
@@ -62,15 +71,16 @@ const Orientation = ({register, errors, watch, trigger, step, setStep}) => {
                     <span className="label-text justify-start pl-5">Prefer not to answer</span>
                 </label>
             </div>
+            <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
             <div className={`flex gap-5 py-5`}>
                 <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`btn text-white ${!watch().orientation ? 'btn-neutral' : 'btn-primary'}`} >
+                <button type='submit' onClick={handleNext} className={`btn text-white ${!watch().orientation ? 'btn-neutral' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

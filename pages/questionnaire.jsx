@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
+import { useFetchTherapistQuery } from '../store/api/ssmApi';
 
 
 
@@ -40,51 +40,51 @@ const Questionnaire = () => {
         },
         {
             sr: 2,
-            cp: <Name register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} required />,
+            cp: <Name  step={step} setStep={setStep}  required />,
         },
         {
             sr: 3,
-            cp: <Email register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />,
+            cp: <Email  step={step} setStep={setStep}  />,
         },
         {
             sr: 4,
-            cp: <Orientation register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />,
+            cp: <Orientation  step={step} setStep={setStep}  />,
         },
         {
             sr: 5,
-            cp: <Education register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Education  step={step} setStep={setStep}  />
         },
         {
             sr: 6,
-            cp: <Personality register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Personality  step={step} setStep={setStep}  />
         },
         {
             sr: 7,
-            cp: <Religion register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Religion  step={step} setStep={setStep}  />
         },
         {
             sr: 8,
-            cp: <RelSess register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <RelSess  step={step} setStep={setStep}  />
         },
         {
             sr: 9,
-            cp: <SpritPerson register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <SpritPerson  step={step} setStep={setStep}  />
         },
         {
             sr: 10,
-            cp: <Language register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Language  step={step} setStep={setStep}  />
         },
         {
             sr: 11,
-            cp: <OtherLang register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <OtherLang  step={step} setStep={setStep}  />
         },
         {
             sr: 12,
-            cp: <Insurance register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Insurance  step={step} setStep={setStep}  />
         },
         {
             sr: 13,
-            cp: <Availability register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Availability  step={step} setStep={setStep}  />
         },
         {
             sr: 14,
@@ -92,8 +92,10 @@ const Questionnaire = () => {
         },
     ];
 
+    const { data, isLoading, isError } = useFetchTherapistQuery();
 
     React.useEffect(() => {
+        console.log(data);
         setStep(1);
     },[]);
 

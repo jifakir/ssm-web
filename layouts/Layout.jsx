@@ -1,9 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 
 
 const Header = ({children}) => {
+
+    const auth = useSelector(state => state);
+    console.log("Auth: ", auth);
 
     return (
         <div className="drawer">

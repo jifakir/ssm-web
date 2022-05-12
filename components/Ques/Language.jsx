@@ -1,16 +1,20 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
-
-const Language = ({register, errors, watch, trigger, step, setStep}) => {
+const Language = ({ step, setStep }) => {
     
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = await trigger('language');
-        
-        console.log("Trig from Language", watch().language);
+    const handleNext = async (data) => {
 
-        if(!trig) return;
+        await updateTherapist({ ...data, registration_status: 'entered-language' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -22,7 +26,7 @@ const Language = ({register, errors, watch, trigger, step, setStep}) => {
 
 
     return (
-        <div className="text-left text-sm">
+        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
             <h1 className="my-2 text-lg">Select all languages that apply</h1>
             <div className="form-control">
                 <label className="label cursor-pointer justify-start">
@@ -65,11 +69,11 @@ const Language = ({register, errors, watch, trigger, step, setStep}) => {
                 <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`btn text-white ${!watch().language ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type='submit' className={`btn text-white ${!watch().language ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

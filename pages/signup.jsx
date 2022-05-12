@@ -7,7 +7,7 @@ import Success from '../components/Signup/Success';
 
 const Signup = () => {
 
-    const [submitted, setSubmitted] = React.useState(true);
+    const [submitted, setSubmitted] = React.useState(false);
 
     return (
         <div className="w-full min-h-full flex justify-center items-center">
