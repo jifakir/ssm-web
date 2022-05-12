@@ -4,7 +4,7 @@
 const Success = () => {
 
     return (
-        <div className="bg-neutral mt-10">
+        <div className="bg-neutral">
             <div className="px-10 py-5">
                 <p className="text-center text-sm font-bold">
                     Thank you for creating your account!<br/>

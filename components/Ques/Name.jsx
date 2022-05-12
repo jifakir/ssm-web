@@ -1,13 +1,22 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
+const Name = ({step, setStep}) => {
 
-const Name = ({register, errors, watch, trigger, step, setStep}) => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [registerTherapist, { isSuccess, isLoading, isError, error }] = useRegisterTherapistMutation();
 
-    const handleNext = async () => {
+    const handleNext = async (data) => {
 
-        const trig = await trigger('name');
-        if(!trig) return;
+        const { full_name } = data;
+
+        await registerTherapist({ full_name, registration_status: 'entered-fullname' });
+
+        // if(!isSuccess){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -18,25 +27,26 @@ const Name = ({register, errors, watch, trigger, step, setStep}) => {
         setStep(step - 1);
     };
 
-    console.log(watch().name);
+    console.log(error);
 
     return (
-        <>
+        <form onSubmit={handleSubmit(handleNext)}>
             <div className="form-control w-full max-w-xs">
                 <label className="label">
                     <span className="label-text text-lg">What is your name?</span>
                 </label>
-                <input {...register('name',{required: true})} type="text" placeholder="Full Name" className={`input input-bordered w-full max-w-xs ${errors.name && 'input-error'}`} />
+                <input {...register('full_name',{required: true})} type="text" placeholder="Full Name" className={`input input-bordered w-full max-w-xs ${errors.name && 'input-error'}`} />
+                <p className="text-accent text-xs font-bold py-1">{isError && error?.message || error?.data?.message}</p>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary ${step >= 3 ? 'block' : 'hidden'}`}>
+                <button onClick={handleBack} className={`btn btn-outline btn-primary ${step >= 3 ? 'block' : 'hidden'}`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`w-28 btn text-white ${!watch().name ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type='submit' onClick={handleNext} className={`btn text-white ${!watch().full_name ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </>
+        </form>
     )
 }
 

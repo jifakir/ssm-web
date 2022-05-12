@@ -1,15 +1,22 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
 
-const Availability = ({register, errors, watch, trigger, step, setStep}) => {
+const Availability = ({step, setStep}) => {
     
 
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = await trigger(['availability','start_time','end_time']);
-        console.log("Availability",trig);
-        if(!trig) return;
+    const handleNext = async (data) => {
+
+        await updateTherapist({ availability: {...data}, registration_status: 'complete' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -21,56 +28,56 @@ const Availability = ({register, errors, watch, trigger, step, setStep}) => {
 
 
     return (
-        <div className="">
-        <div className="text-left text-sm flex flex-col md:flex-row gap-5">
+        <form onSubmit={handleSubmit(handleNext)} className="">
+        <div className="text-left text-sm flex gap-5">
             <div className="">
                 <h1 className="text-lg my-2">Availability</h1>
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start">
-                        <input {...register('availability', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
+                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
                         <span className="label-text pl-5">Monday</span>
                     </label>
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start">
-                        <input {...register('availability', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
+                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
                         <span className="label-text justify-start pl-5">Tuesday</span>
                     </label>
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start">
-                        <input {...register('availability', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
+                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
                         <span className="label-text justify-start pl-5">Wednesday</span>
                     </label>
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start">
-                        <input {...register('availability', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
+                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
                         <span className="label-text justify-start pl-5">Thursday</span>
                     </label>
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start">
-                        <input {...register('availability', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
+                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
                         <span className="label-text justify-start pl-5">Friday</span>
                     </label>
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start">
-                        <input {...register('availability', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
+                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
                         <span className="label-text justify-start pl-5">Saturday</span>
                     </label>
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer justify-start">
-                        <input {...register('availability', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
+                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
                         <span className="label-text justify-start pl-5">Sunday</span>
                     </label>
                 </div>
             </div>
             <div className="mt-1">
                 <h3 className="my-2">M-Start Time</h3>
-                <select {...register('start_time', {required: true})} defaultValue={null}  className={`select select-bordered w-full max-w-xs ${errors.start_time && 'select-primary'}`}>
+                <select {...register('startTime', {required: true})} defaultValue={null}  className={`select select-bordered w-full max-w-xs ${errors.start_time && 'select-primary'}`}>
                     <option value={null}>00:00 AM</option>
                     <option value={'1:00pm'}>01:00 PM</option>
                     <option value={'1:30pm'}>01:30 PM</option>
@@ -88,7 +95,7 @@ const Availability = ({register, errors, watch, trigger, step, setStep}) => {
             </div>
             <div className="mt-1">
                 <h3 className="my-2">M-End Time</h3>
-                <select {...register('end_time', {required: true})} defaultValue={null}  className={`select select-bordered w-full max-w-xs ${errors.end_time && 'select-primary'}`}>
+                <select {...register('endTime', {required: true})} defaultValue={null}  className={`select select-bordered w-full max-w-xs ${errors.end_time && 'select-primary'}`}>
                     <option value={null}>00:00 AM</option>
                     <option value={'1:00pm'}>01:00 PM</option>
                     <option value={'1:30pm'}>01:30 PM</option>
@@ -107,14 +114,14 @@ const Availability = ({register, errors, watch, trigger, step, setStep}) => {
             
         </div>
         <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
+                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} type="submit" className={`w-28 btn text-white ${!watch().availability || watch().availability.length === 0 || !watch().start_time || !watch().end_time ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type="submit" className={`btn text-white ${!watch().day && !watch().startTime && !watch().endTime ? 'bg-gray-400' : 'btn-primary'}`} >
                     Submit
                 </button>
-            </div>
         </div>
+        </form>
     )
 }
 

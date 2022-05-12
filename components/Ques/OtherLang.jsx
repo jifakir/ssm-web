@@ -1,13 +1,21 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
 
-const OtherLang = ({register, errors, watch, trigger, step, setStep}) => {
+const OtherLang = ({step, setStep}) => {
 
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = await trigger('other_lang');
-        if(!trig) return;
+    const handleNext = async (data) => {
+
+        await updateTherapist({ ...data, registration_status: 'entered-other-lang' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -19,7 +27,7 @@ const OtherLang = ({register, errors, watch, trigger, step, setStep}) => {
 
 
     return (
-        <div className="text-left text-sm">
+        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
             <h1 className="text-lg my-2">Do you speak other languages?</h1>
             <div className="form-control">
                 <label className="label cursor-pointer justify-start">
@@ -34,14 +42,14 @@ const OtherLang = ({register, errors, watch, trigger, step, setStep}) => {
                 </label>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
+                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`w-28 btn  text-white ${!watch().other_lang ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type='submit' className={`btn  text-white ${!watch().other_lang ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

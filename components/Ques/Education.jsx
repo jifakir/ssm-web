@@ -1,33 +1,25 @@
 import React from 'react';
 import { HiPlus } from 'react-icons/hi';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
-const Education = ({register, errors, watch, trigger, step, setStep}) => {
+
+const Education = ({step, setStep}) => {
 
     const [qualifyNum, setQualifyNum] = React.useState(1);
 
-    const next = qualifyNum === 1 ? watch().education1 && (Object.values(watch().education1).includes(undefined || '' || false)):
-                qualifyNum === 2 ? watch().education2 && (Object.values(watch().education1).includes(false) || Object.values(watch().education2).includes(false) ):
-                qualifyNum === 3 ? watch().education3 && (Object.values(watch().education1).includes(false) || Object.values(watch().education2).includes(false)  || Object.values(watch().education3).includes(false)):
-                qualifyNum === 4 ? watch().education4 && (Object.values(watch().education1).includes(false) || Object.values(watch().education2).includes(false)  || Object.values(watch().education3).includes(false) || Object.values(watch().education4).includes(false)):
-                watch().education5 && (Object.values(watch().education1).includes(false) || Object.values(watch().education2).includes(false)  || Object.values(watch().education3).includes(false) || Object.values(watch().education4).includes(false) || Object.values(watch().education5).includes(false))
-    console.log("Next: ", next);
-    console.log("QualifyNum: ", qualifyNum);
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = qualifyNum === 1 ? 
-                    await trigger(['education1.degree','education1.major','education1.school_name']):
-                    qualifyNum === 2 ?
-                    await trigger(['education1.degree','education1.major','education1.school_name','education2.degree','education2.major','education2.school_name']):
-                    qualifyNum === 3 ? 
-                    await trigger(['education1.degree','education1.major','education1.school_name', 'education2.degree','education2.major','education2.school_name', 'education3.degree','education3.major','education3.school_name']):
-                    qualifyNum === 4 ?
-                    await trigger(['education1.degree','education1.major','education1.school_name', 'education2.degree','education2.major','education2.school_name', 'education3.degree','education3.major','education3.school_name', 'education4.degree','education4.major','education4.school_name']):
-                    await trigger(['education1.degree','education1.major','education1.school_name', 'education2.degree','education2.major','education2.school_name', 'education3.degree','education3.major','education3.school_name', 'education4.degree','education4.major','education4.school_name', 'education5.degree','education5.major','education5.school_name'])
+    const handleNext = async (data) => {
 
-        console.log("Trig",trig);
 
-        if(!trig) return;
+        await updateTherapist({ ...data, registration_status: 'entered-education' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -36,10 +28,25 @@ const Education = ({register, errors, watch, trigger, step, setStep}) => {
     const handleBack = () => {
         setStep(step - 1);
     };
+
+    
+    const ec1 = watch().education1 && Object.values(watch().education1).every(itm => itm);
+    const ec2 = watch().education2 && Object.values(watch().education2).every(itm => itm);
+    const ec3 = watch().education3 && Object.values(watch().education3).every(itm => itm);
+    const ec4 = watch().education4 && Object.values(watch().education4).every(itm => itm);
+    const ec5 = watch().education5 && Object.values(watch().education5).every(itm => itm);
+
+    const isFilledUp = qualifyNum === 1 ? ec1:
+                qualifyNum === 2 ? ec1 && ec2:
+                qualifyNum === 3 ? ec1 && ec2 && ec3 && ec4:
+                qualifyNum === 4 ? ec1 && ec2 && ec3 && ec4:
+                qualifyNum === 5 ? ec1 && ec2 && ec3 && ec4 && ec5: false;
+
     
     return (
-        <div className="">
-            <div className="flex flex-col md:flex-row items-center my-5">
+        <form onSubmit={handleSubmit(handleNext)} className="">
+
+            <div className="flex items-center my-5">
 
                 <h1 className="text-lg mr-5">Please add your education</h1>
                 <button onClick={() => setQualifyNum(qualifyNum + 1)} className="btn btn-primary btn-outline btn-sm text-sm">
@@ -48,7 +55,7 @@ const Education = ({register, errors, watch, trigger, step, setStep}) => {
                 </button>
 
             </div>
-            <div className="flex flex-col md:flex-row gap-5">
+            <div className="flex gap-5">
 
                 <div className="space-y-3" >
                     <h2 className="text-left">Education 1</h2>
@@ -114,14 +121,14 @@ const Education = ({register, errors, watch, trigger, step, setStep}) => {
 
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-32 btn btn-outline btn-primary`}>
+                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`w-32 btn text-white ${ !next ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type='submit' onClick={handleNext} className={`btn text-white ${ !isFilledUp ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

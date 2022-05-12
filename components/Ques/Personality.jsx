@@ -1,15 +1,21 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
+const Personality = ({ step, setStep }) => {
 
-const Personality = ({register, errors, watch, trigger, step, setStep}) => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-    const handleNext = async () => {
+    const handleNext = async (data) => {
 
-        const trig = await trigger(['mind', 'energy','nature', 'tactics', 'identity']);
-        console.log(trig);
-        if(!trig) return;
-        
+        await updateTherapist({ personality: {...data}, registration_status: 'entered-personality' });
+
+        // if(!isSucces){
+        //     return
+        // }
+
         setStep(step + 1);
 
     };
@@ -20,9 +26,9 @@ const Personality = ({register, errors, watch, trigger, step, setStep}) => {
 
 
     return (
-        <div className="">
+        <form onSubmit={handleSubmit(handleNext)} className="">
             <h1 className="text-left text-lg my-5">Share your Myers-Brigg Personality Type aspects</h1>
-            <div className="flex flex-col md:flex-col text-left text-sm gap-5">
+            <div className="flex text-sm gap-5">
                 <div className="">
                     <h3 className="text-sm">Mind(select one)</h3>
                     <div className="form-control">
@@ -100,14 +106,14 @@ const Personality = ({register, errors, watch, trigger, step, setStep}) => {
                 </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
+                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`w-28 btn text-white ${!watch().mind || !watch().energy || !watch().nature || !watch().tactics || !watch().identity ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type='submit' className={`btn text-white ${!watch().mind || !watch().energy || !watch().nature || !watch().tactics || !watch().identity ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

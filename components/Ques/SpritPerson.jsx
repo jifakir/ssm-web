@@ -1,16 +1,22 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
 
-const SpritPerson = ({register, errors, watch, trigger, step, setStep}) => {
+const SpritPerson = ({ step, setStep }) => {
 
 
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = await trigger('spiritual_person');
-        console.log("Sprit Person: ", trig);
-        console.log("Watch Sprit: ", watch('spiritual_person'))
-        if(!trig) return;
+    const handleNext = async (data) => {
+
+        await updateTherapist({ ...data, registration_status: 'entered-sprituality' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -22,7 +28,7 @@ const SpritPerson = ({register, errors, watch, trigger, step, setStep}) => {
 
 
     return (
-        <div className="text-left">
+        <form onSubmit={handleSubmit(handleNext)} className="text-left">
             <h1 className="text-lg my-2">Do you consider yourself a spiritual person?</h1>
             <div className="form-control">
                 <label className="label cursor-pointer justify-start">
@@ -37,14 +43,14 @@ const SpritPerson = ({register, errors, watch, trigger, step, setStep}) => {
                 </label>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
+                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`w-28 btn text-white ${!watch().spiritual_person ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button className={`btn text-white ${!watch().spiritual_person ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

@@ -1,14 +1,22 @@
 import React from 'react';
 import { MdArrowDropDown } from 'react-icons/md';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
-const Insurance = ({register, errors, watch, trigger, step, setStep}) => {
+const Insurance = ({step, setStep}) => {
     
 
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = await trigger('insurance');
-        if(!trig) return;
+    const handleNext = async (data) => {
+
+        await updateTherapist({ ...data, registration_status: 'entered-insurance' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -26,7 +34,7 @@ const Insurance = ({register, errors, watch, trigger, step, setStep}) => {
     const insU_Z = ["UHC", "UHC Student Resources", "UMR", "United Healthcare", "UPMC", "Value Options", "WebTPA", "WellCare", "Wellspan Employee Assistance Program", "Wellspring EAP"];
     
     return (
-        <div className="text-sm text-left">
+        <form onSubmit={handleSubmit(handleNext)} className="text-sm text-left">
             <h1 className="text-lg my-2">Which insurance plans do you accept?</h1>
             <div className="space-y-5">
                 <div className="dropdown dropdwon-primary">
@@ -139,11 +147,11 @@ const Insurance = ({register, errors, watch, trigger, step, setStep}) => {
                 <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`w-28 btn text-white ${!watch().insurance || watch().insurance.length === 0 ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type='submit' className={`w-28 btn text-white ${!watch().insurance || watch().insurance.length === 0 ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

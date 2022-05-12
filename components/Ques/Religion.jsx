@@ -1,14 +1,22 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
 
-const Orientation = ({register, errors, watch, trigger, step, setStep}) => {
+const Orientation = ({ step, setStep}) => {
 
 
-    const handleNext = async () => {
+    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-        const trig = await trigger('religion');
-        if(!trig) return;
+    const handleNext = async (data) => {
+
+        await updateTherapist({ ...data, registration_status: 'entered-religion' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -20,7 +28,7 @@ const Orientation = ({register, errors, watch, trigger, step, setStep}) => {
 
 
     return (
-        <div className="text-left text-sm">
+        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
             <h1 className="text-lg my-2">Which do you identify as?</h1>
             <div className="form-control">
                 <label className="label cursor-pointer justify-start">
@@ -73,14 +81,14 @@ const Orientation = ({register, errors, watch, trigger, step, setStep}) => {
             </div>
 
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
+                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
                     Back
                 </button>
-                <button onClick={handleNext} className={`w-28 btn text-white ${!watch().religion ? 'bg-gray-400' : 'btn-primary'}`} >
+                <button type='submit' className={`btn text-white ${!watch().religion ? 'bg-gray-400' : 'btn-primary'}`} >
                     Next
                 </button>
             </div>
-        </div>
+        </form>
     )
 }
 

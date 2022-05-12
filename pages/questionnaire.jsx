@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-
+import { useFetchTherapistQuery } from '../store/api/ssmApi';
 
 
 
@@ -36,55 +36,55 @@ const Questionnaire = () => {
     const components = [
         {
             sr: 1,
-            cp: <button onClick={() => setStep(2)} className="btn bg-primary border-none px-8 my-5 md:my-0 md:mt-10 text-white">Get Started</button>
+            cp: <button onClick={() => setStep(2)} className="btn bg-primary border-none px-8 mt-10 text-white">Get Started</button>
         },
         {
             sr: 2,
-            cp: <Name register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} required />,
+            cp: <Name  step={step} setStep={setStep}  required />,
         },
         {
             sr: 3,
-            cp: <Email register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />,
+            cp: <Email  step={step} setStep={setStep}  />,
         },
         {
             sr: 4,
-            cp: <Orientation register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />,
+            cp: <Orientation  step={step} setStep={setStep}  />,
         },
         {
             sr: 5,
-            cp: <Education register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Education  step={step} setStep={setStep}  />
         },
         {
             sr: 6,
-            cp: <Personality register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Personality  step={step} setStep={setStep}  />
         },
         {
             sr: 7,
-            cp: <Religion register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Religion  step={step} setStep={setStep}  />
         },
         {
             sr: 8,
-            cp: <RelSess register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <RelSess  step={step} setStep={setStep}  />
         },
         {
             sr: 9,
-            cp: <SpritPerson register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <SpritPerson  step={step} setStep={setStep}  />
         },
         {
             sr: 10,
-            cp: <Language register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Language  step={step} setStep={setStep}  />
         },
         {
             sr: 11,
-            cp: <OtherLang register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <OtherLang  step={step} setStep={setStep}  />
         },
         {
             sr: 12,
-            cp: <Insurance register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Insurance  step={step} setStep={setStep}  />
         },
         {
             sr: 13,
-            cp: <Availability register={register} watch={watch} trigger={trigger} step={step} setStep={setStep} errors={errors} />
+            cp: <Availability  step={step} setStep={setStep}  />
         },
         {
             sr: 14,
@@ -92,8 +92,10 @@ const Questionnaire = () => {
         },
     ];
 
+    const { data, isLoading, isError } = useFetchTherapistQuery();
 
     React.useEffect(() => {
+        console.log(data);
         setStep(1);
     },[]);
 
@@ -145,14 +147,14 @@ const Questionnaire = () => {
     return (
         <div className="px-10 pt-5">
             <div className="">
-                <h1 className="text-5xl font-bold md:text-7xl">Welcome</h1>
-                <p className="text-lg text-center md:text-left md:text-2xl mt-5">
+                <h1 className="text-7xl">Welcome</h1>
+                <p className="text-2xl mt-5">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. 
                 </p>
             </div>
             {/* Slide section */}
             <div className="mt-10">
-                <progress className={`progress w-full bg-neutral1 progress-secondary mb-5 ${step === 14 || step === 1 ? 'hidden' : 'block'}`} value={`${progress}`} max="100"></progress>
+                <progress className={`progress w-full bg-neutral1 progress-secondary ${step === 14 ? 'hidden' : 'block'}`} value={`${progress}`} max="100"></progress>
                 {/* Form Inner */}
                 <div className="text-center">
                     {

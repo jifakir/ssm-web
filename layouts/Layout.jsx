@@ -1,9 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 
 
 const Header = ({children}) => {
+
+    const auth = useSelector(state => state);
+    console.log("Auth: ", auth);
 
     return (
         <div className="drawer">
@@ -35,7 +39,7 @@ const Header = ({children}) => {
             </div> 
             <div className="drawer-side">
                 <label htmlFor="my-drawer-3" className="drawer-overlay"></label> 
-                <ul className="menu p-4 overflow-y-auto w-80 bg-neutral uppercase">
+                <ul className="menu p-4 overflow-y-auto w-80 bg-palette uppercase">
                     <li className="text-left">
                         <Image src='/assets/img/logo.svg' alt='Logo' width={50} height={50} />
                     </li>
