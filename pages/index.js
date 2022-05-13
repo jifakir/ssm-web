@@ -8,7 +8,8 @@ export default function Home() {
   return (
     <div className='flex justify-center'>
         <button className='text-blue-500 text-lg font-bold mt-10'>
-          <Link href={'/signup'}>Signup Please</Link>
+          <Link href={'/therapists'}> Therapists </Link>
+          <Link href={'/therapists'}> Patients </Link>
         </button>
     </div>
   )

@@ -20,7 +20,7 @@ const Header = ({children}) => {
                         </label>
                     </div> 
                     <div className="flex-none px-2 mx-2">
-                        <Image src='/assets/img/logo.svg' alt='Logo' width={70} height={50} />
+                        <Image src='/img/logo.svg' alt='Logo' width={70} height={50} />
                     </div>
                     <div className="flex-1 hidden lg:block">
                         <ul className="w-full menu menu-horizontal uppercase justify-between">
