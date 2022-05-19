@@ -15,9 +15,9 @@ const State = ({step, setStep}) => {
 
         await registerTherapist({ full_name, registration_status: 'entered-fullname' });
 
-        // if(!isSuccess){
-        //     return
-        // }
+        if(!isSuccess){
+            return
+        }
 
         setStep(step + 1);
 
@@ -50,6 +50,38 @@ const State = ({step, setStep}) => {
             {
                 label: 'Arkansas',
                 value: 'arkansas',
+            },
+            {
+                label: 'California',
+                value: 'california',
+            },
+            {
+                label: 'Colorado',
+                value: 'colorado',
+            },
+            {
+                label: 'Connecticut',
+                value: 'connecticut',
+            },
+            {
+                label: 'Delaware',
+                value: 'delaware',
+            },
+            {
+                label: 'Florida',
+                value: 'florida',
+            },
+            {
+                label: 'Georgia',
+                value: 'georgia',
+            },
+            {
+                label: 'Hawaii',
+                value: 'hawaii',
+            },
+            {
+                label: 'Idaho',
+                value: 'idaho',
             },
         ]
     }

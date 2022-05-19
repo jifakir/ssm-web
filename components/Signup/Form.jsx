@@ -1,4 +1,5 @@
 import React from 'react';
+import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineClose } from 'react-icons/md';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
@@ -16,6 +17,10 @@ const Form = ({ setSubmitted }) => {
     const onSubmitHandler = async (data) => {
         await signup(data);
     }
+
+    const responseGoogle = (response) => {
+        console.log(response);
+      }
 
 
     React.useEffect(() => {
@@ -36,15 +41,24 @@ const Form = ({ setSubmitted }) => {
 
     return (
         <div className="w-full min-h-full flex justify-center items-center">
+            
             <form onSubmit={handleSubmit(onSubmitHandler)} className="card w-[415px] bg-neutral shadow-xl px-5 py-3">
                 <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                     <MdOutlineClose />
                 </div>
                 <div className="card-body items-center text-center">
-                    <button className="w-full btn gap-2 bg-white text-black hover:bg-white/70 normal-case font-bold">
-                        <FcGoogle className='text-xl'/>
-                        Signup with Google
-                    </button>
+                    {/* <button className="w-full btn gap-2 bg-white text-black hover:bg-white/70 normal-case font-bold">
+                        {/* <FcGoogle className='text-xl'/>
+                        Signup with Google */}
+                    {/* </button> */}
+                    <GoogleLogin
+                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
+                            buttonText="Signup with Google"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                            className="bg-white w-full rounded-lg cursor-pointer"
+                        />
                     <div className="">
                         <h1 className="text-2xl font-bold">or</h1>
                     </div>

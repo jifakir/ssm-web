@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    @font-face {
+        font-family: 'Afternoon in Stereo';
+        src: url('/font/AfternoonInStereo.ttf');
+        font-weight: 400;
+    }
+}
