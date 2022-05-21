@@ -13,8 +13,14 @@ const RadioInput = ({data, register, errors, ...rest}) => {
                 options.map(( option, idx ) => (
                 <div className="form-control" key={idx}>
                     <label className="label cursor-pointer justify-start">
-                        <input {...rest} type="radio" {...register(name, {required})} value={option.value} className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                        <span className="label-text pl-2">{option.label}</span>
+                        <input 
+                            {...rest} 
+                            type="radio" 
+                            {...register(name, {required})}
+                            value={option.value} 
+                            className={`radio hover:radio-secondary ${errors[name] ? 'radio-error': 'checked:bg-neutral'}`} />
+                        
+                        <span className={`pl-2 ${errors[name] && 'text-error'}`}>{option.label}</span>
                     </label>
                 </div>
                 ))

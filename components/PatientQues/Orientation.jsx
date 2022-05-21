@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
-import RadioInput from '../UI/RadioInput';
+import RadioInput from '../UI/Radio';
 
 
 
