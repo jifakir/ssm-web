@@ -17,21 +17,21 @@ const menuList = [
     },
     {
         title: 'Join As A Therapist',
-        linkUrl: '/'
+        linkUrl: '/therapist/join'
     },
     {
         title: 'About',
-        linkUrl: '/'
+        linkUrl: '/about'
     },
     {
         title: 'Contact',
-        linkUrl: '/'
+        linkUrl: '/contact'
     },
 ];
 
 const Header = () => {
 
-    const [isOpen, setIsOpen] = React.useState(true);
+    const [isOpen, setIsOpen] = React.useState(false);
     const { isLoggedIn } = useSelector(state => state.auth);
 
 

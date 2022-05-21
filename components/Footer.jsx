@@ -57,7 +57,7 @@ const Footer = () => {
     const { register, watch, handleSubmit, formState: {errors}} = useForm();
 
     return (
-        <div className="relative bg-neutral/30 pt-5">
+        <footer className="relative bg-neutral/30 pt-5">
             <div className="absolute -z-10 top-0 left-0 h-2/3 md:h-full w-full sm:w-full md:w-1/3">
                 <Image src={'/img/footerbg.png'} alt={"Footer Bg"} layout={"fill"} />
             </div>
@@ -138,7 +138,7 @@ const Footer = () => {
                     Copyright &copy; 2020 Start Saying More, LLC. All Rights Reserved. | Privacy Policy | Terms &amp; Conditions
                 </p>
             </div>
-        </div>
+        </footer>
     )
 }
 

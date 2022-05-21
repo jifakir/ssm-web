@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/therapist": [
+    "/contact": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/therapist.js"
-    ],
-    "/therapist/join": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/therapist/join.js"
+      "static/chunks/pages/contact.js"
     ]
   },
   "ampFirstPages": []
