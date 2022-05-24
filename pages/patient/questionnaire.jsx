@@ -87,7 +87,7 @@ const Questionnair = () => {
     React.useEffect(() => {
         console.log(data);
         setStep(1);
-    },[]);
+    },[data]);
 
     React.useEffect(() => {
         
