@@ -2,16 +2,42 @@ import React from 'react';
 
 
 
-const Input = ({data, register, errors, ...rest}) => {
+const Input = ({data, register, titleStyle, className, errors, ...rest}) => {
 
-    const {title, name, pHolder, required} = data;
+    const {title, type, name, pHolder, required} = data;
 
     return (
-        <div className="form-control w-full max-w-xs">
-            <label className="label">
-                <span className="label-text text-lg">{title}</span>
-            </label>
-            <input {...register(name, {required})} {...rest} type="text" placeholder={pHolder} className={`input input-bordered w-full max-w-xs ${errors[name] && 'input-error'}`} />
+        <div className="w-full">
+            {
+                title && (
+                    <label className={`label ${titleStyle}`}>
+                        <span className="label-text">{title}</span>
+                    </label>
+                )
+            }
+            {
+                type === 'textarea' ? 
+                <textarea
+                    {...register(name, {required})} 
+                    {...rest}
+                    placeholder={pHolder}
+                    rows={10}
+                    className={`input input-bordered w-full border-2 hover:border-neutral shadow-sm focus:border-accent focus:outline-none bg-white max-w-xs rounded ${className} ${errors[name] && 'input-error'}`} 
+                >
+                </textarea>:
+                <input 
+                    {...register(name, {required})} 
+                    {...rest} 
+                    type={type ? type : 'text'} 
+                    placeholder={pHolder}
+                    className={`input input-bordered w-full border-2 hover:border-neutral shadow-sm focus:border-accent focus:outline-none bg-white max-w-xs rounded ${className} ${errors[name] && 'input-error'}`} 
+                />
+            }
+            <p className="text-error text-[10px] pt-1 font-medium italic">
+                {
+                    errors[name] && errors[name].message
+                }
+            </p>
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react'
 import store from '../store/configureStore';
 import '../styles/globals.css';
+import 'react-modern-drawer/dist/index.css'
 
 const persistor = persistStore(store);
 

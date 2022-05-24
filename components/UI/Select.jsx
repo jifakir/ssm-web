@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ReactSelect from 'react-select';
 
 
 const Select = ({data, register, errors, ...rest}) => {
