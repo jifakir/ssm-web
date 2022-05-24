@@ -1,63 +1,96 @@
 import React from 'react';
+import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineClose } from 'react-icons/md';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
 import { useForm } from 'react-hook-form';
-
+import { useLoginQuery, useSignupMutation } from '../../store/api/ssmApi';
 
 const Form = ({ setSubmitted }) => {
 
     const [showPass, setShowPass] = React.useState(false);
 
-    const { register, formState: { errors }, watch, handleSubmit} = useForm({mode: 'all'});
+    const { register, reset, handleSubmit, formState: {errors}} = useForm();
 
-    const onSubmitHandler = (data) => {
-        console.log("Handle Data", data);
-        setSubmitted(true);
+    const [signup, { data, isError, isSuccess, isLoading, error }] = useSignupMutation();
 
+    const onSubmitHandler = async (data) => {
+        await signup(data);
     }
-    console.log(errors);
+
+    const responseGoogle = (response) => {
+        console.log(response);
+      }
+
+
+    React.useEffect(() => {
+        
+        if(isError){
+            reset({
+                password: ''
+            })
+        }
+        if(isSuccess){
+            setSubmitted(true);
+            reset();
+        }
+
+    },[isError, isSuccess, reset, setSubmitted, data]);
+
+    if(isLoading) return <p className="">Loading...</p>
+
     return (
-        <div className="w-full min-h-full flex justify-center items-center py-5">
+        <div className="w-full min-h-full flex justify-center items-center">
+            
             <form onSubmit={handleSubmit(onSubmitHandler)} className="card w-[415px] bg-neutral shadow-xl px-5 py-3">
                 <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                     <MdOutlineClose />
                 </div>
                 <div className="card-body items-center text-center">
-                    <button className="w-full btn gap-2 bg-white text-black hover:bg-white/70 normal-case font-bold">
-                        <FcGoogle className='text-xl'/>
-                        Signup with Google
-                    </button>
+                    {/* <button className="w-full btn gap-2 bg-white text-black hover:bg-white/70 normal-case font-bold">
+                        {/* <FcGoogle className='text-xl'/>
+                        Signup with Google */}
+                    {/* </button> */}
+                    <GoogleLogin
+                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
+                            buttonText="Signup with Google"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                            className="bg-white w-full rounded-lg cursor-pointer"
+                        />
                     <div className="">
                         <h1 className="text-2xl font-bold">or</h1>
+                    </div>
+                    <div className="">
+                        {
+                            isError && <p className="text-xs text-accent font-bold">{error.data?.message}</p>
+                        }
                     </div>
                     <div className="form-control w-full max-w-xs -mt-3">
                         <label className="label">
                             <span className="label-text text-lg">Name</span>
                         </label>
-                        <input {...register('name', {required: 'Name is required'})} type="text" placeholder="Full Name" className={`input input-bordered w-full max-w-xs ${errors && errors.name ? 'input-accent' : ''}`} />
-                        <p className="text-xs text-red-500 pt-2">{ errors && errors.name && 'Please, enter Full Name'}</p>
+                        <input {...register('full_name', {required: true})} type="text" placeholder="Full Name" className={`input input-bordered w-full max-w-xs ${errors.full_name && 'input-error'}`} />
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text text-lg">Email</span>
                         </label>
-                        <input {...register('email', {required: true, pattern:  /^\S+@\S+$/i})} type="email" placeholder="Email" className={`input input-bordered w-full max-w-xs ${ errors && errors.email && 'input-accent'}`} />
-                        <p className="text-xs text-red-500 pt-2">{ errors && errors.name && 'Please, Enter email'}</p>
+                        <input {...register('email', {required: true, pattern: /^\S+@\S+$/i })} type="text" placeholder="Email" className={`input input-bordered w-full max-w-xs ${errors.email || isError && 'input-error'}`} />
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text text-lg">Password</span>
                         </label>
                         <label className="input-group">
-                            <input {...register('password', {required: true})} type={`${showPass ? 'text' : 'password'}`} placeholder="Strong password" className={`input input-bordered w-full max-w-xs ${ errors && errors.email && 'input-accent'}`} />
+                            <input {...register('password', {required: true})} type={`${showPass ? 'text' : 'password'}`} placeholder="Strong password" className={`input input-bordered w-full max-w-xs ${errors.password && 'input-error'}`} />
                             <button onClick={() => setShowPass(!showPass)} className="btn btn-square bg-white hover:bg-white/90 text-black focus:bg-white text-lg px-3 border-none">
                                 {
                                     !showPass ? <BsEye /> : <BsEyeSlash/>
                                 }
                             </button>
                         </label>
-                        <p className="text-xs text-red-500 pt-2">{ errors && errors.name && 'Please, Enter a valid password'}</p>
                     </div>
                     <div className="w-full card-actions pt-5">
                         <button type='submit' className="w-full btn btn-primary">create account</button>
