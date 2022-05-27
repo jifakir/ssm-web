@@ -31,7 +31,6 @@ const OtherLang = ({ step, setStep }) => {
     };
 
     const data = {
-        title: 'Do you speak any other languages?',
         name: 'other_lang',
         options: [
             {
@@ -46,7 +45,8 @@ const OtherLang = ({ step, setStep }) => {
     };
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
+            <div className="w-full">
+            <h1 className="text-lg my-2 text-left">Do you speak any other languages?</h1>
             <div className="form-control w-full max-w-xs">
                 <Radio register={register} errors={errors} data={data} />
             </div>
