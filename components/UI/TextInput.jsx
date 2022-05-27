@@ -2,9 +2,9 @@ import React from 'react';
 
 
 
-const Input = ({data, register, titleStyle, className, errors, ...rest}) => {
+const Input = ({data, register, titleStyle, className, errors, type, ...rest}) => {
 
-    const {title, type, name, pHolder, required} = data;
+    const {title, name, pHolder, required} = data;
 
     return (
         <div className="w-full">

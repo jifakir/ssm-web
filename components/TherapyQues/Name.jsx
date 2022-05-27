@@ -1,6 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import TextInput from '../../components/UI/TextInput';
+import Button from '../UI/Button';
 
 
 const Name = ({step, setStep}) => {
@@ -13,15 +15,14 @@ const Name = ({step, setStep}) => {
         const { full_name } = data;
 
         await registerTherapist({ full_name, registration_status: 'entered-fullname' });
-
-        // if(!isSuccess){
-        //     return
-        // }
-
         setStep(step + 1);
-
     };
 
+
+    if(isSuccess){
+        setStep(step + 1);
+    }
+    console.log(error);
     const handleBack = () => {
         if(step === 1) return;
         setStep(step - 1);
@@ -32,19 +33,10 @@ const Name = ({step, setStep}) => {
     return (
         <form onSubmit={handleSubmit(handleNext)}>
             <div className="form-control w-full max-w-xs">
-                <label className="label">
-                    <span className="label-text text-lg">What is your name?</span>
-                </label>
-                <input {...register('full_name',{required: true})} type="text" placeholder="Full Name" className={`input input-bordered w-full max-w-xs ${errors.name && 'input-error'}`} />
-                <p className="text-accent text-xs font-bold py-1">{isError && error?.message || error?.data?.message}</p>
+                <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary ${step >= 3 ? 'block' : 'hidden'}`}>
-                    Back
-                </button>
-                <button type='submit' onClick={handleNext} className={`btn text-white ${!watch().full_name ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button title={'Next'} onClick={handleNext} className={`${!watch().full_name ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

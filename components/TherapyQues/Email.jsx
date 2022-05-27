@@ -1,7 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
-
+import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import Button from '../UI/Button';
+import TextInput from '../../components/UI/TextInput';
 
 
 const Email = ({ step, setStep }) => {
@@ -12,7 +13,7 @@ const Email = ({ step, setStep }) => {
     const handleNext = async (data) => {
 
         const { email } = data;
-
+        if(!email) return;
         await updateTherapist({ email, registration_status: 'email' });
 
         // if(!isSucces){
@@ -33,19 +34,13 @@ const Email = ({ step, setStep }) => {
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
             <div className="form-control w-full max-w-xs">
-                <label className="label">
-                    <span className="label-text text-lg">E-Mail Address</span>
-                </label>
-                <input {...register('email',{required: true, pattern: /^\S+@\S+$/i})} type="email" placeholder="startsayingmore@gmail.com" className={`input input-bordered w-full max-w-xs ${errors.email && 'input-error'}`} />
-                <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
+            <div className="form-control w-full max-w-xs">
+                <TextInput register={register} errors={errors} data={{ pHolder: 'Email', name: 'email', requred: true, title: 'Email'}} />
+            </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button onClick={handleNext} className={`btn text-white ${!watch().email ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button title={'Back'} onClick={handleBack} />
+                <Button title={'Next'} onClick={handleNext} className={`${!watch().email ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

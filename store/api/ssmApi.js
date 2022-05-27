@@ -12,8 +12,12 @@ export const ssmApi = createApi({
     }),
     tagTypes: ['SSM'],
     endpoints: (builder) => ({
-        login: builder.query({
-            query: () => '/auth/login',
+        login: builder.mutation({
+            query: (body) => ({
+                url: '/auth/login',
+                method: 'POST',
+                body
+            }),
             providesTags: ['SSM']
         }),
         googleLogin: builder.mutation({
@@ -67,4 +71,4 @@ export const ssmApi = createApi({
 });
 
 
-export const { useLoginQuery, useFetchTherapistQuery, useSignupMutation, useRegisterTherapistMutation, useUpdateTherapistMutation } = ssmApi;
+export const { useLoginMutation, useFetchTherapistQuery, useSignupMutation, useRegisterTherapistMutation, useUpdateTherapistMutation } = ssmApi;

@@ -2,24 +2,46 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdOutlineClose } from 'react-icons/md';
-import { useSignupMutation } from '../store/api/ssmApi';
+import { useSignupMutation, useLoginMutation } from '../store/api/ssmApi';
 import { GoogleLogin } from 'react-google-login';
+import Button from '../components/UI/Button';
+import TextInput from '../components/UI/TextInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn } from '../store/reducers/authReducer';
+import { useRouter } from 'next/router';
 
 
 const Login = () => {
 
-    const [showPass, setShowPass] = React.useState();
-    const { register, handleSubmit, watch, formState: {errors}} = useForm();
-    const [signup, { data, isError, isSuccess, isLoading, error }] = useSignupMutation();
+    const [showPass, setShowPass] = React.useState(false);
 
-    const onSubmitHandler = (data) => console.log(data);
+    const { isLoggedIn } = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
+    const { register, reset, handleSubmit, watch, formState: {errors}} = useForm();
+    const [login, { data, isError, isSuccess, isLoading, error }] = useLoginMutation();
+    const router = useRouter();
     const responseGoogle = (data) => console.log(data);
 
+    const onSubmitHandler = async (data) => {
+        await login(data);
+        reset();
+    };
 
+    if(isLoggedIn){
+        router.push('/therapist/questionnaire');
+    }
+
+    if(isSuccess){
+        console.log(data);
+        dispatch(logIn(data));
+        router.push('/therapist/questionnaire');
+
+    }
     return (
-        <div className="w-full min-h-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center">
             
-            <form onSubmit={handleSubmit(onSubmitHandler)} className="card w-[415px] bg-neutral shadow-xl px-5 py-3">
+            <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 card w-[415px] shadow px-5 py-3">
                 <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                     <MdOutlineClose />
                 </div>
@@ -45,31 +67,23 @@ const Login = () => {
                         }
                     </div>
                     <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text text-lg">Email</span>
-                        </label>
-                        <input {...register('email', {required: true, pattern: /^\S+@\S+$/i })} type="text" placeholder="Email" className={`input input-bordered w-full max-w-xs ${errors.email || isError && 'input-error'}`} />
+                        <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />
                     </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text text-lg">Password</span>
-                        </label>
-                        <label className="input-group">
-                            <input {...register('password', {required: true})} type={`${showPass ? 'text' : 'password'}`} placeholder="Strong password" className={`input input-bordered w-full max-w-xs ${errors.password && 'input-error'}`} />
-                            <button onClick={() => setShowPass(!showPass)} className="btn btn-square bg-white hover:bg-white/90 text-black focus:bg-white text-lg px-3 border-none">
-                                {
-                                    !showPass ? <BsEye /> : <BsEyeSlash/>
-                                }
-                            </button>
-                        </label>
+                    <div className="relative form-control w-full max-w-xs">
+                        <TextInput register={register} errors={errors} type={showPass ? 'text' : 'password'} data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
+                        <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-5 cursor-pointer">
+                            {
+                                showPass ? <BsEye /> : <BsEyeSlash />
+                            }
+                        </div>
                     </div>
                     <div className="w-full card-actions pt-5">
-                        <button type='submit' className="w-full btn btn-primary">Log In</button>
+                        <Button title={'Login'} className="btn-secondary w-full" />
                     </div>
-                    <div className="text-sm">
+                    {/* <div className="text-sm">
                         <p className="">Do not have an account? <a className="text-blue-700 font-bold cursor-pointer">Sign up</a></p>
-                    </div>
-                    <div className="text-xs">
+                    </div> */}
+                    <div className="text-xs mt-5">
                         <p className="">
                             Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
                         </p>

@@ -1,18 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import Button from '../UI/Button';
+import Radio from '../../components/UI/Radio';
 
 
-
-const Orientation = ({ step, setStep}) => {
-
+const Religion = ({ step, setStep }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        await updateTherapist({ ...data, registration_status: 'entered-religion' });
+        const { religion } = data;
+        if(!religion) return;
+        await updateTherapist({ religion, registration_status: 'email' });
 
         // if(!isSucces){
         //     return
@@ -23,73 +25,62 @@ const Orientation = ({ step, setStep}) => {
     };
 
     const handleBack = () => {
+
         setStep(step - 1);
+
     };
 
-
+    const data = {
+        title: 'What is your religion?',
+        name: 'religion',
+        options: [
+            {
+                label: 'Christianity',
+                value: 'christianity'
+            },
+            {
+                label: 'Judaism',
+                value: 'judaism'
+            },
+            {
+                label: 'Islam',
+                value: 'islam'
+            },
+            {
+                label: 'Hinduism',
+                value: 'hinduism'
+            },
+            {
+                label: 'Buddhism',
+                value: 'buddhism'
+            },
+            {
+                label: 'Atheism',
+                value: 'atheism'
+            },
+            {
+                label: 'None',
+                value: 'none'
+            },
+            {
+                label: 'Other',
+                value: 'other'
+            },
+        ]
+    };
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-            <h1 className="text-lg my-2">Which do you identify as?</h1>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="christian" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text pl-2">Christianity</span>
-                </label>
+        <form onSubmit={handleSubmit(handleNext)} className="">
+            <div className="form-control w-full max-w-xs">
+            <div className="form-control w-full max-w-xs">
+                <Radio register={register} errors={errors} data={data} />
             </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="judaism" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">Judaism</span>
-                </label>
             </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="islam" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">Islam</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="hinduism" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">Hinduism</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="buddhism" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">Buddhism</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="atheist" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">Atheist</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="none" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">None</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('religion', {required: true})} value="other" className={`radio ${errors.religion ? 'radio-accent': 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">Other</span>
-                    <input type="text" placeholder='Input religious affiliataions' className="input input-sm input-bordered ml-2 focus:outline-none border" />
-                </label>
-            </div>
-
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button type='submit' className={`btn text-white ${!watch().religion ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button title={'Back'} onClick={handleBack} />
+                <Button title={'Next'} onClick={handleNext} className={`${!watch().religion ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )
 }
 
-export default Orientation;
+export default Religion;
