@@ -1,9 +1,27 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import Button from '../UI/Button';
+import Radio from '../../components/UI/Radio';
+
+const data = {
+    name: 'rel_ses',
+    options: [
+        {
+            label: 'Yes, if the patient prefers',
+            value: 'yes'
+        },
+        {
+            label: 'No',
+            value: 'no'
+        },
+    ]
+};
 
 
 
+
+// Component
 const RelSess = ({ step, setStep }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
@@ -11,7 +29,9 @@ const RelSess = ({ step, setStep }) => {
 
     const handleNext = async (data) => {
 
-        await updateTherapist({ ...data, registration_status: 'entered-religious_session' });
+        const { email } = data;
+
+        await updateTherapist({ email, registration_status: 'email' });
 
         // if(!isSucces){
         //     return
@@ -22,32 +42,24 @@ const RelSess = ({ step, setStep }) => {
     };
 
     const handleBack = () => {
+
         setStep(step - 1);
+
     };
 
+    
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-left">
-            <h1 className="text-lg my-2">Do you include religion in your sessions?</h1>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('rel_ses', {required: true})} value={true} className={`radio ${errors.rel_ses ? 'radio-accent' : 'checked:bg-primary'}`} />
-                    <span className="label-text pl-2">Yes</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('rel_ses', {required: true})} value={false} className={`radio ${errors.rel_ses ? 'radio-accent' : 'checked:bg-primary'}`} />
-                    <span className="label-text justify-start pl-2">No</span>
-                </label>
+        <form onSubmit={handleSubmit(handleNext)} className="">
+            <div className="w-full">
+                <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
+                <div className="form-control w-full max-w-xs">
+                    <Radio register={register} errors={errors} data={data} />
+                </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button className={`btn text-white ${!watch().rel_ses ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button title={'Back'} onClick={handleBack} />
+                <Button title={'Next'} onClick={handleNext} className={`${!watch().rel_ses ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

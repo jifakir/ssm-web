@@ -12,7 +12,7 @@ import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 
 const Questionnair = () => {
 
-    const [ step, setStep ] = React.useState();
+    const [ step, setStep ] = React.useState(0);
     const [progress, setProgress] = React.useState(0);
 
     const components = [
