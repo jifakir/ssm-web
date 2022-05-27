@@ -24,32 +24,33 @@ const Contact = () => {
                         <form onSubmit={handleSubmit(onSubmitHandler)} className="mt-5">
                             <div className="grid grid-cols-2 gap-x-5 gap-y-2">
                                 <TextInput 
-                                    data={{name: 'name', title: 'First Name', pHolder: 'First Name'}}
+                                    data={{name: 'firstname', title: 'First Name', pHolder: 'First Name'}}
                                     register={register}
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
                                     />
                                 <TextInput 
-                                    data={{name: 'name', title: 'First Name', pHolder: 'First Name'}}
+                                    data={{name: 'lastname', title: 'Email', pHolder: 'First Name'}}
                                     register={register}
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
                                     />
                                 <TextInput 
-                                    data={{name: 'name', title: 'First Name', pHolder: 'First Name'}}
+                                    data={{name: 'email', title: 'First Name', pHolder: 'First Name'}}
                                     register={register}
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
                                     />
                                 <TextInput 
-                                    data={{name: 'name', title: 'First Name', pHolder: 'First Name'}}
+                                    data={{name: 'phone', title: 'First Name', pHolder: 'First Name'}}
                                     register={register}
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
                                     />
                                 <div className="col-span-2">
                                     <TextInput
-                                    data={{name: 'name', type: 'textarea', title: 'First Name', pHolder: 'First Name'}}
+                                    type={'textarea'}
+                                    data={{name: 'message', type: 'textarea', title: 'First Name', pHolder: 'First Name'}}
                                     register={register}
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
