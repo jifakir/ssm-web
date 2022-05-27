@@ -31,7 +31,6 @@ const SpiritSession = ({ step, setStep }) => {
     };
 
     const data = {
-        title: 'Do you offer spirituality in your sessions?',
         name: 'spirit_session',
         options: [
             {
@@ -46,7 +45,8 @@ const SpiritSession = ({ step, setStep }) => {
     };
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
+            <div className="form-control">
+            <h1 className="text-lg my-2 text-left">Do you offer spirituality in your sessions?</h1>
             <div className="form-control w-full max-w-xs">
                 <Radio register={register} errors={errors} data={data} />
             </div>

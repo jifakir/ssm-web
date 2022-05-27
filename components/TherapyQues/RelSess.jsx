@@ -5,7 +5,6 @@ import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 
 const data = {
-    title: 'Do you offer religion in your sessions?',
     name: 'rel_ses',
     options: [
         {
@@ -52,10 +51,11 @@ const RelSess = ({ step, setStep }) => {
 
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
-            <div className="form-control w-full max-w-xs">
-                <Radio register={register} errors={errors} data={data} />
-            </div>
+            <div className="w-full">
+                <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
+                <div className="form-control w-full max-w-xs">
+                    <Radio register={register} errors={errors} data={data} />
+                </div>
             </div>
             <div className={`flex gap-5 py-5`}>
                 <Button title={'Back'} onClick={handleBack} />

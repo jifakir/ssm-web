@@ -32,7 +32,6 @@ const SpiritPerson = ({ step, setStep }) => {
 
     const data = {
         
-        title: 'Do you consider yourself a spiritual person?',
         name: 'spirit_persion',
         options: [
             {
@@ -49,7 +48,8 @@ const SpiritPerson = ({ step, setStep }) => {
 
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
+            <div className="w-full">
+            <h1 className="text-lg my-2 text-left">Do you consider yourself a spiritual person?</h1>
             <div className="form-control w-full max-w-xs">
                 <Radio register={register} errors={errors} data={data} />
             </div>
