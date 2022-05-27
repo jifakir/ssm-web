@@ -44,6 +44,7 @@ const NewPatient = ({ step, setStep }) => {
             },
         ]
     };
+    
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
