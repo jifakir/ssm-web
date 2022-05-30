@@ -1,23 +1,17 @@
 import React from 'react';
-import { MdArrowDropDown } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
+import Select from '../UI/Select';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
 
 const Insurance = ({step, setStep}) => {
     
-
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         await updateTherapist({ ...data, registration_status: 'entered-insurance' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
         setStep(step + 1);
 
     };
@@ -33,115 +27,17 @@ const Insurance = ({step, setStep}) => {
     const insO_T = ["Oklahoma Health Network", "Optima", "Optum", "Oscar", "Out of Network Provider", "Oxford", "Paramount-Medicaid", "Peach State Health Plan", "PHCS", "Physicians Health Plan", "Premera Blue Cross", "QualChoice", "Quest Behavioral Health", "Reach EAP", "Regence Blue Shield", "Scott 7 White", "Self Pay", "Sliding Scale Offered", "Tricare", "Trihealth EAP"];
     const insU_Z = ["UHC", "UHC Student Resources", "UMR", "United Healthcare", "UPMC", "Value Options", "WebTPA", "WellCare", "Wellspan Employee Assistance Program", "Wellspring EAP"];
     
+    console.log(insA_D.map(v=> ({label: v, value: v.trim()})))
+    
     return (
         <form onSubmit={handleSubmit(handleNext)} className="text-sm text-left">
             <h1 className="text-lg my-2">Which insurance plans do you accept?</h1>
             <div className="space-y-5">
-                <div className="dropdown dropdwon-primary">
-                    <label tabIndex="0" className="btn btn-outline w-60 m-1 flex justify-between">
-                        <span className="">Insurances A-D</span> 
-                        <span className=""><MdArrowDropDown /></span>
-                    </label>
-                    <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72">
-                        
-                        {
-                            insA_D.map(v => (
-                                <li key={`_insurance${v}`}>
-                                    <div className="form-control flex justify-start">
-                                        <label className="label block w-full cursor-pointer justify-self-start">
-                                            <input {...register('insurance', { required: true })} type="checkbox" className="checkbox checked:checkbox-primary" />
-                                            <span className="label-text pl-5">{v}</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <div className="dropdown dropdwon-primary">
-                    <label tabIndex="0" className="btn btn-outline w-60 m-1 flex justify-between">
-                        <span className="">Insurances E-H</span> 
-                        <span className=""><MdArrowDropDown /></span>
-                    </label>
-                    <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72">
-                        
-                        {
-                            insE_H.map(v => (
-                                <li key={`_insurance${v}`}>
-                                    <div className="form-control flex justify-start">
-                                        <label className="label block w-full cursor-pointer justify-self-start">
-                                            <input {...register('insurance', { required: true })} type="checkbox" className="checkbox checked:checkbox-primary" />
-                                            <span className="label-text pl-5">{v}</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <div className="dropdown dropdwon-primary">
-                    <label tabIndex="0" className="btn btn-outline w-60 m-1 flex justify-between">
-                        <span className="">Insurances I-N</span> 
-                        <span className=""><MdArrowDropDown /></span>
-                    </label>
-                    <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72">
-                        
-                        {
-                            insI_N.map(v => (
-                                <li key={`_insurance${v}`}>
-                                    <div className="form-control flex justify-start">
-                                        <label className="label block w-full cursor-pointer justify-self-start">
-                                            <input {...register('insurance', { required: true })} type="checkbox" className="checkbox checked:checkbox-primary" />
-                                            <span className="label-text pl-5">{v}</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <div className="dropdown dropdwon-primary">
-                    <label tabIndex="0" className="btn btn-outline w-60 m-1 flex justify-between">
-                        <span className="">Insurances O-T</span> 
-                        <span className=""><MdArrowDropDown /></span>
-                    </label>
-                    <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72">
-                        
-                        {
-                            insO_T.map(v => (
-                                <li key={`_insurance${v}`}>
-                                    <div className="form-control flex justify-start">
-                                        <label className="label block w-full cursor-pointer justify-self-start">
-                                            <input {...register('insurance', { required: true })} type="checkbox" className="checkbox checked:checkbox-primary" />
-                                            <span className="label-text pl-5">{v}</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <div className="dropdown dropdwon-primary">
-                    <label tabIndex="0" className="btn btn-outline w-60 m-1 flex justify-between">
-                        <span className="">Insurances U-Z</span> 
-                        <span className=""><MdArrowDropDown /></span>
-                    </label>
-                    <ul tabIndex="0" className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72">
-                        
-                        {
-                            insU_Z.map(v => (
-                                <li key={`_insurance${v}`}>
-                                    <div className="form-control flex justify-start">
-                                        <label className="label block w-full cursor-pointer justify-self-start">
-                                            <input {...register('insurance', { required: true })} type="checkbox" className="checkbox checked:checkbox-primary" />
-                                            <span className="label-text pl-5">{v}</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
+                {
+                    <div className="">
+                        <Select control={control} data={{name: 'insurance', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
+                    </div>
+                }
             </div>
             <div className={`flex gap-5 py-5`}>
                 <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>

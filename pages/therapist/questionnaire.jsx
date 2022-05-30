@@ -3,116 +3,157 @@ import Email from '../../components/TherapyQues/Email';
 import Name from '../../components/TherapyQues/Name';
 import Phone from '../../components/TherapyQues/Phone';
 import Gender from '../../components/TherapyQues/Gender';
-import InpersonFuture from '../../components/TherapyQues/InpersonFuture';
 import Address from '../../components/TherapyQues/Address';
 import Personality from '../../components/TherapyQues/Personality';
 import Education from '../../components/TherapyQues/Education';
 import Language from '../../components/TherapyQues/Language';
 import BirthDate from '../../components/TherapyQues/BirthDate';
-import DateOfBirth from '../../components/TherapyQues/BirthDate';
 import Religion from '../../components/TherapyQues/Religion';
 import RelSess from '../../components/TherapyQues/RelSess';
 import SpiritPerson from '../../components/TherapyQues/SpritPerson';
 import SpiritSess from '../../components/TherapyQues/SpiritSess';
 import OtherLang from '../../components/TherapyQues/OtherLang';
+import Orientation from '../../components/TherapyQues/Orientation';
 import Race from '../../components/TherapyQues/Race';
 import NewPatient from '../../components/TherapyQues/NewPatient';
 import Button from '../../components/UI/Button';
+import Experience from '../../components/TherapyQues/Experience';
+import Availability from '../../components/TherapyQues/Availability';
+import Titles from '../../components/TherapyQues/Titles';
+import AcceptInsurance from '../../components/TherapyQues/AcceptInsurance';
+import Insurance from '../../components/TherapyQues/Insurance';
+import SessionFee from '../../components/TherapyQues/SessionFee';
+import VirtualInperson from '../../components/TherapyQues/VirtualInperson';
+import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
+import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
+import Specialization from '../../components/TherapyQues/Specialization';
 
 
 
 const Questionnaire = () => {
 
     const [ step, setStep ] = React.useState(0);
-    const [progress, setProgress] = React.useState(50);
+    const [progress, setProgress] = React.useState(0);
 
     const components = [
         {
             component: <Button title={'get started'} onClick={() => setStep(step + 1)} className="my-10" />,
             status: "entered-name",
-            sr: 1
         },
         {
             component: <Name step={step} setStep={setStep} />,
             status: "entered-name",
-            sr: 2
         },
         {
             component: <Email step={step} setStep={setStep} />,
             status: "entered-name",
-            sr: 1
         },
         {
             component: <Gender step={step} setStep={setStep} />,
             status: "entered-name",
-            sr: 1
         },
         {
-            component: <Education step={step} setStep={setStep} />,
+            component: <Phone step={step} setStep={setStep} />,
             status: "entered-name",
-            sr: 1
         },
         {
-            component: <Personality step={step} setStep={setStep} />,
+            component: <Orientation step={step} setStep={setStep} />,
             status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <Religion step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <RelSess step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <SpiritPerson step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <SpiritSess step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <OtherLang step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <Language step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <DateOfBirth step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
-        },
-        {
-            component: <Race step={step} setStep={setStep} />,
-            status: "entered-name",
-            sr: 1
         },
         {
             component: <Address step={step} setStep={setStep} />,
             status: "entered-name",
-            sr: 1
+        },
+        {
+            component: <Religion step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Personality step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Education step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <RelSess step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <SpiritPerson step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <SpiritSess step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <OtherLang step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Language step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <BirthDate step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Race step={step} setStep={setStep} />,
+            status: "entered-name",
         },
         {
             component: <NewPatient step={step} setStep={setStep} />,
             status: "entered-name",
-            sr: 1
+        },
+        {
+            component: <Experience step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Titles step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Availability step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <AcceptInsurance step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Insurance step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <SessionFee step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <VirtualInperson step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <AcceptSessionFee step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <InpersonSessionFuture step={step} setStep={setStep} />,
+            status: "entered-name",
+        },
+        {
+            component: <Specialization step={step} setStep={setStep} />,
+            status: "entered-name",
         },
     ];
- 
+
 
     return (
     <div className="px-10 pt-5">
-        <div className={`mt-10 ${step === 0 ? 'hidden' : 'block'}`}>
+        <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
             <h1 className="text-[54px] font-sterio">Welcome</h1>
             <p className="mt-3">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useRegisterTherapistMutation } from '../../store/api/ssmApi';
 import TextInput from '../../components/UI/TextInput';
 import Button from '../UI/Button';
 
@@ -11,24 +11,14 @@ const Name = ({step, setStep}) => {
     const [registerTherapist, { isSuccess, isLoading, isError, error }] = useRegisterTherapistMutation();
 
     const handleNext = async (data) => {
-
+        console.log("Triggered!")
         const { full_name } = data;
 
-        await registerTherapist({ full_name, registration_status: 'entered-fullname' });
+        // await registerTherapist({ full_name, registration_status: 'entered-fullname' });
         setStep(step + 1);
     };
 
-
-    if(isSuccess){
-        setStep(step + 1);
-    }
-    console.log(error);
-    const handleBack = () => {
-        if(step === 1) return;
-        setStep(step - 1);
-    };
-
-    console.log(error);
+    
 
     return (
         <form onSubmit={handleSubmit(handleNext)}>
@@ -36,7 +26,10 @@ const Name = ({step, setStep}) => {
                 <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Next'} onClick={handleNext} className={`${!watch().full_name ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button 
+                    title={'Next'} 
+                    type="submit" 
+                    className={`px-8 text-2xl ${!watch().full_name ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

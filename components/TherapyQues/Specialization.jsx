@@ -2,12 +2,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import Select from '../../components/UI/Select';
+import Checkbox from '../UI/Checkbox';
 
 
-const Orientation = ({ step, setStep }) => {
+const Specialization = ({ step, setStep }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -31,32 +32,32 @@ const Orientation = ({ step, setStep }) => {
     };
 
     const data = {
-        title: 'Which do you identify as?',
+        title: 'Do you specialize in any type of therapy? (Select all that apply)',
         name: 'sexual_orientation',
         options: [
             {
-                label: 'Straight',
-                value: 'straight'
+                label: 'Psychodynamic therapy',
+                value: 'psychodynamictherapy'
             },
             {
-                label: 'Lesbian',
-                value: 'lesbian'
+                label: 'Cognitive behavioral therapy',
+                value: 'Cognitive behavioral therapy'
             },
             {
-                label: 'Gay',
-                value: 'lay'
+                label: 'Behavioral therapy',
+                value: 'Behavioral therapy'
             },
             {
-                label: 'Bi-Sexual',
-                value: 'bi_sexual'
+                label: 'Humanistic therapy',
+                value: 'Humanistic therapy'
             },
             {
-                label: 'Asexual',
-                value: 'asexual'
+                label: 'Substance abuse counseling',
+                value: 'Substance abuse counseling'
             },
             {
-                label: 'Pansexual',
-                value: 'pansexual'
+                label: 'Emotion-Focused Therapy (EFT)',
+                value: 'Not applicable'
             },
             {
                 label: 'Prefer not to say',
@@ -64,26 +65,19 @@ const Orientation = ({ step, setStep }) => {
             },
         ]
     };
-    
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
             <div className="form-control w-full max-w-xs">
-                <Radio register={register} errors={errors} data={data} />
+                <Checkbox control={control} register={register} errors={errors} data={data} />
             </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button 
-                    title={'Back'}
-                    className="btn-outline border-neutral px-8 text-2xl" />
-                <Button 
-                    title={'Next'} 
-                    onClick={handleNext}
-                    className={`px-8 text-2xl ${!watch().orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`}
-                     />
+                <Button title={'Back'} />
+                <Button title={'Next'} className="btn-base text-black" />
             </div>
         </form>
     )
 }
 
-export default Orientation;
+export default Specialization;

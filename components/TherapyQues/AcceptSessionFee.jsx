@@ -2,10 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import Radio from '../UI/Radio';
 
 
-const AcceptInsurance = ({ step, setStep }) => {
+const AcceptSessionFee = ({ step, setStep }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
@@ -15,6 +15,10 @@ const AcceptInsurance = ({ step, setStep }) => {
         const { email } = data;
 
         await updateTherapist({ email, registration_status: 'email' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -27,7 +31,7 @@ const AcceptInsurance = ({ step, setStep }) => {
     };
 
     const data = {
-        title: 'Do you accept insurance?',
+        title: 'Do you accept session Fee?',
         name: 'accept_insurance',
         options: [
             {
@@ -55,4 +59,4 @@ const AcceptInsurance = ({ step, setStep }) => {
     )
 }
 
-export default AcceptInsurance;
+export default AcceptSessionFee;

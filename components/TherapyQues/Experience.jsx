@@ -3,38 +3,39 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+import Select from '../UI/Select';
 
 const data = {
     name: 'gender',
     options: [
         {
-            label: 'Male',
-            value: 'male'
+            label: '0-5 years',
+            value: '0-5'
         },
         {
-            label: 'Female',
-            value: 'female'
+            label: '6-10 years',
+            value: '6-10'
         },
         {
-            label: 'Transgender Male',
-            value: 'trans_male'
+            label: '11-15 years',
+            value: '11-15'
         },
         {
-            label: 'Transgender Female',
-            value: 'trans_female'
+            label: '16-20 years',
+            value: '16-20'
         },
         {
-            label: 'Prefer not to say',
-            value: 'not_preferred'
+            label: '21-25 years',
+            value: '21-25'
         },
     ]
 };
 
 
 
-const Gender = ({ step, setStep }) => {
+const Experience = ({ step, setStep }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({mode: 'all'});
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({mode: 'all'});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -57,23 +58,22 @@ const Gender = ({ step, setStep }) => {
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
-                <h1 className="text-lg my-2 text-left">What is your gender?</h1>
-                <div className="form-control w-full max-w-xs">
-                    <Radio register={register} errors={errors} data={data} />
+                <h1 className="text-lg my-2 text-left">How many years of experience do you have?</h1>
+                <div className="form-control w-full max-w-xs text-left">
+                    <Select register={register} control={control} errors={errors} data={data} />
                 </div>
             </div>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'}
-                    onClick={() => handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    onClick={() => handleBack} />
                 <Button 
                     title={'Next'} 
                     type="submit"
-                    className={`px-8 text-2xl ${!watch().gender ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    className={`${!watch().gender ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )
 }
 
-export default Gender;
+export default Experience;

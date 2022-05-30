@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
@@ -9,7 +9,7 @@ const Address = ({ step, setStep }) => {
 
     const { register, watch, handleSubmit, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
-
+    const [submitted, setSubmitted] = useState(false);
     const handleNext = async (data) => {
 
         const { email } = data;
@@ -19,9 +19,7 @@ const Address = ({ step, setStep }) => {
         // if(!isSucces){
         //     return
         // }
-
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -29,6 +27,12 @@ const Address = ({ step, setStep }) => {
         setStep(step - 1);
 
     };
+
+    // useEffect(() => {
+    //     if(submitted){
+    //         setStep(step + 1)
+    //     }
+    // },[submitted]);
 
 
     return (
@@ -49,8 +53,15 @@ const Address = ({ step, setStep }) => {
                 </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} onClick={handleBack} />
-                <Button title={'Next'} onClick={handleNext} className={`${ !watch('user_address.state') ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+
+                <Button 
+                    title={'Next'} 
+                    onClick={handleNext} 
+                    className={`px-8 text-2xl ${ !watch('user_address.state') ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

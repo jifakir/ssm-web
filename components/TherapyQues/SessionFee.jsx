@@ -2,19 +2,26 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import TextInput from '../../components/UI/TextInput';
 
 
-const AcceptInsurance = ({ step, setStep }) => {
+
+
+const SessionFee = ({ step, setStep }) => {
+
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
+        const { phone } = data;
 
         await updateTherapist({ email, registration_status: 'email' });
+
+        // if(!isSucces){
+        //     return
+        // }
 
         setStep(step + 1);
 
@@ -26,33 +33,21 @@ const AcceptInsurance = ({ step, setStep }) => {
 
     };
 
-    const data = {
-        title: 'Do you accept insurance?',
-        name: 'accept_insurance',
-        options: [
-            {
-                label: 'Yes',
-                value: true
-            },
-            {
-                label: 'No',
-                value: false
-            },
-        ]
-    };
+
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full">
             <div className="form-control w-full max-w-xs">
-                <Radio register={register} errors={errors} data={data} />
+            <div className="form-control w-full max-w-xs">
+                <TextInput register={register} errors={errors} data={{type: 'text', pHolder: '500', name: 'session_fee', title: 'How much session fee do you take?'}} />
             </div>
             </div>
             <div className={`flex gap-5 py-5`}>
                 <Button title={'Back'} />
-                <Button title={'Next'} className="btn-base text-black" />
+                <Button title={'Next'} onClick={handleNext} className="btn-base text-black" />
             </div>
         </form>
     )
 }
 
-export default AcceptInsurance;
+
+export default SessionFee;

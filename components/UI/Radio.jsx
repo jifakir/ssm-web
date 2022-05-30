@@ -7,8 +7,8 @@ const RadioInput = ({data, register, errors, ...rest}) => {
     const { options, title, name, required} = data;
 
     return (
-        <div className="">
-            <h1 className="text-lg my-2">{title}</h1>
+        <>
+            <h1 className="text-lg text-left my-2">{title}</h1>
             {
                 options.map(( option, idx ) => (
                 <div className="form-control" key={idx}>
@@ -25,7 +25,7 @@ const RadioInput = ({data, register, errors, ...rest}) => {
                 </div>
                 ))
             }
-        </div>
+        </>
     )
 }
 

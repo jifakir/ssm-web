@@ -1,13 +1,149 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import Checkbox from '../UI/Checkbox';
+import Select from '../UI/Select';
 
 
+const week = [
+    {
+        label: 'Monday',
+        value: 'monday'
+    },
+    {
+        label: 'Tuesday',
+        value: 'tuesday'
+    },
+    {
+        label: 'Wednesday',
+        value: 'wednesday'
+    },
+    {
+        label: 'Thursday',
+        value: 'thursday'
+    },
+    {
+        label: 'Friday',
+        value: 'friday'
+    },
+    {
+        label: 'Saturday',
+        value: 'saturday'
+    },
+    {
+        label: 'Sunday',
+        value: 'sunday'
+    },
+]
+
+
+const pmTime = [
+    {
+        label: '01:00 PM',
+        value: '01:00pm',
+    },
+    {
+        label: '02:00 PM',
+        value: '02:00pm',
+    },
+    {
+        label: '03:00 PM',
+        value: '03:00pm',
+    },
+    {
+        label: '04:00 PM',
+        value: '04:00pm',
+    },
+    {
+        label: '05:00 PM',
+        value: '05:00pm',
+    },
+    {
+        label: '06:00 PM',
+        value: '06:00pm',
+    },
+    {
+        label: '07:00 PM',
+        value: '07:00pm',
+    },
+    {
+        label: '08:00 PM',
+        value: '08:00pm',
+    },
+    {
+        label: '09:00 PM',
+        value: '09:00pm',
+    },
+    {
+        label: '10:00 PM',
+        value: '10:00pm',
+    },
+    {
+        label: '11:00 PM',
+        value: '11:00pm',
+    },
+    {
+        label: '12:00 PM',
+        value: '12:00pm',
+    },
+];
+
+
+const amTime = [
+    {
+        label: '01:00 AM',
+        value: '01:00pm',
+    },
+    {
+        label: '02:00 AM',
+        value: '02:00pm',
+    },
+    {
+        label: '03:00 AM',
+        value: '03:00pm',
+    },
+    {
+        label: '04:00 AM',
+        value: '04:00pm',
+    },
+    {
+        label: '05:00 AM',
+        value: '05:00pm',
+    },
+    {
+        label: '06:00 AM',
+        value: '06:00pm',
+    },
+    {
+        label: '07:00 AM',
+        value: '07:00pm',
+    },
+    {
+        label: '08:00 AM',
+        value: '08:00pm',
+    },
+    {
+        label: '09:00 AM',
+        value: '09:00pm',
+    },
+    {
+        label: '10:00 AM',
+        value: '10:00pm',
+    },
+    {
+        label: '11:00 AM',
+        value: '11:00pm',
+    },
+    {
+        label: '12:00 AM',
+        value: '12:00pm',
+    },
+];
 
 const Availability = ({step, setStep}) => {
     
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -32,84 +168,15 @@ const Availability = ({step, setStep}) => {
         <div className="text-left text-sm flex gap-5">
             <div className="">
                 <h1 className="text-lg my-2">Availability</h1>
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start">
-                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
-                        <span className="label-text pl-5">Monday</span>
-                    </label>
-                </div>
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start">
-                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
-                        <span className="label-text justify-start pl-5">Tuesday</span>
-                    </label>
-                </div>
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start">
-                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
-                        <span className="label-text justify-start pl-5">Wednesday</span>
-                    </label>
-                </div>
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start">
-                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
-                        <span className="label-text justify-start pl-5">Thursday</span>
-                    </label>
-                </div>
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start">
-                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
-                        <span className="label-text justify-start pl-5">Friday</span>
-                    </label>
-                </div>
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start">
-                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
-                        <span className="label-text justify-start pl-5">Saturday</span>
-                    </label>
-                </div>
-                <div className="form-control">
-                    <label className="label cursor-pointer justify-start">
-                        <input {...register('day', {required: true})} type="checkbox"  className={`checkbox ${errors.availability ? 'checkbox-accent' : 'checked:checkbox-primary'}`} />
-                        <span className="label-text justify-start pl-5">Sunday</span>
-                    </label>
-                </div>
+                <Checkbox register={register} errors={errors} data={{name: 'availability', options: week }} />
             </div>
             <div className="mt-1">
                 <h3 className="my-2">M-Start Time</h3>
-                <select {...register('startTime', {required: true})} defaultValue={null}  className={`select select-bordered w-full max-w-xs ${errors.start_time && 'select-primary'}`}>
-                    <option value={null}>00:00 AM</option>
-                    <option value={'1:00pm'}>01:00 PM</option>
-                    <option value={'1:30pm'}>01:30 PM</option>
-                    <option value={'2:00pm'}>02:00 PM</option>
-                    <option value={'2:30pm'}>02:30 PM</option>
-                    <option value={'3:00pm'}>03:00 PM</option>
-                    <option value={'3:30pm'}>03:30 PM</option>
-                    <option value={'4:00pm'}>04:00 PM</option>
-                    <option value={'4:30pm'}>04:30 PM</option>
-                    <option value={'5:00pm'}>05:00 PM</option>
-                    <option value={'5:30pm'}>05:30 PM</option>
-                    <option value={'6:00pm'}>06:00 PM</option>
-                    <option value={'6:30pm'}>06:30 PM</option>
-                </select>
+                <Select control={control} data={{name: 'startTime', options: pmTime}} />
             </div>
             <div className="mt-1">
                 <h3 className="my-2">M-End Time</h3>
-                <select {...register('endTime', {required: true})} defaultValue={null}  className={`select select-bordered w-full max-w-xs ${errors.end_time && 'select-primary'}`}>
-                    <option value={null}>00:00 AM</option>
-                    <option value={'1:00pm'}>01:00 PM</option>
-                    <option value={'1:30pm'}>01:30 PM</option>
-                    <option value={'2:00pm'}>02:00 PM</option>
-                    <option value={'2:30pm'}>02:30 PM</option>
-                    <option value={'3:00pm'}>03:00 PM</option>
-                    <option value={'3:30pm'}>03:30 PM</option>
-                    <option value={'4:00pm'}>04:00 PM</option>
-                    <option value={'4:30pm'}>04:30 PM</option>
-                    <option value={'5:00pm'}>05:00 PM</option>
-                    <option value={'5:30pm'}>05:30 PM</option>
-                    <option value={'6:00pm'}>06:00 PM</option>
-                    <option value={'6:30pm'}>06:30 PM</option>
-                </select>
+                <Select control={control} data={{name: 'endTime', options: amTime}} />
             </div>
             
         </div>

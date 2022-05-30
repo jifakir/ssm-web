@@ -58,8 +58,14 @@ const RelSess = ({ step, setStep }) => {
                 </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} onClick={handleBack} />
-                <Button title={'Next'} onClick={handleNext} className={`${!watch().rel_ses ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    onClick={handleNext} 
+                    className={`px-8 text-2xl ${!watch().rel_ses ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

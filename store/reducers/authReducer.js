@@ -14,7 +14,10 @@ const authSlice = createSlice({
             state.isLoggedIn = true
             state.userDetails = action.payload
         },
-        logOut: (state) => state =  { isLoggedIn: false, userDetails: {}},
+        logOut: (state) => {
+            state.isLoggedIn  = false
+            state.userDetails = {}
+        },
 
         getUserDetails: (state) => state.userDetails,
 

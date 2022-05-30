@@ -25,7 +25,7 @@ const JoinAsTherapist = () => {
                             <h1 className="text-3xl font-bold">Monthly</h1>
                             <p className="">Membership</p>
                         </div>
-                        <div className="my-10">
+                        <div className="my-16">
                             <h1 className="text-5xl font-bold"><sup className='font-normal text-3xl'>$</sup>29.99</h1>
                             <p className="pb-3">per month</p>
                         </div>
@@ -33,15 +33,18 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-2xl" />
+                    <Button title={'Subscribe Now'} className="w-full bg-[#EEA86D] border-[#EEA86D] rounded-t-none btn-secondary text-2xl" />
                 </div>
-                <div className="md:w-1/2 border-2 border-primary rounded-md mt-10 md:mt-0">
+                <div className="relative md:w-1/2 border-2 border-primary rounded-md mt-10 md:mt-0">
+                    <div className="absolute bottom-full left-1/2 bg-neutral px-2 transform -translate-x-1/2">
+                        RECOM MENDED
+                    </div>
                     <div className="p-5 text-center">
                         <div className="">
                             <h1 className="text-3xl font-bold">Annual</h1>
                             <p className="">Membership</p>
                         </div>
-                        <div className="mt-10 mb-5">
+                        <div className="mt-16 mb-11">
                             <h1 className="text-5xl font-bold"><sup className='font-normal text-3xl'>$</sup>240</h1>
                             <p className="">per year</p>
                         </div>
@@ -50,7 +53,7 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-2xl" />
+                    <Button title={'Subscribe Now'} className="w-full rounded-t-none bg-[#EEA86D] border-[#EEA86D] text-2xl" />
                 </div>
             </div>
         </div>

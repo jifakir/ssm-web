@@ -8,29 +8,33 @@ import Button from '../UI/Button';
 
 
 const data = {
-        title: 'What other language(s) do you speak?',
-        name: 'languages',
+        title: 'Title(s) ?',
+        name: 'title',
         required: true,
         options: [
             {
-                label: 'Spanish',
-                value: 'spanish'
+                label: 'Ph.D.',
+                value: 'phd'
             },
             {
-                label: 'French',
-                value: 'french'
+                label: 'Psy.D.',
+                value: 'psyd'
             },
             {
-                label: 'Kreyol',
-                value: 'kreyol'
+                label: 'M.A.',
+                value: 'ma'
             },
             {
-                label: 'Yoruba',
-                value: 'yoruba'
+                label: 'M.S.',
+                value: 'ms'
             },
             {
-                label: 'Igbo',
-                value: 'igbo'
+                label: 'M.S.W.',
+                value: 'msw'
+            },
+            {
+                label: 'M.D.',
+                value: 'md'
             },
             {
                 label: 'Other',
@@ -39,7 +43,7 @@ const data = {
         ]
     };
 
-const Language = ({ step, setStep }) => {
+const Titles = ({ step, setStep }) => {
     
     const { register, control, handleSubmit, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
@@ -64,17 +68,11 @@ const Language = ({ step, setStep }) => {
         <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
             <Checkbox data={data} register={register} errors={errors} />
             <div className={`flex gap-5 py-5`}>
-                <Button 
-                    title={'Back'} 
-                    onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
-                <Button 
-                    title={'Next'} 
-                    onClick={handleNext} 
-                    className={`px-8 text-2xl ${!watch().languages ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button title={'Back'} onClick={handleBack} />
+                <Button title={'Next'} onClick={handleNext} className={`${!watch().title ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )
 }
 
-export default Language;
+export default Titles;

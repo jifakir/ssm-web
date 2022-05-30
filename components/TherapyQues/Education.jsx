@@ -19,7 +19,7 @@ const data = [
     { 
         name: 'education1.school_name',
         type: 'text', 
-        pHolder: 'Major/Minor/Degree Focus',
+        pHolder: 'School Name',
     },
 ];
 
@@ -38,7 +38,7 @@ const data2 = [
     { 
         name: 'education2.school_name',
         type: 'text', 
-        pHolder: 'Major/Minor/Degree Focus',
+        pHolder: 'School Name',
     },
 ];
 
@@ -56,7 +56,7 @@ const data3 = [
     { 
         name: 'education3.school_name',
         type: 'text', 
-        pHolder: 'Major/Minor/Degree Focus',
+        pHolder: 'School Name',
     },
 ];
 
@@ -74,7 +74,7 @@ const data4 = [
     { 
         name: 'education4.school_name',
         type: 'text', 
-        pHolder: 'Major/Minor/Degree Focus',
+        pHolder: 'School Name',
     },
 ];
 
@@ -92,7 +92,7 @@ const data5 = [
     { 
         name: 'education5.school_name',
         type: 'text', 
-        pHolder: 'Major/Minor/Degree Focus',
+        pHolder: 'School Name',
     },
 ];
 
@@ -193,8 +193,14 @@ const Education = ({step, setStep}) => {
 
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} onClick={handleBack} />
-                <Button title={'Next'} onClick={handleNext} className={`${ !isFilledUp ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    type="submit" 
+                    className={`px-8 text-2xl ${ !isFilledUp ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )
