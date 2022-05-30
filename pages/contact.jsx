@@ -59,7 +59,7 @@ const Contact = () => {
                                     className={'min-w-full'} />
                                 </div>
                             </div>
-                            <Button title={'Submit'} className="bg-[#EEA86D] border-[#EEA86D] text-2xl mt-2 px-10" />
+                            <Button title={'Submit'} className="bg-[#EEA86D] border-[#EEA86D] text-2xl mt-5 px-10" />
                             <p className="text-error hidden">There was an error with your submission.</p>
                         </form>
                     </div>
