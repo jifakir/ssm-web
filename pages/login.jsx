@@ -41,7 +41,7 @@ const Login = () => {
     return (
         <div className="w-full flex justify-center items-center">
             
-            <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 card w-[415px] shadow px-5 py-3">
+            <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 card w-[415px] shadow-lg px-5 py-3">
                 <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                     <MdOutlineClose />
                 </div>
@@ -59,7 +59,7 @@ const Login = () => {
                             className="bg-white w-full rounded-lg cursor-pointer text-center"
                         />
                     <div className="">
-                        <h1 className="text-2xl font-bold">or</h1>
+                        <h1 className="text-2xl mt-5 font-medium">or</h1>
                     </div>
                     <div className="">
                         {
