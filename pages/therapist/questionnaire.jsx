@@ -152,7 +152,7 @@ const Questionnaire = () => {
 
 
     return (
-    <div className={`px-10 pt-5 ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] to-[#6F348D]/90': ''}`}>
+    <div className={`px-10 pt-5 ${step === 0 ? 'h-[600px] bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
             <h1 className="text-[54px] font-sterio">Welcome</h1>
             <p className="mt-3">
