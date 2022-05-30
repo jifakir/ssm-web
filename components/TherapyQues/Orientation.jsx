@@ -12,9 +12,9 @@ const Orientation = ({ step, setStep }) => {
 
     const handleNext = async (data) => {
 
-        const { orientation } = data;
+        const { sexual_orientation } = data;
 
-        await updateTherapist({ orientation, registration_status: 'email' });
+        // await updateTherapist({ sexual_orientation, registration_status: 'email' });
 
         // if(!isSucces){
         //     return
@@ -79,7 +79,7 @@ const Orientation = ({ step, setStep }) => {
                 <Button 
                     title={'Next'} 
                     onClick={handleNext}
-                    className={`px-8 text-2xl ${!watch().orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`}
+                    className={`px-8 text-2xl ${!watch().sexual_orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`}
                      />
             </div>
         </form>

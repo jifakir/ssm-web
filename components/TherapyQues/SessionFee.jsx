@@ -15,9 +15,9 @@ const SessionFee = ({ step, setStep }) => {
 
     const handleNext = async (data) => {
 
-        const { phone } = data;
+        const { session_fee } = data;
 
-        await updateTherapist({ email, registration_status: 'email' });
+        await updateTherapist({ session_fee, registration_status: 'email' });
 
         // if(!isSucces){
         //     return
@@ -42,8 +42,14 @@ const SessionFee = ({ step, setStep }) => {
             </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} />
-                <Button title={'Next'} onClick={handleNext} className="btn-base text-black" />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    onClick={handleNext} 
+                    className={`px-8 text-2xl ${!watch().session_fee ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

@@ -13,9 +13,9 @@ const Specialization = ({ step, setStep }) => {
 
     const handleNext = async (data) => {
 
-        const { orientation } = data;
+        const { specialization } = data;
 
-        await updateTherapist({ orientation, registration_status: 'email' });
+        await updateTherapist({ specialization, registration_status: 'email' });
 
         // if(!isSucces){
         //     return
@@ -33,7 +33,7 @@ const Specialization = ({ step, setStep }) => {
 
     const data = {
         title: 'Do you specialize in any type of therapy? (Select all that apply)',
-        name: 'sexual_orientation',
+        name: 'specialization',
         options: [
             {
                 label: 'Psychodynamic therapy',
@@ -73,8 +73,14 @@ const Specialization = ({ step, setStep }) => {
             </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} />
-                <Button title={'Next'} className="btn-base text-black" />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    type="submit" 
+                    className={`px-8 text-2xl ${!watch().specialization ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

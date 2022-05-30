@@ -12,7 +12,7 @@ const AcceptInsurance = ({ step, setStep }) => {
 
     const handleNext = async (data) => {
 
-        const { email } = data;
+        const { accept_insurance } = data;
 
         await updateTherapist({ email, registration_status: 'email' });
 
@@ -48,8 +48,13 @@ const AcceptInsurance = ({ step, setStep }) => {
             </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} />
-                <Button title={'Next'} className="btn-base text-black" />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button title={'Next'} 
+                    type="submit" 
+                    className={`px-8 text-2xl ${!watch().accept_insurance ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

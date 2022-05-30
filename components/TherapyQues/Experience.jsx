@@ -6,7 +6,7 @@ import Radio from '../../components/UI/Radio';
 import Select from '../UI/Select';
 
 const data = {
-    name: 'gender',
+    name: 'experience',
     options: [
         {
             label: '0-5 years',
@@ -40,7 +40,7 @@ const Experience = ({ step, setStep }) => {
 
     const handleNext = async (data) => {
 
-        const { gender } = data;
+        const { experience } = data;
 
         // await updateTherapist({ gender, registration_status: 'entered-email' });
 
@@ -60,17 +60,18 @@ const Experience = ({ step, setStep }) => {
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">How many years of experience do you have?</h1>
                 <div className="form-control w-full max-w-xs text-left">
-                    <Select register={register} control={control} errors={errors} data={data} />
+                    <Select register={register} control={control} errors={errors} data={{options: data.options}} />
                 </div>
             </div>
             <div className={`flex gap-5 py-5`}>
                 <Button 
-                    title={'Back'}
-                    onClick={() => handleBack} />
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    type="submit"
-                    className={`${!watch().gender ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    type="submit" 
+                    className={`px-8 text-2xl ${!watch().experience ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

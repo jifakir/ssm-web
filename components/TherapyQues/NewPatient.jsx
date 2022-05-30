@@ -57,8 +57,11 @@ const NewPatient = ({ step, setStep }) => {
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                     />
-                <Button title={'Next'} onClick={handleNext} className={`${!watch().new_patient ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    onClick={handleNext} 
+                    className={`px-8 text-2xl ${!watch().new_patient ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
     )

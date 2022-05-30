@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Checkbox from '../UI/Checkbox';
 import Select from '../UI/Select';
-
+import Button from '../UI/Button';
 
 const week = [
     {
@@ -181,9 +181,14 @@ const Availability = ({step, setStep}) => {
             
         </div>
         <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    type="submit" 
+                    className={`px-8 text-2xl ${!watch().day && !watch().startTime && !watch().endTime ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
                 <button type="submit" className={`btn text-white ${!watch().day && !watch().startTime && !watch().endTime ? 'bg-gray-400' : 'btn-primary'}`} >
                     Submit
                 </button>
