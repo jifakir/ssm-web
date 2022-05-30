@@ -78,7 +78,7 @@ const Login = () => {
                         </div>
                     </div>
                     <div className="w-full card-actions pt-5">
-                        <Button title={'Login'} className="btn-secondary w-full" />
+                        <Button title={'Continue'} className="btn-secondary text-2xl w-full" />
                     </div>
                     {/* <div className="text-sm">
                         <p className="">Do not have an account? <a className="text-blue-700 font-bold cursor-pointer">Sign up</a></p>
