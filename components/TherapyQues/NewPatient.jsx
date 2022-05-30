@@ -54,7 +54,10 @@ const NewPatient = ({ step, setStep }) => {
             </div>
             </div>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} onClick={handleBack} />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                     />
                 <Button title={'Next'} onClick={handleNext} className={`${!watch().new_patient ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </form>
