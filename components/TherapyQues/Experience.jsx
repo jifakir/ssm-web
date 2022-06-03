@@ -36,7 +36,7 @@ const data = {
 const Experience = ({ step, setStep, profile }) => {
 
     // const { head, tail } = profile?.years_of_experience;
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { years_of_experience: profile?.years_of_experience ? data.options.find((itm) => itm.value === `${head}-${tail}`) : null }});
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
