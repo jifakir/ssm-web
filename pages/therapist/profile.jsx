@@ -9,6 +9,38 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 
+
+const titles = [
+    {
+        label: 'Ph.D.',
+        value: 'phd'
+    },
+    {
+        label: 'Psy.D.',
+        value: 'psyd'
+    },
+    {
+        label: 'M.A.',
+        value: 'ma'
+    },
+    {
+        label: 'M.S.',
+        value: 'ms'
+    },
+    {
+        label: 'M.S.W.',
+        value: 'msw'
+    },
+    {
+        label: 'M.D.',
+        value: 'md'
+    },
+    {
+        label: 'Other',
+        value: 'other'
+    },
+]
+
 const TherapistProfile = () => {
 
     const router = useRouter();
@@ -145,7 +177,9 @@ const TherapistProfile = () => {
                                 </div>
                                 <div className="pl-5 flex-1">
                                     <h4 className="">
-                                        {profile?.titles} 
+                                        {profile?.titles.map(v => {
+                                            return v.toUpperCase() + ' '
+                                        })} 
                                     </h4>
                                 </div>
                             </div>

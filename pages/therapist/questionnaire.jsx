@@ -29,7 +29,7 @@ import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
 import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
 import Specialization from '../../components/TherapyQues/Specialization';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
-
+import { MdSpinner } from 'react-icons/md';
 
 
 const Questionnaire = () => {
@@ -184,7 +184,7 @@ const Questionnaire = () => {
             {/* Form Inner */}
             <div className="text-center">
                 {
-                    isLoading ? <div className="">Loading...</div> : components.map((comp, idx) => {
+                    isLoading ? <div className=""><MdSpinner /> </div> : components.map((comp, idx) => {
 
                         return (
                             <div className={step === idx ? 'block' : 'hidden'} key={idx}>
