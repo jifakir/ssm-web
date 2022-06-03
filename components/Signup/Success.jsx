@@ -6,7 +6,7 @@ import { useEffect } from "react";
 const Success = () => {
     const router = useRouter();
     useEffect(() => {
-        router.push('/');
+        router.push('/therapist/questionnaire');
     },[])
     return (
         <div className="bg-neutral">

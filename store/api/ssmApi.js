@@ -60,7 +60,7 @@ export const ssmApi = createApi({
         }),
         updateTherapist: builder.mutation({
             query: (body) => ({
-                url: `/therapist/${body.id}`,
+                url: `/therapists/${body.id}`,
                 method: 'PATCH',
                 body
             }),

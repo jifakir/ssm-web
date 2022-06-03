@@ -5,16 +5,16 @@ import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
 
 
-const Email = ({ step, setStep }) => {
+const Email = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
     const [updateTherapist, {data, isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
-
-        await updateTherapist({ email, registration_status: 'entered-email' });
+        const { email_address } = data;
+        if(!email_address) return;
+        await updateTherapist({id: profile?.id, email_address, registration_status: 'entered-email' });
 
         setStep(step + 1);
     };
@@ -25,26 +25,25 @@ const Email = ({ step, setStep }) => {
 
     };
 
-    console.log("Data from email: ", data);
 
     return (
         <>
             <form id='email-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full max-w-xs">
-                        <TextInput register={register} errors={errors} data={{ pHolder: 'Email', name: 'email', title: 'Email'}} />
+                        <TextInput defaultValue={ profile?.email_address } register={register} errors={errors} data={{ pHolder: 'Email', name: 'email_address', title: 'Email', pattern: /^\S+@\S+$/i}} />
                     </div>
                 </div>
             </form>
             <div className={`flex gap-5 py-5`}>
-            <Button 
-                title={'Back'} 
-                onClick={handleBack}
-                className="btn-outline border-neutral px-8 text-2xl" />
-            <Button 
-                title={'Next'} 
-                form="email-form" 
-                className={`px-8 text-2xl ${!watch().email ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    form="email-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().email_address ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </>
     )

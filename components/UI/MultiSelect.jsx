@@ -21,7 +21,7 @@ const Option = (props) => {
   };
 
 
-const Select = ({data, control, errors, isMulti, ...rest}) => {
+const Select = ({data, control, errors, ...rest}) => {
     
     const { options, title, name, required} = data;
 
@@ -35,9 +35,9 @@ const Select = ({data, control, errors, isMulti, ...rest}) => {
                 control={control}
                 defaultValue={''}
                 name={name}
-                render={({ field: { onChange, value, ref } }) => (
+                render={({ field }) => (
                     <ReactSelect
-                        inputRef={ref}
+                        {...field}
                         isMulti
                         components={{Option}}
                         closeMenuOnSelect={false}
@@ -68,8 +68,6 @@ const Select = ({data, control, errors, isMulti, ...rest}) => {
                           })}
                         classNamePrefix="outline-secondary text-primary"
                         options={options}
-                        value={options.filter(c => value.includes(c.value))}
-                        onChange={val => onChange(val.map(c => c.value))}
                     />
                 )}
             />

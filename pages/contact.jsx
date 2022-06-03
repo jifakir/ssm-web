@@ -29,25 +29,25 @@ const Contact = () => {
                                     data={{name: 'firstname', title: 'First Name', pHolder: 'First Name'}}
                                     register={register}
                                     errors={errors}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 pb-2 font-medium"
                                     />
                                 <TextInput 
                                     data={{name: 'lastname', title: 'Last Name', pHolder: 'Last Name'}}
                                     register={register}
                                     errors={errors}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 pb-2 font-medium"
                                     />
                                 <TextInput 
                                     data={{name: 'email', title: 'Email', pHolder: 'Email'}}
                                     register={register}
                                     errors={errors}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 pb-2 font-medium"
                                     />
                                 <TextInput 
                                     data={{name: 'phone', title: 'Phone Number', pHolder: 'Phone Number'}}
                                     register={register}
                                     errors={errors}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 pb-2 font-medium"
                                     />
                                 <div className="col-span-2">
                                     <TextInput
@@ -55,7 +55,7 @@ const Contact = () => {
                                     data={{name: 'message', type: 'textarea', title: 'Message', pHolder: 'We’d love to hear from you!'}}
                                     register={register}
                                     errors={errors}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 pb-2 font-medium"
                                     className={'min-w-full'} />
                                 </div>
                             </div>

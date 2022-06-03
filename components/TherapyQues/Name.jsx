@@ -20,16 +20,10 @@ const Name = ({ step, setStep, data:profile }) => {
         setStep(step + 1);
     };
 
-    if(isSuccess){
-        console.log(data);
-    }
-
-    console.log(profile);
-
     return (
         <form onSubmit={handleSubmit(handleNext)}>
             <div className="form-control w-full max-w-xs">
-                <TextInput register={register} value={profile.full_name} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
+                <TextInput register={register} defaultValue={profile?.full_name} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
             </div>
             <div className={`flex gap-5 py-5`}>
                 <Button 

@@ -1,19 +1,25 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Select from '../UI/Select';
+import Select from '../UI/MultiSelect';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import Button from '../../components/UI/Button';
 
-
-const Insurance = ({step, setStep}) => {
+const Insurance = ({step, setStep, profile}) => {
     
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const { 
+        register, 
+        handleSubmit, 
+        control, 
+        watch, 
+        formState: { errors} } = useForm({defaultValues: {acceptable_insurances: profile?.acceptable_insurances}});
+    
+        const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
-
-        await updateTherapist({ ...data, registration_status: 'entered-insurance' });
+        const { acceptable_insurances  } = data;
+        console.log(acceptable_insurances);
+        await updateTherapist({id: profile?.id, acceptable_insurances, registration_status: 'entered-insurance' });
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -27,27 +33,30 @@ const Insurance = ({step, setStep}) => {
     const insO_T = ["Oklahoma Health Network", "Optima", "Optum", "Oscar", "Out of Network Provider", "Oxford", "Paramount-Medicaid", "Peach State Health Plan", "PHCS", "Physicians Health Plan", "Premera Blue Cross", "QualChoice", "Quest Behavioral Health", "Reach EAP", "Regence Blue Shield", "Scott 7 White", "Self Pay", "Sliding Scale Offered", "Tricare", "Trihealth EAP"];
     const insU_Z = ["UHC", "UHC Student Resources", "UMR", "United Healthcare", "UPMC", "Value Options", "WebTPA", "WellCare", "Wellspan Employee Assistance Program", "Wellspring EAP"];
     
-    console.log(insA_D.map(v=> ({label: v, value: v.trim()})))
     
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-sm text-left">
-            <h1 className="text-lg my-2">Which insurance plans do you accept?</h1>
-            <div className="space-y-5">
-                {
-                    <div className="">
-                        <Select control={control} data={{name: 'insurance', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
-                    </div>
-                }
-            </div>
+        <>
+            <form id="insurance-form" onSubmit={handleSubmit(handleNext)} className="text-sm text-left">
+                <h1 className="text-lg my-2">Which insurance plans do you accept?</h1>
+                <div className="space-y-5">
+                    {
+                        <div className="">
+                            <Select control={control} data={{name: 'acceptable_insurances', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
+                        </div>
+                    }
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`w-28 btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button type='submit' className={`w-28 btn text-white ${!watch().insurance || watch().insurance.length === 0 ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    form="insurance-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${(!watch().acceptable_insurances || !watch().acceptable_insurances.length) ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

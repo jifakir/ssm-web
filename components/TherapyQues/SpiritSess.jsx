@@ -3,23 +3,35 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+const data = {
+    name: 'offer_spirituality',
+    options: [
+        {
+            label: 'Yes, if the patient prefers',
+            value: true
+        },
+        {
+            label: 'No',
+            value: false
+        },
+    ]
+};
 
+const SpiritSession = ({ step, setStep, profile }) => {
 
-const SpiritSession = ({ step, setStep }) => {
-
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { 
+        register, 
+        handleSubmit, 
+        watch, 
+        formState: { errors} } = useForm({
+            defaultValues: {offer_spirituality: profile?.offer_spirituality} });
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
-
-        await updateTherapist({ email, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const { offer_spirituality } = data;
+        await updateTherapist({ id: profile?.id, offer_spirituality, registration_status: 'entered-spirit-session' });
+        
         setStep(step + 1);
 
     };
@@ -30,27 +42,17 @@ const SpiritSession = ({ step, setStep }) => {
 
     };
 
-    const data = {
-        name: 'spirit_session',
-        options: [
-            {
-                label: 'Yes, if the patient prefers',
-                value: 'yes'
-            },
-            {
-                label: 'No',
-                value: 'no'
-            },
-        ]
-    };
+    
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control">
-            <h1 className="text-lg my-2 text-left">Do you offer spirituality in your sessions?</h1>
-            <div className="form-control w-full max-w-xs">
-                <Radio register={register} errors={errors} data={data} />
-            </div>
-            </div>
+        <>
+            <form id="spirit-session-form" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="form-control">
+                <h1 className="text-lg my-2 text-left">Do you offer spirituality in your sessions?</h1>
+                <div className="form-control w-full max-w-xs">
+                    <Radio register={register} errors={errors} data={data} />
+                </div>
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -59,10 +61,10 @@ const SpiritSession = ({ step, setStep }) => {
 
                 <Button 
                     title={'Next'} 
-                    onClick={handleNext} 
-                    className={`px-8 text-2xl ${!watch().spirit_session ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="spirit-session-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().offer_spirituality ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

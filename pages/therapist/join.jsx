@@ -36,7 +36,7 @@ const JoinAsTherapist = () => {
                     <Button title={'Subscribe Now'} className="w-full bg-[#EEA86D] border-[#EEA86D] rounded-t-none btn-secondary text-2xl" />
                 </div>
                 <div className="relative md:w-1/2 border-2 border-primary rounded-md mt-10 md:mt-0">
-                    <div className="absolute bottom-full left-1/2 bg-neutral px-2 transform -translate-x-1/2">
+                    <div className="absolute bottom-full font-medium left-1/2 bg-neutral px-2 transform -translate-x-1/2">
                         RECOM MENDED
                     </div>
                     <div className="p-5 text-center">

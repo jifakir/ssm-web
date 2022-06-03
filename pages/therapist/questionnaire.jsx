@@ -50,108 +50,108 @@ const Questionnaire = () => {
             status: "entered-name",
         },
         {
-            component: <Email step={step} setStep={setStep} />,
+            component: <Email profile={data} step={step} setStep={setStep} />,
             status: "entered-email",
         },
         {
-            component: <Gender step={step} setStep={setStep} />,
+            component: <Gender profile={data} step={step} setStep={setStep} />,
             status: "entered-gender",
         },
+        // {
+        //     component: <Phone profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-phone",
+        // },
         {
-            component: <Phone step={step} setStep={setStep} />,
-            status: "entered-phone",
-        },
-        {
-            component: <Orientation step={step} setStep={setStep} />,
+            component: <Orientation profile={data} step={step} setStep={setStep} />,
             status: "entered-orientation",
         },
         {
-            component: <Address step={step} setStep={setStep} />,
-            status: "entered-name",
+            component: <Address profile={data} step={step} setStep={setStep} />,
+            status: "entered-address",
         },
         {
-            component: <Religion step={step} setStep={setStep} />,
+            component: <Religion profile={data} step={step} setStep={setStep} />,
             status: "entered-religion",
         },
         {
-            component: <Personality step={step} setStep={setStep} />,
+            component: <Personality profile={data} step={step} setStep={setStep} />,
             status: "entered-personality",
         },
         {
-            component: <Education step={step} setStep={setStep} />,
+            component: <Education profile={data} step={step} setStep={setStep} />,
             status: "entered-education",
         },
         {
-            component: <RelSess step={step} setStep={setStep} />,
+            component: <RelSess profile={data} step={step} setStep={setStep} />,
             status: "entered-relsess",
         },
         {
-            component: <SpiritPerson step={step} setStep={setStep} />,
+            component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
             status: "entered-spirituality",
         },
         {
-            component: <SpiritSess step={step} setStep={setStep} />,
+            component: <SpiritSess profile={data} step={step} setStep={setStep} />,
             status: "entered-spiritsess",
         },
         {
-            component: <OtherLang step={step} setStep={setStep} />,
+            component: <OtherLang profile={data} step={step} setStep={setStep} />,
             status: "entered-otherlang",
         },
         {
-            component: <Language step={step} setStep={setStep} />,
+            component: <Language profile={data} step={step} setStep={setStep} />,
             status: "entered-lang",
         },
         {
-            component: <BirthDate step={step} setStep={setStep} />,
+            component: <BirthDate profile={data} step={step} setStep={setStep} />,
             status: "entered-dateofbirth",
         },
         {
-            component: <Race step={step} setStep={setStep} />,
+            component: <Race profile={data} step={step} setStep={setStep} />,
             status: "entered-race",
         },
         {
-            component: <NewPatient step={step} setStep={setStep} />,
+            component: <NewPatient profile={data} step={step} setStep={setStep} />,
             status: "entered-patient",
         },
         {
-            component: <Experience step={step} setStep={setStep} />,
+            component: <Experience profile={data} step={step} setStep={setStep} />,
             status: "entered-experience",
         },
         {
-            component: <Titles step={step} setStep={setStep} />,
+            component: <Titles profile={data} step={step} setStep={setStep} />,
             status: "entered-titles",
         },
         {
-            component: <Availability step={step} setStep={setStep} />,
-            status: "entered-availability",
-        },
-        {
-            component: <AcceptInsurance step={step} setStep={setStep} />,
+            component: <AcceptInsurance profile={data} step={step} setStep={setStep} />,
             status: "entered-acceptinsurance",
         },
         {
-            component: <Insurance step={step} setStep={setStep} />,
+            component: <Insurance profile={data} step={step} setStep={setStep} />,
             status: "entered-insurance",
         },
         {
-            component: <SessionFee step={step} setStep={setStep} />,
+            component: <SessionFee profile={data} step={step} setStep={setStep} />,
             status: "entered-sessionfee",
         },
         {
-            component: <VirtualInperson step={step} setStep={setStep} />,
+            component: <VirtualInperson profile={data} step={step} setStep={setStep} />,
             status: "entered-virtualperson",
         },
         {
-            component: <AcceptSessionFee step={step} setStep={setStep} />,
+            component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
             status: "entered-sessionfee",
         },
+        // {
+        //     component: <InpersonSessionFuture profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-inpersonsession",
+        // },
         {
-            component: <InpersonSessionFuture step={step} setStep={setStep} />,
-            status: "entered-inpersonsession",
+            component: <Specialization profile={data} step={step} setStep={setStep} />,
+            status: "entered-specialization",
         },
         {
-            component: <Specialization step={step} setStep={setStep} />,
-            status: "entered-specialization",
+            component: <Availability profile={data} step={step} setStep={setStep} />,
+            status: "entered-availability",
         },
     ];
 

@@ -4,6 +4,7 @@ import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../
 import Checkbox from '../UI/Checkbox';
 import Select from '../UI/Select';
 import Button from '../UI/Button';
+import { useRouter } from 'next/router';
 
 const week = [
     {
@@ -140,20 +141,19 @@ const amTime = [
     },
 ];
 
-const Availability = ({step, setStep}) => {
+const Availability = ({step, setStep, profile }) => {
     
 
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { ...profile?.availabilities }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
-
+    const router = useRouter();
     const handleNext = async (data) => {
 
-        await updateTherapist({ availability: {...data}, registration_status: 'complete' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const { day, start_time, end_time } = data;
+        
+        if(!day) return;
+        await updateTherapist({id: profile?.id, availabilities: [{day, start_time, end_time}], registration_status: 'completed' });
+        router.push('/therapist/profile');
         setStep(step + 1);
 
     };
@@ -164,34 +164,36 @@ const Availability = ({step, setStep}) => {
 
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-        <div className="text-left text-sm flex gap-5">
-            <div className="w-1/5">
-                <h1 className="text-lg my-2">Availability</h1>
-                <Checkbox register={register} errors={errors} data={{name: 'availability.days', options: week }} />
-            </div>
-            <div className={`flex gap-10 ${!watch('availability.days') ? 'hidden' : 'block'}`}>
-                <div className="mt-1 w-40">
-                    <h3 className="my-2">M-Start Time</h3>
-                    <Select control={control} data={{name: 'availability.startTime', options: pmTime}} />
+        <>
+            <form id="availability-form" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="text-left text-sm flex gap-5">
+                    <div className="w-1/5">
+                        <h1 className="text-lg my-2">Availability</h1>
+                        <Checkbox register={register} errors={errors} data={{name: 'day', options: week }} />
+                    </div>
+                    <div className={`flex gap-10 ${!watch('day') ? 'hidden' : 'block'}`}>
+                        <div className="mt-1 w-40">
+                            <h3 className="my-2">M-Start Time</h3>
+                            <Select control={control} data={{name: 'start_time', options: pmTime}} />
+                        </div>
+                        <div className="mt-1 w-40">
+                            <h3 className="my-2">M-End Time</h3>
+                            <Select control={control} data={{name: 'end_time', options: amTime}} />
+                        </div>
+                    </div>
                 </div>
-                <div className="mt-1 w-40">
-                    <h3 className="my-2">M-End Time</h3>
-                    <Select control={control} data={{name: 'availability.endTime', options: amTime}} />
-                </div>
+            </form>
+            <div className={`flex gap-5 py-5`}>
+                    <Button 
+                        title={'Back'} 
+                        onClick={handleBack}
+                        className="btn-outline border-neutral px-8 text-2xl" />
+                    <Button 
+                        title={'Submit'} 
+                        form="availability-form" 
+                        className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().day && !watch().startTime && !watch().endTime ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </div>
-        <div className={`flex gap-5 py-5`}>
-                <Button 
-                    title={'Back'} 
-                    onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
-                <Button 
-                    title={'Submit'} 
-                    type="submit" 
-                    className={`px-8 text-2xl ${!watch().day && !watch().startTime && !watch().endTime ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
-        </div>
-        </form>
+        </>
     )
 }
 

@@ -6,7 +6,7 @@ import Radio from '../../components/UI/Radio';
 import Select from '../UI/Select';
 
 const data = {
-    name: 'experience',
+    name: 'years_of_experience',
     options: [
         {
             label: '0-5 years',
@@ -33,17 +33,18 @@ const data = {
 
 
 
-const Experience = ({ step, setStep }) => {
+const Experience = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({mode: 'all'});
+    // const { head, tail } = profile?.years_of_experience;
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { years_of_experience: profile?.years_of_experience ? data.options.find((itm) => itm.value === `${head}-${tail}`) : null }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { experience } = data;
-
-        // await updateTherapist({ gender, registration_status: 'entered-email' });
-
+        const { years_of_experience } = data;
+        if(!years_of_experience) return;
+        const splitted_year = years_of_experience?.value.split('-');
+        await updateTherapist({id: profile?.id, years_of_experience: {head:splitted_year[0], tail:splitted_year[1]}, registration_status: 'entered-years_of_experience' });
         setStep(step + 1);
 
     };
@@ -56,13 +57,15 @@ const Experience = ({ step, setStep }) => {
 
     
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full">
-                <h1 className="text-lg my-2 text-left">How many years of experience do you have?</h1>
-                <div className="form-control w-full max-w-xs text-left">
-                    <Select register={register} control={control} errors={errors} data={data} />
+        <>
+            <form id="experience-form" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                    <h1 className="text-lg my-2 text-left">How many years of experience do you have?</h1>
+                    <div className="form-control w-full max-w-xs text-left">
+                        <Select register={register} control={control} errors={errors} data={data} />
+                    </div>
                 </div>
-            </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -70,10 +73,10 @@ const Experience = ({ step, setStep }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    type="submit" 
-                    className={`px-8 text-2xl ${!watch().experience ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="experience-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().years_of_experience ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

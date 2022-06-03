@@ -47,6 +47,7 @@ const Login = () => {
         router.push('/therapist/questionnaire');
 
     }
+
     return (
         <div className="w-full flex justify-center items-center">
             
@@ -62,10 +63,13 @@ const Login = () => {
                     <GoogleLogin
                             clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
                             buttonText="Login with Google"
+                            // render={renderProps => (
+                            //     <button onClick={renderProps.onClick} style={{backgroundColor: 'blue'}}>This is my custom Google button</button>
+                            //   )}
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}
-                            className="bg-white w-full rounded-lg cursor-pointer text-center"
+                            className="w-full rounded-lg cursor-pointer text-center"
                         />
                     <div className="">
                         <h1 className="text-2xl mt-5 font-medium">or</h1>

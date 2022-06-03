@@ -5,21 +5,31 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 
-const AcceptSessionFee = ({ step, setStep }) => {
+const data = {
+    title: 'Do you accept session Fee?',
+    name: 'accept_session_fee',
+    options: [
+        {
+            label: 'Yes',
+            value: true
+        },
+        {
+            label: 'No',
+            value: false
+        },
+    ]
+};
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+const AcceptSessionFee = ({ step, setStep, profile }) => {
+
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {accept_session_fee: profile?.accept_session_fee}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { accept_insurance } = data;
-
-        await updateTherapist({ accept_insurance, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const { accept_session_fee } = data;
+        if(!accept_session_fee) return;
+        await updateTherapist({id: profile?.id, accept_session_fee, registration_status: 'entered-accept_session_fee' });
         setStep(step + 1);
 
     };
@@ -30,27 +40,16 @@ const AcceptSessionFee = ({ step, setStep }) => {
 
     };
 
-    const data = {
-        title: 'Do you accept session Fee?',
-        name: 'accept_insurance',
-        options: [
-            {
-                label: 'Yes',
-                value: true
-            },
-            {
-                label: 'No',
-                value: false
-            },
-        ]
-    };
+    
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full">
-            <div className="form-control w-full max-w-xs">
-                <Radio register={register} errors={errors} data={data} />
-            </div>
-            </div>
+        <>
+            <form id="accept-session-fee" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                    <div className="form-control w-full max-w-xs">
+                        <Radio register={register} errors={errors} data={data} />
+                    </div>
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -58,10 +57,10 @@ const AcceptSessionFee = ({ step, setStep }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    type="submit" 
-                    className={`px-8 text-2xl ${!watch().accept_insurance ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="accept-session-fee" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().accept_session_fee ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

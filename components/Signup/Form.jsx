@@ -8,11 +8,15 @@ import { useForm } from 'react-hook-form';
 import Button from '../../components/UI/Button';
 import TextInput from '../../components/UI/TextInput';
 import { useLoginQuery, useSignupMutation } from '../../store/api/ssmApi';
+import { logIn } from '../../store/reducers/authReducer';
+import { useDispatch } from 'react-redux';
+
+
 
 const Form = ({ setSubmitted }) => {
 
     const [showPass, setShowPass] = React.useState(false);
-
+    const dispatch = useDispatch();
     const { register, reset, handleSubmit, formState: {errors}} = useForm();
 
     const [signup, { data, isError, isSuccess, isLoading, error }] = useSignupMutation();
@@ -71,7 +75,7 @@ const Form = ({ setSubmitted }) => {
                         }
                     </div>
                     <div className="form-control w-full max-w-xs">
-                        <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'name', title: 'Name'}} />
+                        <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />

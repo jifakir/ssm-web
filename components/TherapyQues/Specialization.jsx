@@ -6,21 +6,16 @@ import Select from '../../components/UI/Select';
 import Checkbox from '../UI/Checkbox';
 
 
-const Specialization = ({ step, setStep }) => {
+const Specialization = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: {specialization: profile?.specialization}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { specialization } = data;
 
-        await updateTherapist({ specialization, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        await updateTherapist({ id: profile?.id, specialization, registration_status: 'entered-specialization' });
         setStep(step + 1);
 
     };
@@ -66,12 +61,14 @@ const Specialization = ({ step, setStep }) => {
         ]
     };
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full">
-            <div className="form-control w-full max-w-xs">
-                <Checkbox control={control} register={register} errors={errors} data={data} />
-            </div>
-            </div>
+        <>
+            <form id="specialization-form" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                <div className="form-control w-full max-w-xs">
+                    <Checkbox control={control} register={register} errors={errors} data={data} />
+                </div>
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -79,10 +76,10 @@ const Specialization = ({ step, setStep }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    type="submit" 
-                    className={`px-8 text-2xl ${!watch().specialization ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="specialization-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().specialization ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

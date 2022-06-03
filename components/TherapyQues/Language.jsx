@@ -39,21 +39,16 @@ const data = {
         ]
     };
 
-const Language = ({ step, setStep }) => {
+const Language = ({ step, setStep, profile }) => {
     
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { languages: profile?.languages }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
-
-        await updateTherapist({ ...data, registration_status: 'entered-language' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const { languages } = data;
+        if(!languages) return;
+        await updateTherapist({id: profile?.id, ...data, registration_status: 'entered-language' });
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -61,8 +56,10 @@ const Language = ({ step, setStep }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-            <Checkbox data={data} register={register} errors={errors} />
+        <>
+            <form id="language-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+                <Checkbox data={data} register={register} errors={errors} />
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -70,10 +67,10 @@ const Language = ({ step, setStep }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    onClick={handleNext} 
-                    className={`px-8 text-2xl ${!watch().languages ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="language-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().languages ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

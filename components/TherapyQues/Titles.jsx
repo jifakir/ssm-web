@@ -9,7 +9,7 @@ import Button from '../UI/Button';
 
 const data = {
         title: 'Title(s) ?',
-        name: 'title',
+        name: 'titles',
         required: true,
         options: [
             {
@@ -43,19 +43,15 @@ const data = {
         ]
     };
 
-const Titles = ({ step, setStep }) => {
+const Titles = ({ step, setStep, profile }) => {
     
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {titles: profile?.titles}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        await updateTherapist({ ...data, registration_status: 'entered-language' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const {titles} = data;
+        await updateTherapist({id: profile?.id, titles, registration_status: 'entered-titles' });
         setStep(step + 1);
 
     };
@@ -63,10 +59,12 @@ const Titles = ({ step, setStep }) => {
     const handleBack = () => {
         setStep(step - 1);
     };
-
+    console.log(watch());
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-            <Checkbox data={data} register={register} errors={errors} />
+        <>
+            <form id="titles-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+                <Checkbox data={data} register={register} errors={errors} />
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -74,10 +72,10 @@ const Titles = ({ step, setStep }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    onClick={handleNext} 
-                    className={`px-8 text-2xl ${!watch().title ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="titles-form"  
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${(!watch().titles || !watch().titles.length) ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

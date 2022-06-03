@@ -27,14 +27,15 @@ const Phone = ({ step, setStep }) => {
 
     };
 
-
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full">
-                <div className="form-control w-full max-w-xs">
-                    <TextInput register={register} errors={errors} data={{type: 'text', pHolder: '000-000-0000', name: 'phone', title: 'Phone Number'}} />
+        <>
+            <form id='phone-form' onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                    <div className="form-control w-full max-w-xs">
+                        <TextInput register={register} errors={errors} data={{type: 'text', pHolder: '000-000-0000', name: 'phone', title: 'Phone Number', pattern: /\d/i}} />
+                    </div>
                 </div>
-            </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -42,11 +43,11 @@ const Phone = ({ step, setStep }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'}
-                    type="submit"
+                    form="phone-form"
                     onClick={handleNext} 
-                    className={`px-8 text-2xl ${!watch().phone ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().phone ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

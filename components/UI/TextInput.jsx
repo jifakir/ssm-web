@@ -4,7 +4,7 @@ import React from 'react';
 
 const Input = ({data, register, titleStyle, className, errors, type, ...rest}) => {
 
-    const {title, name, pHolder, required} = data;
+    const {title, name, pHolder, pattern, required} = data;
 
     return (
         <div className="w-full">
@@ -25,7 +25,7 @@ const Input = ({data, register, titleStyle, className, errors, type, ...rest}) =
                 >
                 </textarea>:
                 <input 
-                    {...register(name, {required})} 
+                    {...register(name, {required, pattern})} 
                     {...rest} 
                     type={type ? type : 'text'} 
                     placeholder={pHolder}
