@@ -70,4 +70,4 @@ export const ssmApi = createApi({
 });
 
 
-export const { useLoginMutation, useFetchTherapistQuery, useSignupMutation, useRegisterTherapistMutation, useUpdateTherapistMutation } = ssmApi;
+export const { useLoginMutation, useGoogleLoginMutation, useFetchTherapistQuery, useSignupMutation, useRegisterTherapistMutation, useUpdateTherapistMutation } = ssmApi;
