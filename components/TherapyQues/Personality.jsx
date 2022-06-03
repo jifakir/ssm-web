@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import RadioInput from '../../components/UI/Radio';
 import Button from '../UI/Button';
 import { useForm } from 'react-hook-form';
@@ -81,18 +81,18 @@ const data = [
 
 
 
-const Personality = ({ step, setStep }) => {
+const Personality = ({ step, setStep, profile }) => {
 
 
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {...profile?.personality_type}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { mind, energy, nature, tactics, identity} = data;
         if(!mind || !energy || !nature || !tactics || !identity) return;
-        // await updateTherapist({ personality: {...data}, registration_status: 'entered-personality' });
+        await updateTherapist({id: profile?.id, personality_type: {...data}, registration_status: 'entered-personality' });
 
         setStep(step + 1);
 
@@ -105,17 +105,19 @@ const Personality = ({ step, setStep }) => {
     
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <h1 className="text-left text-lg my-5">Share your Myers-Brigg Personality Type aspects</h1>
-            <div className="flex text-sm gap-5">
-                {
-                    data.map((itm, idx) => (
-                        <div key={`personality_item_${idx}`} className="">
-                            <RadioInput data={itm} register={register} errors={errors} />
-                        </div>
-                    ))
-                }
-            </div>
+        <>
+            <form id="personality-form" onSubmit={handleSubmit(handleNext)} className="">
+                <h1 className="text-left text-lg my-5">Share your Myers-Brigg Personality Type aspects</h1>
+                <div className="flex text-sm gap-5">
+                    {
+                        data.map((itm, idx) => (
+                            <div key={`personality_item_${idx}`} className="">
+                                <RadioInput data={itm} register={register} errors={errors} />
+                            </div>
+                        ))
+                    }
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'} 
@@ -123,10 +125,10 @@ const Personality = ({ step, setStep }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    type="submit" 
-                    className={`px-8 text-2xl ${ (!watch().mind || !watch().energy || !watch().nature || !watch().tactics || !watch().identity) ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="personality-form"
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${ (!watch().mind || !watch().energy || !watch().nature || !watch().tactics || !watch().identity) ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

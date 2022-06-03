@@ -47,8 +47,8 @@ const About = () => {
                 </div>
             </div>
             <div className="w-[90%] mx-auto my-5">
-                <h3 className="text-2xl text-center">Connect with us on social media!</h3>
-                <div className="my-5 md:flex gap-2">
+                <h3 className="text-2xl text-left">Connect with us on social media!</h3>
+                <div className="my-5 md:flex justify-center gap-2">
                     <div className="relative w-52 h-52">
                         <Image src={'/img/who1.png'} alt="Pic" layout='fill' objectFit='cover' />
                     </div>

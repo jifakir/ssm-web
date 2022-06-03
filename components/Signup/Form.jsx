@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineClose } from 'react-icons/md';
@@ -7,11 +8,15 @@ import { useForm } from 'react-hook-form';
 import Button from '../../components/UI/Button';
 import TextInput from '../../components/UI/TextInput';
 import { useLoginQuery, useSignupMutation } from '../../store/api/ssmApi';
+import { logIn } from '../../store/reducers/authReducer';
+import { useDispatch } from 'react-redux';
+
+
 
 const Form = ({ setSubmitted }) => {
 
     const [showPass, setShowPass] = React.useState(false);
-
+    const dispatch = useDispatch();
     const { register, reset, handleSubmit, formState: {errors}} = useForm();
 
     const [signup, { data, isError, isSuccess, isLoading, error }] = useSignupMutation();
@@ -55,7 +60,7 @@ const Form = ({ setSubmitted }) => {
                     {/* </button> */}
                     <GoogleLogin
                             clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                            buttonText="Login with Google"
+                            buttonText="Signup with google"
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}
@@ -70,7 +75,7 @@ const Form = ({ setSubmitted }) => {
                         }
                     </div>
                     <div className="form-control w-full max-w-xs">
-                        <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'name', title: 'Name'}} />
+                        <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
                     </div>
                     <div className="form-control w-full max-w-xs">
                         <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />
@@ -91,7 +96,7 @@ const Form = ({ setSubmitted }) => {
                     </div> */}
                     <div className="text-xs mt-5">
                         <p className="font-medium mb-2">
-                            Already have an account? <span className="underline text-secondary">CONTINUE</span>
+                            Already have an account? <Link href={'/login'}><a className="text-blue-700 font-bold cursor-pointer">Log in</a></Link>
                         </p>
                         <p className="">
                             Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.

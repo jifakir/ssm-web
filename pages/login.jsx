@@ -9,6 +9,7 @@ import TextInput from '../components/UI/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../store/reducers/authReducer';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 
 const Login = () => {
@@ -32,12 +33,21 @@ const Login = () => {
         router.push('/therapist/questionnaire');
     }
 
+    if(isLoading){
+        return (
+            <div className="">
+                Brave Facebook
+            </div>
+        )
+    }
+
     if(isSuccess){
         console.log(data);
         dispatch(logIn(data));
         router.push('/therapist/questionnaire');
 
     }
+
     return (
         <div className="w-full flex justify-center items-center">
             
@@ -53,10 +63,13 @@ const Login = () => {
                     <GoogleLogin
                             clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
                             buttonText="Login with Google"
+                            // render={renderProps => (
+                            //     <button onClick={renderProps.onClick} style={{backgroundColor: 'blue'}}>This is my custom Google button</button>
+                            //   )}
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}
-                            className="bg-white w-full rounded-lg cursor-pointer text-center"
+                            className="w-full rounded-lg cursor-pointer text-center"
                         />
                     <div className="">
                         <h1 className="text-2xl mt-5 font-medium">or</h1>
@@ -80,10 +93,10 @@ const Login = () => {
                     <div className="w-full card-actions pt-5">
                         <Button title={'Continue'} className="btn-secondary text-2xl w-full" />
                     </div>
-                    {/* <div className="text-sm">
-                        <p className="">Do not have an account? <a className="text-blue-700 font-bold cursor-pointer">Sign up</a></p>
-                    </div> */}
-                    <div className="text-xs mt-5">
+                    <div className="text-sm mt-4">
+                        <p className="">Do not have an account? <Link href={'/signup'}><a className="text-blue-700 font-bold cursor-pointer">Sign up</a></Link></p>
+                    </div>
+                    <div className="text-xs">
                         <p className="">
                             Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
                         </p>

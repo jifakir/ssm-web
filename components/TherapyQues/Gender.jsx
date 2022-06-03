@@ -32,17 +32,17 @@ const data = {
 
 
 
-const Gender = ({ step, setStep }) => {
+const Gender = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({mode: 'all'});
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {gender: profile?.gender}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { gender } = data;
-
-        // await updateTherapist({ gender, registration_status: 'entered-email' });
-
+        console.log("Gender: ",gender);
+        if(!gender) return;
+        await updateTherapist({ gender, id: profile?.id, registration_status: 'entered-gender' });
         setStep(step + 1);
 
     };
@@ -55,24 +55,26 @@ const Gender = ({ step, setStep }) => {
 
     
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full">
-                <h1 className="text-lg my-2 text-left">What is your gender?</h1>
-                <div className="form-control w-full max-w-xs">
-                    <Radio register={register} errors={errors} data={data} />
+        <>
+            <form id="gender-form" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                    <h1 className="text-lg my-2 text-left">What is your gender?</h1>
+                    <div className="form-control w-full max-w-xs">
+                        <Radio register={register} errors={errors} data={data} />
+                    </div>
                 </div>
-            </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Back'}
-                    onClick={() => handleBack}
+                    onClick={handleBack}
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    type="submit"
-                    className={`px-8 text-2xl ${!watch().gender ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="gender-form"
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().gender ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

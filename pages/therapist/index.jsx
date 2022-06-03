@@ -27,13 +27,15 @@ import HowItWorks from '../../components/Home/HowItWorks';
 
 
 
-const Questionnaire = () => {
+const Therapist = () => {
 
     const [step, setStep] = React.useState(null);
     const [ progress, setProgress ] = React.useState(0);
 
     const {register, trigger, formState: { errors }, watch, handleSubmit} = useForm({mode: 'all'});
+    const { data, isLoading, isError } = useFetchTherapistQuery();
 
+    console.log("Data: ",data);
 
 
     const components = [
@@ -95,12 +97,6 @@ const Questionnaire = () => {
         },
     ];
 
-    const { data, isLoading, isError } = useFetchTherapistQuery();
-
-    React.useEffect(() => {
-        console.log(data);
-        setStep(1);
-    },[]);
 
     React.useEffect(() => {
 
@@ -172,7 +168,7 @@ const Questionnaire = () => {
                 <div className="mt-10 flex justify-center">
                     <Button title={'Find A Therapist'} className="text-xl btn-secondary" />
                 </div>
-                <div className="">
+                <div className="mb-10">
                     <h1 className="my-10 font-bold text-2xl md:text-3xl text-center">Therapy is more successful when you feel supported</h1>
                     <div className="">
                         <p className="py-2">
@@ -201,4 +197,4 @@ const Questionnaire = () => {
     )
 }
 
-export default Questionnaire;
+export default Therapist;

@@ -9,8 +9,18 @@ export const ssmApi = createApi({
     reducerPath: "ssmApi",
     baseQuery: fetchBaseQuery({
         baseUrl: process.env.NEXT_PUBLIC_API_URL,
+        prepareHeaders: (headers, { getState }) => {
+            const token = getState().auth.userDetails.token
+        
+            // If we have a token set in state, let's assume that we should be passing it.
+            if (token) {
+              headers.set('authorization', `Bearer ${token}`)
+            }
+        
+            return headers
+          },
     }),
-    tagTypes: ['SSM'],
+    tagTypes: ['Therapist', 'SSM'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (body) => ({
@@ -37,35 +47,24 @@ export const ssmApi = createApi({
             invalidatesTags: ['SSM']
         }),
         fetchTherapist: builder.query({
-            query: () => ({
-                url: '/therapists/myaccount',
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                }
-            }),
-            providesTags: ['SSM']
+            query: () => '/therapists/my-account',
+            providesTags: ['Therapist']
         }),
         registerTherapist: builder.mutation({
             query: (body) => ({
                 url: '/therapists',
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                },
                 body
             }),
-            invalidatesTags: ['SSM']
+            invalidatesTags: ['Therapist']
         }),
         updateTherapist: builder.mutation({
             query: (body) => ({
-                url: '/',
+                url: `/therapists/${body.id}`,
                 method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${user.token}`
-                },
                 body
             }),
-            invalidatesTags: ['SSM']
+            invalidatesTags: ['Therapist']
         }),
     })
 });
