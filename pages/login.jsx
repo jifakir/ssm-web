@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdOutlineClose } from 'react-icons/md';
-import { useSignupMutation, useLoginMutation } from '../store/api/ssmApi';
+import { useSignupMutation, useLoginMutation, useGoogleLoginMutation } from '../store/api/ssmApi';
 import { GoogleLogin } from 'react-google-login';
 import Button from '../components/UI/Button';
 import TextInput from '../components/UI/TextInput';
@@ -21,9 +21,14 @@ const Login = () => {
 
     const { register, reset, handleSubmit, watch, formState: {errors}} = useForm();
     const [login, { data, isError, isSuccess, isLoading, error }] = useLoginMutation();
+    const [googleLogin, result] = useGoogleLoginMutation();
     const router = useRouter();
-    const responseGoogle = (data) => console.log(data);
-
+    const responseGoogle = async (data) => {
+        const {accessToken} = data;
+        console.log(accessToken);
+        await googleLogin({token: accessToken});
+    };
+    console.log("Google Login: ", result);
     const onSubmitHandler = async (data) => {
         await login(data);
         reset();
@@ -45,7 +50,6 @@ const Login = () => {
         console.log(data);
         dispatch(logIn(data));
         router.push('/therapist/questionnaire');
-
     }
 
     return (
@@ -66,6 +70,7 @@ const Login = () => {
                             // render={renderProps => (
                             //     <button onClick={renderProps.onClick} style={{backgroundColor: 'blue'}}>This is my custom Google button</button>
                             //   )}
+                            theme='dark'
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}

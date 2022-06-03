@@ -61,6 +61,7 @@ const Form = ({ setSubmitted }) => {
                     <GoogleLogin
                             clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
                             buttonText="Signup with google"
+                            theme='dark'
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
                             cookiePolicy={'single_host_origin'}

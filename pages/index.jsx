@@ -6,8 +6,8 @@ import Hero from '../components/Home/Hero'
 import Button from '../components/UI/Button'
 import HowItWorks from '../components/Home/HowItWorks';
 import {url} from '../utils/flickr';
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
   const [filcker, setFlick] = useState(null);
