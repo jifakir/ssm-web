@@ -5,10 +5,16 @@ import Header from '../components/Header'
 import Hero from '../components/Home/Hero'
 import Button from '../components/UI/Button'
 import HowItWorks from '../components/Home/HowItWorks';
-
+import {url} from '../utils/flickr';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
-  
+  const [filcker, setFlick] = useState(null);
+  console.log(filcker)
+  useEffect(() => {
+    axios.get(url).then((result) => result).then(data => setFlick(data)).catch(err=> console.log(err));
+  },[])
   return (
     <div className='w-full'>
       <Hero />
@@ -39,11 +45,16 @@ export default function Home() {
         </div>
       </div>
       <div className="">
-        <div className="px-[10%] my-5 md:flex gap-2">
-          <div className="relative w-52 h-52">
-            <Image src={'/img/who1.png'} alt="Pic" layout='fill' objectFit='cover' />
-          </div>
-          <div className="relative w-52 h-52">
+        <div className="px-[5%] md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
+          {
+            filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
+              <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-52" key={idx}>
+                <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} alt="Pic" layout='fill' objectFit='cover' />
+              </div>
+            ))
+          }
+          
+          {/* <div className="relative w-52 h-52">
             <Image src={'/img/who2.png'} alt="Pic" layout='fill' objectFit='cover' />
           </div>
           <div className="relative w-52 h-52">
@@ -54,7 +65,7 @@ export default function Home() {
           </div>
           <div className="relative w-52 h-52">
             <Image src={'/img/who5.png'} alt="Pic" layout='fill' objectFit='cover' />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

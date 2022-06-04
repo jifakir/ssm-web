@@ -5,15 +5,15 @@ import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 
 const data = {
-    name: 'rel_ses',
+    name: 'is_religion_biased',
     options: [
         {
             label: 'Yes, if the patient prefers',
-            value: 'yes'
+            value: true
         },
         {
             label: 'No',
-            value: 'no'
+            value: false
         },
     ]
 };
@@ -22,20 +22,17 @@ const data = {
 
 
 // Component
-const RelSess = ({ step, setStep }) => {
+const RelSess = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_religion_biased: profile?.is_religion_biased}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
-
-        await updateTherapist({ email, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
+        const { is_religion_biased } = data;
+        console.log("Religion Biased: ", is_religion_biased);
+        if(!is_religion_biased) return;
+        await updateTherapist({id: profile?.id, is_religion_biased, registration_status: 'entered-religion_biased' });
 
         setStep(step + 1);
 
@@ -47,21 +44,28 @@ const RelSess = ({ step, setStep }) => {
 
     };
 
-    
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
+    <>
+        <form id="rel-sess-form" onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
                 <div className="form-control w-full max-w-xs">
                     <Radio register={register} errors={errors} data={data} />
                 </div>
             </div>
-            <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} onClick={handleBack} />
-                <Button title={'Next'} onClick={handleNext} className={`${!watch().rel_ses ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
-            </div>
         </form>
+        <div className={`flex gap-5 py-5`}>
+            <Button 
+                title={'Back'} 
+                onClick={handleBack}
+                className="btn-outline border-neutral px-8 text-2xl" />
+            <Button 
+                title={'Next'} 
+                form="rel-sess-form" 
+                className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().is_religion_biased ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+        </div>
+    </>
     )
 }
 

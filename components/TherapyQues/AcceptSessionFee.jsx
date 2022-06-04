@@ -2,11 +2,12 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import Radio from '../UI/Radio';
+
 
 const data = {
-    title: 'Do you accept insurance?',
-    name: 'accept_insurance',
+    title: 'Do you accept session Fee?',
+    name: 'accept_session_fee',
     options: [
         {
             label: 'Yes',
@@ -19,17 +20,16 @@ const data = {
     ]
 };
 
+const AcceptSessionFee = ({ step, setStep, profile }) => {
 
-const AcceptInsurance = ({ step, setStep, profile }) => {
-
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { accept_insurance: profile?.accept_insurance}});
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {accept_session_fee: profile?.accept_session_fee}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { accept_insurance } = data;
-        if(!accept_insurance) return;
-        await updateTherapist({ id: profile?.id, accept_insurance, registration_status: 'entered-accept_insurance' });
+        const { accept_session_fee } = data;
+        if(!accept_session_fee) return;
+        await updateTherapist({id: profile?.id, accept_session_fee, registration_status: 'entered-accept_session_fee' });
         setStep(step + 1);
 
     };
@@ -43,7 +43,7 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
     
     return (
         <>
-            <form id="accept_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="accept-session-fee" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full max-w-xs">
                         <Radio register={register} errors={errors} data={data} />
@@ -57,11 +57,11 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    form="accept_insurance-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().accept_insurance ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="accept-session-fee" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().accept_session_fee ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </>
     )
 }
 
-export default AcceptInsurance;
+export default AcceptSessionFee;

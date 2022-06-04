@@ -5,21 +5,47 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 
-const Race = ({ step, setStep }) => {
+const data = {
+    title: 'What is your nationality/race?',
+    name: 'race',
+    options: [
+        {
+            label: 'Black/African descent',
+            value: 'black'
+        },
+        {
+            label: 'Asian',
+            value: 'asian'
+        },
+        {
+            label: 'Hispanic',
+            value: 'hispanic'
+        },
+        {
+            label: 'white',
+            value: 'white'
+        },
+        {
+            label: 'Other',
+            value: 'other'
+        },
+        {
+            label: 'Prefer not to say',
+            value: 'not_preferred'
+        },
+    ]
+};
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+const Race = ({ step, setStep, profile }) => {
+
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { race: profile?.race }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
-
-        await updateTherapist({ email, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const { race } = data;
+        if(!race) return;
+        await updateTherapist({ id: profile?.id, race, registration_status: 'entered-race' });
         setStep(step + 1);
 
     };
@@ -30,49 +56,27 @@ const Race = ({ step, setStep }) => {
 
     };
 
-    const data = {
-        title: 'What is your nationality/race?',
-        name: 'nationality',
-        options: [
-            {
-                label: 'Black/African descent',
-                value: 'black'
-            },
-            {
-                label: 'Asian',
-                value: 'asian'
-            },
-            {
-                label: 'Hispanic',
-                value: 'hispanic'
-            },
-            {
-                label: 'white',
-                value: 'white'
-            },
-            {
-                label: 'Other',
-                value: 'other'
-            },
-            {
-                label: 'Prefer not to say',
-                value: 'not_preferred'
-            },
-        ]
-    };
     
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
-            <div className="form-control w-full max-w-xs">
-                <Radio register={register} errors={errors} data={data} />
-            </div>
-            </div>
+        <>
+            <form id="race-form" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full max-w-xs">
+                    <Radio register={register} errors={errors} data={data} />
+                </div>
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} onClick={handleBack} />
-                <Button title={'Next'} onClick={handleNext} className={`${!watch().nationality ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    form="race-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().race ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

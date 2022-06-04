@@ -5,23 +5,18 @@ import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
 
 
-const Email = ({ step, setStep }) => {
+const Email = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, {data, isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
-        if(!email) return;
-        await updateTherapist({ email, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
+        const { email_address } = data;
+        if(!email_address) return;
+        await updateTherapist({id: profile?.id, email_address, registration_status: 'entered-email' });
 
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -32,17 +27,25 @@ const Email = ({ step, setStep }) => {
 
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
-            <div className="form-control w-full max-w-xs">
-                <TextInput register={register} errors={errors} data={{ pHolder: 'Email', name: 'email', requred: true, title: 'Email'}} />
-            </div>
-            </div>
+        <>
+            <form id='email-form' onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                    <div className="form-control w-full max-w-xs">
+                        <TextInput defaultValue={ profile?.email_address } register={register} errors={errors} data={{ pHolder: 'Email', name: 'email_address', title: 'Email', pattern: /^\S+@\S+$/i}} />
+                    </div>
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} onClick={handleBack} />
-                <Button title={'Next'} onClick={handleNext} className={`${!watch().email ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    form="email-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().email_address ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

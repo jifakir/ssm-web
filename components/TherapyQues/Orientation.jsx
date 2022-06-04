@@ -1,38 +1,33 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import RadioInput from '../UI/Radio';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
 
 
-const Orientation = ({ step, setStep }) => {
+const Orientation = ({ step, setStep, profile}) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {sexual_orientation: profile?.sexual_orientation}});
+    
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-    const handleNext = async (data) => {
-
-        const { email } = data;
-
-        await updateTherapist({ email, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+    const handleNext = async ({sexual_orientation}) => {
+        console.log("Orientation",sexual_orientation);
+        if(!sexual_orientation) return;
+        await updateTherapist({id: profile?.id, sexual_orientation, registration_status: 'entered-sexual_orientation' });
         setStep(step + 1);
 
     };
 
     const handleBack = () => {
-
         setStep(step - 1);
-
     };
+
 
     const data = {
         title: 'Which do you identify as?',
-        sexual_orientation	: 'orientation',
+        name: 'sexual_orientation',
+        required: true,
         options: [
             {
                 label: 'Straight',
@@ -44,38 +39,41 @@ const Orientation = ({ step, setStep }) => {
             },
             {
                 label: 'Gay',
-                value: 'lay'
+                value: 'gay'
             },
             {
                 label: 'Bi-Sexual',
-                value: 'bi_sexual'
-            },
-            {
-                label: 'Asexual',
-                value: 'asexual'
+                value: 'Assexual'
             },
             {
                 label: 'Pansexual',
                 value: 'pansexual'
             },
             {
-                label: 'Prefer not to say',
-                value: 'not_preferred'
+                label: 'Prefer not to answer',
+                value: 'not_prefer'
             },
         ]
     };
+
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
-            <div className="form-control w-full max-w-xs">
-                <Radio register={register} errors={errors} data={data} />
-            </div>
-            </div>
+        <>
+            <form id='orientationform' onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+                <RadioInput register={register} errors={errors} data={data} />
+                <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} />
-                <Button title={'Next'} className="btn-base text-black" />
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button
+                    title={'Next'} 
+                    form="orientationform" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().sexual_orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                
             </div>
-        </form>
+        </>
     )
 }
 

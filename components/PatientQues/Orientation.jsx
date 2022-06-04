@@ -2,23 +2,19 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import RadioInput from '../UI/Radio';
+import Button from '../UI/Button';
 
 
+const Orientation = ({ step, setStep, profile}) => {
 
-const Orientation = ({ step, setStep}) => {
-
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {sexual_orientation: profile?.sexual_orientation}});
+    
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
-    const handleNext = async (data) => {
-
-
-        await updateTherapist({ ...data, registration_status: 'entered-orientaton' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+    const handleNext = async ({sexual_orientation}) => {
+        console.log("Orientation",sexual_orientation);
+        if(!sexual_orientation) return;
+        await updateTherapist({id: profile?.id, sexual_orientation, registration_status: 'entered-sexual_orientation' });
         setStep(step + 1);
 
     };
@@ -61,18 +57,23 @@ const Orientation = ({ step, setStep}) => {
     };
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-            <RadioInput register={register} errors={errors} data={data} />
-            <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
+        <>
+            <form id='orientationform' onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+                <RadioInput register={register} errors={errors} data={data} />
+                <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button type='submit' onClick={handleNext} className={`btn text-white ${!watch().orientation ? 'btn-neutral' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button
+                    title={'Next'} 
+                    form="orientationform" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().sexual_orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                
             </div>
-        </form>
+        </>
     )
 }
 

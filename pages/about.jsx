@@ -1,9 +1,18 @@
 import React from 'react';
 import Image from 'next/image';
 import Button from '../components/UI/Button';
-
+import {url} from '../utils/flickr';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const About = () => {
+
+    const [filcker, setFlick] = useState(null);
+    console.log(filcker)
+    useEffect(() => {
+        axios.get(url).then((result) => result).then(data => setFlick(data)).catch(err=> console.log(err));
+    },[])
+
     return (
         <div className="">
            <div className="relative w-full">
@@ -47,9 +56,16 @@ const About = () => {
                 </div>
             </div>
             <div className="w-[90%] mx-auto my-5">
-                <h3 className="text-2xl text-center">Connect with us on social media!</h3>
-                <div className="my-5 md:flex gap-2">
-                    <div className="relative w-52 h-52">
+                <h3 className="text-2xl text-left">Connect with us on social media!</h3>
+                <div className="my-5 md:flex justify-center gap-2">
+                    {
+                        filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
+                        <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-52" key={idx}>
+                            <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} alt="Pic" layout='fill' objectFit='cover' />
+                        </div>
+                        ))
+                    }
+                    {/* <div className="relative w-52 h-52">
                         <Image src={'/img/who1.png'} alt="Pic" layout='fill' objectFit='cover' />
                     </div>
                     <div className="relative w-52 h-52">
@@ -63,7 +79,7 @@ const About = () => {
                     </div>
                     <div className="relative w-52 h-52">
                         <Image src={'/img/who5.png'} alt="Pic" layout='fill' objectFit='cover' />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

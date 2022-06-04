@@ -14,7 +14,6 @@ import Checkbox from '../components/UI/Checkbox';
 const Layout = ({children}) => {
 
     const auth = useSelector(state => state);
-    console.log("Auth: ", auth);
 
     const { register, watch, formState: {errors}} = useForm();
 

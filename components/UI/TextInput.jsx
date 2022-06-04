@@ -4,7 +4,7 @@ import React from 'react';
 
 const Input = ({data, register, titleStyle, className, errors, type, ...rest}) => {
 
-    const {title, name, pHolder, required} = data;
+    const {title, name, pHolder, pattern, required} = data;
 
     return (
         <div className="w-full">
@@ -21,12 +21,11 @@ const Input = ({data, register, titleStyle, className, errors, type, ...rest}) =
                     {...register(name, {required})} 
                     {...rest}
                     placeholder={pHolder}
-                    rows={10}
-                    className={`input input-bordered w-full border-2 hover:border-neutral shadow-sm focus:border-accent focus:outline-none bg-white max-w-xs rounded ${className} ${errors[name] && 'input-error'}`} 
+                    className={`input min-h-40 h-40 input-bordered w-full border-2 hover:border-neutral shadow-sm focus:border-accent focus:outline-none bg-white max-w-xs rounded ${className} ${errors[name] && 'input-error'}`} 
                 >
                 </textarea>:
                 <input 
-                    {...register(name, {required})} 
+                    {...register(name, {required, pattern})} 
                     {...rest} 
                     type={type ? type : 'text'} 
                     placeholder={pHolder}

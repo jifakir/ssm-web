@@ -84,7 +84,7 @@ const Footer = () => {
                     <div className="sm:w-1/2 sm:pr-5">
                         <form action="" className="">
                             <h5 className="text-sm font-semibold text-center sm:text-left">
-                                Stay intouch with us!
+                                Stay in touch with us!
                             </h5>
                             <div className="flex gap-2 mt-2">
                                 <TextInput data={{
@@ -120,16 +120,16 @@ const Footer = () => {
                     <div className="sm:w-1/2 lg:w-full">
                         <h5 className="text-sm font-semibold">Find A Therapist</h5>
                         <p className="text-sm py-2">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Are you ready to start your therapy journey? Match with one today!
                         </p>
-                        <Button title={'START SAYING MORE'} className="btn-outline" />
+                        <Button title={'START SAYING MORE'} className="btn-outline border-secondary" />
                     </div>
                     <div className="sm:w-1/2 lg:w-full mt-5 sm:mt-0 lg:mt-5">
-                        <h5 className="text-sm font-semibold">Find A Therapist</h5>
+                        <h5 className="text-sm font-semibold">Join As A Therapist</h5>
                         <p className="text-sm py-2">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Interested in joining our directory?
                         </p>
-                        <Button title={'START SAYING MORE'} className="btn-outline" />
+                        <Button title={'REGISTER TODAY'} className="btn-outline border-secondary" />
                     </div>
                 </div>
             </div>

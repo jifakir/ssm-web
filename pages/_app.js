@@ -6,6 +6,11 @@ import store from '../store/configureStore';
 import '../styles/globals.css';
 import 'react-modern-drawer/dist/index.css'
 
+
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+
 const persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }) {
