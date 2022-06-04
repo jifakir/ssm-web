@@ -59,7 +59,7 @@ const About = () => {
                 <h3 className="text-2xl text-left">Connect with us on social media!</h3>
                 <div className="my-5 md:flex justify-center gap-2">
                     {
-                        filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
+                        filcker?.data?.photos?.photo?.slice(0,5).map((photo, idx) => (
                         <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-52" key={idx}>
                             <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} alt="Pic" layout='fill' objectFit='cover' />
                         </div>
