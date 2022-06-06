@@ -26,7 +26,7 @@ const Orientation = ({ step, setStep, profile}) => {
 
     const data = {
         title: 'Which do you identify as?',
-        name: 'orientation',
+        name: 'sexual_orientation',
         required: true,
         options: [
             {

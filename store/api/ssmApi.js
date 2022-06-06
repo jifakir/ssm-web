@@ -50,6 +50,10 @@ export const ssmApi = createApi({
             query: () => '/therapists/my-account',
             providesTags: ['Therapist']
         }),
+        fetchPatient: builder.query({
+            query: () => '/therapists/my-account',
+            providesTags: ['Therapist']
+        }),
         registerTherapist: builder.mutation({
             query: (body) => ({
                 url: '/therapists',
@@ -66,8 +70,31 @@ export const ssmApi = createApi({
             }),
             invalidatesTags: ['Therapist']
         }),
+        registerPatients: builder.mutation({
+            query: (body) => ({
+                url: '/patients',
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['Patients']
+        }),
+        updateTherapist: builder.mutation({
+            query: (body) => ({
+                url: `/patients/${body.id}`,
+                method: 'PATCH',
+                body
+            }),
+            invalidatesTags: ['Patients']
+        }),
     })
 });
 
 
-export const { useLoginMutation, useGoogleLoginMutation, useFetchTherapistQuery, useSignupMutation, useRegisterTherapistMutation, useUpdateTherapistMutation } = ssmApi;
+export const { 
+    useLoginMutation, 
+    useGoogleLoginMutation, 
+    useFetchTherapistQuery,
+    useFetchPatientQuery,
+    useSignupMutation, 
+    useRegisterTherapistMutation, 
+    useUpdateTherapistMutation } = ssmApi;

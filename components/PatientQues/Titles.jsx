@@ -8,29 +8,33 @@ import Button from '../UI/Button';
 
 
 const data = {
-        title: 'What other language(s) do you speak?',
-        name: 'languages',
+        title: 'Title(s) ?',
+        name: 'titles',
         required: true,
         options: [
             {
-                label: 'Spanish',
-                value: 'spanish'
+                label: 'Ph.D.',
+                value: 'phd'
             },
             {
-                label: 'French',
-                value: 'french'
+                label: 'Psy.D.',
+                value: 'psyd'
             },
             {
-                label: 'Kreyol',
-                value: 'kreyol'
+                label: 'M.A.',
+                value: 'ma'
             },
             {
-                label: 'Yoruba',
-                value: 'yoruba'
+                label: 'M.S.',
+                value: 'ms'
             },
             {
-                label: 'Igbo',
-                value: 'igbo'
+                label: 'M.S.W.',
+                value: 'msw'
+            },
+            {
+                label: 'M.D.',
+                value: 'md'
             },
             {
                 label: 'Other',
@@ -39,25 +43,26 @@ const data = {
         ]
     };
 
-const Language = ({ step, setStep, profile }) => {
+const Titles = ({ step, setStep, profile }) => {
     
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { languages: profile?.languages }});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {titles: profile?.titles}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
-        const { languages } = data;
-        if(!languages) return;
-        await updateTherapist({id: profile?.id, ...data, registration_status: 'entered-language' });
+
+        const {titles} = data;
+        await updateTherapist({id: profile?.id, titles, registration_status: 'entered-titles' });
         setStep(step + 1);
+
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
-
+    console.log(watch());
     return (
         <>
-            <form id="language-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+            <form id="titles-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
                 <Checkbox data={data} register={register} errors={errors} />
             </form>
             <div className={`flex gap-5 py-5`}>
@@ -67,11 +72,11 @@ const Language = ({ step, setStep, profile }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    form="language-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().languages ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="titles-form"  
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${(!watch().titles || !watch().titles.length) ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </>
     )
 }
 
-export default Language;
+export default Titles;

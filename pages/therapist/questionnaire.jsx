@@ -30,6 +30,7 @@ import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
 import Specialization from '../../components/TherapyQues/Specialization';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { ImSpinner9 } from 'react-icons/im';
+import { useRouter } from 'next/router';
 
 
 const Questionnaire = () => {
@@ -40,6 +41,7 @@ const Questionnaire = () => {
     const {isLoggedIn } = useSelector(state => state.auth);
     const {data, isSuccess, isLoading} = useFetchTherapistQuery();
 
+    const router = useRouter();
     const components = [
         {
             component: <Button title={'get started'} onClick={() => setStep(step + 1)} className="my-10" />,
@@ -156,18 +158,21 @@ const Questionnaire = () => {
     ];
 
 
-    useEffect(() => {
-        if(isSuccess){
-            components.map((com, idx) => {
-                console.log(com.status);
-                console.log(data.registration_status);
-                if(com.status === data.registration_status){
-                    console.log('Triggered SetStep')
-                    setStep(idx + 1);
-                }
-            })
-        }
-    },[])
+    // useEffect(() => {
+    //     if(!isLoggedIn){
+    //         router.push('/');
+    //     }
+    //     if(isSuccess){
+    //         components.map((com, idx) => {
+    //             console.log(com.status);
+    //             console.log(data.registration_status);
+    //             if(com.status === data.registration_status){
+    //                 console.log('Triggered SetStep')
+    //                 setStep(idx + 1);
+    //             }
+    //         })
+    //     }
+    // },[isSuccess, isLoggedIn]);
 
 
     return (
@@ -179,7 +184,7 @@ const Questionnaire = () => {
             </p>
         </div>
         {/* Slide section */}
-        <div className="">
+        <div className="pb-40">
             <progress className={`progress my-5 h-4 w-full bg-neutral1 progress-secondary ${step <1 ? 'hidden' : 'block'}`} value={(step/components.length)*100} max="100"></progress>
             {/* Form Inner */}
             <div className="text-center">

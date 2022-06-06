@@ -1,26 +1,22 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import Button from '../UI/Button';
+import TextInput from '../../components/UI/TextInput';
 
 
-
-const Email = ({ step, setStep }) => {
+const Email = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, {data, isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
-
-        await updateTherapist({ email, registration_status: 'email' });
-
-        // if(!isSucces){
-        //     return
-        // }
+        const { email_address } = data;
+        if(!email_address) return;
+        await updateTherapist({id: profile?.id, email_address, registration_status: 'entered-email' });
 
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -31,23 +27,25 @@ const Email = ({ step, setStep }) => {
 
 
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
-                <label className="label">
-                    <span className="label-text text-lg">E-Mail Address</span>
-                </label>
-                <input {...register('email',{required: true, pattern: /^\S+@\S+$/i})} type="email" placeholder="startsayingmore@gmail.com" className={`input input-bordered w-full max-w-xs ${errors.email && 'input-error'}`} />
-                <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
-            </div>
+        <>
+            <form id='email-form' onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                    <div className="form-control w-full max-w-xs">
+                        <TextInput defaultValue={ profile?.email_address } register={register} errors={errors} data={{ pHolder: 'Email', name: 'email_address', title: 'Email', pattern: /^\S+@\S+$/i}} />
+                    </div>
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button onClick={handleNext} className={`btn text-white ${!watch().email ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    form="email-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().email_address ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

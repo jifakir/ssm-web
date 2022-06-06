@@ -6,6 +6,7 @@ import { FaRegUser, FaUser } from 'react-icons/fa';
 import { CgMenu } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../store/reducers/authReducer';
+import Login from './Auth/Login';
 
 const menuList = [
     {
@@ -14,11 +15,11 @@ const menuList = [
     },
     {
         title: 'Find A Therapist',
-        linkUrl: '/therapist'
+        linkUrl: '/patient'
     },
     {
         title: 'Join As A Therapist',
-        linkUrl: '/therapist/join'
+        linkUrl: '/therapist'
     },
     {
         title: 'About',
@@ -33,6 +34,8 @@ const menuList = [
 const Header = () => {
 
     const [isOpen, setIsOpen] = React.useState(false);
+    const [tab, setTab] = React.useState(0);
+    const [open, setOpen] = React.useState(false);
     const { isLoggedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
@@ -42,12 +45,15 @@ const Header = () => {
     };
 
     return (
-        <div className="w-full max-h-[120px] py-2 px-5 border-b-8 border-primary">
+        <div className="w-full max-h-[120px] py-1 md:py-2 px-5 border-b-8 border-primary">
+            <Login open={open} setOpen={setOpen} />
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                    <div className="relative w-[126px] h-[102px]">
-                        <Image src={'/img/logo.svg'} alt={'Logo'} layout={'fill'} />
-                    </div>
+                    <Link href={'/'} className="cursor-pointer" passHref>
+                        <div className="relative cursor-pointer transform translate-y-1 w-[80px] h-[73px] md:w-[126px] md:h-[102px]">
+                            <Image src={'/img/logo.svg'} alt={'Logo'} layout={'fill'} />
+                        </div>
+                    </Link>
                     <ul className="hidden lg:flex items-center gap-10 ml-14">
                         {
                             menuList.map( (menu, idx) => <li 
@@ -65,16 +71,16 @@ const Header = () => {
                         {
                             !isLoggedIn ?
                             (
-                            <Link href={'/login'}>
-                                <a className="transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
+                            <div onClick={() => setOpen(true)}>
+                                <a className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
                                     <FaUser />
                                     <h4 className="text-sm pl-1">
                                         Provider Login
                                     </h4>
                                 </a>
-                            </Link>
+                            </div>
                             ):
-                            <div onClick={() => dispatch(logOut())} className="transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
+                            <div onClick={() => dispatch(logOut())} className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
                                 <FaRegUser />
                                 <h4 className="text-sm pl-1">
                                     Sign out

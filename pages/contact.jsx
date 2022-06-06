@@ -16,10 +16,10 @@ const Contact = () => {
 
     return (
         <main className="">
-            <div className="w-[90%] mx-auto my-16 flex flex-col md:flex-row md:gap-[150px]">
-                <div className="md:w-1/2 order-2 md:order-none">
+            <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[80px]">
+                <div className="lg:w-1/2 order-2 lg:order-none">
                     <div className="">
-                        <h1 className="text-5xl mt-5 md:mt-0 font-sterio">Connect with us!</h1>
+                        <h1 className="text-5xl mt-5 lg:mt-0 font-sterio">Connect with us!</h1>
                         <p className="mt-5">
                             Vestibulum id ligula parta felis euismod semper. Donec id elit non mi porta gravida at eget metus.
                         </p>
@@ -59,15 +59,15 @@ const Contact = () => {
                                     className={'min-w-full'} />
                                 </div>
                             </div>
-                            <Button title={'Submit'} className="bg-[#EEA86D] border-[#EEA86D] text-2xl mt-5 px-10" />
-                            <p className="text-error hidden">There was an error with your submission.</p>
+                            <Button 
+                                title={'Submit'} 
+                                className="bg-[#EEA86D] border-[#EEA86D] text-lg md:text-2xl mt-5 px-5 md:px-10" />
+                            <p className="text-error text-xs sm:text-sm pt-2">There was an error with your submission.</p>
                         </form>
                     </div>
                 </div>
-                <div className="md:w-1/2">
-                    <div className="relative h-[550px]">
+                <div className="relative lg:w-1/2 h-[300px] xs:h-[450px] sm:h-[550px] md:h-[638px]">
                         <Image src={'/img/contact.png'} alt="Contact Image" layout='fill' />
-                    </div>
                 </div>
             </div>
         </main>

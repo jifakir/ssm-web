@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React from 'react';
+import Link from 'next/link';
+import React, { useRef, useState } from 'react';
 import { GrCertificate } from 'react-icons/gr';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
 import { MdAccessTime, MdEdit, MdOutlineCake, MdOutlineLocationOn } from 'react-icons/md';
@@ -43,9 +44,27 @@ const titles = [
 
 const TherapistProfile = () => {
 
+    const [imgUrl, setImgUrl] = useState();
+    const inputRef = useRef();
     const router = useRouter();
     const { isLoggedIn } = useSelector(state => state.auth);
     const {data:profile, isLoading, isSuccess, isError} = useFetchTherapistQuery();
+
+
+    const uploadHandler = (e) => {
+
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const url = reader.result;
+            setImgUrl(url);
+        }
+        reader.onerror = (error) => {
+            console.log(error);
+        }
+
+    };
 
     if(!isLoggedIn){
         router.push("/login");
@@ -53,30 +72,31 @@ const TherapistProfile = () => {
 
     if(isLoading){
         return (
-            <div className="flex justify-center items-center min-h-72">
-                <FaSpinner className='spin' />
+            <div className="flex justify-center items-center min-h-72 h-72">
+                <FaSpinner className='animate-spin text-primary text-5xl' />
             </div>
         )
     }
 
     return (
         <div className="w-[90%] mx-auto my-10">
-            <div className="md:flex gap-5">
-                <div className="flex flex-col items-center justify-center md:w-1/3 md:block">
+            <div className="lg:flex gap-5">
+                <div className="flex flex-col items-center justify-center lg:w-1/3 lg:block">
                     <h1 className="font-sterio text-4xl">Therapist Profile</h1>
                     <h4 className="py-3 text-2xl">{profile?.full_name}</h4>
-                    <div className="w-60 border rounded-lg">
-                        <div className="px-2 pt-2">
+                    <div className="w-60 border rounded-lg overflow-hidden">
+                        <div>
                             <div className="relative h-56">
-                                <Image src={'/img/profile.png'} layout="fill" alt="Profile" />
+                                <Image src={imgUrl ? imgUrl : '/img/profile.png'} layout="fill" alt="Profile" />
                             </div>
                         </div>
-                        <button className="w-full text-primary btn btn-secondary rounded-none rounded-b-lg">
+                        <input ref={inputRef} onChange={uploadHandler} type="file" className="hidden" />
+                        <button onClick={() => inputRef.current.click()} className="w-full text-primary btn btn-secondary rounded-none rounded-b-lg">
                             upload profile picture
                         </button>
                     </div>
                 </div>
-                <div className="flex-1">
+                <div className="pt-10 flex-1">
                     <div className="flex justify-between items-center border-b-2 border-black">
                         <div className="flex items-center text-primary">
                             <FaHeadSideVirus className='2xl' />
