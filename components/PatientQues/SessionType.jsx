@@ -2,31 +2,23 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import Radio from '../UI/Radio';
 
 const data = {
-    title: 'What is the most you are willing to pay per therapy session?',
-    name: 'max_payable_fee',
+    title: 'Do you prefer virtual or in-person sessions?',
+    name: 'session_type',
     options: [
         {
-            label: '$65',
-            value: '65'
+            label: 'Virtual',
+            value: 'virtual'
         },
         {
-            label: '$100',
-            value: '100'
+            label: 'In-person',
+            value: 'in_person'
         },
         {
-            label: '$150',
-            value: '150'
-        },
-        {
-            label: '$200',
-            value: '200'
-        },
-        {
-            label: '$250+',
-            value: '250+'
+            label: 'No preference',
+            value: 'not_prefer'
         },
     ]
 };
@@ -35,13 +27,13 @@ const data = {
 const SessionFee = ({ step, setStep, profile }) => {
 
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { max_payable_fee: profile?.max_payable_fee }})
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { session_type: profile?.session_type }})
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { max_payable_fee } = data;
-        await updatePatient({ id: profile?.id, max_payable_fee, registration_status: 'entered-max_payable_fee' });
+        const { session_type } = data;
+        await updatePatient({ id: profile?.id, session_type, registration_status: 'entered-session_type' });
         setStep(step + 1);
 
     };
@@ -55,7 +47,7 @@ const SessionFee = ({ step, setStep, profile }) => {
 
     return (
         <>
-            <form id="max_payable_fee-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="session_type-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control w-full max-w-xs">
                     <div className="form-control w-full max-w-xs">
                         <Radio register={register} errors={errors} data={data} />
@@ -69,8 +61,8 @@ const SessionFee = ({ step, setStep, profile }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    form="max_payable_fee-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().max_payable_fee ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="session_type-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().session_type ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
         </>
     )

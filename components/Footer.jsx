@@ -57,15 +57,15 @@ const Footer = () => {
     const { register, watch, handleSubmit, formState: {errors}} = useForm();
 
     return (
-        <footer className="relative bg-neutral/30 pt-5">
-            <div className="absolute -z-10 top-0 left-0 h-2/3 md:h-full w-full sm:w-full md:w-1/3">
-                <Image src={'/img/footerbg.png'} alt={"Footer Bg"} layout={"fill"} />
+        <footer className="relative bg-neutral/30 py-4 overflow-hidden ">
+            <div className="absolute -z-10 -top-[60px] w-[600px] h-[450px]">
+                <Image src={'/img/footerbg.svg'} alt={"Footer Bg"} width={686} height={450} />
             </div>
-            <div className="px-[5%] md:px-[10%] lg:flex justify-between">
+            <div className="px-[2%] lg:flex justify-between">
                 <div className="lg:w-2/3 sm:flex justify-between items-center">
                     <div className="sm:w-1/2 py-10">
-                        <div className="flex justify-center">
-                            <Image src={'/img/ssm-footer.png'} alt="Footer Logo" width={260} height={84} />
+                        <div className="w-full flex justify-center">
+                            <Image src={'/img/seclogo.svg'} alt="Footer Logo" width={326} height={106} />
                         </div>
                         <ul className="mt-5 flex justify-center items-center gap-5 text-2xl">
                             {
@@ -81,9 +81,9 @@ const Footer = () => {
                             }
                         </ul>
                     </div>
-                    <div className="sm:w-1/2 sm:pr-5">
+                    <div className="sm:w-1/2 sm:pr-10">
                         <form action="" className="">
-                            <h5 className="text-sm font-semibold text-center sm:text-left">
+                            <h5 className="text-[15px] font-semibold text-center sm:text-left">
                                 Stay in touch with us!
                             </h5>
                             <div className="flex gap-2 mt-2">
@@ -91,6 +91,7 @@ const Footer = () => {
                                     name: 'email',
                                     pHolder: 'Email Address'
                                     }} 
+                                    inputLg
                                     register={register}
                                     errors={errors} />
                                 <div className="">
@@ -99,10 +100,10 @@ const Footer = () => {
                             </div>
                         </form>
                         <div className="mt-5 text-center sm:text-left">
-                            <h5 className="text-sm font-semibold mb-2">
+                            <h5 className="text-[15px] font-semibold mb-2">
                                 Quick Links
                             </h5>
-                            <ul className="sm:grid grid-cols-2 text-sm space-y-1">
+                            <ul className="sm:grid grid-cols-2 text-[15px] space-y-1">
                                 {
                                     menuList.map( (menu, idx) => <li 
                                         key={`menu_item_${idx}`} 
@@ -116,25 +117,43 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="lg:w-1/3 lg:border-l border-primary sm:pl-5 mt-5 sm:mt-10 sm:flex lg:block text-center lg:text-left">
+                <div className="lg:w-1/3 lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 sm:flex lg:block text-center lg:text-left">
                     <div className="sm:w-1/2 lg:w-full">
-                        <h5 className="text-sm font-semibold">Find A Therapist</h5>
-                        <p className="text-sm py-2">
+                        <h5 className="relative text-[15px] font-semibold inline-block">
+                            <span>Find A Therapist</span>
+                            <div className="absolute -top-4 -right-5">
+                                <Image 
+                                    width={46} 
+                                    height={49} 
+                                    src={'/img/speechbubble.svg'} 
+                                    alt="Seech" />
+                            </div>
+                        </h5>
+                        <p className="text-[15px] pt-4 pb-3">
                         Are you ready to start your therapy journey? Match with one today!
                         </p>
-                        <Button title={'START SAYING MORE'} className="btn-outline border-secondary" />
+                        <Button title={'START SAYING MORE'} btnSecondary />
                     </div>
-                    <div className="sm:w-1/2 lg:w-full mt-5 sm:mt-0 lg:mt-5">
-                        <h5 className="text-sm font-semibold">Join As A Therapist</h5>
-                        <p className="text-sm py-2">
+                    <div className="sm:w-1/2 lg:w-full mt-5 sm:mt-0 lg:mt-6">
+                        <h5 className="relative inline-block text-[15px] font-semibold">
+                            <span>Join As A Therapist</span>
+                            <div className="absolute -top-1 -right-5">
+                                <Image 
+                                    width={59} 
+                                    height={40} 
+                                    src={'/img/lip.svg'} 
+                                    alt="Seech" />
+                            </div>
+                        </h5>
+                        <p className="text-[15px] pt-4 pb-3">
                             Interested in joining our directory?
                         </p>
-                        <Button title={'REGISTER TODAY'} className="btn-outline border-secondary" />
+                        <Button title={'REGISTER TODAY'} btnSecondary />
                     </div>
                 </div>
             </div>
             <div className="">
-                <p className="text-xs text-center py-5">
+                <p className="text-xs text-center pt-8">
                     Copyright &copy; 2020 Start Saying More, LLC. All Rights Reserved. | Privacy Policy | Terms &amp; Conditions
                 </p>
             </div>

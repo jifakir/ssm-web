@@ -1,68 +1,66 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
-
-
+import Login from '../../components/Auth/Login';
+import { useSelector } from 'react-redux';
 
 
 // importing components;
-
-import Orientation from '../../components/TherapyQues/Orientation';
-import Religion from '../../components/TherapyQues/Religion';
-import Language from '../../components/TherapyQues/Language';
-import Availability from '../../components/TherapyQues/Availability';
-import Education from '../../components/TherapyQues/Education';
-import Email from '../../components/TherapyQues/Email';
-import Insurance from '../../components/TherapyQues/Insurance';
-import Name from '../../components/TherapyQues/Name';
-import OtherLang from '../../components/TherapyQues/OtherLang';
-import Personality from '../../components/TherapyQues/Personality';
-import RelSess from '../../components/TherapyQues/RelSess';
-import SpritPerson from '../../components/TherapyQues/SpritPerson';
-import Submitted from '../../components/TherapyQues/Submitted';
 import Image from 'next/image';
 import Button from '../../components/UI/Button';
 import HowItWorks from '../../components/Home/HowItWorks';
+import { useRouter } from 'next/router';
 
 
 
 
 const Therapist = () => {
 
+    const [open , setOpen] = React.useState(false);
+
+    const { isLoggedIn } = useSelector(state => state.auth);
     const { data, isLoading, isError } = useFetchTherapistQuery();
+
+    const router = useRouter();
+    const loginHandler = () => {
+        if(!isLoggedIn){
+            setOpen(!open);
+        }else{  
+            router.push('/patient/questionnaire');
+        }
+    };
 
     return (
         <div className="">
+            <Login open={open} setOpen={setOpen} redirectTo={'/patient/questionnaire'}/>
             <div className="w-[90%] md:w-[65%] mx-auto">
-                <div className="my-5 md:my-10">
+                <div className="my-5 md:my-16">
                     <h1 className="font-sterio text-4xl md:text-5xl text-center mt-10">Find a Therapist</h1>
                     <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
                         <div className="text-center">
                             <div className="">
                                 <h2 className="text-sm sm:text-lg font-medium md:text-2xl mb-3">Step 1</h2>
                                 <Button 
-                                    title={'Myers Briggs Test'} 
-                                    className="btn-sm sm:btn-md text-sm btn-secondary sm:text-lg md:text-2xl font-medium" />
+                                    title={'Myers Briggs Test'} />
                             </div>
-                            <div className="mt-5">
-                                <h2 className="text-sm font-medium sm:text-lg md:text-2xl mb-3">Step 1</h2>
+                            <div className="mt-8">
+                                <h2 className="text-sm font-medium sm:text-lg md:text-2xl mb-3">Step 2</h2>
                                 <Button 
-                                    title={'Match Survey'} 
-                                    className="btn-sm sm:btn-md text-sm sm:text-lg md:text-2xl btn-secondary font-medium" />
+                                    onClick={loginHandler}
+                                    title={'Match Survey'} />
                             </div>
                         </div>
                         <div className="relative lg:w-1/2">
-                            <Image src={'/img/find_therapist.png'} alt="" width={591} height={472} />
+                            <Image src={'/img/talking_therapist.png'} alt="" width={591} height={472} />
                         </div>
                     </div>
                 </div>
                 <HowItWorks />
                 <div className="mt-10 flex justify-center">
                     <Button 
-                        title={'Find A Therapist'} 
-                        className="btn-sm sm:btn-md text-xs sm:text-xl btn-secondary" />
+                        title={'Find A Therapist'} />
                 </div>
-                <div className="mb-5 md:mb-10">
+                <div className="md:my-16">
                     <h1 className="my-5 md:my-10 font-bold text-lg sm:text-2xl md:text-3xl text-center">Therapy is more successful when you feel supported</h1>
                     <div className="text-sm md:text-base">
                         <p className="py-2">

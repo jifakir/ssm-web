@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 
@@ -35,14 +35,14 @@ const data = {
 const Gender = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {gender: profile?.gender}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { gender } = data;
         console.log("Gender: ",gender);
         if(!gender) return;
-        await updateTherapist({ gender, id: profile?.id, registration_status: 'entered-gender' });
+        await updatePatient({ gender, id: profile?.id, registration_status: 'entered-gender' });
         setStep(step + 1);
 
     };

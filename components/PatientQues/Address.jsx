@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
 
@@ -8,14 +8,19 @@ import TextInput from '../../components/UI/TextInput';
 const Address = ({ step, setStep, profile }) => {
 
     const { register, watch, handleSubmit, formState: { errors} } = useForm({defaultValues: {user_address: profile?.user_address}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, 
+        { 
+            isSucces, 
+            isLoading, 
+            isError, 
+            error }] = useUpdatePatientMutation();
     const [submitted, setSubmitted] = useState(false);
     const handleNext = async (data) => {
 
         const { user_address: {line1, line2, city, state, zip_code} } = data;
         console.log("User Address: ",data);
         if(!state) return;
-        await updateTherapist({ 
+        await updatePatient({
                 id:profile?.id, 
                 user_address: {
                     line1: line1 ? line1 : '',

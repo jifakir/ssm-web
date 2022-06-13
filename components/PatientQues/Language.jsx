@@ -2,7 +2,7 @@ import React from 'react';
 import Checkbox from '../../components/UI/Checkbox';
 import { useForm } from 'react-hook-form';
 
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Select from '../UI/Select';
 import Button from '../UI/Button';
 

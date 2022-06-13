@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
 
@@ -8,13 +8,13 @@ import TextInput from '../../components/UI/TextInput';
 const Email = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm();
-    const [updateTherapist, {data, isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { email_address } = data;
         if(!email_address) return;
-        await updateTherapist({id: profile?.id, email_address, registration_status: 'entered-email' });
+        await updatePatient({id: profile?.id, email_address, registration_status: 'entered-email' });
 
         setStep(step + 1);
     };
@@ -22,7 +22,7 @@ const Email = ({ step, setStep, profile }) => {
     const handleBack = () => {
 
         setStep(step - 1);
-
+        
     };
 
 

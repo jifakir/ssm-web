@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 
-const Login = ({open, setOpen}) => {
+const Login = ({open, setOpen, redirectTo}) => {
 
     const [showPass, setShowPass] = React.useState(false);
     const [tab, setTab] = React.useState(0);
@@ -47,7 +47,7 @@ const Login = ({open, setOpen}) => {
     useEffect(() => {
         if(isSuccess){
             dispatch(logIn({...data}));
-            router.push('/therapist/profile')
+            router.push(redirectTo);
         }
         if(isLoggedIn){
             setOpen(false);
@@ -60,7 +60,7 @@ const Login = ({open, setOpen}) => {
         <div className={`${open ? 'block' : 'hidden'} fixed min-h-screen overflow-y-scroll transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full flex justify-center items-center`}>
             
             {
-                isLoading ? (
+                isLoading && !isError ? (
                 <div className="bg-white">
                     <div className="px-10 py-5">
                         <p className="text-center text-sm font-bold">

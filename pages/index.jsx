@@ -19,7 +19,7 @@ export default function Home() {
     <div className='w-full'>
       <Hero />
       <div className="w-[90%] md:w-[65%] mx-auto">
-        <div className="w-full lg:flex items-center justify-between py-10">
+        <div className="w-full lg:flex items-center justify-between py-16">
           <div className="lg:w-1/2 relative px-5 flex justify-center lg:block">
             <Image src={'/img/underhero.png'} alt="Under hero" width={454} height={302} />
           </div>
@@ -33,10 +33,10 @@ export default function Home() {
         <HowItWorks />
         {/* FIND A THERAPIST BUTTON AND WHO WE ARE */}
         <div className="mt-10 flex justify-center">
-          <Button title={'Find A Therapist'} className="text-xl btn-secondary" />
+          <Button title={'Find A Therapist'}  />
         </div>
-        <div className="mt-20">
-          <h1 className="text-3xl font-bold text-center mb-5">
+        <div className="mt-16">
+          <h1 className="text-[35px] text-black font-bold text-center mb-5">
             Who We Are
           </h1>
           <p className="py-5">
@@ -44,7 +44,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div className="">
+      <div className="mb-16">
         <div className="px-[5%] md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
           {
             filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
@@ -53,19 +53,6 @@ export default function Home() {
               </div>
             ))
           }
-          
-          {/* <div className="relative w-52 h-52">
-            <Image src={'/img/who2.png'} alt="Pic" layout='fill' objectFit='cover' />
-          </div>
-          <div className="relative w-52 h-52">
-            <Image src={'/img/who3.png'} alt="Pic" layout='fill' objectFit='cover' />
-          </div>
-          <div className="relative w-52 h-52">
-            <Image src={'/img/who4.png'} alt="Pic" layout='fill' objectFit='cover' />
-          </div>
-          <div className="relative w-52 h-52">
-            <Image src={'/img/who5.png'} alt="Pic" layout='fill' objectFit='cover' />
-          </div> */}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import RadioInput from '../UI/Radio';
 import Button from '../UI/Button';
 
@@ -9,12 +9,12 @@ const Orientation = ({ step, setStep, profile}) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {sexual_orientation: profile?.sexual_orientation}});
     
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
-
+    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    
     const handleNext = async ({sexual_orientation}) => {
         console.log("Orientation",sexual_orientation);
         if(!sexual_orientation) return;
-        await updateTherapist({id: profile?.id, sexual_orientation, registration_status: 'entered-sexual_orientation' });
+        await updatePatient({id: profile?.id, sexual_orientation, registration_status: 'entered-sexual_orientation' });
         setStep(step + 1);
 
     };

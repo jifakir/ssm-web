@@ -1,10 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 
-const data = {
+const relData = {
     name: 'religion',
     options: [
         {
@@ -46,13 +46,13 @@ const data = {
 const Religion = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { religion: profile?.religion }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { religion } = data;
         if(!religion) return;
-        await updateTherapist({id: profile?.id, religion, registration_status: 'entered-email' });
+        await updatePatient({id: profile?.id, religion, registration_status: 'entered-email' });
         setStep(step + 1);
     };
 
@@ -62,16 +62,13 @@ const Religion = ({ step, setStep, profile }) => {
 
     };
 
-    
-
-    console.log("Religion: ", data);
     return (
         <>
             <form id='religion-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <h1 className="text-lg my-2 text-left">What is your religion?</h1>
                     <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio register={register} errors={errors} data={relData} />
                     </div>
                 </div>
             </form>

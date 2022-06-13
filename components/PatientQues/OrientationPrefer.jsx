@@ -2,13 +2,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import Radio from '../UI/Radio';
 
 const data = {
-    name: 'is_religion_biased',
+    name: 'has_sexual_preference',
     options: [
         {
-            label: 'Yes, if the patient prefers',
+            label: 'Yes',
             value: true
         },
         {
@@ -22,17 +22,17 @@ const data = {
 
 
 // Component
-const RelSess = ({ step, setStep, profile }) => {
+const PreferOrientation = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_religion_biased: profile?.is_religion_biased}});
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {has_sexual_preference: profile?.has_sexual_preference}});
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { is_religion_biased } = data;
-        console.log("Religion Biased: ", is_religion_biased);
-        if(!is_religion_biased) return;
-        await updatePatient({id: profile?.id, is_religion_biased, registration_status: 'entered-religion_biased' });
+        const { has_sexual_preference } = data;
+        console.log("Religion Biased: ", has_sexual_preference);
+        if(!has_sexual_preference) return;
+        await updatePatient({id: profile?.id, has_sexual_preference, registration_status: 'entered-religion_biased' });
 
         setStep(step + 1);
 
@@ -49,7 +49,7 @@ const RelSess = ({ step, setStep, profile }) => {
     <>
         <form id="rel-sess-form" onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
-                <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
+                <h1 className="text-lg my-2 text-left">Are you interested in a provider that specializes in LGBTQ+ issues?</h1>
                 <div className="form-control w-full max-w-xs">
                     <Radio register={register} errors={errors} data={data} />
                 </div>
@@ -63,10 +63,10 @@ const RelSess = ({ step, setStep, profile }) => {
             <Button 
                 title={'Next'} 
                 form="rel-sess-form" 
-                className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().is_religion_biased ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().has_sexual_preference ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
         </div>
     </>
     )
 }
 
-export default RelSess;
+export default PreferOrientation;

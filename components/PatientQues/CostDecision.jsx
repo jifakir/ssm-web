@@ -2,31 +2,31 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import Radio from '../UI/Radio';
 
 const data = {
-    title: 'What is the most you are willing to pay per therapy session?',
-    name: 'max_payable_fee',
+    title: 'How important is cost in your decision to begin therapy?',
+    name: 'cost_decision',
     options: [
         {
-            label: '$65',
-            value: '65'
+            label: 'Not Important',
+            value: 'not_important'
         },
         {
-            label: '$100',
-            value: '100'
+            label: 'Somewhat Important',
+            value: 'somewhat_important'
         },
         {
-            label: '$150',
-            value: '150'
+            label: 'Important',
+            value: 'important'
         },
         {
-            label: '$200',
-            value: '200'
+            label: 'Very Important',
+            value: 'very_important'
         },
         {
-            label: '$250+',
-            value: '250+'
+            label: 'Extremely Important',
+            value: 'extremely_important'
         },
     ]
 };

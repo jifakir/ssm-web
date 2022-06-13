@@ -10,6 +10,14 @@ const JoinAsTherapist = () => {
     const { isLoggedIn } = useSelector(state => state.auth);
     const router = useRouter();
 
+    const loginHandler = () => {
+        if(!isLoggedIn){
+            setOpen(!open);
+        }else{  
+            router.push('/patient/questionnaire');
+        }
+    };
+
     useEffect(() => {
         // if(isLoggedIn){
         //     router.push('/therapist/questionnaire');
@@ -18,7 +26,7 @@ const JoinAsTherapist = () => {
 
     return (
         <div className="px-[10%]">
-            <Login open={open} setOpen={setOpen}  />
+            <Login open={open} setOpen={setOpen} redirectTo="/therapist/questionnaire"   />
             <div className="">
                 <h1 className="font-sterio text-4xl md:text-5xl text-center mt-16">
                     Join As a Therapist
@@ -32,7 +40,7 @@ const JoinAsTherapist = () => {
                     </p>
                 </div>
             </div>
-            <div className="my-10 md:flex justify-between gap-5">
+            <div className="my-16 md:flex justify-between gap-5">
                 <div className="md:w-1/2 border-2 border-primary rounded-md">
                     <div className="p-5 text-center">
                         <div className="">
@@ -47,10 +55,10 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => setOpen(!open)} title={'Subscribe Now'} className="w-full bg-[#EEA86D] border-[#EEA86D] rounded-t-none btn-secondary text-2xl" />
+                    <Button onClick={loginHandler} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-2xl" />
                 </div>
                 <div className="relative md:w-1/2 border-2 border-primary rounded-md mt-10 md:mt-0">
-                    <div className="absolute bottom-full font-medium left-1/2 bg-neutral px-2 transform -translate-x-1/2">
+                    <div className="absolute bottom-full font-medium left-1/2 bg-neutral px-3 py-0.5 transform -translate-x-1/2">
                         RECOM MENDED
                     </div>
                     <div className="p-5 text-center">
@@ -67,7 +75,7 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => setOpen(!open)} title={'Subscribe Now'} className="w-full rounded-t-none bg-[#EEA86D] border-[#EEA86D] text-2xl" />
+                    <Button onClick={() => setOpen(!open)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-2xl" />
                 </div>
             </div>
         </div>

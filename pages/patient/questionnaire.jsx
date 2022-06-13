@@ -1,33 +1,33 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Email from '../../components/TherapyQues/Email';
-import Name from '../../components/TherapyQues/Name';
-import Phone from '../../components/TherapyQues/Phone';
-import Gender from '../../components/TherapyQues/Gender';
-import Address from '../../components/TherapyQues/Address';
-import Personality from '../../components/TherapyQues/Personality';
-import Education from '../../components/TherapyQues/Education';
-import Language from '../../components/TherapyQues/Language';
-import BirthDate from '../../components/TherapyQues/BirthDate';
-import Religion from '../../components/TherapyQues/Religion';
-import RelSess from '../../components/TherapyQues/RelSess';
-import SpiritPerson from '../../components/TherapyQues/SpritPerson';
-import SpiritSess from '../../components/TherapyQues/SpiritSess';
-import OtherLang from '../../components/TherapyQues/OtherLang';
-import Orientation from '../../components/TherapyQues/Orientation';
-import Race from '../../components/TherapyQues/Race';
-import NewPatient from '../../components/TherapyQues/NewPatient';
+import Email from '../../components/PatientQues/Email';
+import Name from '../../components/PatientQues/Name';
+import Phone from '../../components/PatientQues/Phone';
+import Gender from '../../components/PatientQues/Gender';
+import Address from '../../components/PatientQues/Address';
+import Personality from '../../components/PatientQues/Personality';
+import TriedCounseling from '../../components/PatientQues/TriedCounseling';
+// import Language from '../../components/PatientQues/Language';
+// import BirthDate from '../../components/PatientQues/BirthDate';
+import Religion from '../../components/PatientQues/Religion';
+import RelSess from '../../components/PatientQues/RelSess';
+import IsSpiritual from '../../components/PatientQues/IsSpiritual';
+import PreferSpirituality from '../../components/PatientQues/PreferSpirituality';
+import PreferOtherLang from '../../components/PatientQues/PreferOtherLang';
+import Orientation from '../../components/PatientQues/Orientation';
+import Race from '../../components/PatientQues/Race';
+import RacePrefer from '../../components/PatientQues/RacePrefer';
 import Button from '../../components/UI/Button';
-import Experience from '../../components/TherapyQues/Experience';
-import Availability from '../../components/TherapyQues/Availability';
-import Titles from '../../components/TherapyQues/Titles';
-import AcceptInsurance from '../../components/TherapyQues/AcceptInsurance';
-import Insurance from '../../components/TherapyQues/Insurance';
-import SessionFee from '../../components/TherapyQues/SessionFee';
-import VirtualInperson from '../../components/TherapyQues/VirtualInperson';
-import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
-import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
-import Specialization from '../../components/TherapyQues/Specialization';
+// import Experience from '../../components/PatientQues/Experience';
+// import Availability from '../../components/PatientQues/Availability';
+import Titles from '../../components/PatientQues/Titles';
+import AcceptInsurance from '../../components/PatientQues/AcceptInsurance';
+import Insurance from '../../components/PatientQues/Insurance';
+import SessionFee from '../../components/PatientQues/SessionFee';
+// import VirtualInperson from '../../components/PatientQues/VirtualInperson';
+import AcceptSessionFee from '../../components/PatientQues/AcceptSessionFee';
+import CounselingExp from '../../components/PatientQues/CounselingExp';
+// import Specialization from '../../components/PatientQues/Specialization';
 import { useFetchPatientQuery } from '../../store/api/ssmApi';
 import { ImSpinner9 } from 'react-icons/im';
 import { useRouter } from 'next/router';
@@ -36,8 +36,6 @@ import { useRouter } from 'next/router';
 const Questionnaire = () => {
 
     const [ step, setStep ] = React.useState(0);
-    const [progress, setProgress] = React.useState(0);
-
     const {isLoggedIn } = useSelector(state => state.auth);
     const {data, isSuccess, isLoading} = useFetchPatientQuery();
 
@@ -80,46 +78,58 @@ const Questionnaire = () => {
             component: <Personality profile={data} step={step} setStep={setStep} />,
             status: "entered-personality",
         },
-        {
-            component: <Education profile={data} step={step} setStep={setStep} />,
-            status: "entered-education",
-        },
+        // {
+        //     component: <Education profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-education",
+        // },
         {
             component: <RelSess profile={data} step={step} setStep={setStep} />,
             status: "entered-relsess",
         },
         {
-            component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
+            component: <IsSpiritual profile={data} step={step} setStep={setStep} />,
             status: "entered-spirituality",
         },
         {
-            component: <SpiritSess profile={data} step={step} setStep={setStep} />,
+            component: <PreferSpirituality profile={data} step={step} setStep={setStep} />,
             status: "entered-spiritsess",
         },
         {
-            component: <OtherLang profile={data} step={step} setStep={setStep} />,
+            component: <PreferOtherLang profile={data} step={step} setStep={setStep} />,
             status: "entered-otherlang",
         },
+        // {
+        //     component: <Language profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-lang",
+        // },
         {
-            component: <Language profile={data} step={step} setStep={setStep} />,
+            component: <TriedCounseling profile={data} step={step} setStep={setStep} />,
             status: "entered-lang",
         },
         {
-            component: <BirthDate profile={data} step={step} setStep={setStep} />,
-            status: "entered-dateofbirth",
+            component: <CounselingExp profile={data} step={step} setStep={setStep} />,
+            status: "entered-lang",
         },
+        // {
+        //     component: <BirthDate profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-dateofbirth",
+        // },
         {
             component: <Race profile={data} step={step} setStep={setStep} />,
             status: "entered-race",
         },
         {
-            component: <NewPatient profile={data} step={step} setStep={setStep} />,
-            status: "entered-patient",
+            component: <RacePrefer profile={data} step={step} setStep={setStep} />,
+            status: "entered-race",
         },
-        {
-            component: <Experience profile={data} step={step} setStep={setStep} />,
-            status: "entered-experience",
-        },
+        // {
+        //     component: <NewPatient profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-patient",
+        // },
+        // {
+        //     component: <Experience profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-experience",
+        // },
         {
             component: <Titles profile={data} step={step} setStep={setStep} />,
             status: "entered-titles",
@@ -136,10 +146,10 @@ const Questionnaire = () => {
             component: <SessionFee profile={data} step={step} setStep={setStep} />,
             status: "entered-sessionfee",
         },
-        {
-            component: <VirtualInperson profile={data} step={step} setStep={setStep} />,
-            status: "entered-virtualperson",
-        },
+        // {
+        //     component: <VirtualInperson profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-virtualperson",
+        // },
         {
             component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
             status: "entered-sessionfee",
@@ -148,32 +158,32 @@ const Questionnaire = () => {
         //     component: <InpersonSessionFuture profile={data} step={step} setStep={setStep} />,
         //     status: "entered-inpersonsession",
         // },
-        {
-            component: <Specialization profile={data} step={step} setStep={setStep} />,
-            status: "entered-specialization",
-        },
-        {
-            component: <Availability profile={data} step={step} setStep={setStep} />,
-            status: "entered-availability",
-        },
+        // {
+        //     component: <Specialization profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-specialization",
+        // },
+        // {
+        //     component: <Availability profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-availability",
+        // },
     ];
 
 
-    // useEffect(() => {
-    //     if(!isLoggedIn){
-    //         router.push('/');
-    //     }
-    //     if(isSuccess){
-    //         components.map((com, idx) => {
-    //             console.log(com.status);
-    //             console.log(data.registration_status);
-    //             if(com.status === data.registration_status){
-    //                 console.log('Triggered SetStep')
-    //                 setStep(idx + 1);
-    //             }
-    //         })
-    //     }
-    // },[isSuccess, isLoggedIn]);
+    useEffect(() => {
+        if(!isLoggedIn){
+            router.push('/');
+        }
+        if(isSuccess){
+            components.map((com, idx) => {
+                console.log(com.status);
+                console.log(data.registration_status);
+                if(com.status === data.registration_status){
+                    console.log('Triggered SetStep')
+                    setStep(idx + 1);
+                }
+            })
+        }
+    },[isSuccess, isLoggedIn]);
 
 
     return (

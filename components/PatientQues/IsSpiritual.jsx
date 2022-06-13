@@ -2,10 +2,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
-import Radio from '../../components/UI/Radio';
+import Radio from '../UI/Radio';
 
 const data = {
-    name: 'is_religion_biased',
+    name: 'is_spiritual',
     options: [
         {
             label: 'Yes, if the patient prefers',
@@ -29,13 +29,11 @@ const RelSess = ({ step, setStep, profile }) => {
 
     const handleNext = async (data) => {
 
-        const { is_religion_biased } = data;
-        console.log("Religion Biased: ", is_religion_biased);
-        if(!is_religion_biased) return;
-        await updatePatient({id: profile?.id, is_religion_biased, registration_status: 'entered-religion_biased' });
-
+        const { is_spiritual } = data;
+        console.log("Religion Biased: ", is_spiritual);
+        if(!is_spiritual) return;
+        await updatePatient({id: profile?.id, is_spiritual, registration_status: 'entered-is_religious' });
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -47,9 +45,9 @@ const RelSess = ({ step, setStep, profile }) => {
 
     return (
     <>
-        <form id="rel-sess-form" onSubmit={handleSubmit(handleNext)} className="">
+        <form id="is-spiritual-form" onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
-                <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
+                <h1 className="text-lg my-2 text-left">Do you consider yourself a spiritual person?</h1>
                 <div className="form-control w-full max-w-xs">
                     <Radio register={register} errors={errors} data={data} />
                 </div>
@@ -62,8 +60,8 @@ const RelSess = ({ step, setStep, profile }) => {
                 className="btn-outline border-neutral px-8 text-2xl" />
             <Button 
                 title={'Next'} 
-                form="rel-sess-form" 
-                className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().is_religion_biased ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                form="is-spiritual-form" 
+                className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().is_spiritual ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
         </div>
     </>
     )

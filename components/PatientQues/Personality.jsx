@@ -2,7 +2,7 @@ import React, { Profiler } from 'react';
 import RadioInput from '../../components/UI/Radio';
 import Button from '../UI/Button';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 
 
 
@@ -86,13 +86,13 @@ const Personality = ({ step, setStep, profile }) => {
 
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {...profile?.personality_type}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { mind, energy, nature, tactics, identity} = data;
         if(!mind || !energy || !nature || !tactics || !identity) return;
-        await updateTherapist({id: profile?.id, personality_type: {...data}, registration_status: 'entered-personality' });
+        await updatePatient({id: profile?.id, personality_type: {...data}, registration_status: 'entered-personality' });
 
         setStep(step + 1);
 
