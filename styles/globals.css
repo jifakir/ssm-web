@@ -10,4 +10,8 @@
         src: url('/font/AfternoonInStereo.ttf');
         font-weight: 400;
     }
+
+    body {
+        @apply text-black;
+    }
 }

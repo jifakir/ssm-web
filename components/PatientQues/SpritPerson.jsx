@@ -1,57 +1,67 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import Button from '../UI/Button';
+import Radio from '../../components/UI/Radio';
 
+const data = {
+        
+    name: 'is_spiritual',
+    options: [
+        {
+            label: 'Yes',
+            value: true
+        },
+        {
+            label: 'No',
+            value: false
+        },
+    ]
+};
 
+const SpiritPerson = ({ step, setStep, profile }) => {
 
-const SpritPerson = ({ step, setStep }) => {
-
-
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_spiritual: profile?.is_spiritual}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        await updateTherapist({ ...data, registration_status: 'entered-sprituality' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const { is_spiritual } = data;
+        if(!is_spiritual) return;
+        await updateTherapist({id: profile?.id, is_spiritual, registration_status: 'entered-spirit-persion' });
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
+
         setStep(step - 1);
+
     };
 
 
+
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-left">
-            <h1 className="text-lg my-2">Do you consider yourself a spiritual person?</h1>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('spiritual_person', {required: true})} value={'yes'} className={`radio ${errors.spiritual_person ? 'radio-accent' : 'checked:radio-primary'}`} />
-                    <span className="label-text pl-2">Yes</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input type="radio" {...register('spiritual_person', {required: true})} value={'no'} className={`radio ${errors.spiritual_person ? 'radio-accent' : 'checked:radio-primary'}`} />
-                    <span className="label-text justify-start pl-2">No</span>
-                </label>
-            </div>
+        <>
+            <form id="spirit-person-form" onSubmit={handleSubmit(handleNext)} className="">
+                <div className="w-full">
+                <h1 className="text-lg my-2 text-left">Do you consider yourself a spiritual person?</h1>
+                <div className="form-control w-full max-w-xs">
+                    <Radio register={register} errors={errors} data={data} />
+                </div>
+                </div>
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button className={`btn text-white ${!watch().spiritual_person ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    form="spirit-person-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().is_spiritual ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 
-export default SpritPerson;
+export default SpiritPerson;

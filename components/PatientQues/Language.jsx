@@ -1,79 +1,76 @@
 import React from 'react';
+import Checkbox from '../../components/UI/Checkbox';
 import { useForm } from 'react-hook-form';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
+import Select from '../UI/Select';
+import Button from '../UI/Button';
 
 
-const Language = ({ step, setStep }) => {
+const data = {
+        title: 'What other language(s) do you speak?',
+        name: 'languages',
+        required: true,
+        options: [
+            {
+                label: 'Spanish',
+                value: 'spanish'
+            },
+            {
+                label: 'French',
+                value: 'french'
+            },
+            {
+                label: 'Kreyol',
+                value: 'kreyol'
+            },
+            {
+                label: 'Yoruba',
+                value: 'yoruba'
+            },
+            {
+                label: 'Igbo',
+                value: 'igbo'
+            },
+            {
+                label: 'Other',
+                value: 'other'
+            },
+        ]
+    };
+
+const Language = ({ step, setStep, profile }) => {
     
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { languages: profile?.languages }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
-
-        await updateTherapist({ ...data, registration_status: 'entered-language' });
-
-        // if(!isSucces){
-        //     return
-        // }
-
+        const { languages } = data;
+        if(!languages) return;
+        await updateTherapist({id: profile?.id, ...data, registration_status: 'entered-language' });
         setStep(step + 1);
-
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
 
-
     return (
-        <form onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-            <h1 className="my-2 text-lg">Select all languages that apply</h1>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input {...register('language', {required: true})} value="spanish" type="checkbox" className={`checkbox checked:checkbox-primary ${errors.language && 'checkbox-accent'}`} />
-                    <span className="label-text pl-2">Spanish</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input {...register('language', {required: true})} value="french" type="checkbox" className={`checkbox checked:checkbox-primary ${errors.language && 'checkbox-accent'}`} />
-                    <span className="label-text justify-start pl-2">French</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input {...register('language', {required: true})} value="kreyol" type="checkbox" className={`checkbox checked:checkbox-primary ${errors.language && 'checkbox-accent'}`} />
-                    <span className="label-text justify-start pl-2">Kreyol</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input {...register('language', {required: true})} value="yoruba" type="checkbox" className={`checkbox checked:checkbox-primary ${errors.language && 'checkbox-accent'}`} />
-                    <span className="label-text justify-start pl-2">Yoruba</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input {...register('language', {required: true})} value="igbo" type="checkbox" className={`checkbox checked:checkbox-primary ${errors.language && 'checkbox-accent'}`} />
-                    <span className="label-text justify-start pl-2">Igbo</span>
-                </label>
-            </div>
-            <div className="form-control">
-                <label className="label cursor-pointer justify-start">
-                    <input {...register('language', {required: true})} value="other" type="checkbox" className={`checkbox checked:checkbox-primary ${errors.language && 'checkbox-accent'}`} />
-                    <span className="label-text justify-start pl-2">Other</span>
-                    <input {...register('other_language', {required: watch().language === 'other' ? true : false })} type="text" placeholder='Input language' className="input input-bordered input-sm ml-2 focus:outline-none border" />
-                </label>
-            </div>
+        <>
+            <form id="language-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+                <Checkbox data={data} register={register} errors={errors} />
+            </form>
             <div className={`flex gap-5 py-5`}>
-                <button onClick={handleBack} className={`btn btn-outline btn-primary`}>
-                    Back
-                </button>
-                <button type='submit' className={`btn text-white ${!watch().language ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Next
-                </button>
+                <Button 
+                    title={'Back'} 
+                    onClick={handleBack}
+                    className="btn-outline border-neutral px-8 text-2xl" />
+                <Button 
+                    title={'Next'} 
+                    form="language-form" 
+                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().languages ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
             </div>
-        </form>
+        </>
     )
 }
 

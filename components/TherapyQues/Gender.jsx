@@ -68,11 +68,12 @@ const Gender = ({ step, setStep, profile }) => {
                 <Button 
                     title={'Back'}
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr />
                 <Button 
                     title={'Next'} 
                     form="gender-form"
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().gender ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    btnQnr
+                    disabled={!watch('gender')} />
             </div>
         </>
     )

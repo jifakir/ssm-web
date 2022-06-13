@@ -30,6 +30,7 @@ import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
 import Specialization from '../../components/TherapyQues/Specialization';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { ImSpinner9 } from 'react-icons/im';
+import { useRouter } from 'next/router';
 
 
 const Questionnaire = () => {
@@ -40,9 +41,10 @@ const Questionnaire = () => {
     const {isLoggedIn } = useSelector(state => state.auth);
     const {data, isSuccess, isLoading} = useFetchTherapistQuery();
 
+    const router = useRouter();
     const components = [
         {
-            component: <Button title={'get started'} onClick={() => setStep(step + 1)} className="my-10" />,
+            component: <Button btnQnr btnLg title={'GET STARTED'} onClick={() => setStep(step + 1)} />,
             status: "",
         },
         {
@@ -52,6 +54,10 @@ const Questionnaire = () => {
         {
             component: <Email profile={data} step={step} setStep={setStep} />,
             status: "entered-email",
+        },
+        {
+            component: <Address profile={data} step={step} setStep={setStep} />,
+            status: "entered-address",
         },
         {
             component: <Gender profile={data} step={step} setStep={setStep} />,
@@ -64,10 +70,6 @@ const Questionnaire = () => {
         {
             component: <Orientation profile={data} step={step} setStep={setStep} />,
             status: "entered-orientation",
-        },
-        {
-            component: <Address profile={data} step={step} setStep={setStep} />,
-            status: "entered-address",
         },
         {
             component: <Religion profile={data} step={step} setStep={setStep} />,
@@ -156,33 +158,41 @@ const Questionnaire = () => {
     ];
 
 
-    useEffect(() => {
-        if(isSuccess){
-            components.map((com, idx) => {
-                console.log(com.status);
-                console.log(data.registration_status);
-                if(com.status === data.registration_status){
-                    console.log('Triggered SetStep')
-                    setStep(idx + 1);
-                }
-            })
-        }
-    },[])
+    // useEffect(() => {
+    //     if(!isLoggedIn){
+    //         router.push('/');
+    //     }
+    //     if(isSuccess){
+    //         components.map((com, idx) => {
+    //             console.log(com.status);
+    //             console.log(data.registration_status);
+    //             if(com.status === data.registration_status){
+    //                 console.log('Triggered SetStep')
+    //                 setStep(idx + 1);
+    //             }
+    //         })
+    //     }
+    // },[isSuccess, isLoggedIn]);
 
+    const percent = Math.round((step/components.length)*100);
 
     return (
-    <div className={`px-10 pt-5 ${step === 0 ? 'h-[600px] bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+    <div className={`px-[5%] pt-[100px] min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
-            <h1 className="text-[54px] font-sterio text-primary">Welcome</h1>
-            <p className="mt-3">
+            <h1 className="text-[54px] font-sterio text-[#331447]">Welcome</h1>
+            <p className="mt-8">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. 
             </p>
         </div>
         {/* Slide section */}
-        <div className="">
-            <progress className={`progress my-5 h-4 w-full bg-neutral1 progress-secondary ${step <1 ? 'hidden' : 'block'}`} value={(step/components.length)*100} max="100"></progress>
+        <div className="pb-14 mt-6">
+            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${percent === 0 ? 'hidden' : 'block'}`}>
+                <div className="relative transition-all duration-500 ease-out bg-secondary h-full" style={{width: `${percent}%`}}>
+                    <span className={`absolute z-10 ${percent > 95 ? 'pr-2 right-0' : 'pl-2 left-full'}`}>{`${percent}%`}</span>
+                </div>
+            </div>
             {/* Form Inner */}
-            <div className="text-center">
+            <div className="text-center mt-10">
                 {
                     isLoading ? <div className="flex justify-center items-center h-28"><ImSpinner9 className='text-2xl text-secondary animate-spin' /> </div> : components.map((comp, idx) => {
 

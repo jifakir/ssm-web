@@ -65,16 +65,10 @@ const Login = () => {
                     <MdOutlineClose />
                 </div>
                 <div className="card-body items-center text-center">
-                    {/* <button className="w-full btn gap-2 bg-white text-black hover:bg-white/70 normal-case font-bold">
-                        {/* <FcGoogle className='text-xl'/>
-                        Signup with Google */}
-                    {/* </button> */}
+                    
                     <GoogleLogin
                             clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
                             buttonText="Login with Google"
-                            // render={renderProps => (
-                            //     <button onClick={renderProps.onClick} style={{backgroundColor: 'blue'}}>This is my custom Google button</button>
-                            //   )}
                             theme='dark'
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}

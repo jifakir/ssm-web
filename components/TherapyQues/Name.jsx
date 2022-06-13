@@ -25,11 +25,11 @@ const Name = ({ step, setStep, data:profile }) => {
             <div className="form-control w-full max-w-xs">
                 <TextInput register={register} defaultValue={profile?.full_name} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
             </div>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Next'} 
-                    type="submit" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().full_name ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    btnQnr
+                    disabled={!watch('full_name')} />
             </div>
         </form>
     )
