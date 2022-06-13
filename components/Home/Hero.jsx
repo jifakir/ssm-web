@@ -71,6 +71,7 @@ const Hero = () => {
                                     <p className="my-2 md:my-5 text-xs md:text-lg">{slide.description}</p>
                                     <Button 
                                         title={'Start Saying More'}
+                                        btnLg
                                          />
                                 </div>
                             </SwiperSlide>

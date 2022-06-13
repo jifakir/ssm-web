@@ -33,7 +33,9 @@ export default function Home() {
         <HowItWorks />
         {/* FIND A THERAPIST BUTTON AND WHO WE ARE */}
         <div className="mt-10 flex justify-center">
-          <Button title={'Find A Therapist'}  />
+          <Link href={'/patient'} passHref>
+            <Button title={'Find A Therapist'} btnLg  />
+          </Link>
         </div>
         <div className="mt-16">
           <h1 className="text-[35px] text-black font-bold text-center mb-5">

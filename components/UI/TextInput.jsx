@@ -14,8 +14,8 @@ const Input = ({data, register, titleStyle, validate, inputLg, className, errors
         <div className="w-full">
             {
                 title && (
-                    <label className={`label ${titleStyle}`}>
-                        <span className="label-text">{title}</span>
+                    <label className={`label`}>
+                        <span className={`label-text ${titleStyle}`}>{title}</span>
                     </label>
                 )
             }

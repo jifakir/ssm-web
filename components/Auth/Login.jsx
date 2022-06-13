@@ -25,6 +25,7 @@ const Login = ({open, setOpen, redirectTo}) => {
     const [signup, { isLoading:signupLoading }] = useSignupMutation();
     const [googleLogin, result] = useGoogleLoginMutation();
     const router = useRouter();
+
     const responseGoogle = async (data) => {
         const {accessToken} = data;
         console.log(accessToken);
@@ -57,7 +58,8 @@ const Login = ({open, setOpen, redirectTo}) => {
 
 
     return (
-        <div className={`${open ? 'block' : 'hidden'} fixed min-h-screen overflow-y-scroll transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full flex justify-center items-center`}>
+        <div className={`${open ? 'block' : 'hidden'} fixed bottom-0 min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
+            <div className="overflow-y-scroll h-full w-full flex justify-center items-center">
             
             {
                 isLoading && !isError ? (
@@ -72,7 +74,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                     </div>
                 </div>
                 ):(tab === 0) ? (
-                    <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 card bg-white w-[415px] shadow-lg px-5 py-3">
+                    <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-5 py-3">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
@@ -102,18 +104,28 @@ const Login = ({open, setOpen, redirectTo}) => {
                                 }
                             </div>
                             <div className="form-control w-full max-w-xs">
-                                <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />
+                                <TextInput 
+                                    register={register} 
+                                    errors={errors} 
+                                    data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />
                             </div>
                             <div className="relative form-control w-full max-w-xs">
-                                <TextInput register={register} errors={errors} type={showPass ? 'text' : 'password'} data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
-                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-5 cursor-pointer">
+                                <TextInput
+                                    register={register} 
+                                    errors={errors} 
+                                    type={showPass ? 'text' : 'password'} 
+                                    data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
+                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-[25px] cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }
                                 </div>
                             </div>
                             <div className="w-full card-actions pt-5">
-                                <Button type="submit" title={'Continue'} className="btn-secondary text-2xl w-full" />
+                                <Button 
+                                    type="submit" 
+                                    title={'Continue'} 
+                                    className={'uppercase w-full'} />
                             </div>
                             <div className="text-sm mt-4">
                                 <p className="">Do not have an account? <span onClick={()=> setTab(1)} className="text-blue-700 font-bold cursor-pointer">Sign up</span></p>
@@ -188,6 +200,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                     </form>
                 )
             }
+            </div>
         </div>
     )
 }

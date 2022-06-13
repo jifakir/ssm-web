@@ -14,6 +14,7 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     leading-7
                     tracking-[0.055em]
                     text-primary
+                    uppercase
                     px-4
                     py-2
                     hover:bg-neutral/50 
@@ -57,6 +58,7 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     disabled:bg-[#C0C0C0]
                     disabled:text-[#3E3643]
                     disabled:cursor-not-allowed
+                    uppercase
                     ${
                         btnSecondary ?
                         'border-[3px] bg-transparent border-secondary hover:border-secondary/10':

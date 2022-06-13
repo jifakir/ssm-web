@@ -66,11 +66,12 @@ const Orientation = ({ step, setStep, profile}) => {
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr />
                 <Button
                     title={'Next'} 
-                    form="orientationform" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().sexual_orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="orientationform"
+                    btnQnr
+                    disabled={!watch('sexual_orientation')}  />
                 
             </div>
         </>

@@ -28,7 +28,7 @@ const Name = ({ step, setStep, data:profile }) => {
             <div className={`flex gap-5 py-5`}>
                 <Button 
                     title={'Next'}
-                    btnQnr 
+                    btnQnr
                     type="submit" 
                     className={`${isLoading ? 'loading' : ''}`} disabled={watch().full_name} />
             </div>

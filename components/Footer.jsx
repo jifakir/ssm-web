@@ -58,7 +58,7 @@ const Footer = () => {
 
     return (
         <footer className="relative bg-neutral/30 py-4 overflow-hidden ">
-            <div className="absolute -z-10 -top-[60px] w-[600px] h-[450px]">
+            <div className="absolute -z-10 -top-5">
                 <Image src={'/img/footerbg.svg'} alt={"Footer Bg"} width={686} height={450} />
             </div>
             <div className="px-[2%] lg:flex justify-between">
