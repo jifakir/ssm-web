@@ -26,7 +26,7 @@ const Therapist = () => {
         if(!isLoggedIn){
             setOpen(!open);
         }else{  
-            router.push('/patient/questionnaire');
+            router.push('/therapist/questionnaire');
         }
     };
 
