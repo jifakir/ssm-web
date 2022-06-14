@@ -19,7 +19,7 @@ const Contact = () => {
     
     return (
         <main className="">
-            <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[150px]">
+            <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[80px]">
                 <div className="lg:w-1/2 order-2 lg:order-none">
                     <div className="">
                         <h1 className="text-5xl mt-5 lg:mt-0 font-sterio">Connect with us!</h1>
@@ -27,13 +27,14 @@ const Contact = () => {
                             Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus.
                         </p>
                         <form id='contact-form' onSubmit={handleSubmit(onSubmitHandler)} className="mt-10 md:pr-16">
-                            <div className="grid grid-cols-2 gap-7">
+                            <div className="w-full sm:grid  gap-3 md:gap-7 space-y-3 sm:space-y-0">
                                 <TextInput 
                                     data={{name: 'firstname', title: 'First Name', pHolder: 'First Name'}}
                                     register={register}
                                     required
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
+                                    className={'min-w-full'}
                                     />
                                 <TextInput 
                                     data={{name: 'lastname', title: 'Last Name', pHolder: 'Last Name'}}
@@ -41,6 +42,7 @@ const Contact = () => {
                                     required
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2 "
+                                    className={'min-w-full'}
                                     />
                                 <TextInput
                                     data={{name: 'email', title: 'Email', pHolder: 'Email'}}
@@ -49,6 +51,7 @@ const Contact = () => {
                                     pattern="/^\S+@\S+$/i"
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
+                                    className={'min-w-full'}
                                     />
                                 <TextInput 
                                     data={{name: 'phone', title: 'Phone Number', pHolder: 'Phone Number'}}
@@ -56,6 +59,7 @@ const Contact = () => {
                                     required
                                     errors={errors}
                                     titleStyle="px-0 py-0 pb-2"
+                                    className={'min-w-full'}
                                     />
                                 <div className="col-span-2">
                                     <TextInput
@@ -77,8 +81,8 @@ const Contact = () => {
                         </form>
                     </div>
                 </div>
-                <div className="relative w-1/2">
-                        <Image src={'/img/contact.png'} alt="Contact Image" width={602} height={637} />
+                <div className="relative w-full lg:w-1/2">
+                        <Image src={'/img/contact.jpg'} alt="Contact Image" layout='fill' />
                 </div>
             </div>
         </main>

@@ -33,7 +33,7 @@ const Therapist = () => {
     return (
         <div className="">
             <Login open={open} setOpen={setOpen} redirectTo={'/patient/questionnaire'}/>
-            <div className="w-[90%] md:w-[65%] mx-auto">
+            <div className="w-[90%] xs:w-[80%] lg:w-[65%] mx-auto">
                 <div className="my-5 md:my-16">
                     <h1 className="font-sterio text-4xl md:text-5xl text-center mt-10">Find a Therapist</h1>
                     <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
@@ -60,9 +60,9 @@ const Therapist = () => {
                     <Button 
                         title={'Find A Therapist'} />
                 </div>
-                <div className="md:my-16">
+                <div className="my-10 md:my-16">
                     <h1 className="my-5 md:my-10 font-bold text-lg sm:text-2xl md:text-3xl text-center">Therapy is more successful when you feel supported</h1>
-                    <div className="text-sm md:text-base">
+                    <div className="text-sm md:text-base text-center sm:text-left">
                         <p className="py-2">
                             When it comes to the mental health treatment journey, a critical aspect of your healing is how connected you feel to your provider. Have you ever tried going to a therapist just to feel disconnected and ultimately quit going? Or maybe you were simply just looking for a therapist and became overwhelmed with the sheer number of options out there. Well, we can promise you that you&apos;re not alone. Unfortunately, finding the ideal therapist ends up being much like dating around. The issue, though, is that feeling a disconnect in therapy only continues to affect us in the long run.    
                         </p>

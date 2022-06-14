@@ -21,9 +21,9 @@ export default function Home() {
       <div className="w-[90%] md:w-[65%] mx-auto">
         <div className="w-full lg:flex items-center justify-between py-16">
           <div className="lg:w-1/2 relative px-5 flex justify-center lg:block">
-            <Image src={'/img/underhero.png'} alt="Under hero" width={454} height={302} />
+            <Image src={'/img/therapysession_couch.png'} alt="Under hero" width={454} height={302} />
           </div>
-          <div className="lg:w-1/2 pl-5 mt-5 lg:mt-0">
+          <div className="lg:w-1/2 md:pl-5 mt-5 lg:mt-0">
             <p className="text-center lg:text-left">
               Finding the right therapist can be stressful and time-intensive. Start Saying More is an innovative platform that aims to connect minority individuals with a mental health provider that they are most likely to feel secure sharing and healing with. Using our detailed survey, we’ll match your personality, area(s) of concern, experiences, and preferences with professionals in our database that are just right for you. We’re helping to reduce the stress associated with looking for a new provider. We want to make it easier for you.
             </p>
@@ -34,7 +34,7 @@ export default function Home() {
         {/* FIND A THERAPIST BUTTON AND WHO WE ARE */}
         <div className="mt-10 flex justify-center">
           <Link href={'/patient'} passHref>
-            <Button title={'Find A Therapist'} btnLg  />
+            <Button title={'Find A Therapist'} btnLg fontSize={'text-lg md:text-2xl'}  />
           </Link>
         </div>
         <div className="mt-16">

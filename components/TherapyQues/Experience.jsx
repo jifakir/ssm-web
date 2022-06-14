@@ -60,21 +60,25 @@ const Experience = ({ step, setStep, profile }) => {
         <>
             <form id="experience-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <h1 className="text-lg my-2 text-left">How many years of experience do you have?</h1>
+                    <h1 className="my-2 text-left">How many years of experience do you have?</h1>
                     <div className="form-control w-full max-w-xs text-left">
                         <Select register={register} control={control} errors={errors} data={data} />
                     </div>
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
+                    btnQnr
+                    btnSecondary
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
                     form="experience-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().years_of_experience ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    btnQnr
+                    disabled={!watch('years_of_experience')}
+                     />
             </div>
         </>
     )

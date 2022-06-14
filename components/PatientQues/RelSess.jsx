@@ -55,7 +55,7 @@ const RelSess = ({ step, setStep, profile }) => {
                 </div>
             </div>
         </form>
-        <div className={`flex gap-5 py-5`}>
+        <div className={`flex gap-5 py-5 mt-9`}>
             <Button 
                 title={'Back'} 
                 onClick={handleBack}

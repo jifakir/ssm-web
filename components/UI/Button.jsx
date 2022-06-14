@@ -37,7 +37,7 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     }
                     ${className}`}
                     disabled={disabled}>
-                <div className="">
+                <div className="flex justify-center items-center">
                 {children}
                 {title}
                 </div>
@@ -66,14 +66,14 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     }
                     ${
                         btnLg ?
-                        'min-w-[235px] px-8':
-                        'min-w-[156px] px-6'
+                        'sm:min-w-[235px] px-4 sm:px-6 md:px-8':
+                        'sm:min-w-[156px] px-4 sm:px-5 md:px-6'
                     }
                     ${className}
                     ${
-                        fontSize ? fontSize : 'text-2xl'
+                        fontSize ? fontSize : 'text-xl md:text-2xl'
                     }`}>
-                <div className="">
+                <div className="flex justify-center items-center">
                 {children}
                 {title}
                 </div>

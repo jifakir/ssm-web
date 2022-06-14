@@ -50,6 +50,8 @@ const Insurance = ({step, setStep, profile}) => {
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
+                    btnQnr
+                    btnSecondary
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 

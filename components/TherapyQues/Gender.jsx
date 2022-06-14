@@ -68,7 +68,8 @@ const Gender = ({ step, setStep, profile }) => {
                 <Button 
                     title={'Back'}
                     onClick={handleBack}
-                    btnQnr />
+                    btnQnr
+                    btnSecondary />
                 <Button 
                     title={'Next'} 
                     form="gender-form"

@@ -51,15 +51,18 @@ const NewPatient = ({ step, setStep, profile }) => {
                     </div>
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
+                    btnQnr
+                    btnSecondary
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    form="new-patient-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().accept_new_patients ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="new-patient-form"
+                    btnQnr
+                    disabled={!watch('accept_new_patients')} />
             </div>
         </>
     )
