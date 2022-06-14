@@ -89,7 +89,8 @@ const Hero = () => {
                                             disabled:bg-[#C0C0C0]
                                             disabled:text-[#3E3643]
                                             disabled:cursor-not-allowed
-                                            uppercase border-[3px]':
+                                            uppercase border-[3px]'
+                                            sm:text-2xl
                                             `}>
                                                 START SAYING MORE
                                         </button>
