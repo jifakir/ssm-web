@@ -57,13 +57,13 @@ const Footer = () => {
     const { register, watch, handleSubmit, formState: {errors}} = useForm();
 
     return (
-        <footer className="relative bg-neutral/30 py-4 overflow-hidden ">
+        <footer className="relative bg-neutral/30 py-4 overflow-hidden bg-gradient-to-r from-transparent via-neutral/40 to-transparent">
             <div className="absolute -z-10 -top-5">
                 <Image src={'/img/footerbg.svg'} alt={"Footer Bg"} width={686} height={450} />
             </div>
             <div className="px-[2%] lg:flex justify-between">
                 <div className="lg:w-2/3 sm:flex justify-between items-center">
-                    <div className="sm:w-1/2 py-10">
+                    <div className="sm:w-1/2 py-10 px-5 sm:px-0">
                         <div className="w-full flex justify-center">
                             <Image src={'/img/seclogo.svg'} alt="Footer Logo" width={326} height={106} />
                         </div>
@@ -93,9 +93,10 @@ const Footer = () => {
                                     }} 
                                     inputLg
                                     register={register}
-                                    errors={errors} />
+                                    errors={errors} 
+                                     />
                                 <div className="">
-                                    <Button title={'SUBMIT'} className="btn-secondary" />
+                                    <Button title={'SUBMIT'} fontSize="text-lg" />
                                 </div>
                             </div>
                         </form>
@@ -132,7 +133,9 @@ const Footer = () => {
                         <p className="text-[15px] pt-4 pb-3">
                         Are you ready to start your therapy journey? Match with one today!
                         </p>
-                        <Button title={'START SAYING MORE'} btnSecondary />
+                        <Link href={'/patient'} passHref>
+                            <Button title={'START SAYING MORE'} btnSecondary fontSize={'text-xl'} />
+                        </Link>
                     </div>
                     <div className="sm:w-1/2 lg:w-full mt-5 sm:mt-0 lg:mt-6">
                         <h5 className="relative inline-block text-[15px] font-semibold">
@@ -148,7 +151,9 @@ const Footer = () => {
                         <p className="text-[15px] pt-4 pb-3">
                             Interested in joining our directory?
                         </p>
-                        <Button title={'REGISTER TODAY'} btnSecondary />
+                        <Link href={'/therapist'} passHref>
+                            <Button title={'REGISTER TODAY'} btnSecondary fontSize={'text-xl'} />
+                        </Link>
                     </div>
                 </div>
             </div>

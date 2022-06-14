@@ -74,12 +74,11 @@ const Login = ({open, setOpen, redirectTo}) => {
                     </div>
                 </div>
                 ):(tab === 0) ? (
-                    <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-5 py-3">
+                    <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
                         <div className="card-body items-center text-center">
-                            
                             <GoogleLogin
                                     clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
                                     theme='dark'
@@ -106,7 +105,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                             <div className="form-control w-full max-w-xs">
                                 <TextInput 
                                     register={register} 
-                                    errors={errors} 
+                                    errors={errors}
                                     data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />
                             </div>
                             <div className="relative form-control w-full max-w-xs">
@@ -115,31 +114,58 @@ const Login = ({open, setOpen, redirectTo}) => {
                                     errors={errors} 
                                     type={showPass ? 'text' : 'password'} 
                                     data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
-                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-[25px] cursor-pointer">
+                                <div 
+                                    onClick={() => setShowPass(!showPass)} 
+                                    className="absolute right-3 bottom-4 cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }
                                 </div>
                             </div>
                             <div className="w-full card-actions pt-5">
-                                <Button 
-                                    type="submit" 
-                                    title={'Continue'} 
-                                    className={'uppercase w-full'} />
+                                <button 
+                                type='submit'
+                                    className={`
+                                        w-full
+                                        bg-secondary
+                                        text-2xl
+                                        tracking-[0.055em]
+                                        text-primary
+                                        py-1
+                                        hover:bg-secondary/50 
+                                        active:bg-neutral-focus
+                                        rounded
+                                        gap-2
+                                        px-5
+                                        md:px-8
+                                        font-semibold
+                                        disabled:bg-[#C0C0C0]
+                                        disabled:text-[#3E3643]
+                                        disabled:cursor-not-allowed
+                                        uppercase border-[3px]':
+                                        `}>
+                                            continue
+                                        </button>
                             </div>
                             <div className="text-sm mt-4">
-                                <p className="">Do not have an account? <span onClick={()=> setTab(1)} className="text-blue-700 font-bold cursor-pointer">Sign up</span></p>
+                                <p className="">
+                                    Do not have an account? 
+                                    <span 
+                                    onClick={()=> setTab(1)} 
+                                    className="text-blue-700 font-bold cursor-pointer">Sign up</span></p>
                             </div>
                             <div className="text-xs">
                                 <p className="">
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, 
+                                    tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                                     justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
                                 </p>
                             </div>
                         </div>
                     </form>
                 ) : (
-                    <form onSubmit={handleSubmit(onSignupHandler)} className="my-10 bg-white card w-[415px] shadow px-5 py-3">
-                        <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
+                    <form onSubmit={handleSubmit(onSignupHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
+                        <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
                         <div className="card-body items-center text-center">
@@ -160,10 +186,10 @@ const Login = ({open, setOpen, redirectTo}) => {
                                     onFailure={responseGoogle}
                                     cookiePolicy={'single_host_origin'}
                                 />
-                            <div className="">
-                                <h1 className="text-2xl font-bold">or</h1>
+                            <div className="mt-3">
+                                <h1 className="text-2xl font-medium">or</h1>
                             </div>
-                            <div className="">
+                            <div className={`${isError ? 'block' : 'hidden'}`}>
                                 {
                                     isError && <p className="text-xs text-accent font-bold">{error.data?.message}</p>
                                 }
@@ -176,21 +202,46 @@ const Login = ({open, setOpen, redirectTo}) => {
                             </div>
                             <div className="relative form-control w-full max-w-xs">
                                 <TextInput register={register} errors={errors} type={showPass ? 'text' : 'password'} data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
-                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-5 cursor-pointer">
+                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-4 cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }
                                 </div>
                             </div>
                             <div className="w-full card-actions pt-5">
-                                <Button title={'continue'} type="submit" className="text-2xl btn-secondary w-full" />
+                            <button 
+                                type='submit'
+                                    className={`
+                                        w-full
+                                        bg-secondary
+                                        text-2xl
+                                        tracking-[0.055em]
+                                        text-primary
+                                        py-1
+                                        hover:bg-secondary/50 
+                                        active:bg-neutral-focus
+                                        rounded
+                                        gap-2
+                                        px-5
+                                        md:px-8
+                                        font-semibold
+                                        disabled:bg-[#C0C0C0]
+                                        disabled:text-[#3E3643]
+                                        disabled:cursor-not-allowed
+                                        uppercase border-[3px]':
+                                        `}>
+                                            continue
+                                        </button>
                             </div>
                             {/* <div className="text-sm">
                                 <p className="">Do not have an account? <a className="text-blue-700 font-bold cursor-pointer">Sign up</a></p>
                             </div> */}
                             <div className="text-xs mt-5">
                                 <p className="font-medium mb-2">
-                                    Already have an account? <Link href={'/login'}><a className="text-blue-700 font-bold cursor-pointer">Log in</a></Link>
+                                    Already have an account? 
+                                    <span 
+                                    onClick={()=> setTab(2)} 
+                                    className="text-blue-700 font-bold cursor-pointer pl-1">Login</span>
                                 </p>
                                 <p className="">
                                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.

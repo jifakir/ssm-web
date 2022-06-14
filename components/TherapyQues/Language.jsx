@@ -5,7 +5,21 @@ import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Select from '../UI/Select';
 import Button from '../UI/Button';
+import Radio from '../UI/Radio';
 
+const otherdata = {
+    name: 'speak_other_languages',
+    options: [
+        {
+            label: 'Yes',
+            value: true
+        },
+        {
+            label: 'No',
+            value: false
+        },
+    ]
+};
 
 const data = {
         title: 'What other language(s) do you speak?',
@@ -58,17 +72,32 @@ const Language = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="language-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-                <Checkbox data={data} register={register} errors={errors} />
+                <div className="md:flex gap-20">
+                    <div className="">
+                        <h1 className="text-lg my-2 text-left">Do you speak any other languages?</h1>
+                        <div className="form-control w-full max-w-xs">
+                            <Radio register={register} errors={errors} data={otherdata} />
+                        </div>
+                    </div>
+                    {
+                        watch('speak_other_languages') && 
+                        (
+                            <Checkbox data={data} register={register} errors={errors} />
+                        )
+                    }
+                </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr
+                    btnSecondary />
                 <Button 
                     title={'Next'} 
                     form="language-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().languages ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    btnQnr 
+                    disabled={!watch('speak_other_languages')}/>
             </div>
         </>
     )

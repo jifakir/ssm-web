@@ -47,7 +47,7 @@ const SpiritSession = ({ step, setStep, profile }) => {
         <>
             <form id="spirit-session-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control">
-                <h1 className="text-lg my-2 text-left">Do you offer spirituality in your sessions?</h1>
+                <h1 className="text-lg my-2 text-left"></h1>
                 <div className="form-control w-full max-w-xs">
                     <Radio register={register} errors={errors} data={data} />
                 </div>

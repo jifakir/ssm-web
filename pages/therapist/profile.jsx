@@ -3,12 +3,13 @@ import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { GrCertificate } from 'react-icons/gr';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
-import { MdAccessTime, MdEdit, MdOutlineCake, MdOutlineLocationOn } from 'react-icons/md';
+import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn } from 'react-icons/md';
 import { BsGenderTrans, BsTelephone } from 'react-icons/bs';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-
+import Input from '../../components/UI/TextInput';
+import { useForm } from 'react-hook-form';
 
 
 const titles = [
@@ -45,11 +46,15 @@ const titles = [
 const TherapistProfile = () => {
 
     const [imgUrl, setImgUrl] = useState();
+    const [factor, setFactor] = useState(true);
+    const [details, setdetails] = useState(false);
+    const [qualification, setQualification] = useState(false);
+    const [availibility, setAvailability] = useState(false);
     const inputRef = useRef();
     const router = useRouter();
     const { isLoggedIn } = useSelector(state => state.auth);
     const {data:profile, isLoading, isSuccess, isError} = useFetchTherapistQuery();
-
+    const { register, watch, formState: {errors} } = useForm();
 
     const uploadHandler = (e) => {
 
@@ -103,16 +108,30 @@ const TherapistProfile = () => {
                             <h2 className="pl-2 font-semibold">Myers-Briggs Factors</h2>
                         </div>
                         <div className="text-2xl sm:text-4xl font-bold">
-                            <h1 className="tracking-[10px] md:tracking-[60px] pt-5">ENFJ</h1>
+                            {
+                                factor ? <Input register={register} value={'EFRJ'} errors={errors} data={{name: 'factor', pHolder: 'name'}} /> : (
+                                <h1 className="tracking-[10px] md:tracking-[60px] pt-5">
+                                    EFRJ
+                                </h1>
+                                )
+                            }
                         </div>
                         <div className="text-secondary text-2xl cursor-pointer">
-                            <MdEdit />
+                            {
+                                factor ? 
+                                <MdOutlineUpdate onClick={() => setFactor(false)} /> : 
+                                <MdEdit onClick={() => setFactor(true)} />
+                            }
                         </div>
                     </div>
                     {/* Date of Birth */}
                     <div className="relative py-5 border-b-2 border-black">
                         <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
-                            <MdEdit />
+                            {
+                                details ? 
+                                <MdOutlineUpdate onClick={() => setdetails(false)} /> : 
+                                <MdEdit onClick={() => setdetails(true)} />
+                            }
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pt-5">
                             <div className="flex items-center">
@@ -120,35 +139,77 @@ const TherapistProfile = () => {
                                     <MdOutlineCake className='text-xl' />
                                     <h2 className="pl-2">Date of Birth</h2>
                                 </div>
-                                <h3 className="pl-5">{profile?.date_of_birth}</h3>
+                                <div className=" pl-5">
+                                    {
+                                    details ? 
+                                    <Input 
+                                        register={register} 
+                                        errors={errors} 
+                                        type="date"
+                                        data={{name: 'date_of_birth', pHolder: 'Date'}}
+                                        className="w-52" /> : 
+                                    <h3 className="pl-5">{profile?.date_of_birth}</h3>
+                                    }
+                                </div>
                             </div>
                             <div className="flex items-center">
                                 <div className="flex font-semibold justify-center items-center text-primary">
                                     <MdOutlineLocationOn className='text-xl' />
                                     <h2 className="pl-2">Address</h2>
                                 </div>
-                                <h3 className="pl-5">{
-                                    `${profile?.user_address.line1} 
-                                    ${profile?.user_address.line2}
-                                    ${profile?.user_address.city}
-                                    ${profile?.user_address.state}
-                                    ${profile?.user_address.zip_code}
-                                    `
-                                }</h3>
+                                <div className=" pl-5">
+                                    {
+                                    details ? 
+                                    <Input 
+                                        register={register} 
+                                        errors={errors}
+                                        data={{name: 'date_of_birth', pHolder: 'Address'}}
+                                        className="w-52" /> : 
+                                        <h3 className="">{
+                                            `${profile?.user_address.line1} 
+                                            ${profile?.user_address.line2}
+                                            ${profile?.user_address.city}
+                                            ${profile?.user_address.state}
+                                            ${profile?.user_address.zip_code}
+                                            `
+                                        }</h3>
+                                    }
+                                </div>
                             </div>
                             <div className="flex items-center">
                                 <div className="flex font-semibold justify-center items-center text-primary">
                                     <BsTelephone className='text-xl' />
                                     <h2 className="pl-2">Phone Number</h2>
                                 </div>
-                                <h3 className="pl-5">{profile?.phone_number}</h3>
+                                <div className="pl-5">
+                                    {
+                                        details ? 
+                                        <Input 
+                                            register={register} 
+                                            errors={errors}
+                                            data={{name: 'date_of_birth', pHolder: 'Phone Number'}}
+                                            className="w-52" /> : 
+                                            <h3 className="">{profile?.phone_number}</h3>
+                                    }
+                                </div>
                             </div>
                             <div className="flex items-center">
                                 <div className="flex font-semibold justify-center items-center text-primary">
                                     <BsGenderTrans className='text-xl' />
                                     <h2 className="pl-2">Gender</h2>
                                 </div>
-                                <h3 className="pl-5">{profile?.gender}</h3>
+                                <div className="pl-5">
+                                    {
+                                        details ? 
+                                        <Input 
+                                            register={register} 
+                                            errors={errors}
+                                            data={{name: 'gender', pHolder: 'eg: male'}}
+                                            className="w-52" /> : 
+                                            <h3 className="">{profile?.gender}</h3>
+                                    }
+                                </div>
+
                             </div>
                         </div>
                     </div>

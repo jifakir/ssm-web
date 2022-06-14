@@ -62,11 +62,12 @@ const Orientation = ({ step, setStep, profile}) => {
                 <RadioInput register={register} errors={errors} data={data} />
                 <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    btnQnr />
+                    btnQnr 
+                    btnSecondary />
                 <Button
                     title={'Next'} 
                     form="orientationform"

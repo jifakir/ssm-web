@@ -24,6 +24,7 @@ import Titles from '../../components/TherapyQues/Titles';
 import AcceptInsurance from '../../components/TherapyQues/AcceptInsurance';
 import Insurance from '../../components/TherapyQues/Insurance';
 import SessionFee from '../../components/TherapyQues/SessionFee';
+import License from '../../components/TherapyQues/License';
 import VirtualInperson from '../../components/TherapyQues/VirtualInperson';
 import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
 import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
@@ -55,6 +56,10 @@ const Questionnaire = () => {
             component: <Email profile={data} step={step} setStep={setStep} />,
             status: "entered-email",
         },
+        // {
+        //     component: <Phone profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-phone",
+        // },
         {
             component: <Address profile={data} step={step} setStep={setStep} />,
             status: "entered-address",
@@ -62,46 +67,6 @@ const Questionnaire = () => {
         {
             component: <Gender profile={data} step={step} setStep={setStep} />,
             status: "entered-gender",
-        },
-        // {
-        //     component: <Phone profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-phone",
-        // },
-        {
-            component: <Orientation profile={data} step={step} setStep={setStep} />,
-            status: "entered-orientation",
-        },
-        {
-            component: <Religion profile={data} step={step} setStep={setStep} />,
-            status: "entered-religion",
-        },
-        {
-            component: <Personality profile={data} step={step} setStep={setStep} />,
-            status: "entered-personality",
-        },
-        {
-            component: <Education profile={data} step={step} setStep={setStep} />,
-            status: "entered-education",
-        },
-        {
-            component: <RelSess profile={data} step={step} setStep={setStep} />,
-            status: "entered-relsess",
-        },
-        {
-            component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
-            status: "entered-spirituality",
-        },
-        {
-            component: <SpiritSess profile={data} step={step} setStep={setStep} />,
-            status: "entered-spiritsess",
-        },
-        {
-            component: <OtherLang profile={data} step={step} setStep={setStep} />,
-            status: "entered-otherlang",
-        },
-        {
-            component: <Language profile={data} step={step} setStep={setStep} />,
-            status: "entered-lang",
         },
         {
             component: <BirthDate profile={data} step={step} setStep={setStep} />,
@@ -111,12 +76,21 @@ const Questionnaire = () => {
             component: <Race profile={data} step={step} setStep={setStep} />,
             status: "entered-race",
         },
+        
         {
-            component: <NewPatient profile={data} step={step} setStep={setStep} />,
-            status: "entered-patient",
+            component: <Orientation profile={data} step={step} setStep={setStep} />,
+            status: "entered-orientation",
+        },
+        {
+            component: <Education profile={data} step={step} setStep={setStep} />,
+            status: "entered-education",
         },
         {
             component: <Experience profile={data} step={step} setStep={setStep} />,
+            status: "entered-experience",
+        },
+        {
+            component: <License profile={data} step={step} setStep={setStep} />,
             status: "entered-experience",
         },
         {
@@ -124,33 +98,68 @@ const Questionnaire = () => {
             status: "entered-titles",
         },
         {
+            component: <Personality profile={data} step={step} setStep={setStep} />,
+            status: "entered-personality",
+        },
+        {
+            component: <Religion profile={data} step={step} setStep={setStep} />,
+            status: "entered-religion",
+        },
+        
+        {
+            component: <RelSess profile={data} step={step} setStep={setStep} />,
+            status: "entered-relsess",
+        },
+        {
+            component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
+            status: "entered-spirituality",
+        },
+        // {
+        //     component: <SpiritSess profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-spiritsess",
+        // },
+        // {
+        //     component: <OtherLang profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-otherlang",
+        // },
+        {
+            component: <Language profile={data} step={step} setStep={setStep} />,
+            status: "entered-lang",
+        },
+        
+        {
+            component: <NewPatient profile={data} step={step} setStep={setStep} />,
+            status: "entered-patient",
+        },
+        {
             component: <AcceptInsurance profile={data} step={step} setStep={setStep} />,
             status: "entered-acceptinsurance",
-        },
-        {
-            component: <Insurance profile={data} step={step} setStep={setStep} />,
-            status: "entered-insurance",
-        },
-        {
-            component: <SessionFee profile={data} step={step} setStep={setStep} />,
-            status: "entered-sessionfee",
         },
         {
             component: <VirtualInperson profile={data} step={step} setStep={setStep} />,
             status: "entered-virtualperson",
         },
-        {
-            component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
-            status: "entered-sessionfee",
-        },
         // {
-        //     component: <InpersonSessionFuture profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-inpersonsession",
+        //     component: <Insurance profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-insurance",
         // },
+        {
+            component: <InpersonSessionFuture profile={data} step={step} setStep={setStep} />,
+            status: "entered-inpersonsession",
+        },
         {
             component: <Specialization profile={data} step={step} setStep={setStep} />,
             status: "entered-specialization",
         },
+        // {
+        //     component: <SessionFee profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-sessionfee",
+        // },
+        
+        // {
+        //     component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-sessionfee",
+        // },
         {
             component: <Availability profile={data} step={step} setStep={setStep} />,
             status: "entered-availability",

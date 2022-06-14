@@ -49,7 +49,7 @@ const Form = ({ setSubmitted }) => {
     return (
         <div className="w-full min-h-full flex justify-center items-center">
             
-            <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 card w-[415px] shadow px-5 py-3">
+            <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
                 <div className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                     <MdOutlineClose />
                 </div>
@@ -67,8 +67,8 @@ const Form = ({ setSubmitted }) => {
                             cookiePolicy={'single_host_origin'}
                             className="w-full rounded-lg cursor-pointer text-center bg-blue-500"
                         />
-                    <div className="">
-                        <h1 className="text-2xl font-bold">or</h1>
+                    <div className="mt-3">
+                        <h1 className="text-2xl font-medium">or</h1>
                     </div>
                     <div className="">
                         {
@@ -90,7 +90,29 @@ const Form = ({ setSubmitted }) => {
                         </div>
                     </div>
                     <div className="w-full card-actions pt-5">
-                        <Button title={'Login'} className="btn-secondary w-full" />
+                    <button 
+                                type='submit'
+                                    className={`
+                                        w-full
+                                        bg-secondary
+                                        text-2xl
+                                        tracking-[0.055em]
+                                        text-primary
+                                        py-1
+                                        hover:bg-secondary/50 
+                                        active:bg-neutral-focus
+                                        rounded
+                                        gap-2
+                                        px-5
+                                        md:px-8
+                                        font-semibold
+                                        disabled:bg-[#C0C0C0]
+                                        disabled:text-[#3E3643]
+                                        disabled:cursor-not-allowed
+                                        uppercase border-[3px]':
+                                        `}>
+                                            continue
+                                        </button>
                     </div>
                     {/* <div className="text-sm">
                         <p className="">Do not have an account? <a className="text-blue-700 font-bold cursor-pointer">Sign up</a></p>
