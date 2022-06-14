@@ -32,7 +32,7 @@ const Therapist = () => {
 
     return (
         <div className="">
-            <Login open={open} setOpen={setOpen} redirectTo={'/patient/questionnaire'}/>
+            <Login open={open} setOpen={setOpen} redirectTo={'/therapist/questionnaire'}/>
             <div className="w-[90%] xs:w-[80%] lg:w-[65%] mx-auto">
                 <div className="my-5 md:my-16">
                     <h1 className="font-sterio text-4xl md:text-5xl text-center mt-10">Find a Therapist</h1>
