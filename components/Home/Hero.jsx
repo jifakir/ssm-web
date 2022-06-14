@@ -64,10 +64,10 @@ const Hero = () => {
                     {
                         slideData.map((slide, idx) => (
                             <SwiperSlide key={`slide_${idx}`}>
-                                <div className="relative w-full z-10 h-[200px] xs:h-[250px] sm:h-[300px] md:h-[400px] lg:h-[550px] overflow-hidden">
+                                <div className="relative w-full z-10 h-[200px] xs:h-[250px] sm:h-[350px] md:h-[400px] lg:h-[550px] overflow-hidden">
                                     <Image src={slide.imgUrl} alt={'Hero Image'} layout="fill" objectFit='cover'  />
                                 </div>
-                                <div className="absolute z-10 top-1/3 lg:top-1/2 left-5 sm:left-14 md:left-24">
+                                <div className="absolute z-10 top-1/3 sm:top-1/2 md:top-1/3 lg:top-1/2 left-5 sm:left-14 md:left-24">
                                     <h1 className="font-sterio text-3xl sm:text-5xl md:text-7xl text-primary">{slide.title}</h1>
                                     <p className="my-2 md:my-5 text-xs md:text-lg">{slide.description}</p>
                                     <Link href={'/therapist'} passHref>

@@ -19,7 +19,7 @@ const Contact = () => {
     
     return (
         <main className="">
-            <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[80px]">
+            <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[50px]">
                 <div className="lg:w-1/2 order-2 lg:order-none">
                     <div className="">
                         <h1 className="text-5xl mt-5 lg:mt-0 font-sterio">Connect with us!</h1>
@@ -27,7 +27,7 @@ const Contact = () => {
                             Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus.
                         </p>
                         <form id='contact-form' onSubmit={handleSubmit(onSubmitHandler)} className="mt-10 md:pr-16">
-                            <div className="w-full sm:grid  gap-3 md:gap-7 space-y-3 sm:space-y-0">
+                            <div className="w-full sm:grid  gap-5 space-y-3 sm:space-y-0">
                                 <TextInput 
                                     data={{name: 'firstname', title: 'First Name', pHolder: 'First Name'}}
                                     register={register}
@@ -81,8 +81,8 @@ const Contact = () => {
                         </form>
                     </div>
                 </div>
-                <div className="relative w-full lg:w-1/2">
-                        <Image src={'/img/contact.jpg'} alt="Contact Image" layout='fill' />
+                <div className="relative lg:w-1/2 max-h-[350px] xs:max-h-[490px] sm:max-h-[640px] md:max-h-[850px] lg:max-h-[680px] overflow-hidden">
+                        <Image src={'/img/contact.jpg'} alt="Contact Image" width={2832} height={4240} />
                 </div>
             </div>
         </main>

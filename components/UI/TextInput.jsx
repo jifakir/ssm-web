@@ -41,17 +41,17 @@ const Input = ({data, register, titleStyle, validate, inputLg, className, errors
                     shadow-sm 
                     focus:border-accent 
                     focus:outline-none 
-                    bg-white 
-                    max-w-xs 
+                    bg-white
                     cursor-pointer
                     rounded ${className} ${errors[name] && 'input-error'}`}
                 />
             }
-            <p className="text-error text-[10px] pt-1 font-medium italic">
-                {
-                    errors[name] && errors[name].message
-                }
-            </p>
+            {
+                errors[name] && <p className="text-error text-[10px] pt-1 font-medium italic">
+                    {errors[name].message}
+                </p>
+            }
+            
         </div>
     )
 }

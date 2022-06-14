@@ -62,8 +62,8 @@ const Footer = () => {
                 <Image src={'/img/footerbg.svg'} alt={"Footer Bg"} width={686} height={450} />
             </div>
             <div className="px-[2%] lg:flex justify-between">
-                <div className="lg:w-2/3 sm:flex justify-between items-center">
-                    <div className="sm:w-1/2 py-10 px-5 sm:px-0">
+                <div className="lg:w-2/3 md:flex justify-between items-center">
+                    <div className="md:w-1/2 py-10 px-5 sm:px-0">
                         <div className="w-full flex justify-center">
                             <Image src={'/img/seclogo.svg'} alt="Footer Logo" width={326} height={106} />
                         </div>
@@ -81,12 +81,12 @@ const Footer = () => {
                             }
                         </ul>
                     </div>
-                    <div className="sm:w-1/2 sm:pr-10">
+                    <div className="md:w-1/2 md:pr-10">
                         <form action="" className="">
-                            <h5 className="text-[15px] font-semibold text-center sm:text-left">
+                            <h5 className="text-[15px] font-semibold text-center md:text-left">
                                 Stay in touch with us!
                             </h5>
-                            <div className="flex gap-2 mt-2">
+                            <div className="flex justify-center items-center gap-2 mt-5 md:mt-2">
                                 <TextInput data={{
                                     name: 'email',
                                     pHolder: 'Email Address'
@@ -96,12 +96,12 @@ const Footer = () => {
                                     errors={errors} 
                                      />
                                 <div className="">
-                                    <Button title={'SUBMIT'} fontSize="text-lg" />
+                                    <Button title={'SUBMIT'} fontSize="text-lg sm:text-xl" />
                                 </div>
                             </div>
                         </form>
-                        <div className="mt-5 text-center sm:text-left">
-                            <h5 className="text-[15px] font-semibold mb-2">
+                        <div className="mt-5 text-center md:text-left">
+                            <h5 className="text-[15px] font-semibold mb-2 md:mb-2">
                                 Quick Links
                             </h5>
                             <ul className="sm:grid grid-cols-2 text-[15px] space-y-1">
@@ -118,8 +118,8 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="lg:w-1/3 lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 sm:flex lg:block text-center lg:text-left">
-                    <div className="sm:w-1/2 lg:w-full">
+                <div className="lg:w-1/3 lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 md:flex lg:block text-center lg:text-left">
+                    <div className="md:w-1/2 lg:w-full">
                         <h5 className="relative text-[15px] font-semibold inline-block">
                             <span>Find A Therapist</span>
                             <div className="absolute -top-4 -right-5">
@@ -137,7 +137,7 @@ const Footer = () => {
                             <Button title={'START SAYING MORE'} btnSecondary fontSize={'text-xl'} />
                         </Link>
                     </div>
-                    <div className="sm:w-1/2 lg:w-full mt-5 sm:mt-0 lg:mt-6">
+                    <div className="md:w-1/2 lg:w-full mt-5 sm:mt-6 lg:mt-6">
                         <h5 className="relative inline-block text-[15px] font-semibold">
                             <span>Join As A Therapist</span>
                             <div className="absolute -top-1 -right-5">
