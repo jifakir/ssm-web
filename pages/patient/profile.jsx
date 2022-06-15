@@ -229,14 +229,14 @@ const TherapistProfile = () => {
                     <h4 className="py-3 text-2xl">{profile?.full_name}</h4>
                     <div className="w-60 border rounded-lg overflow-hidden">
                         <div>
-                            <div className="relative h-56">
+                            <div className="relative h-64 px-2">
                                 <Image src={imgUrl ? imgUrl : '/img/profile.png'} layout="fill" alt="Profile" />
                             </div>
                         </div>
-                        <input ref={inputRef} onChange={uploadHandler} type="file" className="hidden" />
+                        {/* <input ref={inputRef} onChange={uploadHandler} type="file" className="hidden" />
                         <button onClick={() => inputRef.current.click()} className="w-full text-primary btn btn-secondary rounded-none rounded-b-lg">
                             upload profile picture
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 <div className="pt-10 flex-1">
@@ -358,7 +358,7 @@ const TherapistProfile = () => {
                         </div>
                     </div>
                     {/* Education Section */}
-                    <div className="relative py-10 border-b-2 border-black">
+                    {/* <div className="relative py-10 border-b-2 border-black">
                         <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
                             {
                                 qualification ? 
@@ -447,65 +447,7 @@ const TherapistProfile = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {/* Availability */}
-                    <div className="relative py-5">
-                        <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
-                            {
-                                availibility ? 
-                                <MdOutlineUpdate onClick={() => setAvailability(false)} /> : 
-                                <MdEdit onClick={() => setAvailability(true)} />
-                            }
-                        </div>
-                        <div className="">
-                            <div className="flex justify-start">
-                                <div className="flex font-semibold items-center justify-center text-primary">
-                                    <MdAccessTime className='text-xl' />
-                                    <h2 className="pl-2">Availability</h2>
-                                </div>
-                            </div>
-                            <div className="pt-5 flex flex-wrap justify-center md:justify-start gap-5">
-                                {
-                                    availibility ? 
-                                    (
-                                        <div className="text-left text-sm flex gap-5">
-                                            <div className="w-1/5">
-                                                <h1 className="text-lg my-2">Availability</h1>
-                                                <Checkbox register={register} errors={errors} data={{name: 'day', options: week }} />
-                                            </div>
-                                            <div className={`flex gap-10 ${!watch('day') ? 'hidden' : 'block'}`}>
-                                                <div className="mt-1 w-40">
-                                                    <h3 className="my-2">M-Start Time</h3>
-                                                    <Select control={control} data={{name: 'start_time', options: pmTime}} />
-                                                </div>
-                                                <div className="mt-1 w-40">
-                                                    <h3 className="my-2">M-End Time</h3>
-                                                    <Select control={control} data={{name: 'end_time', options: amTime}} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ) : 
-                                    (
-                                        ['S','M','T','W','T','F','S'].map((itm, idx) => (
-                                            <div key={idx} className="text-xs border-r-2 pr-5 last:border-r-0">
-                                                <h1 className="text-2xl text-center leading-8">{itm}</h1>
-                                                <p className="flex justify-between">
-                                                    <span className="">Start:</span> 
-                                                    <span className=""> &nbsp;09:00AM</span>
-                                                </p>
-                                                <p className="flex justify-between">
-                                                    <span className="">End:</span>
-                                                    <span className="">06:00AM</span></p>
-                                            </div>
-                                        ))
-                                    )
-                                }
-                                {
-                                    
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

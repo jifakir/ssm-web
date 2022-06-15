@@ -22,7 +22,7 @@ const Login = ({open, setOpen, redirectTo}) => {
 
     const { register, reset, handleSubmit, watch, formState: {errors}} = useForm();
     const [login, { data, isError, isSuccess, isLoading, error }] = useLoginMutation();
-    const [signup, { isLoading:signupLoading }] = useSignupMutation();
+    const [signup, {data:signupData, isSuccess:signupSuccess, isLoading:signupLoading, isError:signupError, error:serror }] = useSignupMutation();
     const [googleLogin, result] = useGoogleLoginMutation();
     const router = useRouter();
 
@@ -38,6 +38,7 @@ const Login = ({open, setOpen, redirectTo}) => {
 
     const onSignupHandler = async (data) => {
         await signup(data);
+        reset();
     };
 
     const openHandler = () => {
@@ -50,30 +51,38 @@ const Login = ({open, setOpen, redirectTo}) => {
             dispatch(logIn({...data}));
             router.push(redirectTo);
         }
+        if(signupSuccess){
+            dispatch(logIn({...signupData}));
+            router.push(redirectTo);
+        }
         if(isLoggedIn){
             setOpen(false);
         }
-    },[isSuccess, data, isLoggedIn]);
+    },[isSuccess, signupSuccess, data, isLoggedIn]);
 
 
-
+    
     return (
         <div className={`${open ? 'block' : 'hidden'} fixed bottom-0 min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
             <div className="overflow-y-scroll h-full w-full flex justify-center items-center">
             
             {
-                isLoading && !isError ? (
-                <div className="bg-white">
-                    <div className="px-10 py-5">
-                        <p className="text-center text-sm font-bold">
-                            Thank you for creating your account!<br/>
-                        </p>
-                        <p className="mt-5">
-                            You will now be redirected to<br/> complete our questionnaire.
-                        </p>
+                (isLoading && !isError) || (signupLoading && !signupError) &&
+                    <div className="bg-white">
+                        <div className="px-10 py-5">
+                            <p className="text-center text-sm font-bold">
+                                Thank you for creating your account!<br/>
+                            </p>
+                            <p className="mt-5">
+                                You will now be redirected to<br/> complete our questionnaire.
+                            </p>
+                        </div>
                     </div>
-                </div>
-                ):(tab === 0) ? (
+            }
+
+            {
+                (tab === 0 && !isLoading) ? 
+                (
                     <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
@@ -116,7 +125,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                     data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
                                 <div 
                                     onClick={() => setShowPass(!showPass)} 
-                                    className="absolute right-3 bottom-4 cursor-pointer">
+                                    className="absolute right-3 bottom-[13px] cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }
@@ -148,11 +157,11 @@ const Login = ({open, setOpen, redirectTo}) => {
                                         </button>
                             </div>
                             <div className="text-sm mt-4">
-                                <p className="">
+                                <p className="font-medium">
                                     Do not have an account? 
                                     <span 
                                     onClick={()=> setTab(1)} 
-                                    className="text-blue-700 font-bold cursor-pointer">Sign up</span></p>
+                                    className="text-blue-700 font-bold cursor-pointer pl-1">Sign up</span></p>
                             </div>
                             <div className="text-xs">
                                 <p className="">
@@ -163,7 +172,9 @@ const Login = ({open, setOpen, redirectTo}) => {
                             </div>
                         </div>
                     </form>
-                ) : (
+                ) : 
+                (tab === 1 && !signupLoading) ?
+                (
                     <form onSubmit={handleSubmit(onSignupHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
@@ -189,9 +200,9 @@ const Login = ({open, setOpen, redirectTo}) => {
                             <div className="mt-3">
                                 <h1 className="text-2xl font-medium">or</h1>
                             </div>
-                            <div className={`${isError ? 'block' : 'hidden'}`}>
+                            <div className={`${signupError ? 'block' : 'hidden'}`}>
                                 {
-                                    isError && <p className="text-xs text-accent font-bold">{error.data?.message}</p>
+                                    signupError && <p className="text-xs text-accent font-bold">{serror.data?.message}</p>
                                 }
                             </div>
                             <div className="form-control w-full max-w-xs">
@@ -202,7 +213,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                             </div>
                             <div className="relative form-control w-full max-w-xs">
                                 <TextInput register={register} errors={errors} type={showPass ? 'text' : 'password'} data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
-                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-4 cursor-pointer">
+                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-[13px] cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }
@@ -237,10 +248,10 @@ const Login = ({open, setOpen, redirectTo}) => {
                                 <p className="">Do not have an account? <a className="text-blue-700 font-bold cursor-pointer">Sign up</a></p>
                             </div> */}
                             <div className="text-xs mt-5">
-                                <p className="font-medium mb-2">
+                                <p className="text-sm font-medium mb-2">
                                     Already have an account? 
                                     <span 
-                                    onClick={()=> setTab(2)} 
+                                    onClick={()=> setTab(1)}
                                     className="text-blue-700 font-bold cursor-pointer pl-1">Login</span>
                                 </p>
                                 <p className="">
@@ -249,7 +260,8 @@ const Login = ({open, setOpen, redirectTo}) => {
                             </div>
                         </div>
                     </form>
-                )
+                ) : 
+                ''
             }
             </div>
         </div>
