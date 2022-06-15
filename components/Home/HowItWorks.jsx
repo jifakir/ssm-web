@@ -4,7 +4,7 @@ import Image from 'next/image';
 const howitworks = [
     {
       title: 'Step 1',
-      description: 'Complete the Myers-Briggs’ Personality test to receive your five factor personality type.',
+      description: 'Complete the Myers-Briggs Personality test to receive your five-factor personality type.',
       imgUrl: '/img/brain.png'
     },
     {
@@ -14,7 +14,7 @@ const howitworks = [
     },
     {
       title: 'Step 3',
-      description: 'Complete our detailed survey to provide us with your personality factors, experiences, preferences, and area(s) of concern.',
+      description: 'Our intelligent algorithm will use the results you have provided us with to match you with mental health professionals.',
       imgUrl: '/img/relation.png'
     },
     {

@@ -30,7 +30,7 @@ const Name = ({ step, setStep, data:profile }) => {
                     title={'Next'}
                     btnQnr
                     type="submit" 
-                    className={`${isLoading ? 'loading' : ''}`} disabled={watch().full_name} />
+                    disabled={!watch().full_name} />
             </div>
         </form>
     )

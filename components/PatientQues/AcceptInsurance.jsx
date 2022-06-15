@@ -62,15 +62,17 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                     }
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr
+                    btnSecondary />
                 <Button 
                     title={'Next'} 
-                    form="accept_insurance-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().accept_insurance ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="accept_insurance-form"
+                    btnQnr
+                    disabled={!watch('accept_insurance')} />
             </div>
         </>
     )

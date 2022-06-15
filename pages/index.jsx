@@ -19,7 +19,7 @@ export default function Home() {
     <div className='w-full'>
       <Hero />
       <div className="w-[90%] md:w-[65%] mx-auto">
-        <div className="w-full lg:flex items-center justify-between py-16">
+        <div className="w-full lg:flex items-center justify-between my-10 md:my-16">
           <div className="lg:w-1/2 relative px-5 flex justify-center lg:block">
             <Image src={'/img/therapysession_couch.png'} alt="Under hero" width={454} height={302} />
           </div>
@@ -37,12 +37,12 @@ export default function Home() {
             <Button title={'Find A Therapist'} btnLg fontSize={'text-lg md:text-2xl'}  />
           </Link>
         </div>
-        <div className="mt-16">
-          <h1 className="text-[35px] text-black font-bold text-center mb-5">
+        <div className="mt-10 md:mt-16">
+          <h1 className="text-[35px] text-black font-bold text-center mb-2 md:mb-5">
             Who We Are
           </h1>
-          <p className="py-5">
-            Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus. Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus. Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo.
+          <p className="py-5 text-center md:text-left">
+            Outside of matching you with your ideal therapist, we also provide tips for self-care and mental wellness on our social media pages. Visit us on Instagram for regular posts that can assist you in your daily life and supplement your therapy experience.
           </p>
         </div>
       </div>
