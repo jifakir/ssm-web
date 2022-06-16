@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Button from '../../components/UI/Button';
 import HowItWorks from '../../components/Home/HowItWorks';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 
 
@@ -39,9 +40,13 @@ const Therapist = () => {
                     <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
                         <div className="text-center">
                             <div className="">
-                                <h2 className="text-sm sm:text-lg font-medium md:text-2xl mb-3">Step 1</h2>
-                                <Button 
-                                    title={'Myers Briggs Test'} />
+                                <h2 className="text-sm sm:text-xl font-medium md:text-2xl mb-3">Step 1</h2>
+                                <Link href={'http://16personalities.com'}>
+                                    <a target={'_blank'}>
+                                        <Button 
+                                        title={'Myers Briggs Test'} />
+                                    </a>
+                                </Link>
                             </div>
                             <div className="mt-8">
                                 <h2 className="text-sm font-medium sm:text-lg md:text-2xl mb-3">Step 2</h2>
@@ -57,12 +62,13 @@ const Therapist = () => {
                 </div>
                 <HowItWorks />
                 <div className="mt-10 flex justify-center">
-                    <Button 
+                    <Button
+                        onClick={loginHandler} 
                         title={'Find A Therapist'} />
                 </div>
                 <div className="my-10 md:my-16">
                     <h1 className="my-5 md:my-10 font-bold text-lg sm:text-2xl md:text-3xl text-center">Therapy is more successful when you feel supported</h1>
-                    <div className="text-sm md:text-base text-center sm:text-left">
+                    <div className="text-sm md:text-base text-center md:text-left">
                         <p className="py-2">
                             When it comes to the mental health treatment journey, a critical aspect of your healing is how connected you feel to your provider. Have you ever tried going to a therapist just to feel disconnected and ultimately quit going? Or maybe you were simply just looking for a therapist and became overwhelmed with the sheer number of options out there. Well, we can promise you that you&apos;re not alone. Unfortunately, finding the ideal therapist ends up being much like dating around. The issue, though, is that feeling a disconnect in therapy only continues to affect us in the long run.    
                         </p>

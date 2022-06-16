@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div className='w-full'>
       <Hero />
-      <div className="w-[90%] md:w-[65%] mx-auto">
+      <div className="w-[90%] md:w-[80%] lg:w-[65%] mx-auto">
         <div className="w-full lg:flex items-center justify-between my-10 md:my-16">
           <div className="lg:w-1/2 relative px-5 flex justify-center lg:block">
             <Image src={'/img/therapysession_couch.png'} alt="Under hero" width={454} height={302} />
@@ -38,7 +38,7 @@ export default function Home() {
           </Link>
         </div>
         <div className="mt-10 md:mt-16">
-          <h1 className="text-[35px] text-black font-bold text-center mb-2 md:mb-5">
+          <h1 className="text-2xl sm:text-[32px] text-black font-bold text-center mb-2 md:mb-5">
             Who We Are
           </h1>
           <p className="py-5 text-center md:text-left">
@@ -50,7 +50,7 @@ export default function Home() {
         <div className="px-[5%] md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
           {
             filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
-              <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-52" key={idx}>
+              <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-32 lg:h-52" key={idx}>
                 <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} alt="Pic" layout='fill' objectFit='cover' />
               </div>
             ))

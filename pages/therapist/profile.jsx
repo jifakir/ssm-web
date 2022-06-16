@@ -210,7 +210,7 @@ const TherapistProfile = () => {
     };
 
     if(!isLoggedIn){
-        router.push("/login");
+        router.push("/");
     }
 
     if(isLoading){

@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 const Name = ({ step, setStep, data:profile }) => {
 
     const { token } = useSelector(state => state.auth.userDetails );
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
-    const [registerTherapist, {data , isSuccess, isLoading, isError, error }] = useRegisterTherapistMutation();
+    const { control, watch, handleSubmit } = useForm();
+    const [registerTherapist, {data , isSuccess, isLoading, isError, error }] = useRegisterTherapistMutation({ full_name: profile?.full_name });
 
     const handleNext = async (data) => {
         console.log("Triggered!")
@@ -23,7 +23,14 @@ const Name = ({ step, setStep, data:profile }) => {
     return (
         <form onSubmit={handleSubmit(handleNext)}>
             <div className="form-control w-full max-w-xs">
-                <TextInput register={register} defaultValue={profile?.full_name} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
+                <TextInput 
+                    control={control}
+                    name={'full_name'}
+                    pHolder={'Full Name'}
+                    title={'Name'}
+                    rules={{
+                        required: 'Name is required'
+                    }} />
             </div>
             <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 

@@ -12,7 +12,7 @@ const data = {
 
 const DateOfBirth = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {date_of_birth: profile?.date_of_birth}});
+    const { control, handleSubmit, watch } = useForm({defaultValues: {date_of_birth: profile?.date_of_birth}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -38,9 +38,12 @@ const DateOfBirth = ({ step, setStep, profile }) => {
                     <div className="form-control w-full max-w-xs">
                         <Input 
                             type={'date'} 
-                            register={register} 
-                            errors={errors} 
-                            data={data}
+                            control={control}
+                            rules={{
+                                required: "Date of birth is required!"
+                            }}
+                            name={'date_of_birth'}
+                            title={"Date of birth"}
                             className="cursor-pointer" />
                     </div>
                 </div>
