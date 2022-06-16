@@ -30,8 +30,6 @@ const data = {
     ]
 };
 
-
-
 const Gender = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {gender: profile?.gender}});

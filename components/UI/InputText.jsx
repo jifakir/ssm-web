@@ -1,28 +1,14 @@
 import React from 'react';
-import { useEffect } from 'react';
 import { useController } from 'react-hook-form';
 
 
-const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, name, control }) => {
 
-    // console.log({...validate});
-    // useEffect(() => {
-    //     console.log(errors);
-    // },[errors]);
+const InputText = ({ control, name, rules, type, pHolder, inputLg, className,}) => {
 
-    const { field, formState: { errors } } = useController({ 
-        control, name, rules 
-    });
+    const { field, fieldState: {error} } = useController({ control, name, rules });
 
     return (
-        <div className="w-full">
-            {
-                title && (
-                    <label className={`label`}>
-                        <span className={`label-text ${titleStyle}`}>{title}</span>
-                    </label>
-                )
-            }
+        <div className="">
             {
                 type === 'textarea' ? 
                 <textarea
@@ -33,7 +19,7 @@ const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, na
                     w-full border-2 hover:border-neutral 
                     shadow-sm focus:border-accent 
                     focus:outline-none bg-white 
-                    max-w-xs rounded ${className} ${errors[name] && 'input-error'}`} 
+                    max-w-xs rounded ${className} ${error && 'input-error'}`} 
                 >
                 </textarea>:
                 <input 
@@ -50,17 +36,16 @@ const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, na
                     focus:outline-none 
                     bg-white
                     cursor-pointer
-                    rounded ${className} ${errors[name] && 'input-error'}`}
+                    rounded ${className} ${error && 'input-error'}`}
                 />
             }
             {
-                errors[name] && <p className="text-error text-left text-[10px] pt-1 font-medium italic">
-                    {errors[name].message}
+                error && <p className="text-error text-[10px] pt-1 font-medium italic">
+                    {error.message}
                 </p>
             }
-            
         </div>
     )
 }
 
-export default Input;
+export default InputText;

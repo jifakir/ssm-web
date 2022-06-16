@@ -28,10 +28,10 @@ const JoinAsTherapist = () => {
         <div className="px-[10%]">
             <Login open={open} setOpen={setOpen} redirectTo="/therapist/questionnaire"   />
             <div className="">
-                <h1 className="font-sterio text-4xl sm:text-5xl text-center mt-16">
+                <h1 className="font-sterio text-3xl xs:text-4xl sm:text-5xl text-center mt-16">
                     Join As a Therapist
                 </h1>
-                <div className="mt-8 text-sm sm:text-base text-center md:text-left">
+                <div className="mt-8 text-xs xs:text-sm sm:text-base text-center lg:text-left">
                     <p className="">
                         Therapists are the foundation of the healing journey. With the growing demand for mental health care, it’s challenging for individuals to find their ideal therapist. To alleviate this problem, Start Saying More is dedicated to connecting patients with therapists in an effective and efficient manner. In order to best serve our clients, we need qualified therapists to join our database so we can provide your details to potential patients.
                     </p>

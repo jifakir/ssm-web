@@ -19,7 +19,7 @@ const Experience = ({ step, setStep, profile }) => {
 
     const inputRef = useRef();
     // const { head, tail } = profile?.years_of_experience;
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -60,7 +60,13 @@ const Experience = ({ step, setStep, profile }) => {
                 <div className="w-full">
                     <h1 className="my-2 text-left">Professional Licensure/Insurance</h1>
                     <div className="form-control w-full max-w-xs text-left">
-                        <Input errors={errors} register={register} data={data} />
+                        <Input 
+                            control={control}
+                            name={'license_title'}
+                            rules={{
+                                required: 'License is required'
+                            }}
+                             />
                     </div>
                     <h1 className="my-2 text-left mt-5">Upload License ID</h1>
                     <div className="flex my-2">

@@ -205,7 +205,7 @@ const Questionnaire = () => {
             </div>
             {/* Form Inner */}
             <div className="text-center mt-10">
-                {
+                {/* {
                     isLoading ? <div className="flex justify-center items-center h-28"><ImSpinner9 className='text-2xl text-secondary animate-spin' /> </div> : components.map((comp, idx) => {
 
                         return (
@@ -214,7 +214,7 @@ const Questionnaire = () => {
                             </div>
                         )
                     })
-                }
+                } */}
             </div>
         </div>
     </div>
