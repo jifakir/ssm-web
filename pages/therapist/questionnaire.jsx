@@ -24,12 +24,14 @@ import Titles from '../../components/TherapyQues/Titles';
 import AcceptInsurance from '../../components/TherapyQues/AcceptInsurance';
 import Insurance from '../../components/TherapyQues/Insurance';
 import SessionFee from '../../components/TherapyQues/SessionFee';
+import License from '../../components/TherapyQues/License';
 import VirtualInperson from '../../components/TherapyQues/VirtualInperson';
 import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
 import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
 import Specialization from '../../components/TherapyQues/Specialization';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { ImSpinner9 } from 'react-icons/im';
+import { useRouter } from 'next/router';
 
 
 const Questionnaire = () => {
@@ -40,9 +42,10 @@ const Questionnaire = () => {
     const {isLoggedIn } = useSelector(state => state.auth);
     const {data, isSuccess, isLoading} = useFetchTherapistQuery();
 
+    const router = useRouter();
     const components = [
         {
-            component: <Button title={'get started'} onClick={() => setStep(step + 1)} className="my-10" />,
+            component: <Button btnQnr btnLg title={'GET STARTED'} onClick={() => setStep(step + 1)} />,
             status: "",
         },
         {
@@ -53,53 +56,17 @@ const Questionnaire = () => {
             component: <Email profile={data} step={step} setStep={setStep} />,
             status: "entered-email",
         },
-        {
-            component: <Gender profile={data} step={step} setStep={setStep} />,
-            status: "entered-gender",
-        },
         // {
         //     component: <Phone profile={data} step={step} setStep={setStep} />,
         //     status: "entered-phone",
         // },
         {
-            component: <Orientation profile={data} step={step} setStep={setStep} />,
-            status: "entered-orientation",
-        },
-        {
             component: <Address profile={data} step={step} setStep={setStep} />,
             status: "entered-address",
         },
         {
-            component: <Religion profile={data} step={step} setStep={setStep} />,
-            status: "entered-religion",
-        },
-        {
-            component: <Personality profile={data} step={step} setStep={setStep} />,
-            status: "entered-personality",
-        },
-        {
-            component: <Education profile={data} step={step} setStep={setStep} />,
-            status: "entered-education",
-        },
-        {
-            component: <RelSess profile={data} step={step} setStep={setStep} />,
-            status: "entered-relsess",
-        },
-        {
-            component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
-            status: "entered-spirituality",
-        },
-        {
-            component: <SpiritSess profile={data} step={step} setStep={setStep} />,
-            status: "entered-spiritsess",
-        },
-        {
-            component: <OtherLang profile={data} step={step} setStep={setStep} />,
-            status: "entered-otherlang",
-        },
-        {
-            component: <Language profile={data} step={step} setStep={setStep} />,
-            status: "entered-lang",
+            component: <Gender profile={data} step={step} setStep={setStep} />,
+            status: "entered-gender",
         },
         {
             component: <BirthDate profile={data} step={step} setStep={setStep} />,
@@ -109,12 +76,21 @@ const Questionnaire = () => {
             component: <Race profile={data} step={step} setStep={setStep} />,
             status: "entered-race",
         },
+        
         {
-            component: <NewPatient profile={data} step={step} setStep={setStep} />,
-            status: "entered-patient",
+            component: <Orientation profile={data} step={step} setStep={setStep} />,
+            status: "entered-orientation",
+        },
+        {
+            component: <Education profile={data} step={step} setStep={setStep} />,
+            status: "entered-education",
         },
         {
             component: <Experience profile={data} step={step} setStep={setStep} />,
+            status: "entered-experience",
+        },
+        {
+            component: <License profile={data} step={step} setStep={setStep} />,
             status: "entered-experience",
         },
         {
@@ -122,33 +98,68 @@ const Questionnaire = () => {
             status: "entered-titles",
         },
         {
+            component: <Personality profile={data} step={step} setStep={setStep} />,
+            status: "entered-personality",
+        },
+        {
+            component: <Religion profile={data} step={step} setStep={setStep} />,
+            status: "entered-religion",
+        },
+        
+        {
+            component: <RelSess profile={data} step={step} setStep={setStep} />,
+            status: "entered-relsess",
+        },
+        {
+            component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
+            status: "entered-spirituality",
+        },
+        // {
+        //     component: <SpiritSess profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-spiritsess",
+        // },
+        // {
+        //     component: <OtherLang profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-otherlang",
+        // },
+        {
+            component: <Language profile={data} step={step} setStep={setStep} />,
+            status: "entered-lang",
+        },
+        
+        {
+            component: <NewPatient profile={data} step={step} setStep={setStep} />,
+            status: "entered-patient",
+        },
+        {
             component: <AcceptInsurance profile={data} step={step} setStep={setStep} />,
             status: "entered-acceptinsurance",
-        },
-        {
-            component: <Insurance profile={data} step={step} setStep={setStep} />,
-            status: "entered-insurance",
-        },
-        {
-            component: <SessionFee profile={data} step={step} setStep={setStep} />,
-            status: "entered-sessionfee",
         },
         {
             component: <VirtualInperson profile={data} step={step} setStep={setStep} />,
             status: "entered-virtualperson",
         },
-        {
-            component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
-            status: "entered-sessionfee",
-        },
         // {
-        //     component: <InpersonSessionFuture profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-inpersonsession",
+        //     component: <Insurance profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-insurance",
         // },
+        {
+            component: <InpersonSessionFuture profile={data} step={step} setStep={setStep} />,
+            status: "entered-inpersonsession",
+        },
         {
             component: <Specialization profile={data} step={step} setStep={setStep} />,
             status: "entered-specialization",
         },
+        // {
+        //     component: <SessionFee profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-sessionfee",
+        // },
+        
+        // {
+        //     component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-sessionfee",
+        // },
         {
             component: <Availability profile={data} step={step} setStep={setStep} />,
             status: "entered-availability",
@@ -157,32 +168,40 @@ const Questionnaire = () => {
 
 
     useEffect(() => {
-        if(isSuccess){
-            components.map((com, idx) => {
-                console.log(com.status);
-                console.log(data.registration_status);
-                if(com.status === data.registration_status){
-                    console.log('Triggered SetStep')
-                    setStep(idx + 1);
-                }
-            })
+        if(!isLoggedIn){
+            router.push('/');
         }
-    },[])
+        // if(isSuccess){
+        //     components.map((com, idx) => {
+        //         console.log(com.status);
+        //         console.log(data.registration_status);
+        //         if(com.status === data.registration_status){
+        //             console.log('Triggered SetStep')
+        //             setStep(idx + 1);
+        //         }
+        //     })
+        // }
+    },[isSuccess, isLoggedIn]);
 
+    const percent = Math.round((step/components.length)*100);
 
     return (
-    <div className={`px-10 pt-5 ${step === 0 ? 'h-[600px] bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+    <div className={`px-[5%] pt-[100px] min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
-            <h1 className="text-[54px] font-sterio text-primary">Welcome</h1>
-            <p className="mt-3">
+            <h1 className="text-[54px] font-sterio text-[#331447]">Welcome</h1>
+            <p className="mt-8">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. 
             </p>
         </div>
         {/* Slide section */}
-        <div className="">
-            <progress className={`progress my-5 h-4 w-full bg-neutral1 progress-secondary ${step <1 ? 'hidden' : 'block'}`} value={(step/components.length)*100} max="100"></progress>
+        <div className="pb-14 mt-6">
+            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${percent === 0 ? 'hidden' : 'block'}`}>
+                <div className="relative transition-all duration-500 ease-out bg-secondary h-full" style={{width: `${percent}%`}}>
+                    <span className={`absolute z-10 ${percent > 95 ? 'pr-2 right-0' : 'pl-2 left-full'}`}>{`${percent}%`}</span>
+                </div>
+            </div>
             {/* Form Inner */}
-            <div className="text-center">
+            <div className="text-center mt-10">
                 {
                     isLoading ? <div className="flex justify-center items-center h-28"><ImSpinner9 className='text-2xl text-secondary animate-spin' /> </div> : components.map((comp, idx) => {
 

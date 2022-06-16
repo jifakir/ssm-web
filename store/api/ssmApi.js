@@ -11,7 +11,6 @@ export const ssmApi = createApi({
         baseUrl: process.env.NEXT_PUBLIC_API_URL,
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.userDetails.token
-        
             // If we have a token set in state, let's assume that we should be passing it.
             if (token) {
               headers.set('authorization', `Bearer ${token}`)
@@ -20,7 +19,7 @@ export const ssmApi = createApi({
             return headers
           },
     }),
-    tagTypes: ['Therapist', 'SSM'],
+    tagTypes: ['Therapist', 'SSM', 'Patient'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (body) => ({
@@ -50,6 +49,10 @@ export const ssmApi = createApi({
             query: () => '/therapists/my-account',
             providesTags: ['Therapist']
         }),
+        fetchPatient: builder.query({
+            query: () => '/patients/my-account',
+            providesTags: ['Patient']
+        }),
         registerTherapist: builder.mutation({
             query: (body) => ({
                 url: '/therapists',
@@ -66,8 +69,33 @@ export const ssmApi = createApi({
             }),
             invalidatesTags: ['Therapist']
         }),
+        registerPatient: builder.mutation({
+            query: (body) => ({
+                url: '/patients',
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['Patient']
+        }),
+        updatePatient: builder.mutation({
+            query: (body) => ({
+                url: `/patients/${body.id}`,
+                method: 'PATCH',
+                body
+            }),
+            invalidatesTags: ['Patient']
+        }),
     })
 });
 
 
-export const { useLoginMutation, useGoogleLoginMutation, useFetchTherapistQuery, useSignupMutation, useRegisterTherapistMutation, useUpdateTherapistMutation } = ssmApi;
+export const { 
+    useLoginMutation, 
+    useGoogleLoginMutation, 
+    useFetchTherapistQuery,
+    useFetchPatientQuery,
+    useSignupMutation, 
+    useRegisterTherapistMutation, 
+    useUpdateTherapistMutation,
+    useRegisterPatientMutation,
+    useUpdatePatientMutation } = ssmApi;

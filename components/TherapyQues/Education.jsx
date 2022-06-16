@@ -34,6 +34,11 @@ const Education = ({step, setStep, profile}) => {
         setStep(step - 1);
     };
 
+    const handleAppend = () => {
+        if(fields.length >= 3) return;
+        append({degree: '', major: '', school_name: ''})
+    };
+
     return (
     <>
         <form id="education-form" onSubmit={handleSubmit(handleNext)} className="">
@@ -41,7 +46,7 @@ const Education = ({step, setStep, profile}) => {
             <div className="flex items-center my-5">
 
                 <h1 className="text-lg mr-5">Please add your education</h1>
-                <div onClick={() => append({degree: '', major: '', school_name: ''})} className="btn btn-primary btn-outline btn-sm text-sm">
+                <div onClick={handleAppend} className="btn btn-primary btn-outline btn-sm text-sm">
                     <HiPlus className='mr-1' />
                     Education
                 </div>
@@ -68,15 +73,17 @@ const Education = ({step, setStep, profile}) => {
 
             </div>
         </form>
-        <div className={`flex gap-5 py-5`}>
+        <div className={`flex gap-5 py-5 mt-9`}>
             <Button 
                 title={'Back'} 
                 onClick={handleBack}
-                className="btn-outline border-neutral px-8 text-2xl" />
+                btnQnr 
+                btnSecondary/>
             <Button 
                 title={'Next'} 
                 form="education-form" 
-                className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${ !isFilledUp ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                btnQnr
+                disabled={!isFilledUp} />
         </div>
     </>
     )

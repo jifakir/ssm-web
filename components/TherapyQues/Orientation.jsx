@@ -62,15 +62,17 @@ const Orientation = ({ step, setStep, profile}) => {
                 <RadioInput register={register} errors={errors} data={data} />
                 <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr 
+                    btnSecondary />
                 <Button
                     title={'Next'} 
-                    form="orientationform" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().sexual_orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="orientationform"
+                    btnQnr
+                    disabled={!watch('sexual_orientation')}  />
                 
             </div>
         </>

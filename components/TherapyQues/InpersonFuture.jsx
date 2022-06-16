@@ -46,14 +46,18 @@ const InpersonFuture = ({ step, setStep }) => {
     };
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
-            <div className="form-control w-full max-w-xs">
+            <div className="w-full">
                 <Radio register={register} errors={errors} data={data} />
             </div>
-            </div>
-            <div className={`flex gap-5 py-5`}>
-                <Button title={'Back'} />
-                <Button title={'Next'} className="btn-base text-black" />
+            <div className={`flex gap-5 py-5 mt-9`}>
+                <Button title={'Back'}
+                btnQnr
+                btnSecondary
+                 />
+                <Button 
+                    title={'Next'}
+                    btnQnr
+                    disabled={!watch('inperson_future')} />
             </div>
         </form>
     )

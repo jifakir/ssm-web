@@ -7,6 +7,10 @@ module.exports = {
     "./layouts/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xs': '475px',
+      ...defaultTheme.screens,
+    },
     extend: {
       fontFamily: {
         'sans': ['Poppins','Arial', 'Helvetica', 'sans-serif', ...defaultTheme.fontFamily.sans],
@@ -19,11 +23,12 @@ module.exports = {
       {
         mytheme: {
           "primary": "#6F3E8D",
-          "secondary": "#E0914F",
-          "accent": "#EEA86D",
+          "secondary": "#EEA86D",
+          "accent": "#E0914F",
           "accent-focus": "#E7D895",
           "neutral": "#E7D895",
-          "neutral-focus": "#CFC287",
+          "neutral-focus": "#D69C6B",
+          "accent-focus": "#CFC287",
           "neutral3": "#C6EBE3",
           "base-100": "#ffffff",
         },
