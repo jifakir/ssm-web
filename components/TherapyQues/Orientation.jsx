@@ -7,7 +7,7 @@ import Button from '../UI/Button';
 
 const Orientation = ({ step, setStep, profile}) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {sexual_orientation: profile?.sexual_orientation}});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {sexual_orientation: profile?.sexual_orientation}});
     
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
@@ -59,7 +59,7 @@ const Orientation = ({ step, setStep, profile}) => {
     return (
         <>
             <form id='orientationform' onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-                <RadioInput register={register} errors={errors} data={data} />
+                <RadioInput control={control} rules={{required: 'This field is required.'}} data={data} />
                 <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>

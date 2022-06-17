@@ -78,7 +78,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                         <p className="text-center text-sm font-bold">
                             Thank you for logging!<br/>
                         </p>
-                        <p className="mt-5">
+                        <p className="mt-5 text-center">
                             You will now be redirected to<br/>
                             {
                                 redirectTo === '/therapist/profile' ? 
@@ -92,7 +92,7 @@ const Login = ({open, setOpen, redirectTo}) => {
             {
                 (signupLoading && !signupError) &&
                     <div className="bg-white">
-                        <div className="px-10 py-5">
+                        <div className="px-10 py-5 text-center">
                             <p className="text-center text-sm font-bold">
                                 Thank you for creating your account!<br/>
                             </p>

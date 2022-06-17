@@ -14,7 +14,7 @@ const Education = ({step, setStep, profile}) => {
     const [qualifyNum, setQualifyNum] = React.useState(1);
 
     const {  control, handleSubmit, watch, } = useForm({defaultValues: {education: profile?.education || [{major: '', degree: '', school_name: ''}]}});
-    const {  fields, append, remove, swap } = useFieldArray({
+    const {  fields, append, remove } = useFieldArray({
         control,
         name: "education"
       });
@@ -38,7 +38,7 @@ const Education = ({step, setStep, profile}) => {
         if(fields.length >= 3) return;
         append({degree: '', major: '', school_name: ''})
     };
-
+    console.log(watch());
     return (
     <>
         <form id="education-form" onSubmit={handleSubmit(handleNext)} className="">
@@ -80,7 +80,7 @@ const Education = ({step, setStep, profile}) => {
                                     }}  />
                                 <Input 
                                     control={control}
-                                    name={`education.${idx}.school`}
+                                    name={`education.${idx}.school_name`}
                                     pHolder={'School'}
                                     rules={{
                                         required: "School is required."

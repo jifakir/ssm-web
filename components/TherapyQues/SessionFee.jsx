@@ -10,7 +10,7 @@ import TextInput from '../../components/UI/TextInput';
 const SessionFee = ({ step, setStep, profile }) => {
 
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { session_fee: profile?.session_fee }})
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { session_fee: profile?.session_fee }})
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {

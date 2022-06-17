@@ -76,7 +76,7 @@ const Language = ({ step, setStep, profile }) => {
                     <div className="">
                         <h1 className="text-lg my-2 text-left">Do you speak any other languages?</h1>
                         <div className="form-control w-full max-w-xs">
-                            <Radio register={register} errors={errors} data={otherdata} />
+                            <Radio control={control} rules={{required: 'The field is required'}} data={otherdata} />
                         </div>
                     </div>
                     {

@@ -19,7 +19,7 @@ const data = {
 
 const OtherLang = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {speak_other_languages: profile?.speak_other_languages}});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {speak_other_languages: profile?.speak_other_languages}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -44,7 +44,7 @@ const OtherLang = ({ step, setStep, profile }) => {
                 <div className="w-full">
                     <h1 className="text-lg my-2 text-left">Do you speak any other languages?</h1>
                     <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio control={control} rules={{required: 'Other language is required.'}} data={data} />
                     </div>
                 </div>
             </form>

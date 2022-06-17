@@ -5,9 +5,9 @@ import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 
 
-const InpersonFuture = ({ step, setStep }) => {
+const InpersonFuture = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {inperson_future: profile?.inperson_future || ''} });
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -36,18 +36,18 @@ const InpersonFuture = ({ step, setStep }) => {
         options: [
             {
                 label: 'Yes',
-                value: 'yes'
+                value: true
             },
             {
                 label: 'No',
-                value: 'no'
+                value: false
             },
         ]
     };
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
-                <Radio register={register} errors={errors} data={data} />
+                <Radio control={control} rules={{ required: 'Inperson Future is required.' }} data={data} />
             </div>
             <div className={`flex gap-5 py-5 mt-9`}>
                 <Button title={'Back'}
