@@ -38,7 +38,7 @@ const data = {
 
 const Race = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { race: profile?.race }});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { race: profile?.race }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -62,7 +62,7 @@ const Race = ({ step, setStep, profile }) => {
             <form id="race-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control w-full max-w-xs">
                 <div className="form-control w-full max-w-xs">
-                    <Radio register={register} errors={errors} data={data} />
+                    <Radio control={control} rules={{required: 'Race is required.'}} data={data} />
                 </div>
                 </div>
             </form>

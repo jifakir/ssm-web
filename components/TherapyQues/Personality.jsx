@@ -85,7 +85,7 @@ const Personality = ({ step, setStep, profile }) => {
 
 
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {...profile?.personality_type}});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {...profile?.personality_type}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -112,7 +112,7 @@ const Personality = ({ step, setStep, profile }) => {
                     {
                         data.map((itm, idx) => (
                             <div key={`personality_item_${idx}`} className="">
-                                <RadioInput data={itm} register={register} errors={errors} />
+                                <RadioInput data={itm} control={control} rules={{required: 'Personality is required.'}} />
                             </div>
                         ))
                     }

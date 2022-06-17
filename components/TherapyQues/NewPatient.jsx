@@ -21,7 +21,7 @@ const data = {
 
 const NewPatient = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { accept_new_patients: profile?.accept_new_patients }});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { accept_new_patients: profile?.accept_new_patients }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -47,7 +47,7 @@ const NewPatient = ({ step, setStep, profile }) => {
                 <div className="w-full">
                     <h1 className="text-lg my-2 text-left">Are you currently accepting new patients?</h1>
                     <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio control={control} rules={{required: 'New patient is required.'}} data={data} />
                     </div>
                 </div>
             </form>

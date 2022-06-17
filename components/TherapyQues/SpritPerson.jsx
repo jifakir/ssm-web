@@ -35,7 +35,7 @@ const data = {
 
 const SpiritPerson = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_spiritual: profile?.is_spiritual}});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_spiritual: profile?.is_spiritual}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -61,7 +61,7 @@ const SpiritPerson = ({ step, setStep, profile }) => {
                     <div className="">
                         <h1 className="text-lg my-2 text-left">Do you consider yourself a spiritual person?</h1>
                         <div className="form-control w-full max-w-xs">
-                            <Radio register={register} errors={errors} data={data} />
+                            <Radio control={control} rules={{required: 'Spirit person is required.'}} data={data} />
                         </div>
                     </div>
                     {
@@ -70,7 +70,7 @@ const SpiritPerson = ({ step, setStep, profile }) => {
                         <div className={` mt-5`}>
                             <h1 className="text-lg my-2 text-left">Do you offer spirituality in your sessions?</h1>
                             <div className="form-control w-full max-w-xs">
-                                <Radio register={register} errors={errors} data={offerData} />
+                                <Radio control={control} rules={{required: 'This field is required'}} data={offerData} />
                             </div>
                         </div>
                         )

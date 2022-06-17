@@ -22,7 +22,8 @@ const SpiritSession = ({ step, setStep, profile }) => {
     const { 
         register, 
         handleSubmit, 
-        watch, 
+        watch,
+        control,
         formState: { errors} } = useForm({
             defaultValues: {offer_spirituality: profile?.offer_spirituality} });
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
@@ -49,7 +50,7 @@ const SpiritSession = ({ step, setStep, profile }) => {
                 <div className="form-control">
                 <h1 className="text-lg my-2 text-left"></h1>
                 <div className="form-control w-full max-w-xs">
-                    <Radio register={register} errors={errors} data={data} />
+                    <Radio control={control} rules={{required: 'Spirit Session is required.'}} data={data} />
                 </div>
                 </div>
             </form>

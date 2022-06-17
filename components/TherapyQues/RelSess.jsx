@@ -24,7 +24,7 @@ const data = {
 // Component
 const RelSess = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_religion_biased: profile?.is_religion_biased}});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_religion_biased: profile?.is_religion_biased}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -51,7 +51,7 @@ const RelSess = ({ step, setStep, profile }) => {
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
                 <div className="form-control w-full max-w-xs">
-                    <Radio register={register} errors={errors} data={data} />
+                    <Radio control={control} rules={{required: 'This field is required.'}} data={data} />
                 </div>
             </div>
         </form>
