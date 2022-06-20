@@ -5,7 +5,7 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 const data = {
-    name: 'is_in_us',
+    name: 'has_insurance',
     options: [
         {
             label: 'Yes',
@@ -22,18 +22,20 @@ const data = {
 
 
 // Component
-const IsInUs = ({ step, setStep, profile }) => {
+const RelSess = ({ step, setStep, profile }) => {
 
     const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_religion_biased: profile?.is_religion_biased}});
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { is_in_us } = data;
-        console.log("Religion Biased: ", is_in_us);
-        if(!is_in_us) return;
-        await updatePatient({id: profile?.id, is_in_us, registration_status: 'entered-is_religious' });
+        const { has_insurance } = data;
+        console.log("Religion Biased: ", has_insurance);
+        if(!has_insurance) return;
+        await updatePatient({id: profile?.id, has_insurance, registration_status: 'entered-religion_biased' });
+
         setStep(step + 1);
+
     };
 
     const handleBack = () => {
@@ -45,29 +47,28 @@ const IsInUs = ({ step, setStep, profile }) => {
 
     return (
     <>
-        <form id="is-is_in_us-form" onSubmit={handleSubmit(handleNext)} className="">
+        <form id="rel-has_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
-                <h1 className="text-lg my-2 text-left">Will you someday want to transition to in-person sessions?</h1>
+                <h1 className="text-lg my-2 text-left">Will you be using health insurance for your therapy sessions?</h1>
                 <div className="form-control w-full max-w-xs">
                     <Radio control={control} data={data} />
                 </div>
             </div>
         </form>
-        <div className={`flex gap-5 py-5`}>
+        <div className={`flex gap-5 py-5 mt-9`}>
             <Button 
                 title={'Back'} 
                 onClick={handleBack}
                 btnQnr
-                btnSecondary
-                 />
+                btnSecondary />
             <Button 
                 title={'Next'} 
-                form="is-is_in_us-form" 
+                form="rel-has_insurance-form" 
                 btnQnr
-                disabled={!watch('is_in_us')} />
+                disabled={!watch('has_insurance')} />
         </div>
     </>
     )
 }
 
-export default IsInUs;
+export default RelSess;
