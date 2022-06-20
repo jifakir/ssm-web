@@ -26,7 +26,7 @@ const data = {
 
 const VirtualInperson = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { will_provide_in_person: profile?.will_provide_in_person }});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { will_provide_in_person: profile?.will_provide_in_person }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -48,7 +48,7 @@ const VirtualInperson = ({ step, setStep, profile }) => {
         <>
             <form id="virtual-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio control={control} rules={{required: 'Virtual Inperson is requred.'}} data={data} />
                 </div>
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>

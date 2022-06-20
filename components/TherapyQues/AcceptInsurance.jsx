@@ -52,7 +52,7 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
             <form id="accept_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="md:flex justify-start">
                     <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio control={control} rules={{required: 'This field is requuired.'}} data={data} />
                     </div>
                     {
                         watch('accept_insurance') && (

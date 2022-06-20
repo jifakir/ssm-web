@@ -1,10 +1,14 @@
 import React from 'react';
+import { useController } from 'react-hook-form';
 
 
 
-const RadioInput = ({data, register, errors, ...rest}) => {
+const RadioInput = ({data, control,}) => {
 
-    const { options, title, name, required} = data;
+    const { options, title, name, rules} = data;
+
+    const { field, fieldState: {error}} = useController({control, name, rules});
+    const [value, setValue] = React.useState(field.value || '');
 
     return (
         <>
@@ -14,13 +18,18 @@ const RadioInput = ({data, register, errors, ...rest}) => {
                 <div className="form-control" key={idx}>
                     <label className="label cursor-pointer justify-start">
                         <input 
-                            {...rest} 
+                            ref={field.ref}
+                            onChange={(e) => {
+                                // update checkbox value
+                                field.onChange(option.value)
+                                setValue(option.value)
+                            }}
                             type="radio" 
-                            {...register(name, {required})}
-                            value={option.value} 
-                            className={`radio hover:radio-secondary ${errors[name] ? 'radio-error': 'checked:bg-neutral'}`} />
+                            value={option.value}
+                            checked={value == option.value ? true : false}
+                            className={`radio hover:radio-secondary ${error ? 'radio-error': 'checked:bg-neutral'}`} />
                         
-                        <span className={`pl-2 ${errors[name] && 'text-error'}`}>{option.label}</span>
+                        <span className={`pl-2 ${error && 'text-error'}`}>{option.label}</span>
                     </label>
                 </div>
                 ))

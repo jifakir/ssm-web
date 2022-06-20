@@ -29,7 +29,7 @@ const HowItWorks = () => {
 
     return (
         <div className="">
-          <h1 className="text-xl sm:text-[32px] font-bold text-center text-black">How it Works</h1>
+          <h1 className="text-2xl sm:text-[32px] font-bold text-center text-black">How it Works</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10">
             {
               howitworks.map((itm, idx) => (

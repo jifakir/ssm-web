@@ -20,7 +20,7 @@ const Login = ({open, setOpen, redirectTo}) => {
     const { isLoggedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
-    const { register, reset, handleSubmit, watch, formState: {errors}} = useForm();
+    const { reset, control, handleSubmit } = useForm();
     const [login, { data, isError, isSuccess, isLoading, error }] = useLoginMutation();
     const [signup, {data:signupData, isSuccess:signupSuccess, isLoading:signupLoading, isError:signupError, error:serror }] = useSignupMutation();
     const [googleLogin, result] = useGoogleLoginMutation();
@@ -43,6 +43,12 @@ const Login = ({open, setOpen, redirectTo}) => {
 
     const openHandler = () => {
         setOpen(!open);
+        reset();
+    };
+
+    const tabHandler = (num) => {
+        setTab(num);
+        reset();
     };
 
 
@@ -65,11 +71,28 @@ const Login = ({open, setOpen, redirectTo}) => {
     return (
         <div className={`${open ? 'block' : 'hidden'} fixed bottom-0 min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
             <div className="overflow-y-scroll h-full w-full flex justify-center items-center">
-            
             {
-                (isLoading && !isError) || (signupLoading && !signupError) &&
+                (isLoading && !isError) &&
+                <div className="bg-white">
+                    <div className="px-10 py-5">
+                        <p className="text-center text-sm font-bold">
+                            Thank you for logging!<br/>
+                        </p>
+                        <p className="mt-5 text-center">
+                            You will now be redirected to<br/>
+                            {
+                                redirectTo === '/therapist/profile' ? 
+                                'your profile':
+                                'complete our questionnaire.'
+                            }
+                        </p>
+                    </div>
+                </div> 
+            }
+            {
+                (signupLoading && !signupError) &&
                     <div className="bg-white">
-                        <div className="px-10 py-5">
+                        <div className="px-10 py-5 text-center">
                             <p className="text-center text-sm font-bold">
                                 Thank you for creating your account!<br/>
                             </p>
@@ -112,20 +135,34 @@ const Login = ({open, setOpen, redirectTo}) => {
                                 }
                             </div>
                             <div className="form-control w-full max-w-xs">
-                                <TextInput 
-                                    register={register} 
-                                    errors={errors}
-                                    data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />
+                                <TextInput
+                                    control={control}
+                                    pHolder={'startsayingmore@gmail.com'}
+                                    name={'email'}
+                                    title={'Email'}
+                                    rules={{
+                                        required: 'Email is required', 
+                                        pattern: {
+                                            value: /^\S+@\S+$/i,
+                                            message: "Please, enter a valid email"
+                                        }}}
+                                    />
                             </div>
                             <div className="relative form-control w-full max-w-xs">
                                 <TextInput
-                                    register={register} 
-                                    errors={errors} 
-                                    type={showPass ? 'text' : 'password'} 
-                                    data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
+                                    type={showPass ? 'text' : 'password'}
+                                    pHolder="Passoword"
+                                    title={'Password'}
+                                    name={'password'}
+                                    control={control}
+                                    rules={{
+                                        required: 'Password required', 
+                                        minLength: {
+                                            value: 8,
+                                            message: "Password must be 8 characters long"}}} />
                                 <div 
                                     onClick={() => setShowPass(!showPass)} 
-                                    className="absolute right-3 bottom-[13px] cursor-pointer">
+                                    className="absolute right-3 top-12 cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }
@@ -160,7 +197,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                 <p className="font-medium">
                                     Do not have an account? 
                                     <span 
-                                    onClick={()=> setTab(1)} 
+                                    onClick={()=> tabHandler(1)} 
                                     className="text-blue-700 font-bold cursor-pointer pl-1">Sign up</span></p>
                             </div>
                             <div className="text-xs">
@@ -175,7 +212,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                 ) : 
                 (tab === 1 && !signupLoading) ?
                 (
-                    <form onSubmit={handleSubmit(onSignupHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
+                    <div  className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
@@ -189,8 +226,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                     theme='dark'
                                     render={(renderProps) => (
                                         <GoogleButton 
-                                            onClick={renderProps.onClick} 
-                                            disabled={renderProps.disabled}
+                                            onClick={renderProps.onClick}
                                             label="SIGN UP GOOGLE" />
                                     )}
                                     onSuccess={responseGoogle}
@@ -205,45 +241,77 @@ const Login = ({open, setOpen, redirectTo}) => {
                                     signupError && <p className="text-xs text-accent font-bold">{serror.data?.message}</p>
                                 }
                             </div>
-                            <div className="form-control w-full max-w-xs">
-                                <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'Full Name', name: 'full_name', title: 'Name'}} />
-                            </div>
-                            <div className="form-control w-full max-w-xs">
-                                <TextInput register={register} errors={errors} data={{type: 'text', pHolder: 'startsayingmore@gmail.com', name: 'email', title: 'Email'}} />
-                            </div>
-                            <div className="relative form-control w-full max-w-xs">
-                                <TextInput register={register} errors={errors} type={showPass ? 'text' : 'password'} data={{ pHolder: 'Password', name: 'password', title: 'Password'}} />
-                                <div onClick={() => setShowPass(!showPass)} className="absolute right-3 bottom-[13px] cursor-pointer">
-                                    {
-                                        showPass ? <BsEye /> : <BsEyeSlash />
-                                    }
+                            <form onSubmit={handleSubmit(onSignupHandler)}>
+                                <div className="form-control w-full max-w-xs">
+                                    <TextInput
+                                        control={control}
+                                        pHolder={'startsayingmore'}
+                                        name={'full_name'}
+                                        title={'Name'}
+                                        rules={{ required: 'Name is required' }}
+                                        />
                                 </div>
-                            </div>
-                            <div className="w-full card-actions pt-5">
-                            <button 
-                                type='submit'
-                                    className={`
-                                        w-full
-                                        bg-secondary
-                                        text-2xl
-                                        tracking-[0.055em]
-                                        text-primary
-                                        py-1
-                                        hover:bg-secondary/50 
-                                        active:bg-neutral-focus
-                                        rounded
-                                        gap-2
-                                        px-5
-                                        md:px-8
-                                        font-semibold
-                                        disabled:bg-[#C0C0C0]
-                                        disabled:text-[#3E3643]
-                                        disabled:cursor-not-allowed
-                                        uppercase border-[3px]':
-                                        `}>
-                                            continue
-                                        </button>
-                            </div>
+                                <div className="form-control w-full max-w-xs">
+                                    <TextInput
+                                        control={control}
+                                        pHolder={'startsayingmore@gmail.com'}
+                                        name={'email'}
+                                        title={'Email'}
+                                        rules={{
+                                            required: 'Email is required', 
+                                            pattern: {
+                                                value:  /^\S+@\S+$/i,
+                                                message: 'Please, enter a valid email'
+                                            }}}
+                                        />
+                                </div>
+                                <div className="relative form-control w-full max-w-xs">
+                                    <TextInput
+                                        type={showPass ? 'text' : 'password'}
+                                        pHolder="Passoword"
+                                        title={'Password'}
+                                        name={'password'}
+                                        control={control}
+                                        rules={{
+                                            required: 'Password required', 
+                                            minLength: {
+                                                value: 8,
+                                                message: "Password must be 8 characters long"}
+                                            }} />
+                                    <div 
+                                        onClick={() => setShowPass(!showPass)} 
+                                        className="absolute right-3 top-12 cursor-pointer">
+                                        {
+                                            showPass ? <BsEye /> : <BsEyeSlash />
+                                        }
+                                    </div>
+                                </div>
+                                <div className="w-full card-actions pt-5">
+                                <button 
+                                    type='submit'
+                                        className={`
+                                            w-full
+                                            bg-secondary
+                                            text-2xl
+                                            tracking-[0.055em]
+                                            text-primary
+                                            py-1
+                                            hover:bg-secondary/50 
+                                            active:bg-neutral-focus
+                                            rounded
+                                            gap-2
+                                            px-5
+                                            md:px-8
+                                            font-semibold
+                                            disabled:bg-[#C0C0C0]
+                                            disabled:text-[#3E3643]
+                                            disabled:cursor-not-allowed
+                                            uppercase border-[3px]':
+                                            `}>
+                                                continue
+                                            </button>
+                                </div>
+                            </form>
                             {/* <div className="text-sm">
                                 <p className="">Do not have an account? <a className="text-blue-700 font-bold cursor-pointer">Sign up</a></p>
                             </div> */}
@@ -251,7 +319,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                 <p className="text-sm font-medium mb-2">
                                     Already have an account? 
                                     <span 
-                                    onClick={()=> setTab(1)}
+                                    onClick={()=> tabHandler(0)}
                                     className="text-blue-700 font-bold cursor-pointer pl-1">Login</span>
                                 </p>
                                 <p className="">
@@ -259,7 +327,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                 </p>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 ) : 
                 ''
             }

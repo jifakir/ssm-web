@@ -11,10 +11,12 @@ const Contact = () => {
 
     const [submit, setSubmit] = useState(false);
     const [error, setError] = useState(false);
-    const { register, watch, trigger, handleSubmit, formState: { errors }} = useForm();
-    console.log("errors: ", errors );
+    const { control, reset, handleSubmit } = useForm();
+
+
     const onSubmitHandler = (data) => {
         setSubmit(true);
+        reset();
     };
     
     return (
@@ -24,50 +26,73 @@ const Contact = () => {
                     <div className="">
                         <h1 className="text-5xl mt-5 lg:mt-0 font-sterio">Connect with us!</h1>
                         <p className="mt-5">
-                            Vestibulum id ligula porta felis euismod semper. Donec id elit non mi porta gravida at eget metus.
+                            If you would like to connect with us, please feel free to fill out the form below and we will get back to you as soon as possible.
                         </p>
                         <form id='contact-form' onSubmit={handleSubmit(onSubmitHandler)} className="mt-10 md:pr-16">
                             <div className="w-full sm:grid  gap-5 space-y-3 sm:space-y-0">
                                 <TextInput 
-                                    data={{name: 'firstname', title: 'First Name', pHolder: 'First Name'}}
-                                    register={register}
-                                    required
-                                    errors={errors}
+                                    name='firstname'
+                                    title='First Name'
+                                    pHolder='First Name'
+                                    control={control}
+                                    rules={{
+                                        required: 'First name is required!'
+                                    }}
                                     titleStyle="px-0 py-0 pb-2"
                                     className={'min-w-full'}
                                     />
                                 <TextInput 
-                                    data={{name: 'lastname', title: 'Last Name', pHolder: 'Last Name'}}
-                                    register={register}
-                                    required
-                                    errors={errors}
+                                    name='lastname'
+                                    title='Last Name'
+                                    pHolder='Last Name'
+                                    control={control}
+                                    rules={{
+                                        required: 'Last name is required!'
+                                    }}
                                     titleStyle="px-0 py-0 pb-2 "
                                     className={'min-w-full'}
                                     />
                                 <TextInput
-                                    data={{name: 'email', title: 'Email', pHolder: 'Email'}}
-                                    register={register}
-                                    required
-                                    pattern="/^\S+@\S+$/i"
-                                    errors={errors}
+                                    name='email'
+                                    title='Email'
+                                    pHolder='Email'
+                                    control={control}
+                                    rules={{
+                                        required: 'Email is required!',
+                                        pattern: {
+                                            value: /^\S+@\S+$/i,
+                                            message: 'Enter a valid email'
+                                        }
+                                    }}
                                     titleStyle="px-0 py-0 pb-2"
                                     className={'min-w-full'}
                                     />
-                                <TextInput 
-                                    data={{name: 'phone', title: 'Phone Number', pHolder: 'Phone Number'}}
-                                    register={register}
-                                    required
-                                    errors={errors}
+                                <TextInput
+                                    name='phone'
+                                    title='Phone Number'
+                                    pHolder='000-000-0000'
+                                    control={control}
+                                    rules={{
+                                        required: 'Phone Number is required!',
+                                        pattern: {
+                                            value: /^\d{3}(-|\s)\d{3}(-|\s)\d{4}$|^\d{10}$|^1\s\d{3}(-|\s)\d{3}(-|\s)\d{4}$|^(1\s?)?\(\d{3}\)(\s|\-)?\d{3}\-\d{4}$/,
+                                            message: 'Enter a valid Phone Number'
+                                        }
+                                    }}
                                     titleStyle="px-0 py-0 pb-2"
                                     className={'min-w-full'}
                                     />
                                 <div className="col-span-2">
                                     <TextInput
                                     type={'textarea'}
-                                    data={{name: 'message', type: 'textarea', title: 'Message', pHolder: 'We’d love to hear from you!'}}
-                                    register={register}
-                                    required
-                                    errors={errors}
+                                    data={{name: '', type: 'textarea', title: '', pHolder: ''}}
+                                    name='message'
+                                    title='Message'
+                                    pHolder='We’d love to hear from you!'
+                                    control={control}
+                                    rules={{
+                                        required: 'Message is required!',
+                                    }}
                                     titleStyle="px-0 py-0 pb-2"
                                     className={'min-w-full'} />
                                 </div>
@@ -77,7 +102,7 @@ const Contact = () => {
                                 type="submit"
                                 form="contact-form"
                                 className={'mt-8'} />
-                            <p className="text-error text-xs sm:text-sm pt-2">{(submit && !error) ? 'Successfully! Submitted.' : error ? 'There was an error with your submission.': ''}</p>
+                            <p className={`${!submit ? 'text-error' : 'text-green-600'} font-medium text-xs sm:text-sm pt-2`}>{submit ? 'Thank you for your submission!' : error ? 'There was an error with your submission. Please fill out required fields.': ''}</p>
                         </form>
                     </div>
                 </div>

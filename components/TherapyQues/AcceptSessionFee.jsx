@@ -22,7 +22,7 @@ const data = {
 
 const AcceptSessionFee = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {accept_session_fee: profile?.accept_session_fee}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {accept_session_fee: profile?.accept_session_fee}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -46,7 +46,7 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
             <form id="accept-session-fee" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio control={control} rules={{required: 'Accept Session Fee is required.'}} data={data} />
                     </div>
                 </div>
             </form>

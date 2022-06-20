@@ -32,6 +32,7 @@ import Specialization from '../../components/TherapyQues/Specialization';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { ImSpinner9 } from 'react-icons/im';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 
 const Questionnaire = () => {
@@ -190,7 +191,14 @@ const Questionnaire = () => {
         <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
             <h1 className="text-[54px] font-sterio text-[#331447]">Welcome</h1>
             <p className="mt-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. 
+                Thank you for joining our directory! We have created a detailed questionnaire to help us match you with potential patients. You will need to provide your Myers-Briggs Personality Test factors, so please be sure you have completed that test.
+                If you have not completed the Personality Test, please do so 
+                <Link href={'http://16personalities.com'}>
+                    <a target={'_blank'} className="text-secondary">
+                        &nbsp; here
+                    </a>
+                </Link>.
+                It shouldn&apos;t take longer than 20 minutes!
             </p>
         </div>
         {/* Slide section */}

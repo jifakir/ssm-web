@@ -13,8 +13,8 @@ const Education = ({step, setStep, profile}) => {
 
     const [qualifyNum, setQualifyNum] = React.useState(1);
 
-    const { register, control, trigger, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {education: profile?.education || [{major: '', degree: '', school_name: ''}]}});
-    const {  fields, append, remove, swap } = useFieldArray({
+    const {  control, handleSubmit, watch, } = useForm({defaultValues: {education: profile?.education || [{major: '', degree: '', school_name: ''}]}});
+    const {  fields, append, remove } = useFieldArray({
         control,
         name: "education"
       });
@@ -38,7 +38,7 @@ const Education = ({step, setStep, profile}) => {
         if(fields.length >= 3) return;
         append({degree: '', major: '', school_name: ''})
     };
-
+    console.log(watch());
     return (
     <>
         <form id="education-form" onSubmit={handleSubmit(handleNext)} className="">
@@ -63,9 +63,28 @@ const Education = ({step, setStep, profile}) => {
                                         <MdOutlineClose />
                                     </div>
                                 </div>
-                                <Input data={{name: `education.${idx}.degree`, pHolder: 'Major', required: true}} register={register} errors={errors} />
-                                <Input data={{name: `education.${idx}.major`, pHolder: 'Major/Minor/Degree Focus', required: true}} register={register} errors={errors} />
-                                <Input data={{name: `education.${idx}.school_name`, pHolder: 'School Name',  required: true}} register={register} errors={errors} />
+                                <Input
+                                    control={control}
+                                    name={`education.${idx}.degree`}
+                                    pHolder={'Degree'}
+                                    rules={{
+                                        required: "Degreee is required."
+                                    }} 
+                                     />
+                                <Input 
+                                    control={control}
+                                    name={`education.${idx}.major`}
+                                    pHolder={'Major'}
+                                    rules={{
+                                        required: "Major is required."
+                                    }}  />
+                                <Input 
+                                    control={control}
+                                    name={`education.${idx}.school_name`}
+                                    pHolder={'School'}
+                                    rules={{
+                                        required: "School is required."
+                                    }}  />
                             </div>
                         )
                     })

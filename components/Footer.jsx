@@ -9,19 +9,19 @@ import { useForm } from 'react-hook-form';
 const linksData = [
     {
         component: <AiFillInstagram />,
-        url: '/'
+        url: 'http://www.instagram.com/startsayingmore'
     },
     {
         component: <AiFillFacebook />,
-        url: '/'
+        url: 'https://www.facebook.com/StartSayingMore'
     },
     {
         component: <AiOutlineTwitter />,
-        url: '/'
+        url: 'http://www.twitter.com/startsayingmore'
     },
     {
         component: <AiFillLinkedin />,
-        url: '/'
+        url: 'https://www.linkedin.com/company/startsayingmore/'
     }
 ];
 
@@ -40,11 +40,11 @@ const menuList = [
     },
     {
         title: 'FAQs',
-        linkUrl: '/'
+        linkUrl: '/faqs'
     },
     {
         title: 'Donate',
-        linkUrl: '/'
+        linkUrl: 'https://www.kickstarter.com/projects/olamideafolabi/launch-an-innovative-therapist-matching-platform'
     },
     {
         title: 'Emergency Resources',
@@ -54,7 +54,10 @@ const menuList = [
 
 const Footer = () => {
 
-    const { register, watch, handleSubmit, formState: {errors}} = useForm();
+    const { control, handleSubmit} = useForm();
+    const onSubmitHandler = (data) => {
+        console.log(data);
+    }
 
     return (
         <footer className="relative bg-neutral/30 py-4 overflow-hidden bg-gradient-to-r from-transparent via-neutral/40 to-transparent">
@@ -72,9 +75,11 @@ const Footer = () => {
                                 linksData.map(({component, url}, idx) => (
                                     <li key={`footer_link_${idx}`} className="text-primary cursor-pointer">
                                         <Link href={url} passHref>
-                                            {
-                                                component
-                                            }
+                                            <a target="_blank">
+                                                {
+                                                    component
+                                                }
+                                            </a>
                                         </Link>
                                     </li>
                                 ))
@@ -82,18 +87,22 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className="md:w-1/2 md:pr-10">
-                        <form action="" className="">
+                        <form onSubmit={handleSubmit(onSubmitHandler)} className="">
                             <h5 className="text-[15px] font-semibold text-center md:text-left">
                                 Stay in touch with us!
                             </h5>
-                            <div className="flex justify-center items-center gap-2 mt-5 md:mt-2">
-                                <TextInput data={{
-                                    name: 'email',
-                                    pHolder: 'Email Address'
-                                    }} 
+                            <div className="flex justify-center items-start gap-2 mt-5 md:mt-2">
+                                <TextInput 
+                                    control={control} 
+                                    name='email'
+                                    pHolder='Email Address'
+                                    rules={{ 
+                                        required: "Email is required", 
+                                        pattern: {
+                                            value: /^\S+@\S+$/i,
+                                            message: 'Please, enter a valid email'
+                                        }}}
                                     inputLg
-                                    register={register}
-                                    errors={errors} 
                                      />
                                 <div className="">
                                     <Button title={'SUBMIT'} fontSize="text-lg sm:text-xl" />
@@ -134,7 +143,9 @@ const Footer = () => {
                         Are you ready to start your therapy journey? Match with one today!
                         </p>
                         <Link href={'/patient'} passHref>
-                            <Button title={'START SAYING MORE'} btnSecondary fontSize={'text-xl'} />
+                            <a >
+                                <Button title={'START SAYING MORE'} btnSecondary fontSize={'text-xl'} />
+                            </a>
                         </Link>
                     </div>
                     <div className="md:w-1/2 lg:w-full mt-5 sm:mt-6 lg:mt-6">

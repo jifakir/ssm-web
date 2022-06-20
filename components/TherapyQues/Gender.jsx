@@ -30,11 +30,9 @@ const data = {
     ]
 };
 
-
-
 const Gender = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {gender: profile?.gender}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {gender: profile?.gender}});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -60,7 +58,7 @@ const Gender = ({ step, setStep, profile }) => {
                 <div className="w-full">
                     <h1 className="text-lg my-2 text-left">What is your gender?</h1>
                     <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio control={control} rules={{required: 'Gender is required'}} data={data} />
                     </div>
                 </div>
             </form>

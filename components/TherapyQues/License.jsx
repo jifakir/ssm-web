@@ -7,6 +7,7 @@ import Select from '../UI/Select';
 import Input from '../UI/TextInput';
 import { useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
+import { useState } from 'react';
 
 const data = {
     name: 'license_title',
@@ -18,16 +19,16 @@ const data = {
 const Experience = ({ step, setStep, profile }) => {
 
     const inputRef = useRef();
+    const [image, setImage] = useState();
     // const { head, tail } = profile?.years_of_experience;
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { license_title } = data;
         if(!license_title) return;
-        const splitted_year = license_title?.value.split('-');
-        await updateTherapist({id: profile?.id, license_title: {head:splitted_year[0], tail:splitted_year[1]}, registration_status: 'entered-years_of_experience' });
+        await updateTherapist({id: profile?.id, license_title, registration_status: 'entered-years_of_experience' });
         setStep(step + 1);
 
     };
@@ -41,11 +42,11 @@ const Experience = ({ step, setStep, profile }) => {
     const uploadHandler = (e) => {
 
         const file = e.target.files[0];
+        setImage(file);
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
             const url = reader.result;
-            setImgUrl(url);
         }
         reader.onerror = (error) => {
             console.log(error);
@@ -53,18 +54,25 @@ const Experience = ({ step, setStep, profile }) => {
 
     };
 
-    
+    console.log("license ref: ", inputRef);
+
     return (
         <>
-            <form id="experience-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="license-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <h1 className="my-2 text-left">Professional Licensure/Insurance</h1>
                     <div className="form-control w-full max-w-xs text-left">
-                        <Input errors={errors} register={register} data={data} />
+                        <Input 
+                            control={control}
+                            name={'license_title'}
+                            rules={{
+                                required: 'License is required'
+                            }}
+                             />
                     </div>
                     <h1 className="my-2 text-left mt-5">Upload License ID</h1>
                     <div className="flex my-2">
-                        <input ref={inputRef} {...register('license')} onChange={uploadHandler} type="file" className="hidden" />
+                        <input ref={inputRef} onChange={uploadHandler} type="file" className="hidden" />
                         <Button
                             onClick={() => inputRef.current.click()}
                             title={'UPLOAD'} btnQnr>
@@ -85,7 +93,7 @@ const Experience = ({ step, setStep, profile }) => {
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
-                    form="experience-form" 
+                    form="license-form" 
                     btnQnr
                     disabled={!watch('license_title')}
                      />
