@@ -85,7 +85,7 @@ const Personality = ({ step, setStep, profile }) => {
 
 
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {...profile?.personality_type}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {...profile?.personality_type}});
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
@@ -102,7 +102,7 @@ const Personality = ({ step, setStep, profile }) => {
         setStep(step - 1);
     };
 
-    
+    const {mind, energy, nature, tactics, identity} = watch();
 
     return (
         <>
@@ -112,21 +112,28 @@ const Personality = ({ step, setStep, profile }) => {
                     {
                         data.map((itm, idx) => (
                             <div key={`personality_item_${idx}`} className="">
-                                <RadioInput data={itm} register={register} errors={errors} />
+                                <RadioInput 
+                                    data={itm} 
+                                    control={control}
+                                    rules={{
+                                        required: 'Personality is requried.'
+                                    }} />
                             </div>
                         ))
                     }
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr
+                    btnSecondary />
                 <Button 
                     title={'Next'} 
                     form="personality-form"
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${ (!watch().mind || !watch().energy || !watch().nature || !watch().tactics || !watch().identity) ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    btnQnr
+                    disabled={!mind || !energy || !nature || !tactics || !identity} />
             </div>
         </>
     )

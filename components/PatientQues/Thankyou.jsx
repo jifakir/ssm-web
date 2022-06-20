@@ -1,50 +1,75 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
+import Button from '../UI/Button';
+import TextInput from '../../components/UI/TextInput';
+import { useState } from 'react';
+import { MdClose } from 'react-icons/md';
 
-const Questionnaire = () => {
+const Thankyou = ({ step, setStep, profile }) => {
 
-
-    const {register, trigger, formState: { errors }, watch, handleSubmit} = useForm({mode: 'all'});
+    const [modal, setModal] = useState(false);
+    const { control, handleSubmit, watch, formState: { errors} } = useForm();
+    const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { full_name } = data;
-
-        await registerTherapist({ full_name, registration_status: 'entered-fullname' });
-
-        // if(!isSuccess){
-        //     return
-        // }
-
-        setStep(step + 1);
-
+        const { email_address } = data;
+        if(!email_address) return;
+        // await updatePatient({id: profile?.id, email_address, registration_status: 'entered-email' });
+        setModal(true);
     };
 
+    const handleBack = () => {
+
+        setStep(step - 1);
+        
+    };
+
+
     return (
-        <div className="px-10 pt-5">
-            <div className="">
-                <h1 className="text-7xl">Thank You!</h1>
-                <p className="text-2xl mt-5">
-                    Thank you for completing our match survey! Please share your email address with us, and we will
-                    send over your top  matches.
-                </p>
+        <>
+            <form id='thankyou-form' onSubmit={handleSubmit(handleNext)} className="">
+                {
+                    modal ?
+                    <div className="absolute top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
+                        <div className="relative w-1/2 h-52 bg-primary text-whtie text-center flex justify-center items-center">
+                            <span onClick={() => setModal(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
+                                <MdClose />
+                            </span>
+                            <h1 className="text-2xl font-semibold text-white px-20">
+                            Congratulations on starting your mental wellness journey!
+                            </h1>
+                        </div>
+                    </div>:
+                    <div className="w-full">
+                        <div className="form-control w-full max-w-xs">
+                            <TextInput 
+                                control={control}
+                                name={'email_address'}
+                                title={'Email'}
+                                pHolder={'Email'}
+                                rules={{
+                                    required: 'Email is required.',
+                                    pattern: {
+                                        value: /^\S+@\S+$/i,
+                                        message: 'Enter a valid email address'
+                                    }
+                                }} />
+                        </div>
+                    </div>
+                }
+                
+            </form>
+            <div className={`flex gap-5 py-5 mt-9`}>
+                <Button 
+                    title={'Submit'} 
+                    form="thankyou-form"  
+                    btnQnr
+                    disabled={!watch().email_address} />
             </div>
-            <form onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
-                <label className="label">
-                    <span className="label-text text-lg">E-Mail Address</span>
-                </label>
-                <input {...register('email',{required: true, pattern: /^\S+@\S+$/i})} type="email" placeholder="startsayingmore@gmail.com" className={`input input-bordered w-full max-w-xs ${errors.email && 'input-error'}`} />
-                {/* <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p> */}
-            </div>
-            <div className={`flex gap-5 py-5`}>
-                <button onClick={handleNext} className={`btn text-white ${!watch().email ? 'bg-gray-400' : 'btn-primary'}`} >
-                    Submit
-                </button>
-            </div>
-        </form>
-        </div>
+        </>
     )
 }
 
-export default Questionnaire;
+export default Thankyou;

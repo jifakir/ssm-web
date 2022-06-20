@@ -5,34 +5,34 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 const data = {
-    title: 'How important is cost in your decision to begin therapy?',
+    title: 'What is the most you are willing to pay per therapy session?  ',
     name: 'cost_decision',
     options: [
         {
-            label: 'Not Important',
-            value: 'not_important'
+            label: '$65',
+            value: '65'
         },
         {
-            label: 'Somewhat Important',
-            value: 'somewhat_important'
+            label: '$100',
+            value: '100'
         },
         {
-            label: 'Important',
-            value: 'important'
+            label: '150$',
+            value: '150'
         },
         {
-            label: 'Very Important',
-            value: 'very_important'
+            label: '$200',
+            value: '200'
         },
         {
-            label: 'Extremely Important',
-            value: 'extremely_important'
+            label: '$250%',
+            value: '250+'
         },
     ]
 };
 
 
-const CostDecision = ({ step, setStep, profile }) => {
+const SessionFee = ({ step, setStep, profile }) => {
 
 
     const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { max_payable_fee: profile?.max_payable_fee }})
@@ -57,7 +57,7 @@ const CostDecision = ({ step, setStep, profile }) => {
         <>
             <form id="max_payable_fee-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control w-full">
-                    <div className="">
+                    <div className="form-control w-full">
                         <Radio control={control} data={data} />
                     </div>
                 </div>
@@ -81,4 +81,4 @@ const CostDecision = ({ step, setStep, profile }) => {
 }
 
 
-export default CostDecision;
+export default SessionFee;

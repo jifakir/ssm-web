@@ -4,7 +4,7 @@ import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
-const data = {
+const consildata = {
     name: 'has_tried_counseling',
     options: [
         {
