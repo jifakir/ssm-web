@@ -25,7 +25,7 @@ import CostDecision from '../../components/PatientQues/CostDecision';
 import Titles from '../../components/PatientQues/Titles';
 import Language from '../../components/PatientQues/Language';
 import AcceptInsurance from '../../components/PatientQues/AcceptInsurance';
-import Insurance from '../../components/PatientQues/Insurance';
+import Insurance from '../../components/TherapyQues/States';
 import SessionFee from '../../components/PatientQues/SessionFee';
 import IsInUs from '../../components/PatientQues/IsInUs';
 import AcceptSessionFee from '../../components/PatientQues/AcceptSessionFee';
@@ -56,7 +56,7 @@ const Questionnaire = () => {
             status: "",
         },
         {
-            component: <Name data={data} step={step} setStep={setStep} />,
+            component: <Name profile={data} step={step} setStep={setStep} />,
             status: "entered-name",
         },
         {
@@ -75,10 +75,6 @@ const Questionnaire = () => {
         {
             component: <PreferGender profile={data} step={step} setStep={setStep} />,
             status: "entered-orientation",
-        },
-        {
-            component: <Personality profile={data} step={step} setStep={setStep} />,
-            status: "entered-personality",
         },
         {
             component: <Age profile={data} step={step} setStep={setStep} />,
@@ -104,6 +100,7 @@ const Questionnaire = () => {
             component: <PreferOrientation profile={data} step={step} setStep={setStep} />,
             status: "entered-prefer-orientation",
         },
+        
         {
             component: <Religion profile={data} step={step} setStep={setStep} />,
             status: "entered-religion",
@@ -115,6 +112,10 @@ const Questionnaire = () => {
         {
             component: <IsSpiritual profile={data} step={step} setStep={setStep} />,
             status: "entered-spirituality",
+        },
+        {
+            component: <Personality profile={data} step={step} setStep={setStep} />,
+            status: "entered-personality",
         },
         {
             component: <TriedCounseling profile={data} step={step} setStep={setStep} />,
@@ -133,7 +134,7 @@ const Questionnaire = () => {
             status: "entered-education",
         },
         {
-            component: <HasInsurance profile={data} step={step} setStep={setStep} />,
+            component: <AcceptInsurance profile={data} step={step} setStep={setStep} />,
             status: "entered-HasInsurance",
         },
 
@@ -149,12 +150,6 @@ const Questionnaire = () => {
             component: <Thankyou profile={data} step={step} setStep={setStep} />,
             status: "entered-thankyou",
         },
-        
-        // {
-        //     component: <PreferOtherLang profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-otherlang",
-        // },
-        
         // {
         //     component: <TriedCounseling profile={data} step={step} setStep={setStep} />,
         //     status: "entered-lang",
@@ -219,17 +214,17 @@ const Questionnaire = () => {
         if(!isLoggedIn){
             router.push('/');
         }
-        if(isSuccess){
-            components.map((com, idx) => {
-                console.log(com.status);
-                console.log(data.registration_status);
-                if(com.status === data.registration_status){
-                    console.log('Triggered SetStep')
-                    setStep(idx + 1);
-                }
-            })
-        }
-    },[isSuccess, isLoggedIn]);
+        // if(isSuccess){
+        //     components.map((com, idx) => {
+        //         console.log(com.status);
+        //         console.log(data.registration_status);
+        //         if(com.status === data.registration_status){
+        //             console.log('Triggered SetStep')
+        //             setStep(idx + 1);
+        //         }
+        //     })
+        // }
+    },[isSuccess, isLoggedIn, router]);
 
 
     const percent = Math.round((step/components.length)*100);

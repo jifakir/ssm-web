@@ -4,8 +4,7 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 const data = {
-    title: 'Do you prefer virtual or in-person sessions?',
-    name: 'inperson_future',
+    name: 'session_type',
     options: [
         {
             label: 'Virtual only',
@@ -23,7 +22,6 @@ const data = {
 };
 
 const willData = {
-    title: 'Will you someday want to transition to in-person sessions?',
     name: 'will_like_in_person',
     options: [
         {
@@ -41,16 +39,16 @@ const willData = {
     ]
 };
 
-const InpersonFuture = ({ step, setStep }) => {
+const InpersonFuture = ({ step, setStep, profile }) => {
 
     const { control, handleSubmit, watch, formState: { errors} } = useForm();
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { email } = data;
+        const { session_type, will_like_in_person } = data;
 
-        await updateTherapist({ email, registration_status: 'email' });
+        await updateTherapist({id: profile?.id, session_type, will_like_in_person, registration_status: 'entered-session_type' });
 
         // if(!isSucces){
         //     return
@@ -71,9 +69,11 @@ const InpersonFuture = ({ step, setStep }) => {
         <form id="inperson_future-form" onSubmit={handleSubmit(handleNext)} className="">
             <div className="form-control w-full">
                 <div className="">
+                    <h1 className="text-lg my-2 text-left">Do you prefer virtual or in-person sessions?</h1>
                     <Radio control={control} data={data} />
                 </div>
-                <div className={`${watch('inperson_future') ? 'block' : 'hidden'}`}>
+                <div className={`mt-5 ${watch('session_type') === 'virtual' ? 'block' : 'hidden'}`}>
+                <h1 className="text-lg my-2 text-left">Will you someday want to transition to in-person sessions?</h1>
                     <Radio control={control} data={willData} />
                 </div>
             </div>
@@ -85,7 +85,7 @@ const InpersonFuture = ({ step, setStep }) => {
                 <Button title={'Next'}
                     btnQnr
                     form={"inperson_future-form"}
-                    disabled={!watch('inperson_future')} />
+                    disabled={watch('session_type') == null} />
             </div>
         </form>
     )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
@@ -35,15 +35,20 @@ const data = {
 
 const Experience = ({ step, setStep, profile }) => {
 
-    // const { head, tail } = profile?.years_of_experience;
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm();
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            years_of_experience:  profile ? `${profile?.years_of_experience?.head}-${profile?.years_of_experience?.tail}` : ''
+        }
+    });
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { years_of_experience } = data;
-        if(!years_of_experience) return;
-        const splitted_year = years_of_experience?.value.split('-');
+        setStep(step + 1);
+        if(years_of_experience==null) return;
+        console.log("Expereience: ", years_of_experience);
+        const splitted_year = years_of_experience?.split('-');
         await updateTherapist({id: profile?.id, years_of_experience: {head:splitted_year[0], tail:splitted_year[1]}, registration_status: 'entered-years_of_experience' });
         setStep(step + 1);
 
@@ -62,7 +67,7 @@ const Experience = ({ step, setStep, profile }) => {
                 <div className="w-full">
                     <h1 className="my-2 text-left">How many years of experience do you have?</h1>
                     <div className="form-control w-full max-w-xs text-left">
-                        <Select register={register} control={control} errors={errors} data={data} />
+                        <Select control={control} data={data} />
                     </div>
                 </div>
             </form>
@@ -77,7 +82,7 @@ const Experience = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="experience-form" 
                     btnQnr
-                    disabled={!watch('years_of_experience')}
+                    // disabled={!watch('years_of_experience')}
                      />
             </div>
         </>

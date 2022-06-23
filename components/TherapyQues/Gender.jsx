@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+import { useEffect } from 'react';
 
 const data = {
     name: 'gender',
@@ -33,7 +34,7 @@ const data = {
 const Gender = ({ step, setStep, profile }) => {
 
     const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {gender: profile?.gender}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
@@ -51,7 +52,12 @@ const Gender = ({ step, setStep, profile }) => {
 
     };
 
-    
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
+
     return (
         <>
             <form id="gender-form" onSubmit={handleSubmit(handleNext)} className="">

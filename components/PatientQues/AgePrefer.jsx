@@ -4,6 +4,8 @@ import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
+
+
 const preferData = {
     name: 'has_age_preference',
     options: [
@@ -17,6 +19,7 @@ const preferData = {
         },
     ]
 }
+
 const data = {
     name: 'age_preference',
     options: [
@@ -55,16 +58,23 @@ const data = {
 // Component
 const AgePrefer = ({ step, setStep, profile }) => {
 
-    const age = `${profile?.age?.head}-${profile?.age?.tail}`
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {age: profile?.age ? age : ''}});
+    const { 
+        control, handleSubmit, watch, 
+        formState: { errors} } = useForm({
+            defaultValues: {
+            has_age_preference: profile?.has_age_preference,
+            age_preference: profile ? `${profile?.age_preference?.head}-${profile?.age_preference?.tail}` : ''
+        }
+    });
+
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { has_age_preference } = data;
-        console.log("Religion Biased: ", has_age_preference);
-        if(!has_age_preference) return;
-        await updatePatient({id: profile?.id, has_age_preference, registration_status: 'entered-has_age_preference' });
+        const { has_age_preference, age_preference } = data;
+        if(has_age_preference == null) return;
+        const splitAge = age_preference.split('-');
+        await updatePatient({id: profile?.id, has_age_preference, age_preference: {head: splitAge[0], tail: splitAge[1]}, registration_status: 'entered-has_age_preference' });
         setStep(step + 1);
     };
 
@@ -78,9 +88,9 @@ const AgePrefer = ({ step, setStep, profile }) => {
     return (
     <>
         <form id="has_age_preference-form" onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full md:flex gap-10">
+            <div className="w-full">
                 <div className="">
-                    <h1 className="text-lg my-2 text-left">Will you someday want to transition to in-person sessions?</h1>
+                    <h1 className="text-lg my-2 text-left">Do you have any age preference for your provider?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 
                             control={control}
@@ -90,7 +100,7 @@ const AgePrefer = ({ step, setStep, profile }) => {
                             data={preferData} />
                     </div>
                 </div>
-                <div className={`${watch('has_age_preference') ? 'block' : 'hidden'}`}>
+                <div className={`${watch('has_age_preference') ? 'block' : 'hidden'} mt-10`}>
                     <h1 className="text-lg my-2 text-left">What is your age preference?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 
@@ -114,7 +124,7 @@ const AgePrefer = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="has_age_preference-form" 
                 btnQnr
-                disabled={!watch('has_age_preference')}/>
+                disabled={watch('has_age_preference') ? watch('age_preference') == null : watch('has_age_preference') == null}/>
         </div>
     </>
     )

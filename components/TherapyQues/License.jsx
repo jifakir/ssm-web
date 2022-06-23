@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdateTherapistMutation, useUploadLicenseMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import Select from '../UI/Select';
@@ -8,6 +8,7 @@ import Input from '../UI/TextInput';
 import { useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const data = {
     name: 'license_title',
@@ -19,18 +20,18 @@ const data = {
 const Experience = ({ step, setStep, profile }) => {
 
     const inputRef = useRef();
-    const [image, setImage] = useState();
-    // const { head, tail } = profile?.years_of_experience;
-    const { register, handleSubmit, control, watch } = useForm();
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [image, setImage] = useState(profile?.license);
+    const { register, handleSubmit, control, watch } = useForm({defaultValues: {
+        license_title: profile?.license_title,
 
+    }});
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [uploadLicense, { data:licenseData, isSuccess:licenseSuccess }] = useUploadLicenseMutation();
     const handleNext = async (data) => {
 
-        const { license_title } = data;
-        if(!license_title) return;
-        await updateTherapist({id: profile?.id, license_title, registration_status: 'entered-years_of_experience' });
-        setStep(step + 1);
-
+        const { license_type } = data;
+        if(!license_type || !image) return;
+        await updateTherapist({id: profile?.id, license_type, registration_status: 'entered-license'});
     };
 
     const handleBack = () => {
@@ -40,31 +41,34 @@ const Experience = ({ step, setStep, profile }) => {
     };
 
     const uploadHandler = (e) => {
-
         const file = e.target.files[0];
+        
+        const formData = new FormData();
+        formData.append("license",file);
         setImage(file);
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            const url = reader.result;
-        }
-        reader.onerror = (error) => {
-            console.log(error);
-        }
-
+        uploadLicense({id:profile?.id,formData});
+        
     };
 
-    console.log("license ref: ", inputRef);
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+        if(licenseSuccess){
+            setImage(licenseData.license);
+        }
+    },[isSuccess,licenseSuccess]);
 
     return (
         <>
             <form id="license-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <h1 className="my-2 text-left">Professional Licensure/Insurance</h1>
+                    <h1 className="my-5 text-left">Professional Licensure/Insurance</h1>
                     <div className="form-control w-full max-w-xs text-left">
                         <Input 
                             control={control}
-                            name={'license_title'}
+                            name={'license_type'}
+                            pHolder={'Add Professional License'}
                             rules={{
                                 required: 'License is required'
                             }}
@@ -72,16 +76,25 @@ const Experience = ({ step, setStep, profile }) => {
                     </div>
                     <h1 className="my-2 text-left mt-5">Upload License ID</h1>
                     <div className="flex my-2">
-                        <input ref={inputRef} onChange={uploadHandler} type="file" className="hidden" />
+                        <input ref={inputRef} accept="image/jpg, image/png, application/pdf" onChange={uploadHandler} type="file" className="hidden" />
                         <Button
+                            type="button"
                             onClick={() => inputRef.current.click()}
                             title={'UPLOAD'} btnQnr>
                             <MdAdd />
                         </Button>
                     </div>
-                    <p className="text-left text-xs">
-                        .JPG,.PNG,.PDF formats only
-                    </p>
+                    <div className="">
+                        {
+                            !image ? 
+                            <p className="text-left text-xs">
+                                .JPG,.PNG,.PDF formats only
+                            </p>:
+                            <p className="text-left text-xs">
+                                {image?.name}
+                            </p>
+                        }
+                    </div>
                 </div>
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>
@@ -95,7 +108,7 @@ const Experience = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="license-form" 
                     btnQnr
-                    disabled={!watch('license_title')}
+                    disabled={!watch('license_type')}
                      />
             </div>
         </>

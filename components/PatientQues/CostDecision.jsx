@@ -5,7 +5,6 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 const data = {
-    title: 'How important is cost in your decision to begin therapy?',
     name: 'cost_decision',
     options: [
         {
@@ -57,6 +56,7 @@ const CostDecision = ({ step, setStep, profile }) => {
         <>
             <form id="max_payable_fee-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control w-full">
+                    <h1 className="text-lg my-2 text-left">How important is cost in your decision to begin therapy?</h1>
                     <div className="">
                         <Radio control={control} data={data} />
                     </div>

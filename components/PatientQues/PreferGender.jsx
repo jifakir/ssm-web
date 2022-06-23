@@ -7,14 +7,20 @@ import Radio from '../UI/Radio';
 
 const PreferGender = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { has_gender_preference: profile?.has_gender_preference }});
+    const { 
+        control, 
+        handleSubmit, watch, formState: { errors} } = useForm({
+            defaultValues: { 
+                has_gender_preference: profile?.has_gender_preference || '',
+                gender_preference: profile?.gender_preference || ''
+            }});
     const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { has_gender_preference } = data;
-        if(!has_gender_preference) return;
-        await updatePatient({id: profile?.id, has_gender_preference, registration_status: 'entered-gender preference' });
+        const { has_gender_preference, gender_preference } = data;
+        if(has_gender_preference == null) return;
+        await updatePatient({id: profile?.id, has_gender_preference, gender_preference, registration_status: 'entered-gender preference' });
         setStep(step + 1);
     };
 
@@ -74,7 +80,7 @@ const PreferGender = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="perfer-gender-form"
                     btnQnr
-                    disabled={!watch('has_gender_preference')} />
+                    disabled={watch('has_gender_preference') ? watch('gender_preference') == null : watch('has_gender_preference') == null} />
             </div>
         </>
     )

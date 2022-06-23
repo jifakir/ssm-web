@@ -4,9 +4,11 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import Checkbox from '../UI/Checkbox';
+
+
 const raceData = {
-    title: 'What is your race preference?',
-    name: 'languages',
+    
+    name: 'race_preference',
     required: true,
     options: [
         {
@@ -47,14 +49,18 @@ const data = {
 
 const PreferOtherLang = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {has_race_preference: profile?.has_race_preference}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            has_race_preference: profile?.has_race_preference,
+            race_preference: profile?.race_preference
+        }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { has_race_preference } = data;
+        const { has_race_preference, race_preference } = data;
         if(!has_race_preference) return;
-        await updateTherapist({id: profile?.id, has_race_preference, registration_status: 'entered-has_race_preference' });
+        await updateTherapist({id: profile?.id, has_race_preference, race_preference, registration_status: 'entered-has_race_preference' });
 
         setStep(step + 1);
 
@@ -69,11 +75,11 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="race-prefer-form" onSubmit={handleSubmit(handleNext)} className="">
-                <div className="w-full md:flex gap-10">
+                <div className="w-full">
                     
                     <div>   
                         <h1 className="text-lg my-2 text-left">Do you have a race preference for your provider?</h1>
-                        <div className="form-control w-full max-w-xs">
+                        <div className="form-control w-full">
                             <Radio 
                                 control={control}
                                 rules={{
@@ -82,7 +88,8 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
                                 data={data} />
                         </div>
                     </div> 
-                    <div className={`form-control w-full max-w-xs ${watch('has_race_preference') ? 'block' : 'hidden'}`}>
+                    <div className={`form-control mt-10 w-full ${watch('has_race_preference') ? 'block' : 'hidden'}`}>
+                        <h1 className='text-lg my-2 text-left'>What is your race preference?</h1>
                         <Radio 
                             control={control}
                             rules={{
@@ -104,7 +111,7 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="race-prefer-form" 
                     btnQnr
-                    disabled={!watch('has_race_preference')} />
+                    disabled={watch('has_race_preference') ? watch('race_preference') == null : watch('has_race_preference') == null} />
             </div>
         </>
     )

@@ -4,6 +4,7 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import Select from '../UI/MultiSelect';
+import { useEffect } from 'react';
 const data = {
     title: 'Do you accept insurance?',
     name: 'accept_insurance',
@@ -28,15 +29,19 @@ const data = {
 
 const AcceptInsurance = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { accept_insurance: profile?.accept_insurance}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { 
+        accept_insurance: profile?.accept_insurance || '',
+        acceptable_insurances: profile?.acceptable_insurances || []
+    }});
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { accept_insurance } = data;
-        if(!accept_insurance) return;
-        await updateTherapist({ id: profile?.id, accept_insurance, registration_status: 'entered-accept_insurance' });
-        setStep(step + 1);
+        const { accept_insurance, acceptable_insurances } = data;
+        console.log("Insurance: ", acceptable_insurances);
+        if(accept_insurance == null) return;
+        if(accept_insurance && acceptable_insurances == null) return;
+        await updateTherapist({ id: profile?.id, accept_insurance, acceptable_insurances, registration_status: 'entered-accept_insurance' });
 
     };
 
@@ -46,22 +51,36 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
 
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    }, [isSuccess])
     
     return (
         <>
             <form id="accept_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
-                <div className="md:flex justify-start">
-                    <div className="form-control w-full max-w-xs">
+                <div className="md:flex gap-28 justify-start">
+                    <div className="form-control">
                         <Radio control={control} rules={{required: 'This field is requuired.'}} data={data} />
                     </div>
                     {
                         watch('accept_insurance') && (
-                            <div className="text-left">
+                            <div className="text-left mt-5 md:mt-0 md:w-1/2">
                                 <h1 className=" text-lg my-2">Which insurance plans do you accept?</h1>
                                 <div className="space-y-5">
                                     {
-                                        <div className="">
-                                            <Select control={control} data={{name: 'acceptable_insurances', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
+                                        <div className="w-full">
+                                            <Select 
+                                                control={control} 
+                                                data={{name: 'acceptable_insurances', 
+                                                options: [
+                                                    ...insA_D.map(v=> ({label: v, value: v.trim()})),
+                                                    ...insE_H.map(v=> ({label: v, value: v.trim()})),
+                                                    ...insI_N.map(v=> ({label: v, value: v.trim()})),
+                                                    ...insO_T.map(v=> ({label: v, value: v.trim()})),
+                                                    ...insU_Z.map(v=> ({label: v, value: v.trim()})),
+                                                    ]}} />
                                         </div>
                                     }
                                 </div>
@@ -81,7 +100,7 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="accept_insurance-form"
                     btnQnr
-                    disabled={!watch('accept_insurance')} />
+                    disabled={watch('accept_insurance') ? !watch('acceptable_insurances') || watch('acceptable_insurances').length <= 0 : watch('accept_insurance')==null} />
             </div>
         </>
     )

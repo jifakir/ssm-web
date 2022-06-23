@@ -55,10 +55,10 @@ const Age = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const { age } = data;
-        console.log("Religion Biased: ", age);
+        console.log("Age: ", age);
         if(!age) return;
 
-        await updatePatient({id: profile?.id, age, registration_status: 'entered-age' });
+        await updatePatient({id: profile?.id, age: {head: age.split('-')[0], tail: age.split('-')[1]}, registration_status: 'entered-age' });
         setStep(step + 1);
     };
 
@@ -68,6 +68,7 @@ const Age = ({ step, setStep, profile }) => {
 
     };
 
+    console.log("Profile: ", profile);
 
     return (
     <>
@@ -95,7 +96,7 @@ const Age = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="is-spiritual-form" 
                 btnQnr
-                disabled={!watch('age')} />
+                disabled={watch('age') == null} />
         </div>
     </>
     )

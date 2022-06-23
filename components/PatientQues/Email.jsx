@@ -7,7 +7,11 @@ import TextInput from '../../components/UI/TextInput';
 
 const Email = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm();
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            email_address: profile?.email_address || ''
+        }
+    });
     const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {

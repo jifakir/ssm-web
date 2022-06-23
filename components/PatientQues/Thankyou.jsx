@@ -32,7 +32,7 @@ const Thankyou = ({ step, setStep, profile }) => {
             <form id='thankyou-form' onSubmit={handleSubmit(handleNext)} className="">
                 {
                     modal ?
-                    <div className="absolute top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
+                    <div className="fixed bg-white/70 bg-blend-saturation top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
                         <div className="relative w-1/2 h-52 bg-primary text-whtie text-center flex justify-center items-center">
                             <span onClick={() => setModal(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
                                 <MdClose />

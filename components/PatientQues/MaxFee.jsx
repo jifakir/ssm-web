@@ -5,7 +5,6 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 const data = {
-    title: 'What is the most you are willing to pay per therapy session?  ',
     name: 'cost_decision',
     options: [
         {
@@ -17,7 +16,7 @@ const data = {
             value: '100'
         },
         {
-            label: '150$',
+            label: '$150',
             value: '150'
         },
         {
@@ -25,7 +24,7 @@ const data = {
             value: '200'
         },
         {
-            label: '$250%',
+            label: '$250+',
             value: '250+'
         },
     ]
@@ -57,6 +56,7 @@ const SessionFee = ({ step, setStep, profile }) => {
         <>
             <form id="max_payable_fee-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control w-full">
+                <h1 className="text-lg my-2 text-left">What is the most you are willing to pay per therapy session? </h1>
                     <div className="form-control w-full">
                         <Radio control={control} data={data} />
                     </div>

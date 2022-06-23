@@ -2,10 +2,11 @@ import React from 'react';
 import Checkbox from '../../components/UI/Checkbox';
 import { useForm } from 'react-hook-form';
 
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Select from '../UI/Select';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
+import { useEffect } from 'react';
 
 const otherdata = {
     name: 'speak_other_languages',
@@ -55,24 +56,38 @@ const data = {
 
 const Language = ({ step, setStep, profile }) => {
     
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { languages: profile?.languages }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const { 
+        register, 
+        control, 
+        handleSubmit, 
+        watch, 
+        formState: { errors} } = useForm({
+            defaultValues: { 
+                languages: profile?.languages,
+                speak_other_languages: profile?.speak_other_languages
+             }});
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
         const { languages } = data;
         if(!languages) return;
         await updateTherapist({id: profile?.id, ...data, registration_status: 'entered-language' });
-        setStep(step + 1);
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
+
     return (
         <>
             <form id="language-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-                <div className="md:flex gap-20">
+                <div className="">
                     <div className="">
                         <h1 className="text-lg my-2 text-left">Do you speak any other languages?</h1>
                         <div className="form-control w-full max-w-xs">
@@ -97,7 +112,7 @@ const Language = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="language-form" 
                     btnQnr 
-                    disabled={!watch('speak_other_languages')}/>
+                    disabled={watch('speak_other_languages') ? (watch('languages') == null || watch('languages').length <= 0) : watch('languages') == null}/>
             </div>
         </>
     )

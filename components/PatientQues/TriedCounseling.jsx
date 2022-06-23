@@ -51,13 +51,16 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
         handleSubmit, 
         watch, 
         formState: { errors} } = useForm({
-            defaultValues: {has_tried_counseling: profile?.has_tried_counseling} });
+            defaultValues: {
+                has_tried_counseling: profile?.has_tried_counseling,
+                counseling_experience: profile?.counseling_experience
+            } });
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { has_tried_counseling } = data;
-        await updatePatient({ id: profile?.id, has_tried_counseling, registration_status: 'entered-spirit-session' });
+        const { has_tried_counseling, counseling_experience } = data;
+        await updatePatient({ id: profile?.id, has_tried_counseling,counseling_experience, registration_status: 'entered-spirit-session' });
         
         setStep(step + 1);
 
@@ -103,7 +106,7 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="spirit-session-form" 
                     btnQnr
-                    disabled={!watch('has_tried_counseling')} />
+                    disabled={watch('has_tried_counseling') == null} />
             </div>
         </>
     )
