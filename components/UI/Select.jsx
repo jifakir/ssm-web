@@ -4,8 +4,7 @@ import { Controller } from 'react-hook-form';
 
 const Select = ({data, control, errors, isMulti, ...rest}) => {
     
-    const { options, title, name, required} = data;
-
+    const { options, title, name } = data;
 
     return (
         <div className="form-control w-full max-w-xs">
@@ -14,12 +13,13 @@ const Select = ({data, control, errors, isMulti, ...rest}) => {
             </label>
             <Controller
                 control={control}
-                defaultValue={'Value'}
                 name={name}
-                render={({ field }) => {
+                render={({ field: { onChange, value, ref } }) => {
                     return (
                         <ReactSelect
-                            { ...field }
+                            inputRef={ref}
+                            value={options.find(c => c.value === value)}
+                            onChange={val => onChange(val.value)}
                             styles={{
                                 control: base => ({
                                     ...base,

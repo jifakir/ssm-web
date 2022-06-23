@@ -38,15 +38,18 @@ const sessData = {
 // Component
 const RelSess = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_religion_biased: profile?.is_religion_biased}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            is_religious: profile?.is_religious,
+            is_religion_biased: profile?.is_religion_biased
+        }});
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { is_religious } = data;
-        console.log("Religion Biased: ", is_religious);
-        if(!is_religious) return;
-        await updatePatient({id: profile?.id, is_religious, registration_status: 'entered-is_religious' });
+        const { is_religious, is_religion_biased } = data;
+        if(is_religious == null) return;
+        await updatePatient({id: profile?.id, is_religious, is_religion_biased, registration_status: 'entered-is_religious' });
 
         setStep(step + 1);
 
@@ -68,15 +71,15 @@ const RelSess = ({ step, setStep, profile }) => {
                     <div className="form-control w-full max-w-xs">
                         <Radio 
                             control={control}
-                            data={data} />
+                            data={sessData} />
                     </div>
                 </div>
-                <div className={`${watch('is_religious')} ? 'block' : 'hidden'`}>
+                <div className={`${watch('is_religious') ? 'block' : 'hidden'}`}>
                     <h1 className="text-lg my-2 text-left">Do you want your provider to incorporate religion into sessions?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 
                             control={control}
-                            data={sessData} />
+                            data={data} />
                     </div>
                 </div>
             </div>
@@ -91,7 +94,7 @@ const RelSess = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="is-religious-form" 
                 btnQnr
-                disabled={!watch('is_religious')} />
+                disabled={watch('is_religious') ? watch('is_religion_biased') == null : watch('is_religious') == null} />
         </div>
     </>
     )

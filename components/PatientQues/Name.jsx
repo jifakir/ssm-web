@@ -6,14 +6,16 @@ import Button from '../UI/Button';
 import { useSelector } from 'react-redux';
 
 
-const Name = ({ step, setStep, data:profile }) => {
+const Name = ({ step, setStep, profile }) => {
 
-    const { token } = useSelector(state => state.auth.userDetails );
-    const { control, handleSubmit, watch, formState: { errors} } = useForm();
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            full_name: profile?.full_name || ''
+        }
+    });
     const [registerTherapist, {data , isSuccess, isLoading, isError, error }] = useRegisterPatientMutation();
 
     const handleNext = async (data) => {
-        console.log("Triggered!")
         const { full_name } = data;
         if(!full_name) return;
         await registerTherapist({ full_name, registration_status: 'entered-fullname' });
@@ -38,7 +40,7 @@ const Name = ({ step, setStep, data:profile }) => {
                     title={'Next'}
                     btnQnr
                     form="form-name"
-                    disabled={!watch().full_name} />
+                    disabled={watch().full_name == null} />
             </div>
         </form>
     )

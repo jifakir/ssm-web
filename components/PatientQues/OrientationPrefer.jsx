@@ -70,7 +70,7 @@ const PreferOrientation = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="has_sexual_preference-form" 
                 btnQnr
-                disabled={!watch('has_sexual_preference')} />
+                disabled={watch('has_sexual_preference') == null} />
         </div>
     </>
     )

@@ -7,8 +7,8 @@ import TextInput from '../../components/UI/TextInput';
 
 const Address = ({ step, setStep, profile }) => {
 
-    const { register, watch, handleSubmit, control } = useForm({defaultValues: {user_address: profile?.user_address}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const { handleSubmit, control } = useForm({defaultValues: {user_address: profile?.user_address}});
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
     const [submitted, setSubmitted] = useState(false);
     const handleNext = async (data) => {
 
@@ -25,7 +25,6 @@ const Address = ({ step, setStep, profile }) => {
                     zip_code: zip_code ? zip_code : ''
                 }, 
                 registration_status: 'entered-address' });
-        setStep(step + 1);
 
     };
 
@@ -35,7 +34,11 @@ const Address = ({ step, setStep, profile }) => {
 
     };
 
-
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
 
     return (
         <>
@@ -55,9 +58,6 @@ const Address = ({ step, setStep, profile }) => {
                         <TextInput 
                             control={control}
                             name={'user_address.line2'}
-                            rules={{
-                                required: 'Line 2 is required'
-                            }}
                             pHolder={'Street Address Line 2'} />
                     </div>
                     <div className="form-control w-full max-w-xs">

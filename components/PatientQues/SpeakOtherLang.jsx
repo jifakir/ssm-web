@@ -50,7 +50,7 @@ const data = {
 };
 
 const sessdata = {
-    name: 'sess_languages',
+    name: 'prefer_other_language',
     options: [
         {
             label: 'Yes',
@@ -71,10 +71,9 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
 
     const handleNext = async (data) => {
 
-        const { speak_other_languages } = data;
-        if(!speak_other_languages) return;
-        await updateTherapist({id: profile?.id, speak_other_languages, registration_status: 'entered-speak_other_languages' });
-
+        const { speak_other_languages, prefer_other_language, languages } = data;
+        if(speak_other_languages == null) return;
+        await updateTherapist({id: profile?.id, speak_other_languages, prefer_other_language, languages, registration_status: 'entered-speak_other_languages' });
         setStep(step + 1);
 
     };
@@ -96,8 +95,9 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
                         </div>
                     </div>
                     <div className={`text-left mt-5 ${watch('speak_other_languages') ? 'block' : 'hidden'}`}>
+                        
                         <Checkbox data={langData} register={register} errors={errors} />
-                        <div className="">
+                        <div className="mt-5">
                             <h1 className="text-lg my-2 text-left">Would you prefer to have sessions in another language?</h1>
                             <div className="form-control w-full max-w-xs">
                                 <Radio control={control} data={sessdata} />
@@ -116,7 +116,7 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="other-lang-form" 
                     btnQnr
-                    disabled={!watch('speak_other_languages')} />
+                    disabled={watch('speak_other_languages') == null} />
             </div>
         </>
     )

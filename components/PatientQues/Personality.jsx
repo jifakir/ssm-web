@@ -30,8 +30,8 @@ const data = [
                 value: 'observant'
             },
             {
-                label: 'Thinking',
-                value: 'thinking'
+                label: 'Intuitive',
+                value: 'intuitive'
             },
         ]
     },

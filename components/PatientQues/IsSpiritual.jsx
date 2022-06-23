@@ -19,7 +19,7 @@ const data = {
 };
 
 const sessdata = {
-    name: 'is_spiritual',
+    name: 'is_spiritual_biased',
     options: [
         {
             label: 'Yes',
@@ -38,15 +38,17 @@ const sessdata = {
 // Component
 const RelSess = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_religion_biased: profile?.is_religion_biased}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            is_spiritual: profile?.is_spiritual,
+            is_religion_biased: profile?.is_religion_biased}});
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { is_spiritual } = data;
-        console.log("Religion Biased: ", is_spiritual);
+        const { is_spiritual, is_spiritual_biased } = data;
         if(!is_spiritual) return;
-        await updatePatient({id: profile?.id, is_spiritual, registration_status: 'entered-is_religious' });
+        await updatePatient({id: profile?.id, is_spiritual, is_spiritual_biased, registration_status: 'entered-is_religious' });
         setStep(step + 1);
     };
 
@@ -69,7 +71,7 @@ const RelSess = ({ step, setStep, profile }) => {
                             data={data} />
                     </div>
                 </div>
-                <div className={`${watch('is_spiritual')} ? 'block' : 'hidden'`}>
+                <div className={`${watch('is_spiritual') ? 'block' : 'hidden'}`}>
                     <h1 className="text-lg my-2 text-left">Do you want your provider to incorporate spirituality into sessions?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 
@@ -90,7 +92,7 @@ const RelSess = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="is-spiritual-forms" 
                 btnQnr
-                disabled={!watch('is_spiritual')} />
+                disabled={watch('is_spiritual') ? watch('is_religion_biased') == null : watch('is_spiritual') == null} />
         </div>
     </>
     )

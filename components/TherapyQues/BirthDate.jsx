@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
@@ -13,15 +14,13 @@ const data = {
 const DateOfBirth = ({ step, setStep, profile }) => {
 
     const { control, handleSubmit, watch } = useForm({defaultValues: {date_of_birth: profile?.date_of_birth}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { date_of_birth } = data;
         if(!date_of_birth) return;
         await updateTherapist({ id: profile?.id, date_of_birth, registration_status: 'entered-date_of_birth' });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -30,6 +29,11 @@ const DateOfBirth = ({ step, setStep, profile }) => {
 
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
     
     return (
         <>

@@ -31,7 +31,7 @@ const IsInUs = ({ step, setStep, profile }) => {
 
         const { is_in_us } = data;
         console.log("Religion Biased: ", is_in_us);
-        if(!is_in_us) return;
+        if(is_in_us == null) return;
         await updatePatient({id: profile?.id, is_in_us, registration_status: 'entered-is_religious' });
         setStep(step + 1);
     };
@@ -47,13 +47,13 @@ const IsInUs = ({ step, setStep, profile }) => {
     <>
         <form id="is-is_in_us-form" onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
-                <h1 className="text-lg my-2 text-left">Will you someday want to transition to in-person sessions?</h1>
+                <h1 className="text-lg my-2 text-left">Do you live in the United States?</h1>
                 <div className="form-control w-full max-w-xs">
                     <Radio control={control} data={data} />
                 </div>
             </div>
         </form>
-        <div className={`flex gap-5 py-5`}>
+        <div className={`flex gap-5 py-5 mt-9`}>
             <Button 
                 title={'Back'} 
                 onClick={handleBack}
@@ -64,7 +64,7 @@ const IsInUs = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="is-is_in_us-form" 
                 btnQnr
-                disabled={!watch('is_in_us')} />
+                disabled={watch('is_in_us')==null} />
         </div>
     </>
     )
