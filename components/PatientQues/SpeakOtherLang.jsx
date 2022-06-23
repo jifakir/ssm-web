@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import Checkbox from '../UI/Checkbox';
@@ -66,14 +66,19 @@ const sessdata = {
 
 const PreferOtherLang = ({ step, setStep, profile }) => {
 
-    const { control, register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {speak_other_languages: profile?.speak_other_languages}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const { control, register, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            speak_other_languages: profile?.speak_other_languages,
+            prefer_other_language: profile?.prefer_other_language,
+            languages: profile?.languages,
+        }});
+    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { speak_other_languages, prefer_other_language, languages } = data;
         if(speak_other_languages == null) return;
-        await updateTherapist({id: profile?.id, speak_other_languages, prefer_other_language, languages, registration_status: 'entered-speak_other_languages' });
+        await updatePatient({id: profile?.id, speak_other_languages, prefer_other_language, languages, registration_status: 'entered-speak_other_languages' });
         setStep(step + 1);
 
     };

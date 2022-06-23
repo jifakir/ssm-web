@@ -6,7 +6,6 @@ import Radio from '../../components/UI/Radio';
 import Select from '../UI/MultiSelect';
 
 const data = {
-    title: 'Will you be using health insurance for your therapy sessions?',
     name: 'has_insurance',
     options: [
         {
@@ -57,11 +56,13 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
             <form id="accept_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full">
+                        <h1 className="text-lg my-2 text-left">Will you be using health insurance for your therapy sessions?</h1>
                         <Radio control={control} data={data} />
                     </div>
                     {
                         watch('has_insurance') &&
-                        <div className="w-1/2">
+                        <div className="mt-5 w-1/2 text-left">
+                            <h1 className="text-lg my-2 text-left">Please share your insurance provider:</h1>
                             <Select control={control} data={{name: 'insurances', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
                         </div>
                     }
