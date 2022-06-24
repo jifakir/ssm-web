@@ -19,7 +19,7 @@ const Test = () => {
         <div className="min-h-screen">
 
             <form onSubmit={handleSubmit(onSubmitHandler)} className="px-10 py-20">
-                <InputText 
+                {/* <InputText 
                     control={control} 
                     name="test"
                     rules={{
@@ -29,9 +29,9 @@ const Test = () => {
                             message: "Type valid email"
                         }
                     }}
-                    pHolder={'Test'} />
+                    pHolder={'Test'} /> */}
                 
-                <TestRadio 
+                {/* <TestRadio 
                     control={control} 
                     options={ [
                         {
@@ -48,11 +48,11 @@ const Test = () => {
                     rules={{
                         required: 'Is requuired'
                     }} />
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" /> */}
             </form>
                 <InstagramEmbed
-                    url='https://instagr.am/p/Zw9o4/'
-                    clientAccessToken='EAAIrE0ToGKoBAMpdu1AOKvowKTmYF7zBj1VTOOjeiMFe59fZAb3ThEZALXMtA6VQ0hmRvlgZBcnuQHsVw7vtPn8DleNNoPCtKwYHR9QxtGs1KOaD2aMrsCR8kXM2QgvFpLPi9XmppNdeC51bQZB2rzdZBf5FNHoC7f1CgqgYM6rM6HSDIWkMYETuBrQd2MMsplnuZBZC8Mu7e2XnIZBv32Vp'
+                    url='http://instagram.com/gkjahid02'
+                    clientAccessToken='IGQVJYMkNRMUloSHRENHNDZAUxnbVphZAi1UV19qbTZAEeElwV0ZAIMmJMMmxYVEFxNjMwMjhkUDVURnFUcWFoSlBILV9GZAzNVQ1ctQ085WWw5SEtTOXBnYlNMcGlNdDc3LW9xR2hUZAFIyc0NHYVdfOGxDYwZDZD'
                     maxWidth={700}
                     hideCaption={false}
                     containerTagName='div'

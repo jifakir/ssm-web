@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 const data = {
@@ -42,13 +42,13 @@ const willData = {
 const InpersonFuture = ({ step, setStep, profile }) => {
 
     const { control, handleSubmit, watch, formState: { errors} } = useForm();
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { session_type, will_like_in_person } = data;
 
-        await updateTherapist({id: profile?.id, session_type, will_like_in_person, registration_status: 'entered-session_type' });
+        await updatePatient({id: profile?.id, session_type, will_like_in_person, registration_status: 'entered-session_type' });
 
         // if(!isSucces){
         //     return

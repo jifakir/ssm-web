@@ -5,7 +5,7 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 const data = {
-    name: 'cost_decision',
+    name: 'max_payable_fee',
     options: [
         {
             label: '$65',
@@ -34,13 +34,14 @@ const data = {
 const SessionFee = ({ step, setStep, profile }) => {
 
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { max_payable_fee: profile?.max_payable_fee }})
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: { max_payable_fee: profile?.max_payable_fee }})
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { cost_decision } = data;
-        await updatePatient({ id: profile?.id, cost_decision, registration_status: 'entered-max_payable_fee' });
+        const { max_payable_fee } = data;
+        await updatePatient({ id: profile?.id, max_payable_fee, registration_status: 'entered-max_payable_fee' });
         setStep(step + 1);
 
     };
@@ -73,7 +74,7 @@ const SessionFee = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="max_payable_fee-form"
                     btnQnr
-                    disabled={!watch('cost_decision')}
+                    disabled={!watch('max_payable_fee')}
                      />
             </div>
         </>

@@ -34,7 +34,9 @@ const data = {
 const CostDecision = ({ step, setStep, profile }) => {
 
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { max_payable_fee: profile?.max_payable_fee }})
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { 
+        cost_decision: profile?.cost_decision 
+    }})
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
