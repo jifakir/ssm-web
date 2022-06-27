@@ -93,6 +93,17 @@ export const ssmApi = createApi({
             }),
             invalidatesTags: ['Patient']
         }),
+        // Subscription
+        fetchSubscriptionPlan: builder.query({
+            query: () => `/subscription-plans`
+        }),
+        subscribe: builder.mutation({
+            query: (body) => ({
+                url: `/subscriptions`,
+                method: 'POST',
+                body
+            })
+        }),
     })
 });
 
@@ -107,4 +118,6 @@ export const {
     useUpdateTherapistMutation,
     useRegisterPatientMutation,
     useUpdatePatientMutation,
-    useUploadLicenseMutation } = ssmApi;
+    useUploadLicenseMutation,
+    useFetchSubscriptionPlanQuery,
+    useSubscribeMutation } = ssmApi;

@@ -91,21 +91,24 @@ const Footer = () => {
                             <h5 className="text-[15px] font-semibold text-center md:text-left">
                                 Stay in touch with us!
                             </h5>
-                            <div className="flex justify-center items-start gap-2 mt-5 md:mt-2">
-                                <TextInput 
-                                    control={control} 
-                                    name='email'
-                                    pHolder='Email Address'
-                                    rules={{ 
-                                        required: "Email is required", 
-                                        pattern: {
-                                            value: /^\S+@\S+$/i,
-                                            message: 'Please, enter a valid email'
-                                        }}}
-                                    inputLg
-                                     />
-                                <div className="">
-                                    <Button title={'SUBMIT'} fontSize="text-lg sm:text-xl" />
+                            <div className="sm:flex justify-center items-start gap-2 mt-5 md:mt-2">
+                                
+                                <div className="w-2/3 sm:w-auto mx-auto">
+                                    <TextInput 
+                                        control={control} 
+                                        name='email'
+                                        pHolder='Email Address'
+                                        rules={{ 
+                                            required: "Email is required", 
+                                            pattern: {
+                                                value: /^\S+@\S+$/i,
+                                                message: 'Please, enter a valid email'
+                                            }}}
+                                        inputLg
+                                        />
+                                </div>
+                                <div className="mt-5 sm:mt-0 text-center">
+                                    <Button title={'SUBMIT'} fontSize="w-1/2 text-lg sm:text-xl"/>
                                 </div>
                             </div>
                         </form>
