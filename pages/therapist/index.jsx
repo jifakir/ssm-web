@@ -47,7 +47,7 @@ const JoinAsTherapist = () => {
     },[subsError]);
 
     if(isLoading){
-        return <Loader />
+        return <BiLoaderAlt className="animate-spin text-4xl mr-2" />
     }
 
     const [plan1, plan2] = data;
