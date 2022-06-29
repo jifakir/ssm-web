@@ -13,7 +13,7 @@ const Address = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const { user_address: {line1, line2, city, state, zip_code} } = data;
-        console.log("User Address: ",data);
+        console.log("User Address: ",line2);
         if(!state) return;
         await updateTherapist({ 
                 id:profile?.id, 

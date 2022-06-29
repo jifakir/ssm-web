@@ -10,10 +10,6 @@ import { MdAdd } from 'react-icons/md';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-const data = {
-    name: 'license_title',
-    pHolder: 'Add Professional License',
-};
 
 
 
@@ -21,12 +17,13 @@ const Experience = ({ step, setStep, profile }) => {
 
     const inputRef = useRef();
     const [image, setImage] = useState(profile?.license);
+    const [message, setMessage] = useState();
     const { register, handleSubmit, control, watch } = useForm({defaultValues: {
-        license_title: profile?.license_title,
+        license_type: profile?.license_type,
 
     }});
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
-    const [uploadLicense, { data:licenseData, isSuccess:licenseSuccess }] = useUploadLicenseMutation();
+    const [uploadLicense, { data:licenseData, isLoading:licenseLoading, isSuccess:licenseSuccess }] = useUploadLicenseMutation();
     const handleNext = async (data) => {
 
         const { license_type } = data;
@@ -56,8 +53,11 @@ const Experience = ({ step, setStep, profile }) => {
         }
         if(licenseSuccess){
             setImage(licenseData.license);
+            setMessage('License uploaded successfully!')
         }
     },[isSuccess,licenseSuccess]);
+
+    console.log("Message: ", message);
 
     return (
         <>
@@ -88,10 +88,12 @@ const Experience = ({ step, setStep, profile }) => {
                         {
                             !image ? 
                             <p className="text-left text-xs">
-                                .JPG,.PNG,.PDF formats only
+                                {
+                                    message ? message : '.JPG,.PNG,.PDF formats only'
+                                }
                             </p>:
-                            <p className="text-left text-xs">
-                                {image?.name}
+                            <p className="text-left text-xs text-primary">
+                                { licenseLoading ? 'Uploading....' : message ? message : '.JPG,.PNG,.PDF formats only'}
                             </p>
                         }
                     </div>

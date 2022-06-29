@@ -104,6 +104,9 @@ export const ssmApi = createApi({
                 body
             })
         }),
+        fetchSubscription: builder.query({
+            query: () => `/subscriptions`
+        })
     })
 });
 
@@ -120,4 +123,5 @@ export const {
     useUpdatePatientMutation,
     useUploadLicenseMutation,
     useFetchSubscriptionPlanQuery,
-    useSubscribeMutation } = ssmApi;
+    useSubscribeMutation,
+    useFetchSubscriptionQuery } = ssmApi;

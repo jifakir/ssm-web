@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import Checkbox from '../UI/Checkbox';
@@ -54,13 +54,13 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
             has_race_preference: profile?.has_race_preference,
             race_preference: profile?.race_preference
         }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { has_race_preference, race_preference } = data;
         if(has_race_preference == null) return;
-        await updateTherapist({
+        await updatePatient({
             id: profile?.id, 
             has_race_preference, 
             race_preference, 

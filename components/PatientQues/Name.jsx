@@ -24,12 +24,12 @@ const Name = ({ step, setStep, profile }) => {
 
     return (
         <form id='form-name' onSubmit={handleSubmit(handleNext)}>
-            <div className="form-control w-full max-w-xs">
+            <div className="form-control w-full sm:max-w-xs">
                 <TextInput 
                     control={control}
                     name={'full_name'}
                     pHolder={'Full Name'}
-                    title={'Name'}
+                    title={'What is your name?'}
                     rules={{
                         required: true
                     }} 

@@ -3,6 +3,19 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+const relData = {
+    name: 'is_religion_biased',
+    options: [
+        {
+            label: 'Yes, if the patient prefers',
+            value: true
+        },
+        {
+            label: 'No',
+            value: false
+        },
+    ]
+};
 
 const data = {
     name: 'religion',
@@ -45,21 +58,26 @@ const data = {
 
 const Religion = ({ step, setStep, profile }) => {
 
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { religion: profile?.religion }});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: { 
+            religion: profile?.religion,
+            is_religion_biased: profile?.is_religion_biased }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { religion } = data;
+        const { religion, is_religion_biased } = data;
         if(!religion) return;
-        await updateTherapist({id: profile?.id, religion, registration_status: 'entered-religion' });
+        await updateTherapist({
+            id: profile?.id, 
+            religion, 
+            is_religion_biased, 
+            registration_status: 'entered-religion' });
         setStep(step + 1);
     };
 
     const handleBack = () => {
-
         setStep(step - 1);
-
     };
 
 
@@ -70,6 +88,15 @@ const Religion = ({ step, setStep, profile }) => {
                     <h1 className="text-lg my-2 text-left">What is your religion?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio control={control} rules={{required: 'Religion is required.'}} data={data} />
+                    </div>
+                </div>
+                <div className={`w-full mt-8 ${watch('religion') && watch('religion') === 'none' ? 'hidden' : 'block'}`}>
+                    <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
+                    <div className="form-control w-full max-w-xs">
+                        <Radio 
+                            control={control} 
+                            rules={{required: 'This field is required.'}} 
+                            data={relData} />
                     </div>
                 </div>
             </form>

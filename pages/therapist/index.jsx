@@ -8,6 +8,8 @@ import Loader from '../../components/UI/Loader';
 import { MdClose } from 'react-icons/md';
 import { BiLoaderAlt  } from 'react-icons/bi';
 import Stripe from '../../components/Stripe';
+import { saveSubsDetails } from '../../store/reducers/subscriptionSlice';
+import { logOut } from '../../store/reducers/authReducer';
 
 
 const JoinAsTherapist = () => {
@@ -16,7 +18,12 @@ const JoinAsTherapist = () => {
     const [modal, setModal] = React.useState(false);
     const { isLoggedIn } = useSelector(state => state.auth);
     const { data, isSuccess, isError, isLoading } = useFetchSubscriptionPlanQuery();
-    const [subscribe, { data:subscriptionData, error, isLoading: subsLoading, isError:subsError }] = useSubscribeMutation(subscriptionData);
+    const [subscribe, { 
+        data:subscriptionData, 
+        error, 
+        isLoading: subsLoading,
+        isError:subsError,
+        isSuccess:subsSuccess }] = useSubscribeMutation(subscriptionData);
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -29,10 +36,10 @@ const JoinAsTherapist = () => {
         }
     };
 
-    const handleSubscribe = async (plan_id) => {
+    const handleSubscribe = async (plan) => {
         if(!isLoggedIn) return setOpen(!open);
-        await subscribe({subscription_plan_id: plan_id});
-        setModal(plan_id);
+        dispatch(saveSubsDetails(plan));
+        router.push('/therapist/questionnaire');
     };
 
     useEffect(() => {
@@ -43,11 +50,19 @@ const JoinAsTherapist = () => {
             if(error.status == 422){
                 router.push('/therapist/questionnaire')
             }
+            if(error.status == 401){
+                dispatch(logOut());
+                setOpen(state => !state);
+            }
         }
-    },[subsError]);
+        if(subsSuccess){
+            
+            router.push('/therapist/questionnaire');
+        }
+    },[subsError, subsSuccess]);
 
     if(isLoading){
-        return <BiLoaderAlt className="animate-spin text-4xl mr-2" />
+        return <Loader />
     }
 
     const [plan1, plan2] = data;
@@ -57,24 +72,6 @@ const JoinAsTherapist = () => {
     return (
         <div className="px-[10%]">
             <Login open={open} setOpen={setOpen} redirectTo="/therapist"   />
-            {
-                modal && !subsError && (
-                        <div className="fixed bg-primary/50 bg-blend-saturation top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
-                            {
-                                subsLoading ? 
-                                <BiLoaderAlt className="animate-spin text-2xl mr-2" />: 
-                                (
-                                    <div className="shadow-lg rounded-lg relative w-1/2 min-h-52 h-auto bg-white text-whtie text-center flex justify-center items-center">
-                                        <span onClick={() => setModal(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
-                                            <MdClose />
-                                        </span>
-                                        <Stripe loading={subsLoading} data={subscriptionData} />
-                                    </div>
-                                )
-                            }
-                        </div>
-                        )
-            }
             <div className="">
                 <h1 className="font-sterio text-3xl xs:text-4xl sm:text-5xl text-center mt-16">
                     Join As a Therapist
@@ -103,7 +100,7 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => handleSubscribe(plan1.id)} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-2xl" />
+                    <Button onClick={() => handleSubscribe(plan1)} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-2xl" />
                 </div>
                 <div className="relative md:w-1/2 border-2 border-primary rounded-md mt-10 md:mt-0">
                     <div className="absolute bottom-full font-medium left-1/2 bg-neutral px-3 py-0.5 transform -translate-x-1/2">
@@ -123,7 +120,7 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => handleSubscribe(plan2.id)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-2xl" />
+                    <Button onClick={() => handleSubscribe(plan2)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-2xl" />
                 </div>
             </div>
         </div>

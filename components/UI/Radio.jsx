@@ -1,6 +1,6 @@
 import React from 'react';
 import { useController } from 'react-hook-form';
-
+import InputText from './InputText';
 
 
 const RadioInput = ({data, control,}) => {
@@ -9,7 +9,7 @@ const RadioInput = ({data, control,}) => {
 
     const { field, fieldState: {error}} = useController({control, name, rules});
     const [value, setValue] = React.useState(field.value);
-    console.log(`${name}: `, value);
+    
     return (
         <>
             <h1 className="pl-1 text-left my-2">{title}</h1>
@@ -29,7 +29,12 @@ const RadioInput = ({data, control,}) => {
                             checked={value == null ? false : value == option.value ? true : false}
                             className={`radio hover:radio-secondary ${error ? 'radio-error': 'checked:bg-neutral'}`} />
                         
-                        <span className={`pl-2 ${error && 'text-error'}`}>{option.label}</span>
+                        <span className={`px-2 ${error && 'text-error'}`}>{option.label}</span>
+                        <InputText
+                        control={control}
+                        name={'other'}
+                        pHolder={'Other'}
+                        className={`${(value === 'other' && option.value === 'other') ? 'block' : 'hidden'}`} />
                     </label>
                 </div>
                 ))
