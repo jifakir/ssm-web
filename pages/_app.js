@@ -16,15 +16,18 @@ const persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  if(router.pathname === '/welcome'){
-    return 
-  }
+  
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} >
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>  
+        {
+          router.pathname === '/landing' ? <Component {...pageProps} /> :
+          (
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          )
+        }  
       </PersistGate>
     </Provider>
   )
