@@ -149,10 +149,13 @@ const Availability = ({step, setStep, profile }) => {
     const router = useRouter();
     const handleNext = async (data) => {
 
-        const { day, start_time, end_time } = data;
-        
-        if(!day) return;
-        await updateTherapist({id: profile?.id, availabilities: [{day, start_time, end_time}], registration_status: 'completed' });
+        const { days, start_time, end_time } = data;
+        if(days == null) return;
+        const daysArr = days.map(day => {
+            return {day,start_time,end_time}
+        });
+        console.log("Days Arr: ", daysArr);
+        await updateTherapist({id: profile?.id, availabilities: daysArr, registration_status: 'completed' });
         router.push('/therapist/profile');
         setStep(step + 1);
 
@@ -163,20 +166,22 @@ const Availability = ({step, setStep, profile }) => {
     };
 
 
+    console.log(watch());
+
     return (
         <>
             <form id="availability-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="text-left text-sm flex gap-5">
                     <div className="w-1/5">
                         <h1 className="text-lg my-2">Availability</h1>
-                        <Checkbox register={register} errors={errors} data={{name: 'day', options: week }} />
+                        <Checkbox register={register} errors={errors} data={{name: 'days', options: week }} />
                     </div>
                     <div className={`flex gap-10 ${!watch('day') ? 'hidden' : 'block'}`}>
-                        <div className="mt-1 w-40">
+                        <div className=" w-40">
                             <h3 className="my-2">M-Start Time</h3>
                             <Select control={control} data={{name: 'start_time', options: pmTime}} />
                         </div>
-                        <div className="mt-1 w-40">
+                        <div className=" w-40">
                             <h3 className="my-2">M-End Time</h3>
                             <Select control={control} data={{name: 'end_time', options: amTime}} />
                         </div>

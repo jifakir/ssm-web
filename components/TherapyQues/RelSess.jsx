@@ -31,7 +31,7 @@ const RelSess = ({ step, setStep, profile }) => {
 
         const { is_religion_biased } = data;
         console.log("Religion Biased: ", is_religion_biased);
-        if(!is_religion_biased) return;
+        if(is_religion_biased == null) return;
         await updateTherapist({id: profile?.id, is_religion_biased, registration_status: 'entered-religion_biased' });
 
         setStep(step + 1);
@@ -65,7 +65,7 @@ const RelSess = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="rel-sess-form"
                 btnQnr
-                disabled={!watch('is_religion_biased')} />
+                disabled={watch('is_religion_biased') === undefined} />
         </div>
     </>
     )

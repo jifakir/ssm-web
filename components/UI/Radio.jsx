@@ -8,11 +8,11 @@ const RadioInput = ({data, control,}) => {
     const { options, title, name, rules} = data;
 
     const { field, fieldState: {error}} = useController({control, name, rules});
-    const [value, setValue] = React.useState(field.value || '');
-
+    const [value, setValue] = React.useState(field.value);
+    console.log(`${name}: `, value);
     return (
         <>
-            <h1 className="text-lg text-left my-2">{title}</h1>
+            <h1 className="pl-1 text-left my-2">{title}</h1>
             {
                 options.map(( option, idx ) => (
                 <div className="form-control" key={idx}>
@@ -26,7 +26,7 @@ const RadioInput = ({data, control,}) => {
                             }}
                             type="radio" 
                             value={option.value}
-                            checked={value == option.value ? true : false}
+                            checked={value == null ? false : value == option.value ? true : false}
                             className={`radio hover:radio-secondary ${error ? 'radio-error': 'checked:bg-neutral'}`} />
                         
                         <span className={`pl-2 ${error && 'text-error'}`}>{option.label}</span>

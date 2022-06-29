@@ -7,7 +7,11 @@ import TextInput from '../../components/UI/TextInput';
 
 const Email = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            email_address: profile?.email_address || ''
+        }
+    });
     const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
@@ -31,7 +35,18 @@ const Email = ({ step, setStep, profile }) => {
             <form id='email-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full max-w-xs">
-                        <TextInput defaultValue={ profile?.email_address } register={register} errors={errors} data={{ pHolder: 'Email', name: 'email_address', title: 'Email', pattern: /^\S+@\S+$/i}} />
+                        <TextInput 
+                            control={control}
+                            name={'email_address'}
+                            title={'Email'}
+                            pHolder={'Email'}
+                            rules={{
+                                required: 'Email is required.',
+                                pattern: {
+                                    value: /^\S+@\S+$/i,
+                                    message: 'Enter a valid email address'
+                                }
+                            }} />
                     </div>
                 </div>
             </form>

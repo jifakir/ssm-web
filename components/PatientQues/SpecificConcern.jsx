@@ -8,33 +8,33 @@ import Button from '../UI/Button';
 
 
 const data = {
-        title: 'What other language(s) do you speak?',
-        name: 'languages',
+        title: 'Do you have specific concerns to discuss with your therapist? (select all that apply)',
+        name: 'specific_concerns',
         required: true,
         options: [
             {
-                label: 'Spanish',
-                value: 'spanish'
+                label: 'Changes in my behavior',
+                value: 'Changes in my behaviour  '
             },
             {
-                label: 'French',
-                value: 'french'
+                label: 'Life events  ',
+                value: 'Life events'
             },
             {
-                label: 'Kreyol',
-                value: 'kreyol'
+                label: 'Potential or diagnosed disorder  ',
+                value: 'Potential or diagnosed disorder  '
             },
             {
-                label: 'Yoruba',
-                value: 'yoruba'
+                label: 'Relationship issues  ',
+                value: 'Relationship issues  '
             },
             {
-                label: 'Igbo',
-                value: 'igbo'
+                label: 'Life goals  ',
+                value: 'Life goals  '
             },
             {
-                label: 'Other',
-                value: 'other'
+                label: 'Prefer not to say  ',
+                value: 'Prefer not to say  '
             },
         ]
     };
@@ -57,7 +57,7 @@ const Language = ({ step, setStep, profile }) => {
 
     return (
         <>
-            <form id="language-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+            <form id="specific_concerns-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
                 
                 <Checkbox data={data} register={register} errors={errors} />
             </form>
@@ -69,7 +69,7 @@ const Language = ({ step, setStep, profile }) => {
                     btnSecondary />
                 <Button 
                     title={'Next'} 
-                    form="language-form" 
+                    form="specific_concerns-form" 
                     btnQnr
                     disabled={!watch('languages')} />
             </div>

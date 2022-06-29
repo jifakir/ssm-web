@@ -27,17 +27,18 @@ const Select = ({data, control, errors, ...rest}) => {
 
 
     return (
-        <div className="form-control w-full max-w-xs">
+        <div className="form-control w-full">
             <label className="label">
                 <span className="label-text text-lg">{title}</span>
             </label>
             <Controller
                 control={control}
-                defaultValue={''}
                 name={name}
-                render={({ field }) => (
+                render={({ field: { onChange, value, ref } }) => (
                     <ReactSelect
-                        {...field}
+                        inputRef={ref}
+                        value={options.filter(c => value.includes(c.value))}
+                        onChange={val => onChange(val.map(c => c.value))}
                         isMulti
                         components={{Option}}
                         closeMenuOnSelect={false}

@@ -417,13 +417,13 @@ const TherapistProfile = () => {
                                             className="w-52" /> : 
                                             <h4 className="">
                                                 {
-                                                    profile?.license
+                                                    profile?.license_type
                                                 }
                                             </h4>
                                     }
                                 </div>
                             </div>
-                            <div className="flex items-center justify-start py-5">
+                            <div className="flex items-center justify-start py-2">
                                 <div className="flex font-semibold justify-center text-primary">
                                     <div className="text-2xl">
                                         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><desc></desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="15" cy="15" r="3"></circle><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5"></path><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73"></path><line x1="6" y1="9" x2="18" y2="9"></line><line x1="6" y1="12" x2="9" y2="12"></line><line x1="6" y1="15" x2="8" y2="15"></line></svg>
@@ -486,16 +486,16 @@ const TherapistProfile = () => {
                                         </div>
                                     ) : 
                                     (
-                                        ['S','M','T','W','T','F','S'].map((itm, idx) => (
+                                        profile?.availabilities?.map((itm, idx) => (
                                             <div key={idx} className="text-xs border-r-2 pr-5 last:border-r-0">
-                                                <h1 className="text-2xl text-center leading-8">{itm}</h1>
+                                                <h1 className="text-2xl text-center leading-8">{itm.day}</h1>
                                                 <p className="flex justify-between">
                                                     <span className="">Start:</span> 
-                                                    <span className=""> &nbsp;09:00AM</span>
+                                                    <span className=""> &nbsp;{itm.start_time}AM</span>
                                                 </p>
                                                 <p className="flex justify-between">
                                                     <span className="">End:</span>
-                                                    <span className="">06:00AM</span></p>
+                                                    <span className="">{itm.end_time}AM</span></p>
                                             </div>
                                         ))
                                     )
