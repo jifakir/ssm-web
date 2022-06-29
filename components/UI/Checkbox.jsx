@@ -8,10 +8,10 @@ const Checkbox = ({data, register, errors, ...rest}) => {
 
     return (
         <div className="">
-            <h1 className="text-lg my-2">{title}</h1>
+            <h1 className="text-lg my-5">{title}</h1>
             {
                 options.map(( option, idx ) => (
-                <div className="form-control" key={idx}>
+                <div className="form-control text-sm" key={idx}>
                     <label className="label cursor-pointer justify-start">
                         <input 
                             {...rest} 

@@ -69,6 +69,14 @@ export const ssmApi = createApi({
             }),
             invalidatesTags: ['Therapist']
         }),
+        uploadLicense: builder.mutation({
+            query: ({id, formData}) => ({
+                url: `/therapists/${id}/upload-license`,
+                method: 'POST',
+                body: formData
+            }),
+            invalidatesTags: ['Therapist']
+        }),
         registerPatient: builder.mutation({
             query: (body) => ({
                 url: '/patients',
@@ -85,6 +93,17 @@ export const ssmApi = createApi({
             }),
             invalidatesTags: ['Patient']
         }),
+        // Subscription
+        fetchSubscriptionPlan: builder.query({
+            query: () => `/subscription-plans`
+        }),
+        subscribe: builder.mutation({
+            query: (body) => ({
+                url: `/subscriptions`,
+                method: 'POST',
+                body
+            })
+        }),
     })
 });
 
@@ -98,4 +117,7 @@ export const {
     useRegisterTherapistMutation, 
     useUpdateTherapistMutation,
     useRegisterPatientMutation,
-    useUpdatePatientMutation } = ssmApi;
+    useUpdatePatientMutation,
+    useUploadLicenseMutation,
+    useFetchSubscriptionPlanQuery,
+    useSubscribeMutation } = ssmApi;

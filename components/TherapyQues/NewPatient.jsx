@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+import { useEffect } from 'react';
 
 const data = {
     name: 'accept_new_patients',
@@ -21,16 +22,25 @@ const data = {
 
 const NewPatient = ({ step, setStep, profile }) => {
 
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { accept_new_patients: profile?.accept_new_patients }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const { 
+        register, control, 
+        handleSubmit, watch, 
+        formState: { errors} } = useForm({
+            defaultValues: { 
+                accept_new_patients: profile?.accept_new_patients 
+            }});
+
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { accept_new_patients } = data;
-        if(!accept_new_patients)return;
-        await updateTherapist({id: profile?.id, accept_new_patients, registration_status: 'email' });
-        setStep(step + 1);
-    
+        if(accept_new_patients == null)return;
+        await updateTherapist({
+            id: profile?.id, 
+            accept_new_patients, 
+            registration_status: 'entered-accept_new_patients' 
+        });
     };
 
     const handleBack = () => {
@@ -39,7 +49,11 @@ const NewPatient = ({ step, setStep, profile }) => {
 
     };
 
-    
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess])
     
     return (
         <>
@@ -62,7 +76,7 @@ const NewPatient = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="new-patient-form"
                     btnQnr
-                    disabled={!watch('accept_new_patients')} />
+                    disabled={watch('accept_new_patients')==null} />
             </div>
         </>
     )

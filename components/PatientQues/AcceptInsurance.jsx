@@ -6,8 +6,7 @@ import Radio from '../../components/UI/Radio';
 import Select from '../UI/MultiSelect';
 
 const data = {
-    title: 'Will you be using health insurance for your therapy sessions?',
-    name: 'accept_insurance',
+    name: 'has_insurance',
     options: [
         {
             label: 'Yes',
@@ -29,14 +28,18 @@ const data = {
 
 const AcceptInsurance = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { accept_insurance: profile?.accept_insurance}});
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({
+        defaultValues: { 
+            insurances: profile?.insurances || [],
+            has_insurance: profile?.has_insurance
+        }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { accept_insurance } = data;
-        if(!accept_insurance) return;
-        await updateTherapist({ id: profile?.id, accept_insurance, registration_status: 'entered-accept_insurance' });
+        const { has_insurance, insurances } = data;
+        if(has_insurance==null) return;
+        await updateTherapist({ id: profile?.id, has_insurance, insurances, registration_status: 'entered-accept_insurance' });
         setStep(step + 1);
 
     };
@@ -52,12 +55,15 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
         <>
             <form id="accept_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                    <div className="form-control w-full">
+                        <h1 className="text-lg my-2 text-left">Will you be using health insurance for your therapy sessions?</h1>
+                        <Radio control={control} data={data} />
                     </div>
                     {
-                        <div className="">
-                            <Select control={control} data={{name: 'acceptable_insurances', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
+                        watch('has_insurance') &&
+                        <div className="mt-5 w-1/2 text-left">
+                            <h1 className="text-lg my-2 text-left">Please share your insurance provider:</h1>
+                            <Select control={control} data={{name: 'insurances', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
                         </div>
                     }
                 </div>
@@ -72,7 +78,7 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="accept_insurance-form"
                     btnQnr
-                    disabled={!watch('accept_insurance')} />
+                    disabled={watch('has_insurance') == null} />
             </div>
         </>
     )

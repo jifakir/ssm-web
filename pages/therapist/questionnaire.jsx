@@ -27,7 +27,7 @@ import SessionFee from '../../components/TherapyQues/SessionFee';
 import License from '../../components/TherapyQues/License';
 import VirtualInperson from '../../components/TherapyQues/VirtualInperson';
 import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
-import InpersonSessionFuture from '../../components/TherapyQues/InpersonFuture';
+import States from '../../components/TherapyQues/States';
 import Specialization from '../../components/TherapyQues/Specialization';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { ImSpinner9 } from 'react-icons/im';
@@ -115,14 +115,6 @@ const Questionnaire = () => {
             component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
             status: "entered-spirituality",
         },
-        // {
-        //     component: <SpiritSess profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-spiritsess",
-        // },
-        // {
-        //     component: <OtherLang profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-otherlang",
-        // },
         {
             component: <Language profile={data} step={step} setStep={setStep} />,
             status: "entered-lang",
@@ -140,27 +132,19 @@ const Questionnaire = () => {
             component: <VirtualInperson profile={data} step={step} setStep={setStep} />,
             status: "entered-virtualperson",
         },
-        // {
-        //     component: <Insurance profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-insurance",
-        // },
         {
-            component: <InpersonSessionFuture profile={data} step={step} setStep={setStep} />,
-            status: "entered-inpersonsession",
+            component: <States profile={data} step={step} setStep={setStep} />,
+            status: "entered-insurance",
         },
         {
             component: <Specialization profile={data} step={step} setStep={setStep} />,
             status: "entered-specialization",
         },
-        // {
-        //     component: <SessionFee profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-sessionfee",
-        // },
         
-        // {
-        //     component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-sessionfee",
-        // },
+        {
+            component: <AcceptSessionFee profile={data} step={step} setStep={setStep} />,
+            status: "entered-sessionfee",
+        },
         {
             component: <Availability profile={data} step={step} setStep={setStep} />,
             status: "entered-availability",
@@ -182,9 +166,9 @@ const Questionnaire = () => {
         //         }
         //     })
         // }
-    },[isSuccess, isLoggedIn]);
+    },[isSuccess, isLoggedIn, router]);
 
-    const percent = Math.round((step/components.length)*100);
+    const percent = Math.round((step/(components.length - 1))*100);
 
     return (
     <div className={`px-[5%] pt-[100px] min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>

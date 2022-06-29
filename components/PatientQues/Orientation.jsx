@@ -7,12 +7,11 @@ import Button from '../UI/Button';
 
 const Orientation = ({ step, setStep, profile}) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {sexual_orientation: profile?.sexual_orientation}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {sexual_orientation: profile?.sexual_orientation}});
     
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
     
     const handleNext = async ({sexual_orientation}) => {
-        console.log("Orientation",sexual_orientation);
         if(!sexual_orientation) return;
         await updatePatient({id: profile?.id, sexual_orientation, registration_status: 'entered-sexual_orientation' });
         setStep(step + 1);
@@ -25,7 +24,6 @@ const Orientation = ({ step, setStep, profile}) => {
 
 
     const data = {
-        title: 'Which do you identify as?',
         name: 'sexual_orientation',
         required: true,
         options: [
@@ -59,18 +57,27 @@ const Orientation = ({ step, setStep, profile}) => {
     return (
         <>
             <form id='orientationform' onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-                <RadioInput register={register} errors={errors} data={data} />
+            <h1 className='text-lg my-2 text-left'>Which do you identify as?</h1>
+                <RadioInput 
+                    control={control}
+                    rules={{
+                        required: 'Orientation is required.'
+                    }} 
+                    data={data} />
                 <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr
+                    btnSecondary
+                     />
                 <Button
                     title={'Next'} 
                     form="orientationform" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().sexual_orientation ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    btnQnr
+                    disabled={!watch('sexual_orientation')} />
                 
             </div>
         </>

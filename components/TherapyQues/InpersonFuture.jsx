@@ -7,7 +7,14 @@ import Radio from '../../components/UI/Radio';
 
 const InpersonFuture = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {inperson_future: profile?.inperson_future || ''} });
+    const { 
+        control, 
+        handleSubmit, 
+        watch, 
+        formState: { errors} } = useForm({
+            defaultValues: {
+                inperson_future: profile?.inperson_future || ''
+            } });
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -44,6 +51,9 @@ const InpersonFuture = ({ step, setStep, profile }) => {
             },
         ]
     };
+
+    console.log(profile?.inperson_future);
+
     return (
         <form onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
@@ -57,7 +67,7 @@ const InpersonFuture = ({ step, setStep, profile }) => {
                 <Button 
                     title={'Next'}
                     btnQnr
-                    disabled={!watch('inperson_future')} />
+                    disabled={watch('inperson_future') == null} />
             </div>
         </form>
     )

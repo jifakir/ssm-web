@@ -5,44 +5,43 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
 const data = {
-    name: 'cost_decision',
+    name: 'max_payable_fee',
     options: [
         {
-            label: 'Not Important',
-            value: 'not_important'
+            label: '$65',
+            value: '65'
         },
         {
-            label: 'Somewhat Important',
-            value: 'somewhat_important'
+            label: '$100',
+            value: '100'
         },
         {
-            label: 'Important',
-            value: 'important'
+            label: '$150',
+            value: '150'
         },
         {
-            label: 'Very Important',
-            value: 'very_important'
+            label: '$200',
+            value: '200'
         },
         {
-            label: 'Extremely Important',
-            value: 'extremely_important'
+            label: '$250+',
+            value: '250+'
         },
     ]
 };
 
 
-const CostDecision = ({ step, setStep, profile }) => {
+const SessionFee = ({ step, setStep, profile }) => {
 
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { 
-        cost_decision: profile?.cost_decision 
-    }})
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: { max_payable_fee: profile?.max_payable_fee }})
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { cost_decision } = data;
-        await updatePatient({ id: profile?.id, cost_decision, registration_status: 'entered-max_payable_fee' });
+        const { max_payable_fee } = data;
+        await updatePatient({ id: profile?.id, max_payable_fee, registration_status: 'entered-max_payable_fee' });
         setStep(step + 1);
 
     };
@@ -58,8 +57,8 @@ const CostDecision = ({ step, setStep, profile }) => {
         <>
             <form id="max_payable_fee-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control w-full">
-                    <h1 className="text-lg my-2 text-left">How important is cost in your decision to begin therapy?</h1>
-                    <div className="">
+                <h1 className="text-lg my-2 text-left">What is the most you are willing to pay per therapy session? </h1>
+                    <div className="form-control w-full">
                         <Radio control={control} data={data} />
                     </div>
                 </div>
@@ -75,7 +74,7 @@ const CostDecision = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="max_payable_fee-form"
                     btnQnr
-                    disabled={!watch('cost_decision')}
+                    disabled={!watch('max_payable_fee')}
                      />
             </div>
         </>
@@ -83,4 +82,4 @@ const CostDecision = ({ step, setStep, profile }) => {
 }
 
 
-export default CostDecision;
+export default SessionFee;

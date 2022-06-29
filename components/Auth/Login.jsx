@@ -59,7 +59,11 @@ const Login = ({open, setOpen, redirectTo}) => {
         }
         if(signupSuccess){
             dispatch(logIn({...signupData}));
-            router.push(redirectTo);
+            if(redirectTo==='/therapist/profile'){
+                router.push('/therapist/questionnaire')
+            }else{
+                router.push(redirectTo);
+            }
         }
         if(isLoggedIn){
             setOpen(false);

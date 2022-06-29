@@ -27,13 +27,13 @@ const Therapist = () => {
         if(!isLoggedIn){
             setOpen(!open);
         }else{  
-            router.push('/therapist/questionnaire');
+            router.push('/patient/questionnaire');
         }
     };
 
     return (
         <div className="">
-            <Login open={open} setOpen={setOpen} redirectTo={'/therapist/questionnaire'}/>
+            <Login open={open} setOpen={setOpen} redirectTo={'/patient/questionnaire'}/>
             <div className="w-[90%] xs:w-[80%] lg:w-[65%] mx-auto">
                 <div className="my-5 md:my-16">
                     <h1 className="font-sterio text-4xl md:text-5xl text-center mt-10">Find a Therapist</h1>

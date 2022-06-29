@@ -8,14 +8,16 @@ import Checkbox from '../UI/Checkbox';
 
 const Specialization = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: {specialization: profile?.specialization}});
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({
+        defaultValues: {therapy_specializations: profile?.therapy_specializations}
+    });
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { specialization } = data;
-
-        await updateTherapist({ id: profile?.id, specialization, registration_status: 'entered-specialization' });
+        const { therapy_specializations } = data;
+        if(therapy_specializations == null) return;
+        await updateTherapist({ id: profile?.id, therapy_specializations, registration_status: 'entered-specialization' });
         setStep(step + 1);
 
     };
@@ -28,7 +30,7 @@ const Specialization = ({ step, setStep, profile }) => {
 
     const data = {
         title: 'Do you specialize in any type of therapy? (Select all that apply)',
-        name: 'specialization',
+        name: 'therapy_specializations',
         options: [
             {
                 label: 'Psychodynamic therapy',
@@ -63,11 +65,13 @@ const Specialization = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="specialization-form" onSubmit={handleSubmit(handleNext)} className="">
+                
                 <div className="w-full text-left">
                     <Checkbox control={control} register={register} errors={errors} data={data} />
                 </div>
+                    
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
@@ -77,7 +81,7 @@ const Specialization = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="specialization-form" 
                     btnQnr
-                    disabled={!watch('specialization')} />
+                    disabled={watch('therapy_specializations') == null || watch('therapy_specializations').length === 0 } />
             </div>
         </>
     )

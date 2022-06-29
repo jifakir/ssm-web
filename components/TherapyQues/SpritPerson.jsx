@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+import { useEffect } from 'react';
 
 const offerData = {
     name: 'offer_spirituality',
@@ -24,26 +25,31 @@ const data = {
     options: [
         {
             label: 'Yes',
-            value: 'true'
+            value: true
         },
         {
             label: 'No',
-            value: 'false'
+            value: false
         },
     ]
 };
 
 const SpiritPerson = ({ step, setStep, profile }) => {
 
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {is_spiritual: profile?.is_spiritual}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const { register, 
+        control, 
+        handleSubmit, watch, 
+        formState: { errors} } = useForm({defaultValues: {
+            is_spiritual: profile?.is_spiritual,
+            offer_spirituality: profile?.offer_spirituality
+        }});
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { is_spiritual } = data;
-        if(!is_spiritual) return;
-        await updateTherapist({id: profile?.id, is_spiritual, registration_status: 'entered-spirit-persion' });
-        setStep(step + 1);
+        const { is_spiritual, offer_spirituality } = data;
+        if(is_spiritual == null) return;
+        await updateTherapist({id: profile?.id, is_spiritual, offer_spirituality, registration_status: 'entered-spirit-persion' });
     };
 
     const handleBack = () => {
@@ -52,7 +58,11 @@ const SpiritPerson = ({ step, setStep, profile }) => {
 
     };
 
-    console.log(watch().is_spiritual);
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
 
     return (
         <>
@@ -65,7 +75,7 @@ const SpiritPerson = ({ step, setStep, profile }) => {
                         </div>
                     </div>
                     {
-                        watch('is_spiritual') === 'true' &&
+                        watch('is_spiritual') &&
                         (
                         <div className={` mt-5`}>
                             <h1 className="text-lg my-2 text-left">Do you offer spirituality in your sessions?</h1>
@@ -88,7 +98,7 @@ const SpiritPerson = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="spirit-person-form" 
                     btnQnr 
-                    disabled={!watch('is_spiritual') || !watch('offer_spirituality')} />
+                    disabled={watch('is_spiritual') ? watch('offer_spirituality') == null : watch('is_spiritual') == null} />
             </div>
         </>
     )

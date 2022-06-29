@@ -4,12 +4,18 @@ import { useRegisterTherapistMutation } from '../../store/api/ssmApi';
 import TextInput from '../../components/UI/TextInput';
 import Button from '../UI/Button';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 
 const Name = ({ step, setStep, data:profile }) => {
 
     const { token } = useSelector(state => state.auth.userDetails );
-    const { control, watch, handleSubmit } = useForm();
+    const { control, watch, handleSubmit } = useForm({
+        defaultValues: {
+            full_name: profile?.full_name
+        }
+    });
     const [registerTherapist, {data , isSuccess, isLoading, isError, error }] = useRegisterTherapistMutation({ full_name: profile?.full_name });
 
     const handleNext = async (data) => {
@@ -17,8 +23,19 @@ const Name = ({ step, setStep, data:profile }) => {
         const { full_name } = data;
         if(!full_name) return;
         await registerTherapist({ full_name, registration_status: 'entered-fullname' });
-        setStep(step + 1);
+        
     };
+
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+        if(isError){
+            if(error.status === 409){
+                setStep(step + 1);
+            }
+        }
+    },[isSuccess, isError]);
 
     return (
         <form onSubmit={handleSubmit(handleNext)}>
@@ -36,7 +53,11 @@ const Name = ({ step, setStep, data:profile }) => {
                 <Button 
                     title={'Next'} 
                     btnQnr
-                    disabled={!watch('full_name')} />
+                    disabled={!watch('full_name')}>
+                        {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
             </div>
         </form>
     )

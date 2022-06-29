@@ -4,9 +4,11 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import Checkbox from '../UI/Checkbox';
+
+
 const raceData = {
-    title: 'What other language(s) do you speak?',
-    name: 'languages',
+    
+    name: 'race_preference',
     required: true,
     options: [
         {
@@ -47,14 +49,22 @@ const data = {
 
 const PreferOtherLang = ({ step, setStep, profile }) => {
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {speak_other_languages: profile?.speak_other_languages}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            has_race_preference: profile?.has_race_preference,
+            race_preference: profile?.race_preference
+        }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { speak_other_languages } = data;
-        if(!speak_other_languages) return;
-        await updateTherapist({id: profile?.id, speak_other_languages, registration_status: 'entered-speak_other_languages' });
+        const { has_race_preference, race_preference } = data;
+        if(has_race_preference == null) return;
+        await updateTherapist({
+            id: profile?.id, 
+            has_race_preference, 
+            race_preference, 
+            registration_status: 'entered-has_race_preference' });
 
         setStep(step + 1);
 
@@ -68,26 +78,44 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
 
     return (
         <>
-            <form id="other-lang-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="race-prefer-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <h1 className="text-lg my-2 text-left">Do you speak any other languages?</h1>
-                    <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                        <Radio data={raceData} register={register} errors={errors} />
+                    
+                    <div>   
+                        <h1 className="text-lg my-2 text-left">Do you have a race preference for your provider?</h1>
+                        <div className="form-control w-full">
+                            <Radio 
+                                control={control}
+                                rules={{
+                                    required: 'Race Preference is required'
+                                }} 
+                                data={data} />
+                        </div>
+                    </div> 
+                    <div className={`form-control mt-10 w-full ${watch('has_race_preference') ? 'block' : 'hidden'}`}>
+                        <h1 className='text-lg my-2 text-left'>What is your race preference?</h1>
+                        <Radio 
+                            control={control}
+                            rules={{
+                                required: 'Race preference is required.'
+                            }}
+                            data={raceData}
+                             />
                     </div>
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    btnQnr
+                    btnSecondary
+                     />
                 <Button 
                     title={'Next'} 
-                    form="other-lang-form" 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl  ${!watch().speak_other_languages ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    form="race-prefer-form" 
+                    btnQnr
+                    disabled={watch('has_race_preference') ? watch('race_preference') == null : watch('has_race_preference') == null} />
             </div>
         </>
     )
