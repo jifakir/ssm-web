@@ -34,14 +34,21 @@ const menuList = [
 const Header = () => {
 
     const [isOpen, setIsOpen] = React.useState(false);
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [tab, setTab] = React.useState(0);
     const [open, setOpen] = React.useState(false);
     const { isLoggedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
-
+    const signOutHandler = () => {
+        if(isLoggedIn){
+            dispatch(logOut())
+        }else{
+            setOpen(state => !state);
+        }
+    };
     const toggleDrawer = () => {
-        setIsOpen(!isOpen);
+        setDrawerOpen(!isOpen);
     };
 
     return (
@@ -67,11 +74,11 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="justify-self-end">
-                    <div className="hidden lg:block text-[20px]">
+                    <div onClick={signOutHandler} className="hidden lg:block text-[20px]">
                         {
                             !isLoggedIn ?
                             (
-                            <div onClick={() => setOpen(true)}>
+                            <div >
                                 <a className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
                                     <FaUser className='text-3xl' />
                                     <h4 className="pl-1">
@@ -80,22 +87,21 @@ const Header = () => {
                                 </a>
                             </div>
                             ):
-                            <div onClick={() => dispatch(logOut())} className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
+                            <div className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
                                 <FaRegUser className='text-3xl' />
                                 <h4 className="pl-1">
                                     Sign out
                                 </h4>
                             </div>
                         }
-                        
                     </div>
                     <div className="lg:hidden">
-                        <CgMenu onClick={toggleDrawer} className="text-2xl text-secondary" />
+                        <CgMenu onClick={toggleDrawer} className="text-2xl text-primary" />
                     </div>
                 </div>
             </div>
             <Drawer
-                    open={isOpen}
+                    open={drawerOpen}
                     onClose={toggleDrawer}
                     direction="left"
                 >   

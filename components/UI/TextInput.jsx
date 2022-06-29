@@ -19,7 +19,7 @@ const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, na
             {
                 title && (
                     <label className={`label`}>
-                        <span className={`label-text ${titleStyle}`}>{title}</span>
+                        <span className={`label-text text-base mb-3 text-black ${titleStyle}`}>{title}</span>
                     </label>
                 )
             }
@@ -31,7 +31,7 @@ const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, na
                     className={`
                     input min-h-40 h-40 input-bordered 
                     w-full border-2 hover:border-neutral 
-                    shadow-sm focus:border-accent 
+                    shadow-sm focus:border-accent
                     focus:outline-none bg-white 
                     max-w-xs rounded ${className} ${errors[name] && 'input-error'}`} 
                 >

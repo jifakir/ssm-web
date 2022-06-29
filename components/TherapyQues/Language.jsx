@@ -71,7 +71,10 @@ const Language = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
         const { languages } = data;
         if(!languages) return;
-        await updateTherapist({id: profile?.id, ...data, registration_status: 'entered-language' });
+        await updateTherapist({
+            id: profile?.id,
+            languages: languages.filter(v=> v), 
+            registration_status: 'entered-language' });
     };
 
     const handleBack = () => {
@@ -97,7 +100,7 @@ const Language = ({ step, setStep, profile }) => {
                     {
                         watch('speak_other_languages') && 
                         (
-                            <Checkbox data={data} register={register} errors={errors} />
+                            <Checkbox data={data} control={control} register={register} errors={errors} />
                         )
                     }
                 </div>

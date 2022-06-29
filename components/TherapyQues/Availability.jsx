@@ -5,6 +5,14 @@ import Checkbox from '../UI/Checkbox';
 import Select from '../UI/Select';
 import Button from '../UI/Button';
 import { useRouter } from 'next/router';
+import Stripe from '../Stripe/index';
+import { useState } from 'react';
+import { MdClose } from 'react-icons/md';
+import { useEffect } from 'react';
+import Loader from '../UI/Loader';
+import { useSelector } from 'react-redux';
+import { useFetchSubscriptionQuery, useSubscribeMutation } from '../../store/api/ssmApi';
+
 
 const week = [
     {
@@ -143,10 +151,28 @@ const amTime = [
 
 const Availability = ({step, setStep, profile }) => {
     
-
-    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { ...profile?.availabilities }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [payment, setPayment] = useState();
+    const { 
+            register, handleSubmit, 
+            control, watch, 
+            formState: { errors} } = useForm({
+                defaultValues: { 
+                    days: [...profile?.availabilities.map( v => v.day )],
+                    start_time: profile?.availabilities && profile?.availabilities[0].start_time, 
+                    end_time: profile?.availabilities && profile?.availabilities[0].end_time, 
+                }});
+    const [updateTherapist, { isSuccess, isLoading, isError }] = useUpdateTherapistMutation();
+    const [subscribe, { 
+        data:subscriptionData,
+        error, 
+        isLoading: subsLoading,
+        isError:subsError,
+        isSuccess:subsSuccess }] = useSubscribeMutation(subscriptionData);
+    const {data} = useFetchSubscriptionQuery();
+    const { id } = useSelector(state => state.subscription);
+    
     const router = useRouter();
+
     const handleNext = async (data) => {
 
         const { days, start_time, end_time } = data;
@@ -156,27 +182,64 @@ const Availability = ({step, setStep, profile }) => {
         });
         console.log("Days Arr: ", daysArr);
         await updateTherapist({id: profile?.id, availabilities: daysArr, registration_status: 'completed' });
-        router.push('/therapist/profile');
-        setStep(step + 1);
-
     };
+
 
     const handleBack = () => {
         setStep(step - 1);
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            // router.push('/therapist/profile');
+            subscribe({subscription_plan_id: id});
+        }
 
-    console.log(watch());
+        if(subsError){
+            if(error.status == 422){
+                router.push('/therapist/profile')
+            }
+            if(error.status == 401){
+                dispatch(logOut());
+                setOpen(state => !state);
+            }
+        }
 
+        if(subsSuccess){
+            if(profile?.is_subscribed){
+                router.push('/therapist/profile');
+            }
+            setPayment(true);
+        }
+
+    },[isSuccess, subsError, subsSuccess]);
+
+    if(isLoading){
+        return <Loader />
+    }
+    console.log(id);
+    console.log(data);
     return (
-        <>
+        <>  
+            {
+                payment && (
+                        <div className="fixed bg-primary/50 bg-blend-saturation top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
+                            <div className="shadow-lg rounded-lg relative w-1/2 min-h-52 h-auto bg-white text-whtie text-center flex justify-center items-center">
+                                <span onClick={() => setModal(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
+                                    <MdClose />
+                                </span>
+                                <Stripe loading={isLoading} data={subscriptionData} />
+                            </div>
+                        </div>
+                        )
+            }
             <form id="availability-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="text-left text-sm flex gap-5">
                     <div className="w-1/5">
                         <h1 className="text-lg my-2">Availability</h1>
-                        <Checkbox register={register} errors={errors} data={{name: 'days', options: week }} />
+                        <Checkbox register={register} control={control} errors={errors} data={{name: 'days', options: week }} />
                     </div>
-                    <div className={`flex gap-10 ${!watch('day') ? 'hidden' : 'block'}`}>
+                    <div className={`flex gap-10 ${!watch('days') ? 'hidden' : 'block'}`}>
                         <div className=" w-40">
                             <h3 className="my-2">M-Start Time</h3>
                             <Select control={control} data={{name: 'start_time', options: pmTime}} />
@@ -198,7 +261,7 @@ const Availability = ({step, setStep, profile }) => {
                         title={'Submit'} 
                         form="availability-form" 
                         btnQnr
-                        disabled={!watch().day && !watch().startTime && !watch().endTime} />
+                        disabled={!watch().days && !watch().start_time && !watch().end_time} />
             </div>
         </>
     )

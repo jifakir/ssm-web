@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 
 import authReducer from "./reducers/authReducer";
+import subscriptionSlice from "./reducers/subscriptionSlice";
 import { ssmApi }  from './api/ssmApi';
 
 
@@ -26,6 +27,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  subscription: subscriptionSlice,
   [ssmApi.reducerPath]: ssmApi.reducer,
 });
 

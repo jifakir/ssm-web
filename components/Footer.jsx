@@ -67,13 +67,13 @@ const Footer = () => {
             <div className="px-[2%] lg:flex justify-between">
                 <div className="lg:w-2/3 md:flex justify-between items-center">
                     <div className="md:w-1/2 py-10 px-5 sm:px-0">
-                        <div className="w-full flex justify-center">
+                        <div className="w-full px-20 flex justify-center">
                             <Image src={'/img/seclogo.svg'} alt="Footer Logo" width={326} height={106} />
                         </div>
                         <ul className="mt-5 flex justify-center items-center gap-5 text-2xl">
                             {
                                 linksData.map(({component, url}, idx) => (
-                                    <li key={`footer_link_${idx}`} className="text-primary cursor-pointer">
+                                    <li key={`footer_link_${idx}`} className="text-3xl text-primary cursor-pointer">
                                         <Link href={url} passHref>
                                             <a target="_blank">
                                                 {
@@ -86,7 +86,7 @@ const Footer = () => {
                             }
                         </ul>
                     </div>
-                    <div className="md:w-1/2 md:pr-10">
+                    <div className=" md:w-1/2 md:pr-10">
                         <form onSubmit={handleSubmit(onSubmitHandler)} className="">
                             <h5 className="text-[15px] font-semibold text-center md:text-left">
                                 Stay in touch with us!
@@ -112,15 +112,15 @@ const Footer = () => {
                                 </div>
                             </div>
                         </form>
-                        <div className="mt-5 text-center md:text-left">
+                        <div className="mt-10 sm:mt-5 text-center md:text-left">
                             <h5 className="text-[15px] font-semibold mb-2 md:mb-2">
                                 Quick Links
                             </h5>
-                            <ul className="sm:grid grid-cols-2 text-[15px] space-y-1">
+                            <ul className="grid grid-cols-2 gap-y-5 sm:gap-y-auto text-[15px] space-y-1">
                                 {
                                     menuList.map( (menu, idx) => <li 
                                         key={`menu_item_${idx}`} 
-                                        className="last:text-red-800 cursor-pointer hover:underline hover:text-secondary last:hover:text-error transition-all duration-300 ease-out">
+                                        className="last:text-red-800 text-sm sm:text-base cursor-pointer hover:underline hover:text-secondary last:hover:text-error transition-all duration-300 ease-out">
                                             <Link href={menu.linkUrl}>
                                                 {menu.title}
                                             </Link>
@@ -130,7 +130,7 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="lg:w-1/3 lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 md:flex lg:block text-center lg:text-left">
+                <div className="hidden sm:block lg:w-1/3 lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 md:flex lg:block text-center lg:text-left">
                     <div className="md:w-1/2 lg:w-full">
                         <h5 className="relative text-[15px] font-semibold inline-block">
                             <span>Find A Therapist</span>
@@ -172,7 +172,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className="">
-                <p className="text-xs text-center pt-8">
+                <p className="text-[10px] px-10 sm:px-0 sm:text-xs text-center pt-12 sm:pt-8">
                     Copyright &copy; 2020 Start Saying More, LLC. All Rights Reserved. | Privacy Policy | Terms &amp; Conditions
                 </p>
             </div>

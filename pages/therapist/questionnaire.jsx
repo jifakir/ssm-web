@@ -108,10 +108,6 @@ const Questionnaire = () => {
         },
         
         {
-            component: <RelSess profile={data} step={step} setStep={setStep} />,
-            status: "entered-relsess",
-        },
-        {
             component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
             status: "entered-spirituality",
         },

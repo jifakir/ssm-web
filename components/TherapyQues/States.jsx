@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Select from '../UI/MultiSelect';
-import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 
 const Insurance = ({step, setStep, profile}) => {
@@ -36,12 +36,17 @@ const Insurance = ({step, setStep, profile}) => {
     
     return (
         <>
-            <form id="state-form" onSubmit={handleSubmit(handleNext)} className="text-sm text-left">
+            <form id="stateform" onSubmit={handleSubmit(handleNext)} className="text-sm text-left">
                 <h1 className="text-lg my-2">Please select all states where you are licensed to provide counseling</h1>
                 <div className="space-y-5">
                     {
                         <div className="w-1/2">
-                            <Select control={control} data={{name: 'licensed_states', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
+                            <Select 
+                                control={control} 
+                                data={{
+                                    name: 'licensed_states', 
+                                    options: insA_D.map(v=> ({label: v, value: v.trim()}))}
+                                    } />
                         </div>
                     }
                 </div>
@@ -54,7 +59,7 @@ const Insurance = ({step, setStep, profile}) => {
                     btnSecondary />
                 <Button 
                     title={'Next'} 
-                    form="state-form" 
+                    form="stateform" 
                     btnQnr 
                     disabled={watch('licensed_states') == null}
                     />

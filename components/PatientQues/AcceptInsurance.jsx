@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
+import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import Select from '../UI/MultiSelect';
@@ -33,13 +33,17 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
             insurances: profile?.insurances || [],
             has_insurance: profile?.has_insurance
         }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { has_insurance, insurances } = data;
         if(has_insurance==null) return;
-        await updateTherapist({ id: profile?.id, has_insurance, insurances, registration_status: 'entered-accept_insurance' });
+        await updatePatient({ 
+            id: profile?.id, 
+            has_insurance, 
+            insurances, 
+            registration_status: 'entered-accept_insurance' });
         setStep(step + 1);
 
     };
@@ -53,7 +57,7 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
     
     return (
         <>
-            <form id="accept_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="accept_insurance" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full">
                         <h1 className="text-lg my-2 text-left">Will you be using health insurance for your therapy sessions?</h1>
@@ -63,7 +67,18 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                         watch('has_insurance') &&
                         <div className="mt-5 w-1/2 text-left">
                             <h1 className="text-lg my-2 text-left">Please share your insurance provider:</h1>
-                            <Select control={control} data={{name: 'insurances', options: insA_D.map(v=> ({label: v, value: v.trim()}))}} />
+                            <Select 
+                                control={control} 
+                                data={{
+                                    name: 'insurances', 
+                                    options: [
+                                        ...insA_D.map(v=> ({label: v, value: v.trim()})),
+                                        ...insE_H.map(v=> ({label: v, value: v.trim()})),
+                                        ...insI_N.map(v=> ({label: v, value: v.trim()})),
+                                        ...insO_T.map(v=> ({label: v, value: v.trim()})),
+                                        ...insU_Z.map(v=> ({label: v, value: v.trim()})),
+                                        ]
+                                    }} />
                         </div>
                     }
                 </div>
@@ -76,7 +91,7 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                     btnSecondary />
                 <Button 
                     title={'Next'} 
-                    form="accept_insurance-form"
+                    form="accept_insurance"
                     btnQnr
                     disabled={watch('has_insurance') == null} />
             </div>
