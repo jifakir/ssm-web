@@ -51,6 +51,7 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
 
     const { control, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
+            id: profile?.id,
             has_race_preference: profile?.has_race_preference,
             race_preference: profile?.race_preference
         }});
@@ -63,7 +64,7 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
         await updatePatient({
             id: profile?.id, 
             has_race_preference, 
-            race_preference, 
+            race_preference: race_preference || '', 
             registration_status: 'entered-has_race_preference' });
 
         setStep(step + 1);

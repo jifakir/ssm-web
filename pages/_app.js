@@ -15,13 +15,16 @@ import { useRouter } from 'next/router';
 const persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }) {
+
   const router = useRouter();
-  
+  const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} >
         {
-          router.pathname === '/landing' ? <Component {...pageProps} /> :
+          showHomePage === 'true' ? 
+          <Component {...pageProps} /> :
           (
             <Layout>
               <Component {...pageProps} />
