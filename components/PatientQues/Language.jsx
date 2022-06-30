@@ -59,7 +59,7 @@ const Language = ({ step, setStep, profile }) => {
         <>
             <form id="language-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
                 
-                <Checkbox data={data} register={register} errors={errors} />
+                <Checkbox data={data} control={control} register={register} errors={errors} />
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 

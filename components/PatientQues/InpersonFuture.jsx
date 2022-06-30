@@ -13,7 +13,7 @@ const data = {
         },
         {
             label: 'In-person only',
-            value: 'in-person'
+            value: 'in_person'
         },
         {
             label: 'No preference',
@@ -75,6 +75,10 @@ const InpersonFuture = ({ step, setStep, profile }) => {
                     </div>
                     <div className={`mt-5 ${watch('session_type') === 'virtual' ? 'block' : 'hidden'}`}>
                         <h1 className="text-lg my-2 text-left">Will you someday want to transition to in-person sessions?</h1>
+                        <Radio control={control} data={willData} />
+                    </div>
+                    <div className={`mt-5 ${watch('session_type') === 'in_person' ? 'block' : 'hidden'}`}>
+                        <h1 className="text-lg my-2 text-left">Will you someday want to transition to virtual sessions?</h1>
                         <Radio control={control} data={willData} />
                     </div>
                 </div>

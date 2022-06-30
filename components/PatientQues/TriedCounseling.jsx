@@ -76,7 +76,7 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="spirit-session-form" onSubmit={handleSubmit(handleNext)} className="">
-                <div className="w-full md:flex gap-10">
+                <div className="w-full">
                     <div className="">
                         <h1 className="text-lg my-2 text-left">Have you ever tried counseling in the past?</h1>
                         <div className="form-control w-full max-w-xs">
@@ -85,7 +85,7 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
                                 data={data} />
                         </div>
                     </div>
-                    <div className={watch('has_tried_counseling') ? 'block' : 'hidden'}>
+                    <div className={watch('has_tried_counseling') ? 'block mt-10' : 'hidden'}>
                         <h1 className="text-lg my-2 text-left">How would you rate your overall experience with counseling?</h1>
                         <div className="form-control w-full max-w-xs">
                             <Radio 
