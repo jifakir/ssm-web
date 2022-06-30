@@ -50,7 +50,7 @@ const Titles = ({ step, setStep, profile }) => {
 
     const handleNext = async (data) => {
 
-        const {titles} = data;
+        const {titles, other} = data;
         await updateTherapist({id: profile?.id, titles, registration_status: 'entered-titles' });
         setStep(step + 1);
 
@@ -63,7 +63,7 @@ const Titles = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="titles-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-                <Checkbox data={data} register={register} errors={errors} />
+                <Checkbox data={data} control={control} register={register} errors={errors} />
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 

@@ -1,55 +1,44 @@
 import React from 'react';
 import { useController } from 'react-hook-form';
+import InputText from './InputText';
 
 
 
-const RadioInput = ({control, rules, name, title, options}) => {
+const RadioInput = ({data, control,}) => {
 
+    const { options, title, name, rules} = data;
 
-    const { field, formState: {errors}} = useController({control, name, rules});
-    const [value, setValue] = React.useState(field.value || []);
-
-    console.log("Value: ", value);
-    console.log("Value conver",value === value);
+    const { field, fieldState: {error}} = useController({control, name, rules});
+    const [value, setValue] = React.useState(field.value);
+    
     return (
         <>
-            <h1 className="text-lg text-left my-2">{title}</h1>
-            {/* {
+            <h1 className="pl-1 text-left my-2">{title}</h1>
+            {
                 options.map(( option, idx ) => (
                 <div className="form-control" key={idx}>
                     <label className="label cursor-pointer justify-start">
                         <input 
-                            // {...rest} 
-                            // type="radio" 
-                            // {...register(name, {required})}
-                            // value={option.value} 
-                            {...field}
-                            className={`radio hover:radio-secondary ${errors[name] ? 'radio-error': 'checked:bg-neutral'}`} />
+                            ref={field.ref}
+                            onChange={(e) => {
+                                // update checkbox value
+                                field.onChange(option.value)
+                                setValue(option.value)
+                            }}
+                            type="radio" 
+                            value={option.value}
+                            checked={value == null ? false : value == option.value ? true : false}
+                            className={`radio hover:radio-secondary ${error ? 'radio-error': 'checked:bg-neutral'}`} />
                         
-                        <span className={`pl-2 ${errors[name] && 'text-error'}`}>{option.label}</span>
+                        <span className={`px-2 ${error && 'text-error'}`}>{option.label}</span>
+                        <InputText
+                        control={control}
+                        name={'other'}
+                        pHolder={'Other'}
+                        className={`${(value === 'other' && option.value === 'other') ? 'block' : 'hidden'}`} />
                     </label>
                 </div>
                 ))
-            } */}
-
-            {/* Testing */}
-            <p className="text-error">{errors[name] ? errors[name].message : 'ok'}</p>
-            
-            {options.map((option, index) => (
-                <input
-                ref={field.ref}
-                onChange={(e) => {
-                    // update checkbox value
-                    field.onChange(option.value)
-                    setValue(option.value)
-                }}
-                key={`kdjkdoption${index}`}
-                type="radio"
-                value={option.value}
-                checked={value == option.value ? true : false}
-                className={`radio mx-2  ${errors[name] ? 'radio-error': 'checked:bg-neutral'}`} 
-                />
-            ))
             }
         </>
     )

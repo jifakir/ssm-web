@@ -16,6 +16,9 @@ module.exports = {
         'sans': ['Poppins','Arial', 'Helvetica', 'sans-serif', ...defaultTheme.fontFamily.sans],
         'sterio': ['Afternoon in Stereo']
       },
+      backgroundImage: {
+        welcome: "url('/img/welcome.png')"
+      }
     },
   },
   daisyui: {

@@ -6,6 +6,7 @@ import Hero from '../components/Home/Hero'
 import Button from '../components/UI/Button'
 import HowItWorks from '../components/Home/HowItWorks';
 import {url} from '../utils/flickr';
+import Landing from '../pages/landing';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -15,6 +16,11 @@ export default function Home() {
   useEffect(() => {
     axios.get(url).then((result) => result).then(data => setFlick(data)).catch(err=> console.log(err));
   },[])
+
+  const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
+  if(showHomePage==='true'){
+    return <Landing />
+  }
   return (
     <div className='w-full'>
       <Hero />

@@ -53,10 +53,12 @@ const Login = ({open, setOpen, redirectTo}) => {
 
 
     useEffect(() => {
+        
         if(isSuccess){
             dispatch(logIn({...data}));
             router.push(redirectTo);
         }
+
         if(signupSuccess){
             dispatch(logIn({...signupData}));
             if(redirectTo==='/therapist/profile'){
@@ -65,15 +67,17 @@ const Login = ({open, setOpen, redirectTo}) => {
                 router.push(redirectTo);
             }
         }
+
         if(isLoggedIn){
             setOpen(false);
         }
+
     },[isSuccess, signupSuccess, data, isLoggedIn]);
 
 
     
     return (
-        <div className={`${open ? 'block' : 'hidden'} fixed bottom-0 min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
+        <div className={`${open ? 'block' : 'hidden'} sm:fixed bottom-0 sm:min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
             <div className="overflow-y-scroll h-full w-full flex justify-center items-center">
             {
                 (isLoading && !isError) &&
@@ -110,7 +114,7 @@ const Login = ({open, setOpen, redirectTo}) => {
             {
                 (tab === 0 && !isLoading) ? 
                 (
-                    <form onSubmit={handleSubmit(onSubmitHandler)} className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
+                    <form onSubmit={handleSubmit(onSubmitHandler)} className="sm:my-10 sm:rounded bg-white card sm:w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
@@ -166,7 +170,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                             message: "Password must be 8 characters long"}}} />
                                 <div 
                                     onClick={() => setShowPass(!showPass)} 
-                                    className="absolute right-3 top-12 cursor-pointer">
+                                    className="absolute right-3 top-16 cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }
@@ -216,7 +220,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                 ) : 
                 (tab === 1 && !signupLoading) ?
                 (
-                    <div  className="my-10 rounded bg-white card w-[415px] shadow-lg px-8 py-5">
+                    <div  className="sm:my-10 sm:rounded bg-white card w-full sm:w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
@@ -284,7 +288,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                             }} />
                                     <div 
                                         onClick={() => setShowPass(!showPass)} 
-                                        className="absolute right-3 top-12 cursor-pointer">
+                                        className="absolute right-3 top-16 cursor-pointer">
                                         {
                                             showPass ? <BsEye /> : <BsEyeSlash />
                                         }

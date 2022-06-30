@@ -28,8 +28,10 @@ const data = {
 // Component
 const IsInUs = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
         is_in_us: profile?.is_in_us,
+        user_address: profile?.user_address
     }});
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
@@ -37,7 +39,11 @@ const IsInUs = ({ step, setStep, profile }) => {
 
         const { is_in_us, user_address } = data;
         if(is_in_us == null) return;
-        await updatePatient({id: profile?.id, is_in_us, user_address, registration_status: 'entered-is_religious' });
+        await updatePatient({
+            id: profile?.id, 
+            is_in_us, 
+            user_address, 
+            registration_status: 'entered-is_in_us' });
         setStep(step + 1);
     };
 
@@ -50,7 +56,7 @@ const IsInUs = ({ step, setStep, profile }) => {
 
     return (
     <>
-        <form id="is-is_in_us-form" onSubmit={handleSubmit(handleNext)} className="">
+        <form id="is_in_us-form" onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">Do you live in the United States?</h1>
                 <div className="form-control w-full max-w-xs">
@@ -115,7 +121,7 @@ const IsInUs = ({ step, setStep, profile }) => {
                  />
             <Button 
                 title={'Next'} 
-                form="is-is_in_us-form" 
+                form="is_in_us-form"
                 btnQnr
                 disabled={watch('is_in_us')==null} />
         </div>

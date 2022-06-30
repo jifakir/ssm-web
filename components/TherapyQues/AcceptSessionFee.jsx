@@ -48,14 +48,23 @@ const Feedata = {
 
 const AcceptSessionFee = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {accept_session_fee: profile?.accept_session_fee}});
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            accept_session_fee: profile?.accept_session_fee,
+            session_fee: profile?.session_fee
+        }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
-        const { accept_session_fee } = data;
+        const { accept_session_fee, session_fee } = data;
         if(accept_session_fee == null) return;
-        await updateTherapist({id: profile?.id, accept_session_fee, registration_status: 'entered-accept_session_fee' });
+        await updateTherapist({
+            id: profile?.id, 
+            accept_session_fee, 
+            session_fee, 
+            registration_status: 'entered-accept_session_fee' 
+        });
         setStep(step + 1);
 
     };
@@ -66,6 +75,7 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
 
     };
 
+    console.log("Session Fee: ", profile?.session_fee);
     
     return (
         <>
@@ -74,8 +84,8 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
                     <div className="form-control w-full">
                         <Radio control={control} rules={{required: 'Accept Session Fee is required.'}} data={data} />
                     </div>
-                    <div className={`${watch('accept_session_fee')} mt-10`}>
-                        <h1 className="my-2 text-left">How much therapist charge per session?</h1>
+                    <div className={`${watch('accept_session_fee') ? 'block' : 'hidden'} mt-10`}>
+                        <h1 className="my-2 text-left">How much do you charge per session?</h1>
                         <div className="form-control w-full max-w-xs text-left">
                             <Select control={control} data={Feedata} />
                         </div>

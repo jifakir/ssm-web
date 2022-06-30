@@ -4,6 +4,7 @@ import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import Checkbox from '../UI/Checkbox';
+
 const langData = {
     title: 'What other language(s) do you speak?',
     name: 'languages',
@@ -101,7 +102,7 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
                     </div>
                     <div className={`text-left mt-5 ${watch('speak_other_languages') ? 'block' : 'hidden'}`}>
                         
-                        <Checkbox data={langData} register={register} errors={errors} />
+                        <Checkbox control={control} data={langData} register={register} errors={errors} />
                         <div className="mt-5">
                             <h1 className="text-lg my-2 text-left">Would you prefer to have sessions in another language?</h1>
                             <div className="form-control w-full max-w-xs">

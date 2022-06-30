@@ -47,7 +47,7 @@ const RelSess = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const { is_spiritual, is_spiritual_biased } = data;
-        if(!is_spiritual) return;
+        if(is_spiritual == null) return;
         await updatePatient({id: profile?.id, is_spiritual, is_spiritual_biased, registration_status: 'entered-is_religious' });
         setStep(step + 1);
     };

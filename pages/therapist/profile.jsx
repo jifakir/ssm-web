@@ -488,20 +488,18 @@ const TherapistProfile = () => {
                                     (
                                         profile?.availabilities?.map((itm, idx) => (
                                             <div key={idx} className="text-xs border-r-2 pr-5 last:border-r-0">
-                                                <h1 className="text-2xl text-center leading-8">{itm.day}</h1>
+                                                <h1 className="text-2xl text-center leading-8 capitalize">{itm.day.split('')[0]}</h1>
                                                 <p className="flex justify-between">
                                                     <span className="">Start:</span> 
-                                                    <span className=""> &nbsp;{itm.start_time}AM</span>
+                                                    <span className=""> &nbsp;{itm.start_time}</span>
                                                 </p>
                                                 <p className="flex justify-between">
                                                     <span className="">End:</span>
-                                                    <span className="">{itm.end_time}AM</span></p>
+                                                    <span className="">{itm.end_time}</span>
+                                                </p>
                                             </div>
                                         ))
                                     )
-                                }
-                                {
-                                    
                                 }
                             </div>
                         </div>

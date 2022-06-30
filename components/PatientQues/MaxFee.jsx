@@ -41,7 +41,11 @@ const SessionFee = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const { max_payable_fee } = data;
-        await updatePatient({ id: profile?.id, max_payable_fee, registration_status: 'entered-max_payable_fee' });
+        console.log("Max Payable Fee: ", max_payable_fee);
+        await updatePatient({ 
+            id: profile?.id, 
+            max_payable_fee,
+            registration_status: 'entered-max_payable_fee' });
         setStep(step + 1);
 
     };
@@ -52,10 +56,11 @@ const SessionFee = ({ step, setStep, profile }) => {
 
     };
 
+    console.log(watch('max_payable_fee'));
 
     return (
         <>
-            <form id="max_payable_fee-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="max_payable" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="form-control w-full">
                 <h1 className="text-lg my-2 text-left">What is the most you are willing to pay per therapy session? </h1>
                     <div className="form-control w-full">
@@ -72,7 +77,7 @@ const SessionFee = ({ step, setStep, profile }) => {
                      />
                 <Button 
                     title={'Next'} 
-                    form="max_payable_fee-form"
+                    form="max_payable"
                     btnQnr
                     disabled={!watch('max_payable_fee')}
                      />

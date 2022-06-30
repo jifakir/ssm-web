@@ -52,7 +52,7 @@ const Questionnaire = () => {
 
     const components = [
         {
-            component: <Button title={'GET STARTED'} btnQnr btnLg onClick={() => setStep(step + 1)} className="my-10" />,
+            component: <Button title={'GET STARTED'} btnQnr btnLg onClick={() => setStep(step + 1)} className="sm:my-10" />,
             status: "",
         },
         {
@@ -131,20 +131,20 @@ const Questionnaire = () => {
         },
         {
             component: <MaxFee profile={data} step={step} setStep={setStep} />,
-            status: "entered-education",
+            status: "entered-maxfee",
         },
         {
             component: <AcceptInsurance profile={data} step={step} setStep={setStep} />,
-            status: "entered-HasInsurance",
+            status: "entered-accept_insurance",
         },
 
         {
             component: <InpersonFuture profile={data} step={step} setStep={setStep} />,
-            status: "entered-virtualperson",
+            status: "entered-session_type",
         },
         {
             component: <IsInUs profile={data} step={step} setStep={setStep} />,
-            status: "entered-virtualperson",
+            status: "entered-is_in_us",
         },
         {
             component: <Thankyou profile={data} step={step} setStep={setStep} />,
@@ -228,12 +228,11 @@ const Questionnaire = () => {
 
 
     const percent = Math.round((step/components.length)*100);
-    console.log("Length",components.length);
-    console.log("Step",step);
+   
     return (
-    <div className={`px-[5%] pt-[100px] min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+    <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div >
-            <h1 className="text-[54px] font-sterio text-[#331447]">{
+            <h1 className="text-center sm:text-left text-5xl sm:text-[54px] font-sterio text-[#331447]">{
                 step === (components.length - 1) ?
                 'Thank you!':
                 'Welcome'
@@ -241,10 +240,10 @@ const Questionnaire = () => {
             </h1>
             {
                 step === (components.length - 1) ?
-                <p className="mt-8">
+                <p className="mt-8 text-center sm:text-left">
                     Thank you for completing our match survey! Please share your email address with us, and we will send over your top matches.
                 </p>:
-                <p className="mt-8">
+                <p className="mt-8 text-center sm:text-left">
                 Congratulations on starting your 
                 journey! We have created a detailed questionnaire 
                 to help us match you with a therapist in our directory. 
@@ -259,13 +258,13 @@ const Questionnaire = () => {
         </div>
         {/* Slide section */}
         <div className="pb-14 mt-10">
-            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${(percent === 0) || (step === (components.length - 1)) ? 'hidden' : 'block'}`}>
-                <div className="relative transition-all duration-500 ease-out bg-secondary h-full" style={{width: `${percent}%`}}>
+            <div className={`w-full rounded-full h-9 sm:h-7 border-2 border-secondary overflow-hidden ${(percent === 0) || (step === (components.length - 1)) ? 'hidden' : 'block'}`}>
+                <div className="relative transition-all duration-500 ease-out bg-secondary flex items-center h-full" style={{width: `${percent}%`}}>
                     <span className={`absolute z-10 ${percent > 95 ? 'pr-2 right-0' : 'pl-2 left-full'}`}>{`${percent}%`}</span>
                 </div>
             </div>
             {/* Form Inner */}
-            <div className="text-center mt-16">
+            <div className="text-center mt-8 sm:mt-16">
                 {
                     isLoading ? <div className="flex justify-center items-center h-28"><ImSpinner9 className='text-2xl text-secondary animate-spin' /> </div> : components.map((comp, idx) => {
 
