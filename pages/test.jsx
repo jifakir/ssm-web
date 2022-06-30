@@ -8,14 +8,14 @@ import TestRadio from '../components/UI/TestRadio';
 
 
 
-// const Test = () => {
+const Test = () => {
 
-//     const { control, watch, handleSubmit } = useForm({defaultValues: {testradio: false}});
-//     const onSubmitHandler = (data) => {
-//         console.log(data);
-//     };
+    const { control, watch, handleSubmit } = useForm({defaultValues: {testradio: false}});
+    const onSubmitHandler = (data) => {
+        console.log(data);
+    };
 
-//     console.log(watch());
+    console.log(watch());
     
     return (
         <div className="min-h-screen w-[50%] mx-auto my-10">
@@ -70,6 +70,7 @@ import TestRadio from '../components/UI/TestRadio';
              </div>
         </div>
     )
+}
 
 export default Test;
 
