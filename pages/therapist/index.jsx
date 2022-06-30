@@ -59,7 +59,7 @@ const JoinAsTherapist = () => {
             
             router.push('/therapist/questionnaire');
         }
-    },[subsError, subsSuccess]);
+    },[dispatch, error.status, router, subsError, subsSuccess]);
 
     if(isLoading){
         return <Loader />

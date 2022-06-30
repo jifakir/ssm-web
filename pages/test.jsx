@@ -70,7 +70,6 @@ import TestRadio from '../components/UI/TestRadio';
              </div>
         </div>
     )
-}
 
 export default Test;
 
