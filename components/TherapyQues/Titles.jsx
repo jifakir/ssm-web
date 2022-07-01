@@ -79,7 +79,7 @@ const Titles = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="titles-form"
                     btnQnr 
-                    disabled={!watch('titles')} />
+                    disabled={watch('titles') ? watch('titles').filter(t => t).length == 0 : !watch('titles')} />
             </div>
         </>
     )

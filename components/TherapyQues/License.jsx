@@ -105,12 +105,13 @@ const Experience = ({ step, setStep, profile }) => {
                     onClick={handleBack}
                     btnQnr
                     btnSecondary
+                    disabled={licenseLoading}
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
                     form="license-form" 
                     btnQnr
-                    disabled={!watch('license_type')}
+                    disabled={!watch('license_type') || licenseLoading}
                      />
             </div>
         </>

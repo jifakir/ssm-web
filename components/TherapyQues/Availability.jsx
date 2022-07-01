@@ -158,8 +158,8 @@ const Availability = ({step, setStep, profile }) => {
             formState: { errors} } = useForm({
                 defaultValues: { 
                     days: profile?.availabilities ? [...profile?.availabilities.map( v => v.day )] : [],
-                    start_time: profile?.availabilities && profile?.availabilities[0].start_time, 
-                    end_time: profile?.availabilities && profile?.availabilities[0].end_time, 
+                    start_time: profile?.availabilities ? profile?.availabilities[0].start_time : '12:00am', 
+                    end_time: profile?.availabilities ? profile?.availabilities[0].end_time : '11:00pm', 
                 }});
     const [updateTherapist, { isSuccess, isLoading, isError }] = useUpdateTherapistMutation();
     const [subscribe, { 
@@ -167,8 +167,8 @@ const Availability = ({step, setStep, profile }) => {
         error, 
         isLoading: subsLoading,
         isError:subsError,
-        isSuccess:subsSuccess }] = useSubscribeMutation(subscriptionData);
-    const {data} = useFetchSubscriptionQuery();
+        isSuccess:subsSuccess }] = useSubscribeMutation();
+    const {data:isSubscribed} = useFetchSubscriptionQuery();
     const { id } = useSelector(state => state.subscription);
     
     const router = useRouter();
@@ -177,10 +177,10 @@ const Availability = ({step, setStep, profile }) => {
 
         const { days, start_time, end_time } = data;
         if(days == null) return;
-        const daysArr = days.map(day => {
+        const daysArr = days.filter(d=>d).map(day => {
             return {day,start_time,end_time}
         });
-        console.log("Days Arr: ", daysArr);
+        console.log(daysArr);
         await updateTherapist({id: profile?.id, availabilities: daysArr, registration_status: 'completed' });
     };
 
@@ -190,42 +190,47 @@ const Availability = ({step, setStep, profile }) => {
     };
 
     useEffect(() => {
-        if(isSuccess){
-            // router.push('/therapist/profile');
-            subscribe({subscription_plan_id: id});
+        if(isSuccess && !isSubscribed){
+                subscribe({subscription_plan_id: id});
+        }else{
+             router.push('/therapist/profile');
         }
 
-        // if(subsError){
-        //     if(error.status == 422){
-        //         router.push('/therapist/profile')
-        //     }
-        //     if(error.status == 401){
-        //         dispatch(logOut());
-        //         setOpen(state => !state);
-        //     }
-        // }
+    },[isSuccess]);
+    
+    useEffect(()=> {
 
-        // if(subsSuccess){
-        //     if(profile?.is_subscribed){
-        //         router.push('/therapist/profile');
-        //     }
-        //     // setPayment(true);
-        // }
+        if(subsError){
+            if(error.status == 401){
+                dispatch(logOut());
+                setOpen(state => !state);
+            }
+        }
 
-    },[isSuccess, subsError, subsSuccess]);
+        if(subsSuccess){
+            const {subscription_status} = subscriptionData;
+            console.log("Subs Success");
+            if(subscription_status === 'incomplete'){
+                setPayment(true);
+            }else{
+                router.push('/therapist/profile');
+                console.log("Subscription status: ", subscription_status);
+            }
+        }
+    },[subsError, subsSuccess]);
 
     if(isLoading){
         return <Loader />
     }
-    console.log(id);
-    console.log(data);
+    console.log("Subs id: ",id);
+    console.log("Subs Status:  ", isSubscribed);
     return (
         <>  
             {
                 payment && (
                         <div className="fixed bg-primary/50 bg-blend-saturation top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
                             <div className="shadow-lg rounded-lg relative w-1/2 min-h-52 h-auto bg-white text-whtie text-center flex justify-center items-center">
-                                <span onClick={() => setModal(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
+                                <span onClick={() => setPayment(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
                                     <MdClose />
                                 </span>
                                 <Stripe loading={isLoading} data={subscriptionData} />
@@ -261,7 +266,10 @@ const Availability = ({step, setStep, profile }) => {
                         title={'Submit'} 
                         form="availability-form" 
                         btnQnr
-                        disabled={!watch().days && !watch().start_time && !watch().end_time} />
+                        disabled={
+                            watch('days') ? 
+                            watch('days').filter(d => d).length === 0 : 
+                            !watch('days')} />
             </div>
         </>
     )

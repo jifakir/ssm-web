@@ -13,7 +13,6 @@ import Religion from '../../components/TherapyQues/Religion';
 import RelSess from '../../components/TherapyQues/RelSess';
 import SpiritPerson from '../../components/TherapyQues/SpritPerson';
 import SpiritSess from '../../components/TherapyQues/SpiritSess';
-import OtherLang from '../../components/TherapyQues/OtherLang';
 import Orientation from '../../components/TherapyQues/Orientation';
 import Race from '../../components/TherapyQues/Race';
 import NewPatient from '../../components/TherapyQues/NewPatient';
