@@ -195,22 +195,22 @@ const Availability = ({step, setStep, profile }) => {
             subscribe({subscription_plan_id: id});
         }
 
-        if(subsError){
-            if(error.status == 422){
-                router.push('/therapist/profile')
-            }
-            if(error.status == 401){
-                dispatch(logOut());
-                setOpen(state => !state);
-            }
-        }
+        // if(subsError){
+        //     if(error.status == 422){
+        //         router.push('/therapist/profile')
+        //     }
+        //     if(error.status == 401){
+        //         dispatch(logOut());
+        //         setOpen(state => !state);
+        //     }
+        // }
 
-        if(subsSuccess){
-            if(profile?.is_subscribed){
-                router.push('/therapist/profile');
-            }
-            // setPayment(true);
-        }
+        // if(subsSuccess){
+        //     if(profile?.is_subscribed){
+        //         router.push('/therapist/profile');
+        //     }
+        //     // setPayment(true);
+        // }
 
     },[isSuccess, subsError, subsSuccess]);
 

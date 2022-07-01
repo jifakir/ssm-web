@@ -37,12 +37,18 @@ const IsInUs = ({ step, setStep, profile }) => {
 
     const handleNext = async (data) => {
 
-        const { is_in_us, user_address } = data;
+        const { is_in_us, user_address: {line1, line2, city, state, zip_code} } = data;
         if(is_in_us == null) return;
         await updatePatient({
             id: profile?.id, 
             is_in_us, 
-            user_address, 
+            user_address: {
+                line1: line1 ? line1 : '',
+                line2: line2 ? line2 : '',
+                city: city ? city : '',
+                state: state ? state : '',
+                zip_code: zip_code ? zip_code : '', 
+                },
             registration_status: 'entered-is_in_us' });
         setStep(step + 1);
     };
@@ -56,7 +62,7 @@ const IsInUs = ({ step, setStep, profile }) => {
 
     return (
     <>
-        <form id="is_in_us-form" onSubmit={handleSubmit(handleNext)} className="">
+        <form id="is_in_us" onSubmit={handleSubmit(handleNext)} className="">
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">Do you live in the United States?</h1>
                 <div className="form-control w-full max-w-xs">
@@ -121,7 +127,7 @@ const IsInUs = ({ step, setStep, profile }) => {
                  />
             <Button 
                 title={'Next'} 
-                form="is_in_us-form"
+                form="is_in_us"
                 btnQnr
                 disabled={watch('is_in_us')==null} />
         </div>

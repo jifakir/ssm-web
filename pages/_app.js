@@ -22,15 +22,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} >
-        {
-          showHomePage === 'true' ? 
-          <Component {...pageProps} /> :
-          (
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          )
-        }  
       </PersistGate>
     </Provider>
   )

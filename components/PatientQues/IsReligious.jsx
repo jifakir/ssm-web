@@ -65,7 +65,7 @@ const RelSess = ({ step, setStep, profile }) => {
     return (
     <>
         <form id="is-religious-form" onSubmit={handleSubmit(handleNext)} className="">
-            <div className="w-full md:flex gap-10">
+            <div className="w-full">
                 <div className="">
                     <h1 className="text-lg my-2 text-left">Do you consider yourself a religious person?</h1>
                     <div className="form-control w-full max-w-xs">
@@ -74,7 +74,7 @@ const RelSess = ({ step, setStep, profile }) => {
                             data={sessData} />
                     </div>
                 </div>
-                <div className={`${watch('is_religious') ? 'block' : 'hidden'}`}>
+                <div className={`${watch('is_religious') ? 'mt-5 block' : 'hidden'}`}>
                     <h1 className="text-lg my-2 text-left">Do you want your provider to incorporate religion into sessions?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 
