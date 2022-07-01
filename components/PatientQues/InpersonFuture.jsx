@@ -41,17 +41,22 @@ const willData = {
 
 const InpersonFuture = ({ step, setStep, profile }) => {
 
-    const { control, handleSubmit, watch, formState: { errors} } = useForm();
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        session_type: profile?.session_type,
+        will_like_in_person: profile?.will_like_in_person,
+        will_like_virtual: profile?.will_like_virtual
+    });
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { session_type, will_like_in_person } = data;
+        const { session_type, will_like_in_person, will_like_virtual } = data;
 
         await updatePatient({
             id: profile?.id, 
             session_type, 
-            will_like_in_person, 
+            will_like_in_person,
+            will_like_virtual,
             registration_status: 'entered-session_type' });
 
         setStep(step + 1);

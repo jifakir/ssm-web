@@ -157,7 +157,7 @@ const Availability = ({step, setStep, profile }) => {
             control, watch, 
             formState: { errors} } = useForm({
                 defaultValues: { 
-                    days: [...profile?.availabilities.map( v => v.day )],
+                    days: profile?.availabilities ? [...profile?.availabilities.map( v => v.day )] : [],
                     start_time: profile?.availabilities && profile?.availabilities[0].start_time, 
                     end_time: profile?.availabilities && profile?.availabilities[0].end_time, 
                 }});
@@ -195,22 +195,22 @@ const Availability = ({step, setStep, profile }) => {
             subscribe({subscription_plan_id: id});
         }
 
-        if(subsError){
-            if(error.status == 422){
-                router.push('/therapist/profile')
-            }
-            if(error.status == 401){
-                dispatch(logOut());
-                setOpen(state => !state);
-            }
-        }
+        // if(subsError){
+        //     if(error.status == 422){
+        //         router.push('/therapist/profile')
+        //     }
+        //     if(error.status == 401){
+        //         dispatch(logOut());
+        //         setOpen(state => !state);
+        //     }
+        // }
 
-        if(subsSuccess){
-            if(profile?.is_subscribed){
-                router.push('/therapist/profile');
-            }
-            setPayment(true);
-        }
+        // if(subsSuccess){
+        //     if(profile?.is_subscribed){
+        //         router.push('/therapist/profile');
+        //     }
+        //     // setPayment(true);
+        // }
 
     },[isSuccess, subsError, subsSuccess]);
 

@@ -59,13 +59,18 @@ const VirtualInperson = ({ step, setStep, profile }) => {
 
     const { control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { 
         session_type: profile?.session_type,
-        will_provide_in_person: profile?.will_provide_in_person }});
+        will_provide_in_person: profile?.will_provide_in_person,
+        will_provide_virtual: profile?.will_provide_virtual
+     }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { will_provide_in_person, session_type } = data;
-        await updateTherapist({ id: profile?.id, will_provide_in_person, session_type, registration_status: 'entered-will_provide_in_person' });
+        let query = {session_type};
+        if(session_type==='virtual') query = {...query,will_provide_in_person}
+        if(session_type==='in_person') query = {...query,will_provide_virtual}
+        await updateTherapist({ id: profile?.id, ...query, registration_status: 'entered-will_provide_in_person' });
         setStep(step + 1);
 
     };
