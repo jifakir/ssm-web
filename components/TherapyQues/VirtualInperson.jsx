@@ -66,7 +66,7 @@ const VirtualInperson = ({ step, setStep, profile }) => {
 
     const handleNext = async (data) => {
 
-        const { will_provide_in_person, session_type } = data;
+        const { will_provide_in_person, will_provide_virtual, session_type } = data;
         let query = {session_type};
         if(session_type==='virtual') query = {...query,will_provide_in_person}
         if(session_type==='in_person') query = {...query,will_provide_virtual}
@@ -111,7 +111,12 @@ const VirtualInperson = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="virtual-form" 
                     btnQnr 
-                    disabled={watch('session_type') === 'virtual' ? watch('will_provide_in_person') == null : watch('session_type') == null} />
+                    disabled={
+                        watch('session_type') === 'virtual' ? 
+                        watch('will_provide_in_person') == null :
+                        watch('session_type') === 'in_person'? 
+                        watch('will_provide_virtual') == null:
+                        watch('session_type') == null} />
             </div>
         </>
     )

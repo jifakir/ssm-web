@@ -51,7 +51,7 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
     const { control, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
             accept_session_fee: profile?.accept_session_fee,
-            session_fee: profile?.session_fee
+            session_fee: `${profile?.session_fee}` || ''
         }});
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
