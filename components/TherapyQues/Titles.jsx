@@ -51,7 +51,10 @@ const Titles = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const {titles, other} = data;
-        await updateTherapist({id: profile?.id, titles, registration_status: 'entered-titles' });
+        await updateTherapist({
+            id: profile?.id, 
+            titles: titles.filter(title => title), 
+            registration_status: 'entered-titles' });
         setStep(step + 1);
 
     };

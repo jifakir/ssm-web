@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+
+
 const relData = {
     name: 'is_religion_biased',
     options: [
@@ -67,6 +69,7 @@ const Religion = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const { religion, is_religion_biased } = data;
+
         if(!religion) return;
         await updateTherapist({
             id: profile?.id, 
@@ -90,7 +93,7 @@ const Religion = ({ step, setStep, profile }) => {
                         <Radio control={control} rules={{required: 'Religion is required.'}} data={data} />
                     </div>
                 </div>
-                <div className={`w-full mt-8 ${watch('religion') && watch('religion') === 'none' ? 'hidden' : 'block'}`}>
+                <div className={`w-full mt-8 ${!watch('religion') || watch('religion') === 'none' ? 'hidden' : 'block'}`}>
                     <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 
@@ -110,7 +113,7 @@ const Religion = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="religion-form"
                     btnQnr
-                    disabled={!watch('religion')} />
+                    disabled={watch('religion') !== 'none' ? watch('is_religion_biased') == null : !watch('religion')} />
             </div>
         </>
     )

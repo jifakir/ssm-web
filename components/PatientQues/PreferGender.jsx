@@ -11,8 +11,8 @@ const PreferGender = ({ step, setStep, profile }) => {
         control, 
         handleSubmit, watch, formState: { errors} } = useForm({
             defaultValues: { 
-                has_gender_preference: profile?.has_gender_preference || '',
-                gender_preference: profile?.gender_preference || ''
+                has_gender_preference: profile?.has_gender_preference,
+                gender_preference: profile?.gender_preference
             }});
     const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 

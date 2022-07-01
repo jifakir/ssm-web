@@ -5,6 +5,41 @@ import Button from '../UI/Button';
 import Select from '../../components/UI/Select';
 import Checkbox from '../UI/Checkbox';
 
+const data = {
+    title: 'Do you specialize in any type of therapy? (Select all that apply)',
+    name: 'therapy_specializations',
+    options: [
+        {
+            label: 'Psychodynamic therapy',
+            value: 'psychodynamictherapy'
+        },
+        {
+            label: 'Cognitive behavioral therapy',
+            value: 'Cognitive behavioral therapy'
+        },
+        {
+            label: 'Behavioral therapy',
+            value: 'Behavioral therapy'
+        },
+        {
+            label: 'Humanistic therapy',
+            value: 'Humanistic therapy'
+        },
+        {
+            label: 'Substance abuse counseling',
+            value: 'Substance abuse counseling'
+        },
+        {
+            label: 'Emotion-Focused Therapy (EFT)',
+            value: 'Not applicable'
+        },
+        {
+            label: 'Prefer not to say',
+            value: 'not_preferred'
+        },
+    ]
+};
+
 
 const Specialization = ({ step, setStep, profile }) => {
 
@@ -17,7 +52,7 @@ const Specialization = ({ step, setStep, profile }) => {
 
         const { therapy_specializations } = data;
         if(therapy_specializations == null) return;
-        await updateTherapist({ id: profile?.id, therapy_specializations, registration_status: 'entered-specialization' });
+        await updateTherapist({ id: profile?.id, therapy_specializations: therapy_specializations.filter(sp=> sp), registration_status: 'entered-specialization' });
         setStep(step + 1);
 
     };
@@ -28,40 +63,7 @@ const Specialization = ({ step, setStep, profile }) => {
 
     };
 
-    const data = {
-        title: 'Do you specialize in any type of therapy? (Select all that apply)',
-        name: 'therapy_specializations',
-        options: [
-            {
-                label: 'Psychodynamic therapy',
-                value: 'psychodynamictherapy'
-            },
-            {
-                label: 'Cognitive behavioral therapy',
-                value: 'Cognitive behavioral therapy'
-            },
-            {
-                label: 'Behavioral therapy',
-                value: 'Behavioral therapy'
-            },
-            {
-                label: 'Humanistic therapy',
-                value: 'Humanistic therapy'
-            },
-            {
-                label: 'Substance abuse counseling',
-                value: 'Substance abuse counseling'
-            },
-            {
-                label: 'Emotion-Focused Therapy (EFT)',
-                value: 'Not applicable'
-            },
-            {
-                label: 'Prefer not to say',
-                value: 'not_preferred'
-            },
-        ]
-    };
+    
     return (
         <>
             <form id="specialization-form" onSubmit={handleSubmit(handleNext)} className="">

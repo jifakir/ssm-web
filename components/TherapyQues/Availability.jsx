@@ -157,7 +157,7 @@ const Availability = ({step, setStep, profile }) => {
             control, watch, 
             formState: { errors} } = useForm({
                 defaultValues: { 
-                    days: [...profile?.availabilities.map( v => v.day )],
+                    days: profile?.availabilities ? [...profile?.availabilities.map( v => v.day )] : [],
                     start_time: profile?.availabilities && profile?.availabilities[0].start_time, 
                     end_time: profile?.availabilities && profile?.availabilities[0].end_time, 
                 }});
@@ -209,7 +209,7 @@ const Availability = ({step, setStep, profile }) => {
             if(profile?.is_subscribed){
                 router.push('/therapist/profile');
             }
-            setPayment(true);
+            // setPayment(true);
         }
 
     },[isSuccess, subsError, subsSuccess]);

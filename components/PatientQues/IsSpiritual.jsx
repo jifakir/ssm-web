@@ -92,7 +92,7 @@ const RelSess = ({ step, setStep, profile }) => {
                 title={'Next'} 
                 form="is-spiritual-forms" 
                 btnQnr
-                disabled={watch('is_spiritual') ? watch('is_religion_biased') == null : watch('is_spiritual') == null} />
+                disabled={watch('is_spiritual') ? watch('is_spiritual_biased') == null : watch('is_spiritual') == null} />
         </div>
     </>
     )
