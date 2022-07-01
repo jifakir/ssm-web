@@ -168,7 +168,8 @@ const Availability = ({step, setStep, profile }) => {
         isLoading: subsLoading,
         isError:subsError,
         isSuccess:subsSuccess }] = useSubscribeMutation();
-    const {data:isSubscribed} = useFetchSubscriptionQuery();
+
+    const { data:isSubscribed } = useFetchSubscriptionQuery();
     const { id } = useSelector(state => state.subscription);
     
     const router = useRouter();
@@ -190,10 +191,8 @@ const Availability = ({step, setStep, profile }) => {
     };
 
     useEffect(() => {
-        if(isSuccess && !isSubscribed){
+        if(isSuccess){
                 subscribe({subscription_plan_id: id});
-        }else{
-             router.push('/therapist/profile');
         }
 
     },[isSuccess]);
@@ -209,12 +208,10 @@ const Availability = ({step, setStep, profile }) => {
 
         if(subsSuccess){
             const {subscription_status} = subscriptionData;
-            console.log("Subs Success");
             if(subscription_status === 'incomplete'){
                 setPayment(true);
-            }else{
+            }else if(subscription_status === 'trialing'){
                 router.push('/therapist/profile');
-                console.log("Subscription status: ", subscription_status);
             }
         }
     },[subsError, subsSuccess]);
@@ -222,8 +219,7 @@ const Availability = ({step, setStep, profile }) => {
     if(isLoading){
         return <Loader />
     }
-    console.log("Subs id: ",id);
-    console.log("Subs Status:  ", isSubscribed);
+    
     return (
         <>  
             {
