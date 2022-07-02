@@ -200,7 +200,9 @@ const TherapistProfile = () => {
 
     const {control} = useForm();
     const { isLoggedIn } = useSelector(state => state.auth);
-    const {data:profile, isLoading, isSuccess, isError} = useFetchTherapistQuery();
+    const {data:profile, refetch, isLoading, isSuccess, isError} = useFetchTherapistQuery({},{
+        refetchOnMountOrArgChange: true
+    });
     const [uploadPicture,{ isLoading:pictureUploading }] = useUploadPictureMutation();
     
     const uploadHandler = async (e) => {
@@ -214,10 +216,10 @@ const TherapistProfile = () => {
     // Side Effects
     
     useEffect(() => {
+        refetch();
         if(isSuccess && !profile?.is_subscribed){
             router.push('/therapist/questionnaire');
         }
-        
     },[]);
 
     useEffect(()=> {

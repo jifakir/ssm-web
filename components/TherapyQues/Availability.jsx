@@ -192,10 +192,10 @@ const Availability = ({step, setStep, profile }) => {
     };
 
     useEffect(() => {
-        if(isSuccess && profile?.is_subscribed){
-            router.push('/therapist/profile');
-            return;
-        }
+        // if(isSuccess && profile?.is_subscribed){
+        //     router.push('/therapist/profile');
+        //     return;
+        // }
         if(isSuccess){
             subscribe({subscription_plan_id: id});
         }
@@ -204,22 +204,24 @@ const Availability = ({step, setStep, profile }) => {
     
     useEffect(()=> {
 
-        if(subsError){
-            if(error.status == 401){
+        if(subsError && error.status == 401){
                 dispatch(logOut());
                 setOpen(state => !state);
-            }
         }
 
-        if(subsSuccess){
-            const {subscription_status} = subscriptionData;
-            if(subscription_status === 'incomplete'){
-                setPayment(true);
-            }else if(subscription_status === 'trialing'){
-                router.push('/therapist/profile');
-            }
+    },[subsError]);
+
+    useEffect(() => {
+        if(subsSuccess && subscriptionData?.subscription_status === 'incomplete'){
+            setPayment(true);
         }
-    },[subsError, subsSuccess]);
+
+        if(subsSuccess && subscriptionData?.subscription_status === 'trialing'){
+            router.push('/therapist/profile');
+        }
+
+    },[subsSuccess]);
+    
 
     return (
         <>  
