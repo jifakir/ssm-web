@@ -192,7 +192,7 @@ const Availability = ({step, setStep, profile }) => {
 
     useEffect(() => {
         if(isSuccess){
-                subscribe({subscription_plan_id: id});
+            subscribe({subscription_plan_id: id});
         }
 
     },[isSuccess]);
