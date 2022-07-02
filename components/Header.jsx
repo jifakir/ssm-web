@@ -7,6 +7,8 @@ import { CgMenu } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../store/reducers/authReducer';
 import Login from './Auth/Login';
+import { useFetchTherapistQuery } from '../store/api/ssmApi';
+import { useEffect } from 'react';
 
 const menuList = [
     {
@@ -34,10 +36,12 @@ const menuList = [
 const Header = () => {
 
     const [isOpen, setIsOpen] = React.useState(false);
+    const [redirectTo, setRedirectTo] = React.useState(false);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [tab, setTab] = React.useState(0);
     const [open, setOpen] = React.useState(false);
     const { isLoggedIn } = useSelector(state => state.auth);
+    const { data, isSuccess} = useFetchTherapistQuery();
     const dispatch = useDispatch();
 
     const signOutHandler = () => {
@@ -53,7 +57,7 @@ const Header = () => {
 
     return (
         <div className="w-full py-1 md:py-5 px-5 border-b-[10px] border-primary">
-            <Login open={open} setOpen={setOpen} redirectTo={'/therapist/profile'} />
+            <Login open={open} setOpen={setOpen} redirectTo={data?.is_subscribed ? '/therapist/profile' : '/therapist/questionnaire'} />
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <Link href={'/'} className="cursor-pointer" passHref>
