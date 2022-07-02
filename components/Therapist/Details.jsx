@@ -24,7 +24,7 @@ const Details = ({profile}) => {
     const {control, handleSubmit} = useForm({
         defaultValues: {
             date_of_birth: profile?.date_of_birth,
-            phone: '',
+            phone: profile?.phone,
             gender: profile?.gender,
             user_address: profile?.user_address
         }
@@ -76,7 +76,9 @@ const Details = ({profile}) => {
                                             name={'phone'}
                                             title={"Phone Number"}
                                             pHolder={'000-000-0000'}
-
+                                            rules={{
+                                                pattern: /\d/i
+                                            }}
                                             className="cursor-pointer" />
                                     </div>
                                     <div className="w-full mt-5">
@@ -172,7 +174,7 @@ const Details = ({profile}) => {
                                         <h2 className="pl-2">Phone Number</h2>
                                     </div>
                                     <div className="pl-5">
-                                            <h3 className="">{profile?.phone_number}</h3>
+                                            <h3 className="">{profile?.phone}</h3>
                                     </div>
                                 </div>
                                 <div className="flex items-center">

@@ -5,7 +5,7 @@ import { GrCertificate } from 'react-icons/gr';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
 import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose } from 'react-icons/md';
 import { BsGenderTrans, BsTelephone } from 'react-icons/bs';
-import { useFetchTherapistQuery } from '../../store/api/ssmApi';
+import { useFetchTherapistQuery, useUploadPictureMutation } from '../../store/api/ssmApi';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Input from '../../components/UI/TextInput';
@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import Qualification from '../../components/Therapist/Qualification';
 import Details from '../../components/Therapist/Details';
 import Loader from '../../components/UI/Loader';
+import Availability from '../../components/Therapist/Availibilties';
 const week = [
     {
         label: 'Monday',
@@ -196,39 +197,34 @@ const TherapistProfile = () => {
     const [availibility, setAvailability] = useState(false);
     const inputRef = useRef();
     const router = useRouter();
+
+    const {control} = useForm();
     const { isLoggedIn } = useSelector(state => state.auth);
     const {data:profile, isLoading, isSuccess, isError} = useFetchTherapistQuery();
-    // const {user_address: {line1, line2, city, state, zip_code}} = profile;
+    const [uploadPicture,{ isLoading:pictureUploading }] = useUploadPictureMutation();
     
-    const uploadHandler = (e) => {
-
+    const uploadHandler = async (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            const url = reader.result;
-            setImgUrl(url);
-        }
-        reader.onerror = (error) => {
-            console.log(error);
-        }
+        const formData = new FormData();
+        formData.append("picture",file);
+        await uploadPicture({id:profile?.id,formData});
 
-    };
-
-    const detailsSubmitHandler = (data) => {
-        console.log(data);
-    };
-
-    const educationSubmitHandler = (data) => {
-        console.log(data);
     };
 
     // Side Effects
+    
+    useEffect(() => {
+        if(isSuccess && !profile?.is_subscribed){
+            router.push('/therapist/questionnaire');
+        }
+        
+    },[]);
 
-    // Rendering
-    if(!isLoggedIn){
-        router.push("/");
-    }
+    useEffect(()=> {
+        if(!isLoggedIn){
+            router.push("/");
+        }
+    },[isLoggedIn]);
 
     if(isLoading){
         return (
@@ -247,7 +243,11 @@ const TherapistProfile = () => {
                     <div className="w-60 border rounded-lg overflow-hidden">
                         <div>
                             <div className="relative h-56">
-                                <Image src={imgUrl ? imgUrl : '/img/profile.png'} layout="fill" alt="Profile" />
+                                {
+                                    pictureUploading ?
+                                    <Loader />:
+                                    <Image src={profile?.profile_picture ? profile?.profile_picture : '/img/profile.png'} layout="fill" alt="Profile" />
+                                }
                             </div>
                         </div>
                         <input ref={inputRef} onChange={uploadHandler} type="file" className="hidden" />
@@ -293,60 +293,8 @@ const TherapistProfile = () => {
                         <Qualification profile={profile} />
                     </div>
                     {/* Availability */}
-                    <div className="relative py-5">
-                        <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
-                            {
-                                availibility ? 
-                                <MdOutlineUpdate onClick={() => setAvailability(false)} /> : 
-                                <MdEdit onClick={() => setAvailability(true)} />
-                            }
-                        </div>
-                        <div className="">
-                            <div className="flex justify-start">
-                                <div className="flex font-semibold items-center justify-center text-primary">
-                                    <MdAccessTime className='text-xl' />
-                                    <h2 className="pl-2">Availability</h2>
-                                </div>
-                            </div>
-                            <div className="pt-5 flex flex-wrap justify-center md:justify-start gap-5">
-                                {
-                                    availibility ? 
-                                    (
-                                        <div className="text-left text-sm flex gap-5">
-                                            <div className="w-1/5">
-                                                <h1 className="text-lg my-2">Availability</h1>
-                                                <Checkbox register={register} errors={errors} data={{name: 'day', options: week }} />
-                                            </div>
-                                            <div className={`flex gap-10 ${!watch('day') ? 'hidden' : 'block'}`}>
-                                                <div className="mt-1 w-40">
-                                                    <h3 className="my-2">M-Start Time</h3>
-                                                    <Select control={control} data={{name: 'start_time', options: pmTime}} />
-                                                </div>
-                                                <div className="mt-1 w-40">
-                                                    <h3 className="my-2">M-End Time</h3>
-                                                    <Select control={control} data={{name: 'end_time', options: amTime}} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ) : 
-                                    (
-                                        profile?.availabilities?.map((itm, idx) => (
-                                            <div key={idx} className="text-xs border-r-2 pr-5 last:border-r-0">
-                                                <h1 className="text-2xl text-center leading-8 capitalize">{itm.day.split('')[0]}</h1>
-                                                <p className="flex justify-between">
-                                                    <span className="">Start:</span> 
-                                                    <span className=""> &nbsp;{itm.start_time}</span>
-                                                </p>
-                                                <p className="flex justify-between">
-                                                    <span className="">End:</span>
-                                                    <span className="">{itm.end_time}</span>
-                                                </p>
-                                            </div>
-                                        ))
-                                    )
-                                }
-                            </div>
-                        </div>
+                    <div className="mt-6">
+                        <Availability profile={profile} />
                     </div>
                 </div>
             </div>
