@@ -35,7 +35,7 @@ const Education = ({step, setStep, profile}) => {
     };
 
     const handleAppend = () => {
-        if(fields.length >= 3) return;
+        if(fields.length >= 4) return;
         append({degree: '', major: '', school_name: ''})
     };
     console.log(watch());

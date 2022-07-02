@@ -40,7 +40,7 @@ const Questionnaire = () => {
     const [progress, setProgress] = React.useState(0);
 
     const {isLoggedIn } = useSelector(state => state.auth);
-    const {data, isSuccess, isLoading} = useFetchTherapistQuery();
+    const {data, refetch, isSuccess, isLoading} = useFetchTherapistQuery();
 
     const router = useRouter();
     const components = [
@@ -147,6 +147,10 @@ const Questionnaire = () => {
     ];
 
 
+    useEffect(()=>{
+        refetch();
+    },[]);
+    
     useEffect(() => {
         if(!isLoggedIn){
             router.push('/');
