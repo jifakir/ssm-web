@@ -11,8 +11,8 @@ import { MdClose } from 'react-icons/md';
 import { useEffect } from 'react';
 import Loader from '../UI/Loader';
 import { useSelector } from 'react-redux';
+import { MdAccessTime, MdEdit, MdOutlineClose } from 'react-icons/md';
 import { useFetchSubscriptionQuery, useSubscribeMutation } from '../../store/api/ssmApi';
-import { BiLoaderAlt } from 'react-icons/bi';
 
 
 const week = [
@@ -150,9 +150,9 @@ const amTime = [
     },
 ];
 
-const Availability = ({step, setStep, profile }) => {
+const Availability = ({profile }) => {
     
-    const [payment, setPayment] = useState();
+    const [form, setForm] = useState(false);
     const { 
             register, handleSubmit, 
             control, watch, 
@@ -162,19 +162,11 @@ const Availability = ({step, setStep, profile }) => {
                     start_time: profile?.availabilities ? profile?.availabilities[0].start_time : '12:00am', 
                     end_time: profile?.availabilities ? profile?.availabilities[0].end_time : '11:00pm', 
                 }});
-    const [updateTherapist, { isSuccess, isLoading, isError }] = useUpdateTherapistMutation();
-    const [subscribe, { 
-        data:subscriptionData,
-        error, 
-        isLoading: subsLoading,
-        isError:subsError,
-        isSuccess:subsSuccess }] = useSubscribeMutation();
+    const [updateTherapist, { 
+        isSuccess, isLoading, isError 
+    }] = useUpdateTherapistMutation();
 
-    const { data:isSubscribed } = useFetchSubscriptionQuery();
-    const { id } = useSelector(state => state.subscription);
     
-    const router = useRouter();
-
     const handleNext = async (data) => {
 
         const { days, start_time, end_time } = data;
@@ -182,60 +174,27 @@ const Availability = ({step, setStep, profile }) => {
         const daysArr = days.filter(d=>d).map(day => {
             return {day,start_time,end_time}
         });
-        console.log(daysArr);
         await updateTherapist({id: profile?.id, availabilities: daysArr, registration_status: 'completed' });
-    };
-
-
-    const handleBack = () => {
-        setStep(step - 1);
+    
     };
 
     useEffect(() => {
-        if(isSuccess && profile?.is_subscribed){
-            router.push('/therapist/profile');
-            return;
-        }
         if(isSuccess){
-            subscribe({subscription_plan_id: id});
+            setForm(false);
         }
-
-    },[isSuccess]);
-    
-    useEffect(()=> {
-
-        if(subsError){
-            if(error.status == 401){
-                dispatch(logOut());
-                setOpen(state => !state);
-            }
-        }
-
-        if(subsSuccess){
-            const {subscription_status} = subscriptionData;
-            if(subscription_status === 'incomplete'){
-                setPayment(true);
-            }else if(subscription_status === 'trialing'){
-                router.push('/therapist/profile');
-            }
-        }
-    },[subsError, subsSuccess]);
-
+    });
+  
     return (
-        <>  
-            {
-                payment && (
-                        <div className="fixed bg-primary/50 bg-blend-saturation top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
-                            <div className="shadow-lg rounded-lg relative w-1/2 min-h-52 h-auto bg-white text-whtie text-center flex justify-center items-center">
-                                <span onClick={() => setPayment(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
-                                    <MdClose />
-                                </span>
-                                <Stripe loading={isLoading} data={subscriptionData} />
-                            </div>
-                        </div>
-                        )
-            }
-            <form id="availability-form" onSubmit={handleSubmit(handleNext)} className="">
+        <div className='relative'> 
+            <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
+                {
+                    form ? 
+                    <MdOutlineClose onClick={() => setForm(false)} /> : 
+                    <MdEdit onClick={() => setForm(true)} />
+                }
+            </div> 
+           {form ?
+            <form onSubmit={handleSubmit(handleNext)} className="">
                 <div className="text-left text-sm flex gap-5">
                     <div className="w-1/5">
                         <h1 className="text-lg my-2">Availability</h1>
@@ -252,27 +211,43 @@ const Availability = ({step, setStep, profile }) => {
                         </div>
                     </div>
                 </div>
-            </form>
-            <div className={`flex gap-5 py-5`}>
-                    <Button 
-                        title={'Back'} 
-                        onClick={handleBack}
-                        btnQnr
-                        btnSecondary />
+                <div className="mt-5">
                     <Button 
                         title={'Submit'} 
-                        form="availability-form" 
                         btnQnr
                         disabled={
                             watch('days') ? 
                             watch('days').filter(d => d).length === 0 : 
-                            !watch('days')} >
-                                {
-                                    isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
-                                }
-                    </Button>
+                            !watch('days')} />
+                </div>
+            </form>:
+            <div > 
+            <div className="flex justify-start">
+                <div className="flex font-semibold items-center justify-center text-primary">
+                    <MdAccessTime className='text-xl' />
+                    <h2 className="pl-2">Availability</h2>
+                </div>
             </div>
-        </>
+            <div className="pt-5 flex flex-wrap justify-center md:justify-start gap-5">
+                {
+                     profile?.availabilities?.map((itm, idx) => (
+                            <div key={idx} className="text-xs border-r-2 pr-5 last:border-r-0">
+                                <h1 className="text-2xl text-center leading-8 capitalize">{itm.day.split('')[0]}</h1>
+                                <p className="flex justify-between">
+                                    <span className="">Start:</span> 
+                                    <span className=""> &nbsp;{itm.start_time}</span>
+                                </p>
+                                <p className="flex justify-between">
+                                    <span className="">End:</span>
+                                    <span className="">{itm.end_time}</span>
+                                </p>
+                            </div>
+                        ))
+                }
+            </div>
+        </div>
+                        }
+        </div>
     )
 }
 

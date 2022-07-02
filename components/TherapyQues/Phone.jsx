@@ -3,20 +3,22 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
+import { BiLoaderAlt } from 'react-icons/bi';
 
+const Phone = ({ step, setStep, profile }) => {
 
-const Phone = ({ step, setStep }) => {
-
-    const { register, handleSubmit, watch, formState: { errors} } = useForm();
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            phone: profile?.phone
+        }
+    });
     const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { phone } = data;
 
-        await updateTherapist({ phone, registration_status: 'email' });
-        console.log("Triggered")
-
+        await updateTherapist({id: profile?.id, phone, registration_status: 'entered-phone' });
         setStep(step + 1);
 
     };
@@ -32,20 +34,35 @@ const Phone = ({ step, setStep }) => {
             <form id='phone-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full max-w-xs">
-                        <TextInput register={register} errors={errors} data={{type: 'text', pHolder: '000-000-0000', name: 'phone', title: 'Phone Number', pattern: /\d/i}} />
+                        <TextInput 
+                            control={control} 
+                            errors={errors}
+                            name="phone"
+                            pHolder={'000-000-0000'}
+                            title={'Phone Number'}
+                            rules={{
+                                required: true,
+                                pattern: /\d/i
+                            }}
+                             />
                     </div>
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
-                    title={'Back'} 
-                    onClick={handleBack}
-                    className="btn-outline border-neutral px-8 text-2xl" />
+                    title={'Back'}
+                    btnQnr
+                    btnSecondary
+                    onClick={handleBack} />
                 <Button 
                     title={'Next'}
+                    btnQnr
                     form="phone-form"
-                    onClick={handleNext} 
-                    className={`${isLoading ? 'loading' : ''} px-8 text-2xl ${!watch().phone ? 'bg-gray-300 text-black/80 cursor-not-allowed border-gray-300' : 'btn-secondary'}`} />
+                    disabled={!watch('phone')} >
+                    {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
             </div>
         </>
     )

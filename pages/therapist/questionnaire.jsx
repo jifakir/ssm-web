@@ -56,10 +56,10 @@ const Questionnaire = () => {
             component: <Email profile={data} step={step} setStep={setStep} />,
             status: "entered-email",
         },
-        // {
-        //     component: <Phone profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-phone",
-        // },
+        {
+            component: <Phone profile={data} step={step} setStep={setStep} />,
+            status: "entered-phone",
+        },
         {
             component: <Address profile={data} step={step} setStep={setStep} />,
             status: "entered-address",
