@@ -102,51 +102,51 @@ const pmTime = [
 const amTime = [
     {
         label: '01:00 AM',
-        value: '01:00pm',
+        value: '01:00am',
     },
     {
         label: '02:00 AM',
-        value: '02:00pm',
+        value: '02:00am',
     },
     {
         label: '03:00 AM',
-        value: '03:00pm',
+        value: '03:00am',
     },
     {
         label: '04:00 AM',
-        value: '04:00pm',
+        value: '04:00am',
     },
     {
         label: '05:00 AM',
-        value: '05:00pm',
+        value: '05:00am',
     },
     {
         label: '06:00 AM',
-        value: '06:00pm',
+        value: '06:00am',
     },
     {
         label: '07:00 AM',
-        value: '07:00pm',
+        value: '07:00am',
     },
     {
         label: '08:00 AM',
-        value: '08:00pm',
+        value: '08:00am',
     },
     {
         label: '09:00 AM',
-        value: '09:00pm',
+        value: '09:00am',
     },
     {
         label: '10:00 AM',
-        value: '10:00pm',
+        value: '10:00am',
     },
     {
         label: '11:00 AM',
-        value: '11:00pm',
+        value: '11:00am',
     },
     {
         label: '12:00 AM',
-        value: '12:00pm',
+        value: '12:00am',
     },
 ];
 
