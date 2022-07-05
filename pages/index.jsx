@@ -9,6 +9,7 @@ import {url} from '../utils/flickr';
 import Landing from '../pages/landing';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Script from 'next/script'
 
 export default function Home() {
   const [filcker, setFlick] = useState(null);
@@ -23,6 +24,7 @@ export default function Home() {
   }
   return (
     <div className='w-full'>
+      <Script  src="https://cdn2.woxo.tech/a.js#62c40614ec33d95e7c27e46a" async data-usrc/>
       <Hero />
       <div className="w-[90%] md:w-[80%] lg:w-[65%] mx-auto">
         <div className="w-full lg:flex items-center justify-between my-10 md:my-16">
@@ -53,15 +55,18 @@ export default function Home() {
         </div>
       </div>
       <div className="mb-16">
-        <div className="px-[5%] md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
+      <div
+  loading="lazy"
+  data-mc-src="88d1d45b-7899-43f1-a878-fd3c98111fc8#null"></div>
+        {/* <div className="px-[5%] md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
           {
-            filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
+            filcker?.data?.photos?.photo?.slice(0,5).map((photo, idx) => (
               <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-32 lg:h-52" key={idx}>
                 <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} alt="Pic" layout='fill' objectFit='cover' />
               </div>
             ))
           }
-        </div>
+        </div> */}
       </div>
     </div>
   )

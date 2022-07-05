@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Script from 'next/script'
 import InstagramEmbed from 'react-instagram-embed';
 import Stripe from '../components/Stripe/CheckoutForm';
 import InputText from '../components/UI/InputText';
@@ -18,11 +19,17 @@ const Test = () => {
     console.log(watch());
     
     return (
+      <>
+      <Script  src="https://cdn2.woxo.tech/a.js#62c40614ec33d95e7c27e46a" async data-usrc/>
+      <div
+  loading="lazy"
+  data-mc-src="88d1d45b-7899-43f1-a878-fd3c98111fc8#null"></div>
+
         <div className="min-h-screen w-[50%] mx-auto my-10">
 
-                {/* <InstagramEmbed
+                <InstagramEmbed
                     url='http://instagram.com/gkjahid02'
-                    clientAccessToken='IGQVJYMkNRMUloSHRENHNDZAUxnbVphZAi1UV19qbTZAEeElwV0ZAIMmJMMmxYVEFxNjMwMjhkUDVURnFUcWFoSlBILV9GZAzNVQ1ctQ085WWw5SEtTOXBnYlNMcGlNdDc3LW9xR2hUZAFIyc0NHYVdfOGxDYwZDZD'
+                    clientAccessToken='594382165399714|42b7c9778ebe5e3e0183b97f2249ec0d'
                     maxWidth={700}
                     hideCaption={false}
                     containerTagName='div'
@@ -32,8 +39,8 @@ const Test = () => {
                     onSuccess={() => {}}
                     onAfterRender={() => {}}
                     onFailure={() => {}}
-                    /> */}
-
+                    />
+{/* 
           <InputText
             control={control}
             name="name"
@@ -67,8 +74,9 @@ const Test = () => {
                     }
                   ]
                 }} />
-             </div>
+             </div> */}
         </div>
+        </>
     )
 }
 
