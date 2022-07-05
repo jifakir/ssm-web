@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import Select from '../../components/UI/Select';
 import Checkbox from '../../components/UI/Checkbox';
 import Radio from '../../components/UI/Radio';
-import {gender} from './data';
+import {gender} from './../../components/data';
 import Button from '../../components/UI/Button';
 import { useEffect } from 'react';
 import Qualification from '../../components/Therapist/Qualification';

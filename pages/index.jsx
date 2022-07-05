@@ -10,6 +10,7 @@ import Landing from '../pages/landing';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from 'next/router'
+import Script from 'next/script'
 
 export default function Home() {
   const [filcker, setFlick] = useState(null);
@@ -25,7 +26,8 @@ export default function Home() {
   }
   return (
     <div className='w-full'>
-     <Hero />
+      <Script  src="https://cdn2.woxo.tech/a.js#62c40614ec33d95e7c27e46a" async data-usrc/>
+      <Hero />
       <div className="w-[90%] md:w-[80%] lg:w-[65%] mx-auto">
         <div className="w-full lg:flex items-center justify-between my-10 md:my-16">
           <div className="lg:w-1/2 relative px-5 flex justify-center lg:block">
