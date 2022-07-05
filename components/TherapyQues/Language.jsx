@@ -69,10 +69,11 @@ const Language = ({ step, setStep, profile }) => {
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
-        const { languages } = data;
+        const { languages, speak_other_languages } = data;
         if(!languages) return;
         await updateTherapist({
             id: profile?.id,
+            speak_other_languages,
             languages: languages.filter(v=> v), 
             registration_status: 'entered-language' });
     };
@@ -115,7 +116,7 @@ const Language = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="language-form" 
                     btnQnr 
-                    disabled={watch('speak_other_languages') ? (watch('languages') == null || watch('languages').length <= 0) : watch('languages') == null}/>
+                    disabled={watch('speak_other_languages') && watch('languages') ? watch('languages').filter(l=>l).length == 0 : watch('speak_other_languages') == null}/>
             </div>
         </>
     )

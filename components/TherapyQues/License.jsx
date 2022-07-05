@@ -20,7 +20,6 @@ const Experience = ({ step, setStep, profile }) => {
     const [message, setMessage] = useState();
     const { register, handleSubmit, control, watch } = useForm({defaultValues: {
         license_type: profile?.license_type,
-
     }});
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
     const [uploadLicense, { data:licenseData, isLoading:licenseLoading, isSuccess:licenseSuccess }] = useUploadLicenseMutation();
@@ -105,12 +104,13 @@ const Experience = ({ step, setStep, profile }) => {
                     onClick={handleBack}
                     btnQnr
                     btnSecondary
+                    disabled={licenseLoading}
                     className="btn-outline border-neutral px-8 text-2xl" />
                 <Button 
                     title={'Next'} 
                     form="license-form" 
                     btnQnr
-                    disabled={!watch('license_type')}
+                    disabled={!watch('license_type') || licenseLoading}
                      />
             </div>
         </>

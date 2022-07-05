@@ -51,7 +51,10 @@ const Titles = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const {titles, other} = data;
-        await updateTherapist({id: profile?.id, titles, registration_status: 'entered-titles' });
+        await updateTherapist({
+            id: profile?.id, 
+            titles: titles.filter(title => title), 
+            registration_status: 'entered-titles' });
         setStep(step + 1);
 
     };
@@ -76,7 +79,7 @@ const Titles = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="titles-form"
                     btnQnr 
-                    disabled={!watch('titles')} />
+                    disabled={watch('titles') ? watch('titles').filter(t => t).length == 0 : !watch('titles')} />
             </div>
         </>
     )

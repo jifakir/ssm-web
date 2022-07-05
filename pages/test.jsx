@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import Script from 'next/script'
 import InstagramEmbed from 'react-instagram-embed';
 import Stripe from '../components/Stripe/CheckoutForm';
+import Qualification from '../components/Therapist/Qualification';
+import Availability from '../components/TherapyQues/Availability';
+import TestAvail from '../components/TherapyQues/TestAvail';
 import InputText from '../components/UI/InputText';
 import RadioInput from '../components/UI/TestRadio';
 import TestRadio from '../components/UI/TestRadio';
@@ -26,10 +29,11 @@ const Test = () => {
   data-mc-src="88d1d45b-7899-43f1-a878-fd3c98111fc8#null"></div>
 
         <div className="min-h-screen w-[50%] mx-auto my-10">
-
-                <InstagramEmbed
+                <TestAvail />
+            {/* <Qualification /> */}
+                {/* <InstagramEmbed
                     url='http://instagram.com/gkjahid02'
-                    clientAccessToken='594382165399714|42b7c9778ebe5e3e0183b97f2249ec0d'
+                    clientAccessToken='610311713855658|TtqhADvzBmWWT43hhr8W4vvxVXs'
                     maxWidth={700}
                     hideCaption={false}
                     containerTagName='div'
@@ -39,9 +43,11 @@ const Test = () => {
                     onSuccess={() => {}}
                     onAfterRender={() => {}}
                     onFailure={() => {}}
-                    />
-{/* 
-          <InputText
+                     /> */}
+
+          
+
+          {/* <InputText
             control={control}
             name="name"
             pHolder={'Placeholder'}

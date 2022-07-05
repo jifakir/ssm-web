@@ -9,10 +9,15 @@ import {url} from '../utils/flickr';
 import Landing from '../pages/landing';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import Script from 'next/script'
+=======
+import Router, { useRouter } from 'next/router'
+>>>>>>> therapist_flow
 
 export default function Home() {
   const [filcker, setFlick] = useState(null);
+  const router = useRouter();
   console.log(filcker)
   useEffect(() => {
     axios.get(url).then((result) => result).then(data => setFlick(data)).catch(err=> console.log(err));
@@ -20,7 +25,7 @@ export default function Home() {
 
   const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
   if(showHomePage==='true'){
-    return <Landing />
+    return router.push('https://www.startsayingmore.com/');
   }
   return (
     <div className='w-full'>

@@ -13,7 +13,6 @@ import Religion from '../../components/TherapyQues/Religion';
 import RelSess from '../../components/TherapyQues/RelSess';
 import SpiritPerson from '../../components/TherapyQues/SpritPerson';
 import SpiritSess from '../../components/TherapyQues/SpiritSess';
-import OtherLang from '../../components/TherapyQues/OtherLang';
 import Orientation from '../../components/TherapyQues/Orientation';
 import Race from '../../components/TherapyQues/Race';
 import NewPatient from '../../components/TherapyQues/NewPatient';
@@ -41,7 +40,7 @@ const Questionnaire = () => {
     const [progress, setProgress] = React.useState(0);
 
     const {isLoggedIn } = useSelector(state => state.auth);
-    const {data, isSuccess, isLoading} = useFetchTherapistQuery();
+    const {data, refetch, isSuccess, isLoading} = useFetchTherapistQuery();
 
     const router = useRouter();
     const components = [
@@ -57,10 +56,10 @@ const Questionnaire = () => {
             component: <Email profile={data} step={step} setStep={setStep} />,
             status: "entered-email",
         },
-        // {
-        //     component: <Phone profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-phone",
-        // },
+        {
+            component: <Phone profile={data} step={step} setStep={setStep} />,
+            status: "entered-phone",
+        },
         {
             component: <Address profile={data} step={step} setStep={setStep} />,
             status: "entered-address",
@@ -148,6 +147,10 @@ const Questionnaire = () => {
     ];
 
 
+    useEffect(()=>{
+        refetch();
+    },[]);
+    
     useEffect(() => {
         if(!isLoggedIn){
             router.push('/');

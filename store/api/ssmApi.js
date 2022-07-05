@@ -77,6 +77,14 @@ export const ssmApi = createApi({
             }),
             invalidatesTags: ['Therapist']
         }),
+        uploadPicture: builder.mutation({
+            query: ({id, formData}) => ({
+                url: `/therapists/${id}/upload-picture`,
+                method: 'POST',
+                body: formData
+            }),
+            invalidatesTags: ['Therapist']
+        }),
         registerPatient: builder.mutation({
             query: (body) => ({
                 url: '/patients',
@@ -124,4 +132,5 @@ export const {
     useUploadLicenseMutation,
     useFetchSubscriptionPlanQuery,
     useSubscribeMutation,
-    useFetchSubscriptionQuery } = ssmApi;
+    useFetchSubscriptionQuery,
+    useUploadPictureMutation } = ssmApi;
