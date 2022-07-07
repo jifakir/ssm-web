@@ -116,7 +116,7 @@ const Language = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="language-form" 
                     btnQnr 
-                    disabled={watch('speak_other_languages') && watch('languages') ? watch('languages').filter(l=>l).length == 0 : watch('speak_other_languages') == null}/>
+                    disabled={watch('speak_other_languages') ? (watch('languages') && watch('languages').filter(l=>l).length == 0) : watch('speak_other_languages') == null}/>
             </div>
         </>
     )

@@ -65,6 +65,10 @@ const JoinAsTherapist = () => {
         return <Loader />
     }
 
+    if(isError){
+        return <div className="">Something went wrong!</div>
+    }
+
     const [plan1, plan2] = data;
 
     console.log("Subs: ", subscriptionData);

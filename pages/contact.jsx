@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../components/UI/Button';
 import TextInput from '../components/UI/TextInput';
+import PhoneNumber from '../components/UI/Number';
 
 
 const Contact = () => {
@@ -16,9 +17,22 @@ const Contact = () => {
 
     const onSubmitHandler = (data) => {
         setSubmit(true);
-        reset();
     };
-    
+
+    useEffect(()=>{
+        if(submit){
+            reset({
+                firstname: '',
+                lastname: '',
+                email: '',
+                phone: '',
+                message: ''
+            });
+            const timeout = setTimeout(() => setSubmit(false),5000);
+            return () => clearTimeout(timeout);
+        }
+    },[submit]);
+
     return (
         <main className="">
             <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[50px]">
@@ -67,21 +81,23 @@ const Contact = () => {
                                     titleStyle="px-0 py-0 pb-2"
                                     className={'min-w-full'}
                                     />
-                                <TextInput
-                                    name='phone'
-                                    title='Phone Number'
-                                    pHolder='000-000-0000'
-                                    control={control}
-                                    rules={{
-                                        required: 'Phone Number is required!',
-                                        pattern: {
-                                            value: /^\d{3}(-|\s)\d{3}(-|\s)\d{4}$|^\d{10}$|^1\s\d{3}(-|\s)\d{3}(-|\s)\d{4}$|^(1\s?)?\(\d{3}\)(\s|\-)?\d{3}\-\d{4}$/,
-                                            message: 'Enter a valid Phone Number'
-                                        }
-                                    }}
-                                    titleStyle="px-0 py-0 pb-2"
-                                    className={'min-w-full'}
-                                    />
+                                <div className="">
+                                    <h1 className="text my-2 text-left">Phone Number</h1>
+                                    <PhoneNumber
+                                        name='phone'
+                                        title='Phone Number'
+                                        pHolder='000-000-0000'
+                                        control={control}
+                                        rules={{
+                                            pattern: {
+                                                value: /^\d{3}(-|\s)\d{3}(-|\s)\d{4}$|^\d{10}$|^1\s\d{3}(-|\s)\d{3}(-|\s)\d{4}$|^(1\s?)?\(\d{3}\)(\s|\-)?\d{3}\-\d{4}$/,
+                                                message: 'Enter a valid Phone Number'
+                                            }
+                                        }}
+                                        titleStyle="px-0 py-0 pb-2"
+                                        className={'h-10 mt-5'}
+                                        />
+                                </div>
                                 <div className="col-span-2">
                                     <TextInput
                                     type={'textarea'}

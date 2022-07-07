@@ -75,7 +75,7 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
     
     return (
         <>
-            <form id="spirit-session-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="counselling-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="">
                         <h1 className="text-lg my-2 text-left">Have you ever tried counseling in the past?</h1>
@@ -95,7 +95,7 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
                     </div>
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
                     title={'Back'} 
                     onClick={handleBack}
@@ -104,9 +104,9 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
 
                 <Button 
                     title={'Next'} 
-                    form="spirit-session-form" 
+                    form="counselling-form"
                     btnQnr
-                    disabled={watch('has_tried_counseling') == null} />
+                    disabled={watch('has_tried_counseling') ? watch('counseling_experience') == null : watch('has_tried_counseling') == null} />
             </div>
         </>
     )

@@ -24,7 +24,6 @@ const Orientation = ({ step, setStep, profile}) => {
 
 
     const data = {
-        title: 'Which do you identify as?',
         name: 'sexual_orientation',
         required: true,
         options: [
@@ -64,6 +63,7 @@ const Orientation = ({ step, setStep, profile}) => {
     return (
         <>
             <form id='orientationform' onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+                <h1 className="text-lg my-2 text-left">Which do you identify as?</h1>
                 <RadioInput control={control} rules={{required: 'This field is required.'}} data={data} />
                 <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
             </form>

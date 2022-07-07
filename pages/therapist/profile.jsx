@@ -45,7 +45,7 @@ const TherapistProfile = () => {
     };
 
     // Side Effects
-    
+
     useEffect(() => {
         refetch();
         if(isSuccess && !profile?.is_subscribed){
@@ -66,6 +66,16 @@ const TherapistProfile = () => {
             </div>
         )
     }
+
+    if(isError){
+        return (
+            <div className="text-center h-72 min-h-72">
+                <h1>Something went wrong reload please.</h1>
+            </div>
+        )
+    }
+
+    const { personality_type: { mind, energy, nature, tactics, identity } } = profile;
     
     return (
         <div className="w-[90%] mx-auto my-10">
@@ -104,8 +114,18 @@ const TherapistProfile = () => {
                                     name={'factor'}
                                     pHolder={'Factors'}
                                     className="mb-2" /> : (
-                                <h1 className="tracking-[10px] md:tracking-[60px] pt-5">
-                                    EFRJ
+                                <h1 className="tracking-[10px] md:tracking-[20px] pt-5 uppercase">
+                                    {
+                                        profile?.personality_type ?
+                                        (
+                                            mind.split('')[0] +
+                                            energy.split('')[0] +
+                                            tactics.split('')[0] +
+                                            nature.split('')[0] + "-"+
+                                            identity.split('')[0]
+                                        ):
+                                        ''
+                                    }
                                 </h1>
                                 )
                             }
