@@ -4,9 +4,24 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const data = {
     name: 'accept_new_patients',
+    options: [
+        {
+            label: 'Yes',
+            value: true
+        },
+        {
+            label: 'No',
+            value: false
+        },
+    ]
+};
+
+const futureData = {
+    name: 'accept_in_future',
     options: [
         {
             label: 'Yes',
@@ -27,7 +42,8 @@ const NewPatient = ({ step, setStep, profile }) => {
         handleSubmit, watch, 
         formState: { errors} } = useForm({
             defaultValues: { 
-                accept_new_patients: profile?.accept_new_patients 
+                accept_new_patients: profile?.accept_new_patients,
+                accept_in_future: profile?.accept_in_future
             }});
 
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
@@ -61,7 +77,18 @@ const NewPatient = ({ step, setStep, profile }) => {
                 <div className="w-full">
                     <h1 className="text-lg my-2 text-left">Are you currently accepting new patients?</h1>
                     <div className="form-control w-full max-w-xs">
-                        <Radio control={control} rules={{required: 'New patient is required.'}} data={data} />
+                        <Radio 
+                            control={control} 
+                            rules={{required: 'New patient is required.'}} 
+                            data={data} />
+                    </div>
+                </div>
+                <div className={`w-full mt-5 ${!watch('accept_new_patients') ? 'block' : 'hidden'}`}>
+                    <h1 className="text-lg my-2 text-left">Will you accpet new patients in future?</h1>
+                    <div className="form-control w-full max-w-xs">
+                        <Radio 
+                            control={control}  
+                            data={futureData} />
                     </div>
                 </div>
             </form>
@@ -76,7 +103,11 @@ const NewPatient = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="new-patient-form"
                     btnQnr
-                    disabled={watch('accept_new_patients')==null} />
+                    disabled={watch('accept_new_patients')==null} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

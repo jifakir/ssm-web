@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+import { BiLoaderAlt } from 'react-icons/bi';
+import { useEffect } from 'react';
 
 
 const relData = {
@@ -64,25 +66,24 @@ const Religion = ({ step, setStep, profile }) => {
         defaultValues: { 
             religion: profile?.religion,
             is_religion_biased: profile?.is_religion_biased }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
-
-        const { religion, is_religion_biased } = data;
-
-        if(!religion) return;
         await updateTherapist({
             id: profile?.id, 
-            religion, 
-            is_religion_biased, 
+            ...data, 
             registration_status: 'entered-religion' });
-        setStep(step + 1);
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
 
     return (
         <>
@@ -113,7 +114,11 @@ const Religion = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="religion-form"
                     btnQnr
-                    disabled={watch('religion') !== 'none' ? watch('is_religion_biased') == null : !watch('religion')} />
+                    disabled={watch('religion') !== 'none' ? watch('is_religion_biased') == null : !watch('religion')} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

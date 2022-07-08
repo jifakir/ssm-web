@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import { MdAdd } from 'react-icons/md';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 
 
@@ -56,7 +57,6 @@ const Experience = ({ step, setStep, profile }) => {
         }
     },[isSuccess,licenseSuccess]);
 
-    console.log("Message: ", message);
 
     return (
         <>
@@ -111,7 +111,11 @@ const Experience = ({ step, setStep, profile }) => {
                     form="license-form" 
                     btnQnr
                     disabled={!watch('license_type') || licenseLoading}
-                     />
+                     >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

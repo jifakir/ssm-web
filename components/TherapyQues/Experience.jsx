@@ -4,6 +4,8 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import Select from '../UI/Select';
+import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const data = {
     name: 'years_of_experience',
@@ -40,18 +42,15 @@ const Experience = ({ step, setStep, profile }) => {
             years_of_experience:  profile ? `${profile?.years_of_experience?.head}-${profile?.years_of_experience?.tail}` : ''
         }
     });
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { years_of_experience } = data;
-        setStep(step + 1);
         if(years_of_experience==null) return;
-        console.log("Expereience: ", years_of_experience);
         const splitted_year = years_of_experience?.split('-');
         await updateTherapist({id: profile?.id, years_of_experience: {head:splitted_year[0], tail:splitted_year[1]}, registration_status: 'entered-years_of_experience' });
-        setStep(step + 1);
-
+        
     };
 
     const handleBack = () => {
@@ -60,12 +59,17 @@ const Experience = ({ step, setStep, profile }) => {
 
     };
 
-    
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
+
     return (
         <>
             <form id="experience-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <h1 className="my-2 text-left">How many years of experience do you have?</h1>
+                    <h1 className="text-lg my-2 text-left">How many years of experience do you have?</h1>
                     <div className="form-control w-full max-w-xs text-left">
                         <Select control={control} data={data} />
                     </div>
@@ -82,8 +86,12 @@ const Experience = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="experience-form" 
                     btnQnr
-                    // disabled={!watch('years_of_experience')}
-                     />
+                    disabled={!watch('years_of_experience')}
+                     >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

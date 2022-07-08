@@ -5,8 +5,9 @@ import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import Select from '../UI/MultiSelect';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
+
 const data = {
-    title: 'Do you accept insurance?',
     name: 'accept_insurance',
     options: [
         {
@@ -60,14 +61,15 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="accept_insurance-form" onSubmit={handleSubmit(handleNext)} className="">
-                <div className="md:flex gap-28 justify-start">
+                <div className="">
                     <div className="form-control">
+                        <h1 className="text-lg my-2 text-left">Do you accept insurance?</h1>
                         <Radio control={control} rules={{required: 'This field is requuired.'}} data={data} />
                     </div>
                     {
                         watch('accept_insurance') && (
-                            <div className="text-left mt-5 md:mt-0 md:w-1/2">
-                                <h1 className=" text-lg my-2">Which insurance plans do you accept?</h1>
+                            <div className="text-left mt-5 md:w-1/2">
+                                <h1 className=" text-lg">Which insurance plans do you accept?</h1>
                                 <div className="space-y-5">
                                     {
                                         <div className="w-full">
@@ -100,7 +102,11 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="accept_insurance-form"
                     btnQnr
-                    disabled={watch('accept_insurance') ? !watch('acceptable_insurances') || watch('acceptable_insurances').length <= 0 : watch('accept_insurance')==null} />
+                    disabled={watch('accept_insurance') ? !watch('acceptable_insurances') || watch('acceptable_insurances').length <= 0 : watch('accept_insurance')==null} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

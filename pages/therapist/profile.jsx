@@ -15,6 +15,7 @@ import Qualification from '../../components/Therapist/Qualification';
 import Details from '../../components/Therapist/Details';
 import Loader from '../../components/UI/Loader';
 import Availability from '../../components/Therapist/Availibilties';
+import MyersBriggs from '../../components/Therapist/Personality';
 
 
 
@@ -45,7 +46,7 @@ const TherapistProfile = () => {
     };
 
     // Side Effects
-    
+
     useEffect(() => {
         refetch();
         if(isSuccess && !profile?.is_subscribed){
@@ -66,6 +67,16 @@ const TherapistProfile = () => {
             </div>
         )
     }
+
+    if(isError){
+        return (
+            <div className="text-center h-72 min-h-72">
+                <h1>Something went wrong reload please.</h1>
+            </div>
+        )
+    }
+
+    const { personality_type: { mind, energy, nature, tactics, identity } } = profile;
     
     return (
         <div className="w-[90%] mx-auto my-10">
@@ -90,33 +101,8 @@ const TherapistProfile = () => {
                     </div>
                 </div>
                 <div className="pt-10 flex-1">
-                    <div className="flex justify-between items-center border-b-2 border-black">
-                        <div className="flex items-center text-primary">
-                            <FaHeadSideVirus className='2xl' />
-                            <h2 className="pl-2 font-semibold">Myers-Briggs Factors</h2>
-                        </div>
-                        <div className="text-2xl sm:text-4xl font-bold">
-                            {
-                                factor ? 
-                                <Input 
-                                    value={briggs}
-                                    control={control}
-                                    name={'factor'}
-                                    pHolder={'Factors'}
-                                    className="mb-2" /> : (
-                                <h1 className="tracking-[10px] md:tracking-[60px] pt-5">
-                                    EFRJ
-                                </h1>
-                                )
-                            }
-                        </div>
-                        <div className="text-secondary text-2xl cursor-pointer">
-                            {
-                                factor ? 
-                                <MdOutlineUpdate onClick={() => setFactor(false)} /> : 
-                                <MdEdit onClick={() => setFactor(true)} />
-                            }
-                        </div>
+                    <div className="">
+                        <MyersBriggs profile={profile} />
                     </div>
                     {/* Date of Birth */}
                    

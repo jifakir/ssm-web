@@ -47,6 +47,7 @@ const Email = ({ step, setStep, profile }) => {
                                 }
                             }}
                              />
+                        <p className="text-error text-xs text-left mt-2">{error?.data.message}</p>
                     </div>
                 </div>
             </form>
@@ -61,7 +62,7 @@ const Email = ({ step, setStep, profile }) => {
                     btnQnr
                     form="email-form"
                     disabled={!watch('email_address')} >
-                    {
+                        {
                             isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
                         }
                 </Button>

@@ -4,6 +4,8 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
 import { BiLoaderAlt } from 'react-icons/bi';
+import PhonNumber from '../UI/Number';
+import { useEffect } from 'react';
 
 const Phone = ({ step, setStep, profile }) => {
 
@@ -12,37 +14,41 @@ const Phone = ({ step, setStep, profile }) => {
             phone: profile?.phone
         }
     });
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { phone } = data;
-
         await updateTherapist({id: profile?.id, phone, registration_status: 'entered-phone' });
-        setStep(step + 1);
-
+    
     };
 
     const handleBack = () => {
-
         setStep(step - 1);
-
     };
+
+
+    useEffect(()=>{
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
 
     return (
         <>
             <form id='phone-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full max-w-xs">
-                        <TextInput 
-                            control={control} 
-                            errors={errors}
+                    <h1 className="my-2 text-left">Phone Number</h1>
+                        <PhonNumber 
+                            control={control}
                             name="phone"
-                            pHolder={'000-000-0000'}
-                            title={'Phone Number'}
                             rules={{
-                                required: true,
-                                pattern: /\d/i
+                                required: "Number is required",
+                                pattern: {
+                                    value: /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/i,
+                                    message: "Please, input a valid number."
+                                }
                             }}
                              />
                     </div>
@@ -59,7 +65,7 @@ const Phone = ({ step, setStep, profile }) => {
                     btnQnr
                     form="phone-form"
                     disabled={!watch('phone')} >
-                    {
+                        {
                             isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
                         }
                 </Button>

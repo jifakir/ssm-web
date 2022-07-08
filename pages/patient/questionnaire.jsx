@@ -96,10 +96,10 @@ const Questionnaire = () => {
             component: <Orientation profile={data} step={step} setStep={setStep} />,
             status: "entered-orientation",
         },
-        {
-            component: <PreferOrientation profile={data} step={step} setStep={setStep} />,
-            status: "entered-prefer-orientation",
-        },
+        // {
+        //     component: <PreferOrientation profile={data} step={step} setStep={setStep} />,
+        //     status: "entered-prefer-orientation",
+        // },
         
         {
             component: <Religion profile={data} step={step} setStep={setStep} />,

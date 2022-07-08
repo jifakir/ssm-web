@@ -3,7 +3,8 @@ import RadioInput from '../../components/UI/Radio';
 import Button from '../UI/Button';
 import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
-
+import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 
 const data = [
@@ -86,24 +87,27 @@ const Personality = ({ step, setStep, profile }) => {
 
 
     const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {...profile?.personality_type}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { mind, energy, nature, tactics, identity} = data;
         if(!mind || !energy || !nature || !tactics || !identity) return;
         await updateTherapist({id: profile?.id, personality_type: {...data}, registration_status: 'entered-personality' });
-
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
 
-    const {mind, energy, nature, tactics, identity} = watch();
-
+   useEffect(() => {
+    if(isSuccess){
+        setStep(step + 1);
+    }
+   },[isSuccess]);
+   
+   const {mind, energy, nature, tactics, identity} = watch();
+   
     return (
         <>
             <form id="personality-form" onSubmit={handleSubmit(handleNext)} className="">
@@ -128,7 +132,11 @@ const Personality = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="personality-form"
                     btnQnr
-                    disabled={!mind || !energy || !nature || !tactics || !identity}/>
+                    disabled={!mind || !energy || !nature || !tactics || !identity}>
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

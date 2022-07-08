@@ -1,6 +1,7 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import CardForm from "./CardElement";
 
 import CheckoutForm from "./PaymentElement";
 import Loader from "../UI/Loader";
@@ -27,18 +28,16 @@ export default function Stripe({loading, data}) {
 
     console.log(data);
     if(!data) return;
-    const { stripePublicKey, metadata: {stripe_client_secret}} = data;
+    const { stripePublicKey, metadata } = data;
     const stripePromise = loadStripe(`${stripePublicKey}`);
 
     const appearance = {
         theme: 'stripe',
     };
     const options = {
-        clientSecret: stripe_client_secret,
+        clientSecret: metadata?.stripe_client_secret,
         appearance,
     };
-
-    console.log("Secret",stripe_client_secret);
 
     if(loading){
         return (
@@ -48,9 +47,14 @@ export default function Stripe({loading, data}) {
 
   return (
     <div className="w-[80%] py-10 mx-auto">
-      {stripe_client_secret && (
+      {metadata?.stripe_client_secret ? (
         <Elements options={options} stripe={stripePromise}>
           <CheckoutForm />
+        </Elements>
+      ):
+      (
+        <Elements stripe={stripePromise}>
+          <CardForm />
         </Elements>
       )}
     </div>

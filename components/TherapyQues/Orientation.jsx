@@ -4,6 +4,7 @@ import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../
 import RadioInput from '../UI/Radio';
 import Button from '../UI/Button';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 
 const Orientation = ({ step, setStep, profile}) => {
@@ -24,7 +25,6 @@ const Orientation = ({ step, setStep, profile}) => {
 
 
     const data = {
-        title: 'Which do you identify as?',
         name: 'sexual_orientation',
         required: true,
         options: [
@@ -64,6 +64,7 @@ const Orientation = ({ step, setStep, profile}) => {
     return (
         <>
             <form id='orientationform' onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
+                <h1 className="text-lg my-2 text-left">Which do you identify as?</h1>
                 <RadioInput control={control} rules={{required: 'This field is required.'}} data={data} />
                 <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
             </form>
@@ -77,7 +78,11 @@ const Orientation = ({ step, setStep, profile}) => {
                     title={'Next'} 
                     form="orientationform"
                     btnQnr
-                    disabled={!watch('sexual_orientation')}  />
+                    disabled={!watch('sexual_orientation')} >
+                        {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
                 
             </div>
         </>

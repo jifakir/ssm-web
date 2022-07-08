@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 
 const Address = ({ step, setStep, profile }) => {
 
-    const { handleSubmit, control } = useForm({defaultValues: {user_address: profile?.user_address}});
+    const { handleSubmit, watch, control } = useForm({defaultValues: {user_address: profile?.user_address}});
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
     const [submitted, setSubmitted] = useState(false);
     const handleNext = async (data) => {
@@ -99,7 +100,12 @@ const Address = ({ step, setStep, profile }) => {
                 <Button 
                     title={'Next'} 
                     form="address-form" 
-                    btnQnr />
+                    btnQnr
+                    disabled={ !watch('user_address.line1') || !watch('user_address.state') || !watch('user_address.city') || !watch('user_address.zip_code')}>
+                        {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
             </div>
         </>
     )

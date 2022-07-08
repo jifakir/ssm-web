@@ -5,6 +5,9 @@ import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
 import { useState } from 'react';
 import { MdClose } from 'react-icons/md';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 const Thankyou = ({ step, setStep, profile }) => {
 
@@ -26,7 +29,14 @@ const Thankyou = ({ step, setStep, profile }) => {
         
     };
 
+    const router = useRouter();
 
+    useEffect(() => {
+        if(modal){
+            const timeout = setTimeout(() => router.push('/patient/match-therapist'),5000);
+            return () => clearTimeout(timeout);
+        }
+    },[modal]);
     return (
         <>
             <form id='thankyou-form' onSubmit={handleSubmit(handleNext)} className="">
@@ -34,9 +44,9 @@ const Thankyou = ({ step, setStep, profile }) => {
                     modal ?
                     <div className="fixed bg-white/70 bg-blend-saturation top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
                         <div className="relative w-[90%] sm:w-1/2 h-60 sm:h-52 bg-primary text-whtie text-center flex justify-center items-center">
-                            <span onClick={() => setModal(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
+                            {/* <span onClick={() => setModal(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
                                 <MdClose />
-                            </span>
+                            </span> */}
                             <h1 className="text-2xl font-semibold text-white px-20">
                             Congratulations on starting your mental wellness journey!
                             </h1>

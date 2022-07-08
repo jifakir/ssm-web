@@ -7,6 +7,7 @@ import Select from '../UI/Select';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const otherdata = {
     name: 'speak_other_languages',
@@ -116,7 +117,11 @@ const Language = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="language-form" 
                     btnQnr 
-                    disabled={watch('speak_other_languages') && watch('languages') ? watch('languages').filter(l=>l).length == 0 : watch('speak_other_languages') == null}/>
+                    disabled={watch('speak_other_languages') ? (watch('languages') && watch('languages').filter(l=>l).length == 0) : watch('speak_other_languages') == null}>
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )
