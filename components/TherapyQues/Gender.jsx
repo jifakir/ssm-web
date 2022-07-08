@@ -4,6 +4,8 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
+
 
 const data = {
     name: 'gender',
@@ -42,8 +44,6 @@ const Gender = ({ step, setStep, profile }) => {
         console.log("Gender: ",gender);
         if(!gender) return;
         await updateTherapist({ gender, id: profile?.id, registration_status: 'entered-gender' });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -78,7 +78,11 @@ const Gender = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="gender-form"
                     btnQnr
-                    disabled={!watch('gender')} />
+                    disabled={!watch('gender')}>
+                        {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
             </div>
         </>
     )

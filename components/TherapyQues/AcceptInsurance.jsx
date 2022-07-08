@@ -5,6 +5,8 @@ import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import Select from '../UI/MultiSelect';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
+
 const data = {
     name: 'accept_insurance',
     options: [
@@ -100,7 +102,11 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="accept_insurance-form"
                     btnQnr
-                    disabled={watch('accept_insurance') ? !watch('acceptable_insurances') || watch('acceptable_insurances').length <= 0 : watch('accept_insurance')==null} />
+                    disabled={watch('accept_insurance') ? !watch('acceptable_insurances') || watch('acceptable_insurances').length <= 0 : watch('accept_insurance')==null} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

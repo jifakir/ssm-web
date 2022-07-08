@@ -10,9 +10,7 @@ import Education from '../../components/TherapyQues/Education';
 import Language from '../../components/TherapyQues/Language';
 import BirthDate from '../../components/TherapyQues/BirthDate';
 import Religion from '../../components/TherapyQues/Religion';
-import RelSess from '../../components/TherapyQues/RelSess';
 import SpiritPerson from '../../components/TherapyQues/SpritPerson';
-import SpiritSess from '../../components/TherapyQues/SpiritSess';
 import Orientation from '../../components/TherapyQues/Orientation';
 import Race from '../../components/TherapyQues/Race';
 import NewPatient from '../../components/TherapyQues/NewPatient';
@@ -21,8 +19,6 @@ import Experience from '../../components/TherapyQues/Experience';
 import Availability from '../../components/TherapyQues/Availability';
 import Titles from '../../components/TherapyQues/Titles';
 import AcceptInsurance from '../../components/TherapyQues/AcceptInsurance';
-import Insurance from '../../components/TherapyQues/Insurance';
-import SessionFee from '../../components/TherapyQues/SessionFee';
 import License from '../../components/TherapyQues/License';
 import VirtualInperson from '../../components/TherapyQues/VirtualInperson';
 import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
@@ -39,8 +35,8 @@ const Questionnaire = () => {
     const [ step, setStep ] = React.useState(0);
     const [progress, setProgress] = React.useState(0);
 
-    const {isLoggedIn } = useSelector(state => state.auth);
-    const {data, refetch, isSuccess, isLoading} = useFetchTherapistQuery();
+    const { auth:{ isLoggedIn }, subscription } = useSelector(state => state);
+    const {data, refetch, isSuccess, isError} = useFetchTherapistQuery();
 
     const router = useRouter();
     const components = [
@@ -168,7 +164,11 @@ const Questionnaire = () => {
     },[isSuccess, isLoggedIn, router]);
 
     const percent = Math.round((step/(components.length - 1))*100);
-
+    
+    if(!subscription){
+        return router.push('/therapist');
+    }
+    
     return (
     <div className={`px-[5%] pt-[100px] min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
@@ -194,7 +194,7 @@ const Questionnaire = () => {
             {/* Form Inner */}
             <div className="text-center mt-10">
                 {
-                    isLoading ? <div className="flex justify-center items-center h-28"><ImSpinner9 className='text-2xl text-secondary animate-spin' /> </div> : components.map((comp, idx) => {
+                    components.map((comp, idx) => {
 
                         return (
                             <div className={step === idx ? 'block' : 'hidden'} key={idx}>

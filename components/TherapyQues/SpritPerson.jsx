@@ -4,6 +4,8 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
+
 
 const offerData = {
     name: 'offer_spirituality',
@@ -46,10 +48,7 @@ const SpiritPerson = ({ step, setStep, profile }) => {
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
-
-        const { is_spiritual, offer_spirituality } = data;
-        if(is_spiritual == null) return;
-        await updateTherapist({id: profile?.id, is_spiritual, offer_spirituality, registration_status: 'entered-spirit-persion' });
+        await updateTherapist({id: profile?.id, ...data, registration_status: 'entered-spirit-persion' });
     };
 
     const handleBack = () => {
@@ -98,7 +97,11 @@ const SpiritPerson = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="spirit-person-form" 
                     btnQnr 
-                    disabled={watch('is_spiritual') ? watch('offer_spirituality') == null : watch('is_spiritual') == null} />
+                    disabled={watch('is_spiritual') ? watch('offer_spirituality') == null : watch('is_spiritual') == null} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

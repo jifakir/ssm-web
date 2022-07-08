@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const data = {
     title: 'Do you currently provide virtual or in-person sessions?',
@@ -62,7 +63,7 @@ const VirtualInperson = ({ step, setStep, profile }) => {
         will_provide_in_person: profile?.will_provide_in_person,
         will_provide_virtual: profile?.will_provide_virtual
      }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
@@ -71,8 +72,6 @@ const VirtualInperson = ({ step, setStep, profile }) => {
         if(session_type==='virtual') query = {...query,will_provide_in_person}
         if(session_type==='in_person') query = {...query,will_provide_virtual}
         await updateTherapist({ id: profile?.id, ...query, registration_status: 'entered-will_provide_in_person' });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -81,7 +80,12 @@ const VirtualInperson = ({ step, setStep, profile }) => {
 
     };
 
-    
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step+1);
+        }
+    },[isSuccess]);
+
     return (
         <>
             <form id="virtual-form" onSubmit={handleSubmit(handleNext)} className="">
@@ -116,7 +120,11 @@ const VirtualInperson = ({ step, setStep, profile }) => {
                         watch('will_provide_in_person') == null :
                         watch('session_type') === 'in_person'? 
                         watch('will_provide_virtual') == null:
-                        watch('session_type') == null} />
+                        watch('session_type') == null} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

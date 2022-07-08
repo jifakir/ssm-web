@@ -4,7 +4,8 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import InputText from '../UI/InputText';
 import Radio from '../UI/Radio';
-import Select from '../UI/Select';
+import { BiLoaderAlt } from 'react-icons/bi';
+
 
 const data = {
     name: 'accept_session_fee',
@@ -51,9 +52,9 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
     const { control, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
             accept_session_fee: profile?.accept_session_fee,
-            session_fee: `${profile?.session_fee}` || ''
+            session_fee: profile?.session_fee
         }});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
@@ -65,8 +66,6 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
             session_fee, 
             registration_status: 'entered-accept_session_fee' 
         });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -75,8 +74,12 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
 
     };
 
-    console.log("Session Fee: ", profile?.session_fee);
-    
+    React.useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
+
     return (
         <>
             <form id="accept-session-fee" onSubmit={handleSubmit(handleNext)} className="">
@@ -107,7 +110,11 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="accept-session-fee" 
                     btnQnr
-                    disabled={watch('accept_session_fee') == null} />
+                    disabled={watch('accept_session_fee') == null} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

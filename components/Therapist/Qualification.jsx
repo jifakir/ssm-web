@@ -127,7 +127,6 @@ const Qualification = ({profile}) => {
                 }
 
             </div>
-            <div className="flex justify-between">
             <div className="w-full mt-5">
                     <h1 className="my-5 text-left">Professional Licensure/Insurance</h1>
                     <div className="form-control w-full max-w-xs text-left">
@@ -170,7 +169,6 @@ const Qualification = ({profile}) => {
                         control={control}
                         errors={errors}
                          />
-                </div>
                 </div>
                 <div className="mt-5">
                     <Button title={'Submit'} btnQnr />

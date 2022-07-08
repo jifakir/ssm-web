@@ -4,6 +4,7 @@ import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../
 import RadioInput from '../UI/Radio';
 import Button from '../UI/Button';
 import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 
 const Orientation = ({ step, setStep, profile}) => {
@@ -77,7 +78,11 @@ const Orientation = ({ step, setStep, profile}) => {
                     title={'Next'} 
                     form="orientationform"
                     btnQnr
-                    disabled={!watch('sexual_orientation')}  />
+                    disabled={!watch('sexual_orientation')} >
+                        {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
                 
             </div>
         </>

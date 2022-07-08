@@ -32,13 +32,14 @@ const Phone = ({ step, setStep, profile }) => {
         if(isSuccess){
             setStep(step + 1);
         }
-    },[isSuccess])
+    },[isSuccess]);
 
     return (
         <>
             <form id='phone-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full max-w-xs">
+                    <h1 className="my-2 text-left">Phone Number</h1>
                         <PhonNumber 
                             control={control}
                             name="phone"
@@ -64,7 +65,7 @@ const Phone = ({ step, setStep, profile }) => {
                     btnQnr
                     form="phone-form"
                     disabled={!watch('phone')} >
-                    {
+                        {
                             isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
                         }
                 </Button>

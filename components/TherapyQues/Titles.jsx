@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Select from '../UI/Select';
 import Button from '../UI/Button';
+import { BiLoaderAlt } from 'react-icons/bi';
+import { useEffect } from 'react';
 
 
 const data = {
@@ -46,7 +48,7 @@ const data = {
 const Titles = ({ step, setStep, profile }) => {
     
     const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: {titles: profile?.titles}});
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
@@ -55,14 +57,18 @@ const Titles = ({ step, setStep, profile }) => {
             id: profile?.id, 
             titles: titles.filter(title => title), 
             registration_status: 'entered-titles' });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
-    console.log(watch());
+   
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1)
+        }
+    },[isSuccess]);
+
     return (
         <>
             <form id="titles-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
@@ -79,7 +85,11 @@ const Titles = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="titles-form"
                     btnQnr 
-                    disabled={watch('titles') ? watch('titles').filter(t => t).length == 0 : !watch('titles')} />
+                    disabled={watch('titles') ? watch('titles').filter(t => t).length == 0 : !watch('titles')}>
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

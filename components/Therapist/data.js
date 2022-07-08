@@ -59,3 +59,76 @@ export const gender = {
         },
     ]
 };
+
+export const personality = [
+    {
+        title: 'Mind (select one)',
+        name: 'mind',
+        options: [
+            {
+                label: 'Introvert',
+                value: 'introvert'
+            },
+            {
+                label: 'Extrovert',
+                value: 'extrovert'
+            },
+        ]
+    },
+    {
+        title: 'Energy (select one)',
+        name: 'energy',
+        options: [
+            {
+                label: 'Observant',
+                value: 'observant'
+            },
+            {
+                label: 'Intuitive',
+                value: 'intuitive'
+            },
+        ]
+    },
+    {
+        title: 'Nature (select one)',
+        name: 'nature',
+        options: [
+            {
+                label: 'Feeling',
+                value: 'feeling'
+            },
+            {
+                label: 'Thinking',
+                value: 'thinking'
+            },
+        ]
+    },
+    {
+        title: 'Tactics (select one)',
+        name: 'tactics',
+        options: [
+            {
+                label: 'Judging',
+                value: 'judgin'
+            },
+            {
+                label: 'Prospecting',
+                value: 'prospecting'
+            },
+        ]
+    },
+    {
+        title: 'Identity (select one)',
+        name: 'identity',
+        options: [
+            {
+                label: 'Assertive',
+                value: 'assertive'
+            },
+            {
+                label: 'Turbulent',
+                value: 'turbulent'
+            },
+        ]
+    },
+];

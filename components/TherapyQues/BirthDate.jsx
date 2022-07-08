@@ -4,11 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Input from '../UI/TextInput';
+import { BiLoaderAlt } from 'react-icons/bi';
 
-const data = {
-    title: 'Date of birth',
-    name: 'date_of_birth',
-};
 
 
 const DateOfBirth = ({ step, setStep, profile }) => {
@@ -62,7 +59,11 @@ const DateOfBirth = ({ step, setStep, profile }) => {
                     title={'Next'}
                     form="birthdate-form"
                     btnQnr
-                    disabled={!watch('date_of_birth')} />
+                    disabled={!watch('date_of_birth')} >
+                        {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
             </div>
         </>
     )
