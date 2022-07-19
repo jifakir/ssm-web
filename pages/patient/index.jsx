@@ -34,12 +34,21 @@ const Therapist = () => {
     return (
         <div className="">
             <Login open={open} setOpen={setOpen} redirectTo={'/patient/questionnaire'}/>
-            <div className="w-[90%] xs:w-[80%] lg:w-[65%] mx-auto">
+            <div className={`w-[90%] xs:w-[80%] lg:w-[65%] mx-auto ${open ? 'hidden sm:block' : 'block sm:block'}`}>
                 <div className="my-5 md:my-16">
                     <h1 className="font-sterio text-4xl md:text-5xl text-center mt-10">Find a Therapist</h1>
+                    <div className="text-center my-5 lg:hidden">
+                        <h2 className="text-sm sm:text-xl font-medium md:text-2xl mb-3">Step 1</h2>
+                        <Link href={'http://16personalities.com'}>
+                            <a target={'_blank'}>
+                                <Button 
+                                title={'Myers Briggs Test'} />
+                            </a>
+                        </Link>
+                    </div>
                     <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
                         <div className="text-center">
-                            <div className="">
+                            <div className="hidden lg:block">
                                 <h2 className="text-sm sm:text-xl font-medium md:text-2xl mb-3">Step 1</h2>
                                 <Link href={'http://16personalities.com'}>
                                     <a target={'_blank'}>

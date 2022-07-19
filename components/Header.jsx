@@ -51,8 +51,9 @@ const Header = () => {
             setOpen(state => !state);
         }
     };
+    
     const toggleDrawer = () => {
-        setDrawerOpen(!isOpen);
+        setDrawerOpen(!drawerOpen);
     };
 
     return (
@@ -61,8 +62,13 @@ const Header = () => {
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <Link href={'/'} className="cursor-pointer" passHref>
-                        <div className="relative cursor-pointer w-[80px] h-[73px] md:w-[126px] md:h-[102px]">
+                        <div className="hidden lg:block relative cursor-pointer w-[80px] h-[73px] md:w-[126px] md:h-[102px]">
                             <Image src={'/img/ssmlogo.svg'} alt={'Logo'} layout={'fill'} />
+                        </div>
+                    </Link>
+                    <Link href={'/'} className="cursor-pointer" passHref>
+                        <div className="lg:hidden relative cursor-pointer w-[160px] h-[52px] py-10">
+                            <Image src={'/img/logomobile.svg'} alt={'Logo'} layout={'fill'} />
                         </div>
                     </Link>
                     <ul className="hidden lg:flex items-center gap-10 ml-14">
@@ -99,8 +105,8 @@ const Header = () => {
                             </div>
                         }
                     </div>
-                    <div className="lg:hidden">
-                        <CgMenu onClick={toggleDrawer} className="text-2xl text-primary" />
+                    <div className="lg:hidden cursor-pointer">
+                        <CgMenu onClick={toggleDrawer} className="text-4xl text-primary" />
                     </div>
                 </div>
             </div>
@@ -109,15 +115,16 @@ const Header = () => {
                     onClose={toggleDrawer}
                     direction="left"
                 >   
-                    <div className="">
-                        <div className="relative w-2/3 h-28">
-                            <Image src={'/img/logo.svg'} alt={'Logo'} layout={'fill'} />
+                    <div className=" px-5">
+                        <div className="relative w-full h-28">
+                            <Image src={'/img/logomobile.svg'} alt={'Logo'} layout={'fill'} />
                         </div>
                     </div>
                     <ul className="p-5 text-lg space-y-3">
                         {
                             menuList.map( (menu, idx) => <li 
-                                key={`menu_item_${idx}`} 
+                                key={`menu_item_${idx}`}
+                                onClick={toggleDrawer}
                                 className="cursor-pointer hover:underline hover:text-secondary transition-all duration-300 ease-out">
                                     <Link href={menu.linkUrl}>
                                         {menu.title}
