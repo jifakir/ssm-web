@@ -77,7 +77,7 @@ const Login = ({open, setOpen, redirectTo}) => {
 
     
     return (
-        <div className={`${open ? 'block' : 'hidden'} sm:fixed bottom-0 sm:min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
+        <div className={`${open ? 'block' : 'hidden'} sm:fixed bottom-0 sm:h-screen sm:min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
             <div className="overflow-y-scroll h-full w-full flex justify-center items-center">
             {
                 (isLoading && !isError) &&
@@ -114,7 +114,7 @@ const Login = ({open, setOpen, redirectTo}) => {
             {
                 (tab === 0 && !isLoading) ? 
                 (
-                    <form onSubmit={handleSubmit(onSubmitHandler)} className="sm:my-10 sm:rounded bg-white card sm:w-[415px] shadow-lg px-8 py-5">
+                    <form onSubmit={handleSubmit(onSubmitHandler)} className="sm:my-10 rounded-none sm:rounded bg-white card sm:w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
@@ -170,7 +170,7 @@ const Login = ({open, setOpen, redirectTo}) => {
                                             message: "Password must be 8 characters long"}}} />
                                 <div 
                                     onClick={() => setShowPass(!showPass)} 
-                                    className="absolute right-3 top-16 cursor-pointer">
+                                    className="absolute right-3 top-[52px] sm:top-16 cursor-pointer">
                                     {
                                         showPass ? <BsEye /> : <BsEyeSlash />
                                     }

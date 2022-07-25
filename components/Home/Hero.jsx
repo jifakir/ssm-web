@@ -64,37 +64,41 @@ const Hero = () => {
                     {
                         slideData.map((slide, idx) => (
                             <SwiperSlide key={`slide_${idx}`}>
-                                <div className="relative w-full z-10 h-[200px] xs:h-[250px] sm:h-[350px] md:h-[400px] lg:h-[550px] overflow-hidden">
+                                <div className="relative w-full z-10 h-[400px] sm:h-[350px] md:h-[400px] lg:h-[550px] overflow-hidden">
                                     <Image src={slide.imgUrl} alt={'Hero Image'} layout="fill" objectFit='cover'  />
                                 </div>
-                                <div className="absolute z-10 top-1/3 sm:top-1/2 md:top-1/3 lg:top-1/2 left-5 sm:left-14 md:left-24">
-                                    <h1 className="font-sterio text-3xl sm:text-5xl md:text-7xl text-primary">{slide.title}</h1>
-                                    <p className="my-2 md:my-5 text-xs md:text-lg">{slide.description}</p>
-                                    <Link href={'/patient'} passHref>
-                                        <button 
-                                        className={`
-                                            bg-secondary
-                                            leading-7
-                                            tracking-[0.055em]
-                                            text-primary
-                                            py-2
-                                            md:py-4
-                                            hover:bg-secondary/50 
-                                            active:bg-neutral-focus
-                                            rounded
-                                            gap-2
-                                            px-5
-                                            md:px-8
-                                            font-semibold
-                                            disabled:bg-[#C0C0C0]
-                                            disabled:text-[#3E3643]
-                                            disabled:cursor-not-allowed
-                                            uppercase border-[3px]'
-                                            sm:text-2xl
-                                            `}>
-                                                START SAYING MORE
-                                        </button>
-                                    </Link>
+                                <div className="absolute bg-gradient-to-b from-transparent to-secondary/60 md:to-transparent top-0 left-0 w-full h-full z-10 flex justify-center md:justify-start items-center md:items-end">
+                                    <div className='text-center md:text-left px-5 md:px-32 md:pb-16'>
+                                        <h1 className="font-sterio text-[42px] xs:text-5xl md:text-7xl text-primary">{slide.title}</h1>
+                                        <p className="my-2 mx-10 md:mx-0 md:my-5 text-base md:text-lg">{slide.description}</p>
+                                        <Link href={'/patient'} passHref>
+                                            <button 
+                                            className={`
+                                                w-full
+                                                md:w-auto
+                                                bg-secondary
+                                                leading-7
+                                                tracking-[0.055em]
+                                                text-primary
+                                                py-2
+                                                md:py-4
+                                                hover:bg-secondary/50 
+                                                active:bg-neutral-focus
+                                                rounded
+                                                gap-2
+                                                px-5
+                                                md:px-8
+                                                font-semibold
+                                                disabled:bg-[#C0C0C0]
+                                                disabled:text-[#3E3643]
+                                                disabled:cursor-not-allowed
+                                                uppercase border-[3px]'
+                                                text-2xl
+                                                `}>
+                                                    START SAYING MORE
+                                            </button>
+                                        </Link>
+                                    </div>
                                 </div>
                             </SwiperSlide>
                         ))

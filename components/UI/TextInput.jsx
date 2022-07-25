@@ -19,7 +19,7 @@ const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, na
             {
                 title && (
                     <label className={`label`}>
-                        <span className={`label-text text-base mb-3 text-black ${titleStyle}`}>{title}</span>
+                        <span className={`label-text text-base md:mb-3 text-black ${titleStyle}`}>{title}</span>
                     </label>
                 )
             }

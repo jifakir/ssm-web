@@ -37,12 +37,12 @@ const Contact = () => {
         <main className="">
             <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[50px]">
                 <div className="lg:w-1/2 order-2 lg:order-none">
-                    <div className="">
-                        <h1 className="text-5xl mt-5 lg:mt-0 font-sterio">Connect with us!</h1>
-                        <p className="mt-5">
+                    <div className="text-center md:text-left">
+                        <h1 className="text-[32px] md:text-5xl mt-5 lg:mt-0 font-sterio">Connect with us!</h1>
+                        <p className="text-sm md:text-base mt-5">
                             If you would like to connect with us, please feel free to fill out the form below and we will get back to you as soon as possible.
                         </p>
-                        <form id='contact-form' onSubmit={handleSubmit(onSubmitHandler)} className="mt-10 md:pr-16">
+                        <form id='contact-form' onSubmit={handleSubmit(onSubmitHandler)} className="mt-5 md:mt-10 md:pr-16">
                             <div className="w-full sm:grid  gap-5 space-y-3 sm:space-y-0">
                                 <TextInput 
                                     name='firstname'
@@ -52,7 +52,7 @@ const Contact = () => {
                                     rules={{
                                         required: 'First name is required!'
                                     }}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 md:pb-2"
                                     className={'min-w-full'}
                                     />
                                 <TextInput 
@@ -63,7 +63,7 @@ const Contact = () => {
                                     rules={{
                                         required: 'Last name is required!'
                                     }}
-                                    titleStyle="px-0 py-0 pb-2 "
+                                    titleStyle="px-0 py-0 md:pb-2 "
                                     className={'min-w-full'}
                                     />
                                 <TextInput
@@ -78,7 +78,7 @@ const Contact = () => {
                                             message: 'Enter a valid email'
                                         }
                                     }}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 md:pb-2"
                                     className={'min-w-full'}
                                     />
                                 <div className="">
@@ -94,8 +94,7 @@ const Contact = () => {
                                                 message: 'Enter a valid Phone Number'
                                             }
                                         }}
-                                        titleStyle="px-0 py-0 pb-2"
-                                        className={'h-10 mt-5'}
+                                        className={'h-10 md:mt-5 w-full'}
                                         />
                                 </div>
                                 <div className="col-span-2">
@@ -109,20 +108,23 @@ const Contact = () => {
                                     rules={{
                                         required: 'Message is required!',
                                     }}
-                                    titleStyle="px-0 py-0 pb-2"
+                                    titleStyle="px-0 py-0 md:pb-2"
                                     className={'min-w-full'} />
                                 </div>
                             </div>
-                            <Button 
-                                title={'Submit'} 
-                                type="submit"
-                                form="contact-form"
-                                className={'mt-8'} />
+                            <div className="w-full flex">
+                                <Button 
+                                    btnLg
+                                    title={'Submit'} 
+                                    type="submit"
+                                    form="contact-form"
+                                    className={'mt-8'} />
+                            </div>
                             <p className={`${!submit ? 'text-error' : 'text-green-600'} font-medium text-xs sm:text-sm pt-2`}>{submit ? 'Thank you for your submission!' : error ? 'There was an error with your submission. Please fill out required fields.': ''}</p>
                         </form>
                     </div>
                 </div>
-                <div className="relative lg:w-1/2 max-h-[350px] xs:max-h-[490px] sm:max-h-[640px] md:max-h-[850px] lg:max-h-[680px] overflow-hidden">
+                <div className="hidden md:block relative lg:w-1/2 max-h-[350px] xs:max-h-[490px] sm:max-h-[640px] md:max-h-[850px] lg:max-h-[680px] overflow-hidden">
                         <Image src={'/img/contact.jpg'} alt="Contact Image" width={2832} height={4240} />
                 </div>
             </div>

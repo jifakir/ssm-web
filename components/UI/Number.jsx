@@ -18,7 +18,7 @@ const PhonNumber = ({control,name, rules, className}) => {
                       w-full border-2 hover:border-neutral 
                       shadow-sm focus:border-accent
                       focus:outline-none bg-white
-                      max-w-xs rounded ${className} ${error && 'input-error'}`}
+                      rounded ${className} ${error && 'input-error'}`}
                     />
             {
                 error && <p className="text-error text-left text-[10px] pt-1 font-medium italic">

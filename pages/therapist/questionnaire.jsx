@@ -170,29 +170,43 @@ const Questionnaire = () => {
     }
     
     return (
-    <div className={`px-[5%] pt-[100px] min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
-        <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
-            <h1 className="text-[54px] font-sterio text-[#331447]">Welcome</h1>
-            <p className="mt-8">
+    <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px]px-[5%] md:pt-[100px] md:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+        <div className={`mt-16 ${step === 0 ? 'block' : 'block'}`}>
+            <h1 className="text-center md:text-left text-[32px]  md:text-[54px] font-sterio text-[#331447]">Welcome</h1>
+            <p className="mt-8 text-sm text-center md:text-left">
                 Thank you for joining our directory! We have created a detailed questionnaire to help us match you with potential patients. You will need to provide your Myers-Briggs Personality Test factors, so please be sure you have completed that test.
-                If you have not completed the Personality Test, please do so 
+                If you have not completed the Personality Test, please do so &nbsp; 
                 <Link href={'http://16personalities.com'}>
-                    <a target={'_blank'} className="text-secondary">
-                        &nbsp; here
+                    <a target={'_blank'} className="text-secondary underline">
+                        here
                     </a>
                 </Link>.
                 It shouldn&apos;t take longer than 20 minutes!
             </p>
         </div>
         {/* Slide section */}
-        <div className="pb-14 mt-6">
-            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${percent === 0 ? 'hidden' : 'block'}`}>
+        <div className="pb-14 mt-8 md:mt-6">
+            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${percent === 0 ? 'hidden' : 'hidden md:block'}`}>
                 <div className="relative transition-all duration-500 ease-out bg-secondary h-full" style={{width: `${percent}%`}}>
                     <span className={`absolute z-10 ${percent > 95 ? 'pr-2 right-0' : 'pl-2 left-full'}`}>{`${percent}%`}</span>
                 </div>
             </div>
+            <div className="md:hidden w-full h-[11px] flex justify-between items-center">
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`w-full h-full bg-secondary`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 25 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 50 ? 'w-full' : 'w-0'} h-full  transition-all duration-300 ease-out`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 75 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>
+                </div>
+            </div>
             {/* Form Inner */}
-            <div className="text-center mt-10">
+            <div className="text-center mt-8 md:mt-10">
                 {
                     components.map((comp, idx) => {
 

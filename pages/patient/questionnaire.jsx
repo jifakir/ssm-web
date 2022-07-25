@@ -230,7 +230,7 @@ const Questionnaire = () => {
     const percent = Math.round((step/components.length)*100);
    
     return (
-    <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+    <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px]px-[5%] md:pt-[100px] md:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div >
             <h1 className="text-center sm:text-left text-5xl sm:text-[54px] font-sterio text-[#331447]">{
                 step === (components.length - 1) ?
@@ -257,10 +257,24 @@ const Questionnaire = () => {
             }
         </div>
         {/* Slide section */}
-        <div className="pb-14 mt-10">
-            <div className={`w-full rounded-full h-9 sm:h-7 border-2 border-secondary overflow-hidden ${(percent === 0) || (step === (components.length - 1)) ? 'hidden' : 'block'}`}>
-                <div className="relative transition-all duration-500 ease-out bg-secondary flex items-center h-full" style={{width: `${percent}%`}}>
+        <div className="pb-14 mt-8 md:mt-6">
+            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${percent === 0 ? 'hidden' : 'hidden md:block'}`}>
+                <div className="relative transition-all duration-500 ease-out bg-secondary h-full" style={{width: `${percent}%`}}>
                     <span className={`absolute z-10 ${percent > 95 ? 'pr-2 right-0' : 'pl-2 left-full'}`}>{`${percent}%`}</span>
+                </div>
+            </div>
+            <div className="md:hidden w-full h-[11px] flex justify-between items-center">
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`w-full h-full bg-secondary`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 25 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 50 ? 'w-full' : 'w-0'} h-full  transition-all duration-300 ease-out`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 75 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>
                 </div>
             </div>
             {/* Form Inner */}
