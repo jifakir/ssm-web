@@ -288,12 +288,15 @@ const Availability = ({profile }) => {
     },[isSuccess]);
   
     return (
-        <div className='relative'> 
+        <div className='relative border-b-2 pb-5 border-black'> 
             <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
                 {
                     form ? 
                     <MdOutlineClose onClick={() => setForm(false)} /> : 
-                    <MdEdit onClick={() => setForm(true)} />
+                    <div className="">
+                        <MdEdit onClick={() => setForm(true)} className="hidden md:block" />
+                        <div className="md:hidden text-sm font-medium underline underline-offset-4">Edit</div>
+                    </div>
                 }
             </div> 
            {form ?
@@ -344,29 +347,29 @@ const Availability = ({profile }) => {
                 </div>
             </form>:
             <div > 
-            <div className="flex justify-start">
-                <div className="flex font-semibold items-center justify-center text-primary">
-                    <MdAccessTime className='text-xl' />
-                    <h2 className="pl-2">Availability</h2>
+                <div className="flex justify-start">
+                    <div className="flex font-semibold items-center justify-center text-primary">
+                        <MdAccessTime className='text-xl' />
+                        <h2 className="pl-2">Availability</h2>
+                    </div>
                 </div>
-            </div>
-            <div className="pt-5 flex flex-wrap justify-center md:justify-start gap-5">
-                {
-                     profile?.availabilities?.map((itm, idx) => (
-                            <div key={idx} className="text-xs border-r-2 pr-5 last:border-r-0">
-                                <h1 className="text-2xl text-center leading-8 capitalize">{itm.day.split('')[0]}</h1>
-                                <p className="flex justify-between">
-                                    <span className="">Start:</span> 
-                                    <span className=""> &nbsp;{itm.start_time}</span>
-                                </p>
-                                <p className="flex justify-between">
-                                    <span className="">End:</span>
-                                    <span className="">{itm.end_time}</span>
-                                </p>
-                            </div>
-                        ))
-                }
-            </div>
+                <div className="pt-5 flex flex-wrap justify-center md:justify-start gap-5">
+                    {
+                        profile?.availabilities?.map((itm, idx) => (
+                                <div key={idx} className="text-xs border-r-2 pr-5 last:border-r-0">
+                                    <h1 className="text-2xl text-center leading-8 capitalize">{itm.day.split('')[0]}</h1>
+                                    <p className="flex justify-between">
+                                        <span className="">Start:</span> 
+                                        <span className=""> &nbsp;{itm.start_time}</span>
+                                    </p>
+                                    <p className="flex justify-between">
+                                        <span className="">End:</span>
+                                        <span className="">{itm.end_time}</span>
+                                    </p>
+                                </div>
+                            ))
+                    }
+                </div>
         </div>
                         }
         </div>

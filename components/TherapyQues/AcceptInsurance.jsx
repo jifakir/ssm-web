@@ -56,7 +56,8 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
         if(isSuccess){
             setStep(step + 1);
         }
-    }, [isSuccess])
+    }, [isSuccess]);
+
     
     return (
         <>

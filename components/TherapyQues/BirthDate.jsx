@@ -36,7 +36,7 @@ const DateOfBirth = ({ step, setStep, profile }) => {
         <>
             <form id="birthdate-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <div className="form-control w-full max-w-xs">
+                    <div className="form-control w-full md:max-w-xs">
                         <Input 
                             type={'date'} 
                             control={control}

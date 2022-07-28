@@ -191,7 +191,7 @@ const Questionnaire = () => {
                     <span className={`absolute z-10 ${percent > 95 ? 'pr-2 right-0' : 'pl-2 left-full'}`}>{`${percent}%`}</span>
                 </div>
             </div>
-            <div className="md:hidden w-full h-[11px] flex justify-between items-center">
+            <div className={`w-full h-[11px] flex justify-between items-center ${percent === 0 ? 'hidden' : 'block md:hidden'}`}>
                 <div className="w-20 h-full bg-[#E5E5E5]">
                     <div className={`w-full h-full bg-secondary`}></div>
                 </div>
@@ -199,7 +199,7 @@ const Questionnaire = () => {
                     <div className={`${percent > 25 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>
                 </div>
                 <div className="w-20 h-full bg-[#E5E5E5]">
-                    <div className={`${percent > 50 ? 'w-full' : 'w-0'} h-full  transition-all duration-300 ease-out`}></div>
+                    <div className={`${percent > 50 ? 'w-full' : 'w-0'} h-full bg-secondary  transition-all duration-300 ease-out`}></div>
                 </div>
                 <div className="w-20 h-full bg-[#E5E5E5]">
                     <div className={`${percent > 75 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>

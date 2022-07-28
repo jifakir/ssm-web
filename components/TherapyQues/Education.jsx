@@ -48,15 +48,14 @@ const Education = ({step, setStep, profile}) => {
     <>
         <form id="education-form" onSubmit={handleSubmit(handleNext)} className="">
 
-            <div className="flex items-center my-5">
-
-                <h1 className="text-lg mr-5">Please add your education</h1>
-                <div onClick={handleAppend} className="btn btn-primary btn-outline btn-sm text-sm">
+            <div className="flex flex-col md:flex-row md:items-center my-5">
+                <h1 className="text-lg mr-5 text-left">Please add your education</h1>
+                <div onClick={handleAppend} className="btn btn-primary btn-outline btn-sm text-sm mt-5 md:mt-0">
                     <HiPlus className='mr-1' />
                     Education
                 </div>
             </div>
-            <div className="flex gap-5">
+            <div className="flex flex-col md:flex-row gap-5">
 
                 {
                     fields.map((itm, idx) => {

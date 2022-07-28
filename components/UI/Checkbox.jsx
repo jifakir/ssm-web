@@ -29,7 +29,7 @@ const Checkbox = ({data, register, control, errors, ...rest}) => {
                             type="checkbox" 
                             checked={value.includes(option.value)}
                             value={option.value} 
-                            className={`checkbox checkbox-accent ${errors[name] ? 'checkbox-error' : ''}`} />
+                            className={`checkbox checkbox-secondary ${errors[name] ? 'checkbox-error' : ''}`} />
                         
                         <span className={`px-2 ${errors[name] && 'text-error'}`}>{option.label}</span>
                         <InputText

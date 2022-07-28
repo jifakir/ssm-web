@@ -26,7 +26,6 @@ const Name = ({ step, setStep, data:profile }) => {
 
     useEffect(() => {
         if(isError){
-            console.log("Error!");
             if(error.status === 409){
                 setStep(step + 1);
             }
@@ -35,22 +34,15 @@ const Name = ({ step, setStep, data:profile }) => {
 
     useEffect(() => {
         if(isSuccess){
-            console.log("Success!");
             setStep(step + 1);
         }
     },[isSuccess]);
 
-    console.log("Data: ",data);
-    console.log("Error: ",error);
-    console.log("Step: ",step);
-    console.log("isSuccess: ",isSuccess);
-    console.log("isSerror: ",isError);
-    console.log("Name: ", watch('full_name'));
 
     return (
         <>
             <form id='name-form' onSubmit={handleSubmit(handleNext)}>
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full md:max-w-xs">
                     <TextInput 
                         control={control}
                         name={'full_name'}

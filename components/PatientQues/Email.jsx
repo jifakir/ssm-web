@@ -34,7 +34,7 @@ const Email = ({ step, setStep, profile }) => {
         <>
             <form id='email-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <div className="form-control w-full max-w-xs">
+                    <div className="form-control w-full md:max-w-xs">
                         <TextInput 
                             control={control}
                             name={'email_address'}
