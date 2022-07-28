@@ -6,7 +6,6 @@ import Radio from '../UI/Radio';
 
 
 const data = {
-    title: 'What is your nationality/race?',
     name: 'race',
     options: [
         {
@@ -60,8 +59,8 @@ const Race = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="race-form" onSubmit={handleSubmit(handleNext)} className="">
-            <div className="form-control w-full max-w-xs">
                 <div className="form-control w-full max-w-xs">
+                    <h1 className="text-lg my-2 text-left">What is your nationality/race?</h1>
                     <Radio 
                     control={control} 
                     rules={{
@@ -69,7 +68,6 @@ const Race = ({ step, setStep, profile }) => {
                     }}
                     data={data} />
                 </div>
-            </div>
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 

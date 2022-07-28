@@ -10,9 +10,7 @@ import Education from '../../components/TherapyQues/Education';
 import Language from '../../components/TherapyQues/Language';
 import BirthDate from '../../components/TherapyQues/BirthDate';
 import Religion from '../../components/TherapyQues/Religion';
-import RelSess from '../../components/TherapyQues/RelSess';
 import SpiritPerson from '../../components/TherapyQues/SpritPerson';
-import SpiritSess from '../../components/TherapyQues/SpiritSess';
 import Orientation from '../../components/TherapyQues/Orientation';
 import Race from '../../components/TherapyQues/Race';
 import NewPatient from '../../components/TherapyQues/NewPatient';
@@ -21,8 +19,6 @@ import Experience from '../../components/TherapyQues/Experience';
 import Availability from '../../components/TherapyQues/Availability';
 import Titles from '../../components/TherapyQues/Titles';
 import AcceptInsurance from '../../components/TherapyQues/AcceptInsurance';
-import Insurance from '../../components/TherapyQues/Insurance';
-import SessionFee from '../../components/TherapyQues/SessionFee';
 import License from '../../components/TherapyQues/License';
 import VirtualInperson from '../../components/TherapyQues/VirtualInperson';
 import AcceptSessionFee from '../../components/TherapyQues/AcceptSessionFee';
@@ -39,8 +35,8 @@ const Questionnaire = () => {
     const [ step, setStep ] = React.useState(0);
     const [progress, setProgress] = React.useState(0);
 
-    const {isLoggedIn } = useSelector(state => state.auth);
-    const {data, refetch, isSuccess, isLoading} = useFetchTherapistQuery();
+    const { auth:{ isLoggedIn }, subscription } = useSelector(state => state);
+    const {data, refetch, isSuccess, isError} = useFetchTherapistQuery();
 
     const router = useRouter();
     const components = [
@@ -168,33 +164,51 @@ const Questionnaire = () => {
     },[isSuccess, isLoggedIn, router]);
 
     const percent = Math.round((step/(components.length - 1))*100);
-
+    
+    if(!subscription){
+        return router.push('/therapist');
+    }
+    
     return (
-    <div className={`px-[5%] pt-[100px] min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
-        <div className={`mt-10 ${step === 0 ? 'block' : 'block'}`}>
-            <h1 className="text-[54px] font-sterio text-[#331447]">Welcome</h1>
-            <p className="mt-8">
+    <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px]px-[5%] md:pt-[100px] md:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+        <div className={`mt-16 ${step === 0 ? 'block' : 'block'}`}>
+            <h1 className="text-center md:text-left text-[32px]  md:text-[54px] font-sterio text-[#331447]">Welcome</h1>
+            <p className="mt-8 text-sm text-center md:text-left">
                 Thank you for joining our directory! We have created a detailed questionnaire to help us match you with potential patients. You will need to provide your Myers-Briggs Personality Test factors, so please be sure you have completed that test.
-                If you have not completed the Personality Test, please do so 
+                If you have not completed the Personality Test, please do so &nbsp; 
                 <Link href={'http://16personalities.com'}>
-                    <a target={'_blank'} className="text-secondary">
-                        &nbsp; here
+                    <a target={'_blank'} className="text-secondary underline">
+                        here
                     </a>
                 </Link>.
                 It shouldn&apos;t take longer than 20 minutes!
             </p>
         </div>
         {/* Slide section */}
-        <div className="pb-14 mt-6">
-            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${percent === 0 ? 'hidden' : 'block'}`}>
+        <div className="pb-14 mt-8 md:mt-6">
+            <div className={`w-full rounded-full h-7 border-2 border-secondary overflow-hidden ${percent === 0 ? 'hidden' : 'hidden md:block'}`}>
                 <div className="relative transition-all duration-500 ease-out bg-secondary h-full" style={{width: `${percent}%`}}>
                     <span className={`absolute z-10 ${percent > 95 ? 'pr-2 right-0' : 'pl-2 left-full'}`}>{`${percent}%`}</span>
                 </div>
             </div>
+            <div className={`w-full h-[11px] flex justify-between items-center ${percent === 0 ? 'hidden' : 'block md:hidden'}`}>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`w-full h-full bg-secondary`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 25 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 50 ? 'w-full' : 'w-0'} h-full bg-secondary  transition-all duration-300 ease-out`}></div>
+                </div>
+                <div className="w-20 h-full bg-[#E5E5E5]">
+                    <div className={`${percent > 75 ? 'w-full' : 'w-0'} h-full bg-secondary transition-all duration-300 ease-out`}></div>
+                </div>
+            </div>
             {/* Form Inner */}
-            <div className="text-center mt-10">
+            <div className="text-center mt-8 md:mt-10">
                 {
-                    isLoading ? <div className="flex justify-center items-center h-28"><ImSpinner9 className='text-2xl text-secondary animate-spin' /> </div> : components.map((comp, idx) => {
+                    components.map((comp, idx) => {
 
                         return (
                             <div className={step === idx ? 'block' : 'hidden'} key={idx}>

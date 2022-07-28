@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { GrCertificate } from 'react-icons/gr';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
 import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose } from 'react-icons/md';
-import { BsGenderTrans, BsTelephone } from 'react-icons/bs';
+import { BsBookmarks, BsGenderTrans, BsTelephone } from 'react-icons/bs';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -18,7 +18,7 @@ import Button from '../../components/UI/Button';
 import { useEffect } from 'react';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
-const Details = ({profile}) => {
+const Subsciption = ({profile}) => {
 
     const [details, setdetails] = useState(false);
     const {control, handleSubmit} = useForm({
@@ -47,13 +47,13 @@ const Details = ({profile}) => {
     },[isSuccess]);
     
     return (
-        <div className="relative py-5 border-b-2 border-black">
+        <div className="relative py-5">
                         <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
                             {
                                 details ? 
                                 <MdClose onClick={() => setdetails(false)} className="text-red-500" /> : 
                                 <div className="">
-                                    <MdEdit onClick={() => setdetails(true)} className="hidden md:block" />
+                                    <MdEdit onClick={() => setdetails(false)} className="hidden md:block" />
                                     <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                                 </div>
                             }
@@ -144,56 +144,21 @@ const Details = ({profile}) => {
                                         <Button type={'submit'} title={'Update'} btnQnr />
                                     </div>
                                 </form>:
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                                    <div className="flex items-center">
-                                        <div className="flex font-semibold justify-center items-center text-primary">
-                                            <MdOutlineCake className='text-xl' />
-                                            <h2 className="pl-2">Date of Birth</h2>
-                                        </div>
-                                        <div className=" pl-5">
-                                            <h3 className="pl-5">{profile?.date_of_birth}</h3>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex font-semibold justify-center items-center text-primary">
-                                            <MdOutlineLocationOn className='text-xl' />
-                                            <h2 className="pl-2">Address</h2>
-                                        </div>
-                                        <div className=" pl-5">
-                                            
-                                                <h3 className="">{
-                                                    `${profile?.user_address.line1} 
-                                                    ${profile?.user_address.line2}
-                                                    ${profile?.user_address.city}
-                                                    ${profile?.user_address.state}
-                                                    ${profile?.user_address.zip_code}
-                                                    `
-                                                }</h3>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex font-semibold justify-center items-center text-primary">
-                                            <BsTelephone className='text-xl' />
-                                            <h2 className="pl-2">Phone Number</h2>
-                                        </div>
-                                        <div className="pl-5">
-                                                <h3 className="">{profile?.phone}</h3>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex font-semibold justify-center items-center text-primary">
-                                            <BsGenderTrans className='text-xl' />
-                                            <h2 className="pl-2">Gender</h2>
-                                        </div>
-                                        <div className="pl-5">
-                                            <h3 className="capitalize">{profile?.gender}</h3>
-                                        </div>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                <div className="flex justify-start">
+                                    <div className="flex font-semibold items-center justify-center text-primary">
+                                        <BsBookmarks className='text-xl' />
+                                        <h2 className="pl-2">Subscription</h2>
                                     </div>
                                 </div>
-                                }
+                                <div className="text-success">
+                                    On progress!
+                                </div>
                             </div>
+                            }
                         </div>
+                    </div>
     )
 }
 
-export default Details;
+export default Subsciption;

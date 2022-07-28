@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 
 const data = {
@@ -81,7 +82,11 @@ const Race = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="race-form"
                     btnQnr
-                    disabled={!watch('race')} />
+                    disabled={!watch('race')}>
+                        {
+                            isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                        }
+                </Button>
             </div>
         </>
     )

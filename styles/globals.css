@@ -15,3 +15,7 @@
         @apply text-black;
     }
 }
+
+.checkbox-secondary {
+    --chkbg: var(--b1);
+}

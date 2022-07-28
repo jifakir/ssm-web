@@ -25,6 +25,7 @@
     "react-icons": "^4.3.1",
     "react-instagram-embed": "^3.0.0",
     "react-modern-drawer": "^1.1.1",
+    "react-number-format": "^4.9.3",
     "react-redux": "^8.0.1",
     "react-select": "^5.3.2",
     "redux-logger": "^3.0.6",

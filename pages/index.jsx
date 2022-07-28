@@ -34,7 +34,7 @@ export default function Home() {
             <Image src={'/img/therapysession_couch.png'} alt="Under hero" width={454} height={302} />
           </div>
           <div className="lg:w-1/2 md:pl-5 mt-5 lg:mt-0">
-            <p className="text-center lg:text-left">
+            <p className="text-sm md:text-base text-center lg:text-left">
               Finding the right therapist can be stressful and time-intensive. Start Saying More is an innovative platform that aims to connect minority individuals with a mental health provider that they are most likely to feel secure sharing and healing with. Using our detailed survey, we’ll match your personality, area(s) of concern, experiences, and preferences with professionals in our database that are just right for you. We’re helping to reduce the stress associated with looking for a new provider. We want to make it easier for you.
             </p>
           </div>
@@ -51,7 +51,7 @@ export default function Home() {
           <h1 className="text-2xl sm:text-[32px] text-black font-bold text-center mb-2 md:mb-5">
             Who We Are
           </h1>
-          <p className="py-5 text-center md:text-left">
+          <p className="py-5 text-sm md:text-base text-center md:text-left">
             Outside of matching you with your ideal therapist, we also provide tips for self-care and mental wellness on our social media pages. Visit us on Instagram for regular posts that can assist you in your daily life and supplement your therapy experience.
           </p>
         </div>

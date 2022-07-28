@@ -4,6 +4,8 @@ import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Select from '../../components/UI/Select';
 import Checkbox from '../UI/Checkbox';
+import { useEffect } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 const data = {
     title: 'Do you specialize in any type of therapy? (Select all that apply)',
@@ -46,15 +48,13 @@ const Specialization = ({ step, setStep, profile }) => {
     const { register, handleSubmit, control, watch, formState: { errors} } = useForm({
         defaultValues: {therapy_specializations: profile?.therapy_specializations}
     });
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { therapy_specializations } = data;
         if(therapy_specializations == null) return;
         await updateTherapist({ id: profile?.id, therapy_specializations: therapy_specializations.filter(sp=> sp), registration_status: 'entered-specialization' });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -63,6 +63,11 @@ const Specialization = ({ step, setStep, profile }) => {
 
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
     
     return (
         <>
@@ -83,7 +88,11 @@ const Specialization = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="specialization-form" 
                     btnQnr
-                    disabled={watch('therapy_specializations') == null || watch('therapy_specializations').length === 0 } />
+                    disabled={watch('therapy_specializations') == null || watch('therapy_specializations').length === 0 } >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+                </Button>
             </div>
         </>
     )

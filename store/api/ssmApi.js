@@ -114,6 +114,18 @@ export const ssmApi = createApi({
         }),
         fetchSubscription: builder.query({
             query: () => `/subscriptions`
+        }),
+        // Save card details
+        saveCard: builder.mutation({
+            query: (body) => ({
+                url: '/therapists/save-payment-method',
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['Therapist'],
+        }),
+        matchTherapist: builder.query({
+            query: ({patientId}) => `/patients/${patientId}/get-matches`
         })
     })
 });
@@ -133,4 +145,6 @@ export const {
     useFetchSubscriptionPlanQuery,
     useSubscribeMutation,
     useFetchSubscriptionQuery,
-    useUploadPictureMutation } = ssmApi;
+    useUploadPictureMutation,
+    useSaveCardMutation,
+    useMatchTherapistQuery } = ssmApi;

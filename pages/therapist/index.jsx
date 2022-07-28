@@ -37,9 +37,16 @@ const JoinAsTherapist = () => {
     };
 
     const handleSubscribe = async (plan) => {
-        if(!isLoggedIn) return setOpen(!open);
-        dispatch(saveSubsDetails(plan));
-        router.push('/therapist/questionnaire');
+        if(!isLoggedIn){
+            setOpen(!open);
+            return window.scrollTo({
+                top: 10,
+                behavior: 'smooth',
+              });
+        }else{
+            dispatch(saveSubsDetails(plan));
+            router.push('/therapist/questionnaire');
+        }
     };
 
     useEffect(() => {
@@ -65,18 +72,24 @@ const JoinAsTherapist = () => {
         return <Loader />
     }
 
-    const [plan1, plan2] = data;
+    if(isError){
+        return (
+        <div className="w-full h-72 min-h-72 flex justify-center items-center">
+            <p className="text-error font-medium">{ error?.data || error?.error || 'Something went wrong!' }</p>
+        </div>
+        )
+    }
 
-    console.log("Subs: ", subscriptionData);
+    const [plan1, plan2] = data;
 
     return (
         <div className="px-[10%]">
             <Login open={open} setOpen={setOpen} redirectTo="/therapist"   />
-            <div className="">
+            <div className={`${open ? 'hidden' : 'block'}`}>
                 <h1 className="font-sterio text-3xl xs:text-4xl sm:text-5xl text-center mt-16">
                     Join As a Therapist
                 </h1>
-                <div className="mt-8 text-xs xs:text-sm sm:text-base text-center lg:text-left">
+                <div className="mt-8 text-sm md:text-base text-center lg:text-left">
                     <p className="">
                         Therapists are the foundation of the healing journey. With the growing demand for mental health care, it’s challenging for individuals to find their ideal therapist. To alleviate this problem, Start Saying More is dedicated to connecting patients with therapists in an effective and efficient manner. In order to best serve our clients, we need qualified therapists to join our database so we can provide your details to potential patients.
                     </p>
@@ -85,34 +98,34 @@ const JoinAsTherapist = () => {
                     </p>
                 </div>
             </div>
-            <div className="my-16 md:flex justify-between gap-5">
+            <div className={`my-16 md:flex justify-between gap-5 ${open ? 'hidden' : 'block'}`}>
                 <div className="md:w-1/2 border-2 border-primary rounded-md">
                     <div className="p-5 text-center">
                         <div className="">
-                            <h1 className="text-3xl font-bold">{plan1.plan_name}</h1>
-                            <p className="">Membership</p>
+                            <h1 className="text-2xl md:text-3xl font-bold">{plan1.plan_name}</h1>
+                            <p className="text-sm md:text-base">Membership</p>
                         </div>
                         <div className="my-16">
-                            <h1 className="text-5xl font-bold"><sup className='font-normal text-3xl'>$</sup>{plan1.price}</h1>
-                            <p className="pb-3">per month</p>
+                            <h1 className="text-4xl md:text-5xl font-bold"><sup className='font-normal text-2xl md:text-3xl'>$</sup>{plan1.price}</h1>
+                            <p className="pb-3 text-sm md:text-lg">per month</p>
                         </div>
                         <div className="">
-                            <p className="">30-day free trial</p>
+                            <p className="text-sm md:text-base">30-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => handleSubscribe(plan1)} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-2xl" />
+                    <Button onClick={() => handleSubscribe(plan1)} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-xl md:text-2xl" />
                 </div>
                 <div className="relative md:w-1/2 border-2 border-primary rounded-md mt-10 md:mt-0">
-                    <div className="absolute bottom-full font-medium left-1/2 bg-neutral px-3 py-0.5 transform -translate-x-1/2">
+                    <div className="absolute bottom-full text-xs md:text-base font-semibold md:font-medium left-1/2 bg-neutral px-3 py-0.5 transform -translate-x-1/2">
                         RECOMMENDED
                     </div>
-                    <div className="p-5 text-center">
+                    <div className="p-5 text-center text-sm md:text-base">
                         <div className="">
-                            <h1 className="text-3xl font-bold">Annual</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold">Annual</h1>
                             <p className="">Membership</p>
                         </div>
                         <div className="mt-16 mb-11">
-                            <h1 className="text-5xl font-bold"><sup className='font-normal text-3xl'>$</sup>240</h1>
+                            <h1 className="text-4xl md:text-5xl font-bold"><sup className='font-normal text-2xl md:text-3xl'>$</sup>240</h1>
                             <p className="">per year</p>
                         </div>
                         <div className="">
@@ -120,7 +133,7 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => handleSubscribe(plan2)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-2xl" />
+                    <Button onClick={() => handleSubscribe(plan2)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-xl md:mt-1 md:text-2xl" />
                 </div>
             </div>
         </div>

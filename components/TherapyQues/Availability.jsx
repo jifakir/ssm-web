@@ -1,5 +1,6 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { MdAdd, MdDeleteOutline } from 'react-icons/md';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Checkbox from '../UI/Checkbox';
 import Select from '../UI/Select';
@@ -44,7 +45,7 @@ const week = [
         label: 'Sunday',
         value: 'sunday'
     },
-]
+];
 
 
 const pmTime = [
@@ -53,48 +54,92 @@ const pmTime = [
         value: '01:00pm',
     },
     {
+        label: '01:30 PM',
+        value: '01:30pm',
+    },
+    {
         label: '02:00 PM',
         value: '02:00pm',
+    },
+    {
+        label: '02:30 PM',
+        value: '02:30pm',
     },
     {
         label: '03:00 PM',
         value: '03:00pm',
     },
     {
+        label: '03:30 PM',
+        value: '03:30pm',
+    },
+    {
         label: '04:00 PM',
         value: '04:00pm',
+    },
+    {
+        label: '04:30 PM',
+        value: '04:30pm',
     },
     {
         label: '05:00 PM',
         value: '05:00pm',
     },
     {
+        label: '05:30 PM',
+        value: '05:30pm',
+    },
+    {
         label: '06:00 PM',
         value: '06:00pm',
+    },
+    {
+        label: '06:30 PM',
+        value: '06:30pm',
     },
     {
         label: '07:00 PM',
         value: '07:00pm',
     },
     {
+        label: '07:30 PM',
+        value: '07:30pm',
+    },
+    {
         label: '08:00 PM',
         value: '08:00pm',
+    },
+    {
+        label: '08:30 PM',
+        value: '08:30pm',
     },
     {
         label: '09:00 PM',
         value: '09:00pm',
     },
     {
+        label: '09:30 PM',
+        value: '09:30pm',
+    },
+    {
         label: '10:00 PM',
         value: '10:00pm',
     },
     {
-        label: '11:00 PM',
-        value: '11:00pm',
+        label: '10:30 PM',
+        value: '10:30pm',
+    },
+    {
+        label: '11:30 PM',
+        value: '11:30pm',
     },
     {
         label: '12:00 PM',
         value: '12:00pm',
+    },
+    {
+        label: '12:30 PM',
+        value: '12:30pm',
     },
 ];
 
@@ -102,65 +147,115 @@ const pmTime = [
 const amTime = [
     {
         label: '01:00 AM',
-        value: '01:00pm',
+        value: '01:00am',
+    },
+    {
+        label: '01:30 AM',
+        value: '01:30am',
     },
     {
         label: '02:00 AM',
-        value: '02:00pm',
+        value: '02:00am',
+    },
+    {
+        label: '02:30 AM',
+        value: '02:30am',
     },
     {
         label: '03:00 AM',
-        value: '03:00pm',
+        value: '03:00am',
+    },
+    {
+        label: '03:30 AM',
+        value: '03:30am',
     },
     {
         label: '04:00 AM',
-        value: '04:00pm',
+        value: '04:00am',
+    },
+    {
+        label: '04:30 AM',
+        value: '04:30am',
     },
     {
         label: '05:00 AM',
-        value: '05:00pm',
+        value: '05:00am',
+    },
+    {
+        label: '05:30 AM',
+        value: '05:30am',
     },
     {
         label: '06:00 AM',
-        value: '06:00pm',
+        value: '06:00am',
+    },
+    {
+        label: '06:30 AM',
+        value: '06:30am',
     },
     {
         label: '07:00 AM',
-        value: '07:00pm',
+        value: '07:00am',
+    },
+    {
+        label: '07:30 AM',
+        value: '07:30am',
     },
     {
         label: '08:00 AM',
-        value: '08:00pm',
+        value: '08:00am',
+    },
+    {
+        label: '08:30 AM',
+        value: '08:30am',
     },
     {
         label: '09:00 AM',
-        value: '09:00pm',
+        value: '09:00am',
+    },
+    {
+        label: '09:30 AM',
+        value: '09:30am',
     },
     {
         label: '10:00 AM',
-        value: '10:00pm',
+        value: '10:00am',
+    },
+    {
+        label: '10:30 AM',
+        value: '10:30am',
     },
     {
         label: '11:00 AM',
-        value: '11:00pm',
+        value: '11:00am',
+    },
+    {
+        label: '11:30 AM',
+        value: '11:30am',
     },
     {
         label: '12:00 AM',
-        value: '12:00pm',
+        value: '12:00am',
+    },
+    {
+        label: '12:30 AM',
+        value: '12:30am',
     },
 ];
 
 const Availability = ({step, setStep, profile }) => {
     
-    const [payment, setPayment] = useState();
+    const [payment, setPayment] = useState(false);
     const { 
-            register, handleSubmit, 
+            handleSubmit, 
             control, watch, 
             formState: { errors} } = useForm({
                 defaultValues: { 
-                    days: profile?.availabilities ? [...profile?.availabilities.map( v => v.day )] : [],
-                    start_time: profile?.availabilities ? profile?.availabilities[0].start_time : '12:00am', 
-                    end_time: profile?.availabilities ? profile?.availabilities[0].end_time : '11:00pm', 
+                    availabilities: profile?.availabilities || [{
+                        day: 'monday',
+                        start_time: '8:30am',
+                        end_time: '8:30pm'
+                    }]
                 }});
     const [updateTherapist, { isSuccess, isLoading, isError }] = useUpdateTherapistMutation();
     const [subscribe, { 
@@ -173,17 +268,24 @@ const Availability = ({step, setStep, profile }) => {
     const { data:isSubscribed } = useFetchSubscriptionQuery();
     const { id } = useSelector(state => state.subscription);
     
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: 'availabilities'
+    });
+    
+    const appendField = () => {
+        if(fields.length >= 6) return;
+        append({
+                day: 'monday',
+                start_time: '8:00am',
+                end_time: '8:00pm'
+        });
+    }
+
     const router = useRouter();
 
     const handleNext = async (data) => {
-
-        const { days, start_time, end_time } = data;
-        if(days == null) return;
-        const daysArr = days.filter(d=>d).map(day => {
-            return {day,start_time,end_time}
-        });
-        console.log(daysArr);
-        await updateTherapist({id: profile?.id, availabilities: daysArr, registration_status: 'completed' });
+        await updateTherapist({id: profile?.id, ...data, registration_status: 'completed' });
     };
 
 
@@ -191,11 +293,13 @@ const Availability = ({step, setStep, profile }) => {
         setStep(step - 1);
     };
 
+    const isFilledUp = watch('availabilities').every((itm, idx) => itm.day && itm.start_time && itm.end_time);
+
     useEffect(() => {
-        // if(isSuccess && profile?.is_subscribed){
-        //     router.push('/therapist/profile');
-        //     return;
-        // }
+        if(isSuccess && profile?.is_subscribed){
+            router.push('/therapist/profile');
+            return;
+        }
         if(isSuccess){
             subscribe({subscription_plan_id: id});
         }
@@ -212,14 +316,9 @@ const Availability = ({step, setStep, profile }) => {
     },[subsError]);
 
     useEffect(() => {
-        if(subsSuccess && subscriptionData?.subscription_status === 'incomplete'){
+        if(subsSuccess){
             setPayment(true);
         }
-
-        if(subsSuccess && subscriptionData?.subscription_status === 'trialing'){
-            router.push('/therapist/profile');
-        }
-
     },[subsSuccess]);
     
 
@@ -229,33 +328,55 @@ const Availability = ({step, setStep, profile }) => {
                 payment && (
                         <div className="fixed bg-primary/50 bg-blend-saturation top-0 left-0 z-[500] w-full min-h-screen h-screen flex justify-center items-center">
                             <div className="shadow-lg rounded-lg relative w-1/2 min-h-52 h-auto bg-white text-whtie text-center flex justify-center items-center">
-                                <span onClick={() => setPayment(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
+                                {/* <span onClick={() => setPayment(false)} className="absolute top-1 right-2 text-2xl cursor-pointer hover:text-red-600">
                                     <MdClose />
-                                </span>
+                                </span> */}
                                 <Stripe loading={isLoading} data={subscriptionData} />
                             </div>
                         </div>
                         )
             }
             <form id="availability-form" onSubmit={handleSubmit(handleNext)} className="">
-                <div className="text-left text-sm flex gap-5">
-                    <div className="w-1/5">
-                        <h1 className="text-lg my-2">Availability</h1>
-                        <Checkbox register={register} control={control} errors={errors} data={{name: 'days', options: week }} />
+                <div className="md:w-1/2">
+                    <div className="flex justify-start mb-2">
+                        <button type='button' onClick={appendField} className='btn btn-outline btn-primary btn-sm'>
+                            <MdAdd className='mr-1 text-lg' /> Add Day
+                        </button>
                     </div>
-                    <div className={`flex gap-10 ${!watch('days') ? 'hidden' : 'block'}`}>
-                        <div className=" w-40">
-                            <h3 className="my-2">M-Start Time</h3>
-                            <Select control={control} data={{name: 'start_time', options: pmTime}} />
-                        </div>
-                        <div className=" w-40">
-                            <h3 className="my-2">M-End Time</h3>
-                            <Select control={control} data={{name: 'end_time', options: amTime}} />
-                        </div>
+                    <div className="w-full">
+                        {
+                            fields.map((field, idx) => {
+                                return (
+                                        <div key={field.id} className="w-full text-left flex items-center gap-5">
+                                            <div className="min-w-52">
+                                                <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>Day</h3>
+                                                <Select 
+                                                    control={control} 
+                                                    data={{name: `availabilities.${idx}.day`, options: week}} />
+                                            </div>
+                                            <div className=" w-40">
+                                                <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>M-Start Time</h3>
+                                                <Select 
+                                                    control={control} 
+                                                    data={{name: `availabilities.${idx}.start_time`, options: amTime}} />
+                                            </div>
+                                            <div className=" w-40">
+                                                <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>M-End Time</h3>
+                                                <Select 
+                                                    control={control} 
+                                                    data={{name: `availabilities.${idx}.end_time`, options: pmTime}} />
+                                            </div>
+                                            <div onClick={() => remove(idx)} className="w-5 flex items-center">
+                                                <MdDeleteOutline className={`cursor-pointer text-secondary hover:text-error mt-3 text-lg ${idx === 0 ? 'hidden' : 'block'}`} />
+                                            </div>
+                                        </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </form>
-            <div className={`flex gap-5 py-5`}>
+            <div className={`flex gap-5 py-5 mt-9`}>
                     <Button 
                         title={'Back'} 
                         onClick={handleBack}
@@ -265,10 +386,7 @@ const Availability = ({step, setStep, profile }) => {
                         title={'Submit'} 
                         form="availability-form" 
                         btnQnr
-                        disabled={
-                            watch('days') ? 
-                            watch('days').filter(d => d).length === 0 : 
-                            !watch('days')} >
+                        disabled={!isFilledUp} >
                                 {
                                     isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
                                 }

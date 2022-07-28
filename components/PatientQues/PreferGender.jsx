@@ -33,7 +33,7 @@ const PreferGender = ({ step, setStep, profile }) => {
     return (
         <>
             <form id='perfer-gender-form' onSubmit={handleSubmit(handleNext)} className="">
-                <div className="w-full md:flex gap-10">
+                <div className="w-full">
                     <div className="">
                         <h1 className="text-lg my-2 text-left">Do you have a gender preference for your provider?</h1>
                         <div className="form-control w-full max-w-xs">
@@ -50,7 +50,7 @@ const PreferGender = ({ step, setStep, profile }) => {
                                     }} />
                         </div>
                     </div>
-                    <div className={`${watch('has_gender_preference') ? 'block' : 'hidden'}`}>
+                    <div className={`mt-5 ${watch('has_gender_preference') ? 'block' : 'hidden'}`}>
                         <h1 className={`text-lg my-2 text-left `}>What is your gender preference?</h1>
                         <div className={` w-full max-w-xs`}>
                             <Radio 

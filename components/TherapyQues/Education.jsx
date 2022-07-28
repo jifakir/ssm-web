@@ -5,6 +5,8 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { useRegisterTherapistMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import Input from '../UI/TextInput';
 import Button from '../UI/Button';
+import { BiLoaderAlt } from 'react-icons/bi';
+import { useEffect } from 'react';
 
 
 // Component
@@ -19,15 +21,12 @@ const Education = ({step, setStep, profile}) => {
         name: "education"
       });
     
-    const [updateTherapist, { isSucces, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const isFilledUp = watch('education').every((itm, idx) => itm.major && itm.degree && itm.school_name)
     const handleNext = async (data) => {
         if(!data) return;
         await updateTherapist({ id: profile?.id, ...data, registration_status: 'entered-education' });
-
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -38,20 +37,25 @@ const Education = ({step, setStep, profile}) => {
         if(fields.length >= 4) return;
         append({degree: '', major: '', school_name: ''})
     };
-    console.log(watch());
+    
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+    },[isSuccess]);
+    
     return (
     <>
         <form id="education-form" onSubmit={handleSubmit(handleNext)} className="">
 
-            <div className="flex items-center my-5">
-
-                <h1 className="text-lg mr-5">Please add your education</h1>
-                <div onClick={handleAppend} className="btn btn-primary btn-outline btn-sm text-sm">
+            <div className="flex flex-col md:flex-row md:items-center my-5">
+                <h1 className="text-lg mr-5 text-left">Please add your education</h1>
+                <div onClick={handleAppend} className="btn btn-primary btn-outline btn-sm text-sm mt-5 md:mt-0">
                     <HiPlus className='mr-1' />
                     Education
                 </div>
             </div>
-            <div className="flex gap-5">
+            <div className="flex flex-col md:flex-row gap-5">
 
                 {
                     fields.map((itm, idx) => {
@@ -102,7 +106,11 @@ const Education = ({step, setStep, profile}) => {
                 title={'Next'} 
                 form="education-form" 
                 btnQnr
-                disabled={!isFilledUp} />
+                disabled={!isFilledUp} >
+                    {
+                        isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
+                    }
+            </Button>
         </div>
     </>
     )

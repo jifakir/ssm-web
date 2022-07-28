@@ -7,7 +7,7 @@ const Select = ({data, control, errors, isMulti, ...rest}) => {
     const { options, title, name } = data;
 
     return (
-        <div className="form-control w-full max-w-xs">
+        <div className="form-control w-full md:max-w-xs">
             <label className="label">
                 <span className="label-text text-lg">{title}</span>
             </label>
