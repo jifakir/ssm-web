@@ -70,7 +70,7 @@ const Experience = ({ step, setStep, profile }) => {
             <form id="experience-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <h1 className="text-lg my-2 text-left">How many years of experience do you have?</h1>
-                    <div className="form-control w-full max-w-xs text-left">
+                    <div className="form-control w-full md:max-w-xs text-left">
                         <Select control={control} data={data} />
                     </div>
                 </div>

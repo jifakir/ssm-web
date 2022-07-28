@@ -38,7 +38,7 @@ const Phone = ({ step, setStep, profile }) => {
         <>
             <form id='phone-form' onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
-                    <div className="form-control w-full max-w-xs">
+                    <div className="form-control w-full md:max-w-xs">
                     <h1 className="my-2 text-left">Phone Number</h1>
                         <PhonNumber 
                             control={control}

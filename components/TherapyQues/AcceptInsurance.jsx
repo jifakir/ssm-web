@@ -31,7 +31,7 @@ const data = {
 const AcceptInsurance = ({ step, setStep, profile }) => {
 
     const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { 
-        accept_insurance: profile?.accept_insurance || '',
+        accept_insurance: profile?.accept_insurance,
         acceptable_insurances: profile?.acceptable_insurances || []
     }});
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
@@ -56,7 +56,8 @@ const AcceptInsurance = ({ step, setStep, profile }) => {
         if(isSuccess){
             setStep(step + 1);
         }
-    }, [isSuccess])
+    }, [isSuccess]);
+
     
     return (
         <>

@@ -112,7 +112,7 @@ const Personality = ({ step, setStep, profile }) => {
         <>
             <form id="personality-form" onSubmit={handleSubmit(handleNext)} className="">
                 <h1 className="text-left text-lg my-5">Share your Myers-Brigg Personality Type aspects</h1>
-                <div className="flex text-sm gap-5">
+                <div className="flex flex-col md:flex-row text-sm gap-5">
                     {
                         data.map((itm, idx) => (
                             <div key={`personality_item_${idx}`} className="">

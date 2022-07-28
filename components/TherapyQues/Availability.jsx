@@ -337,18 +337,18 @@ const Availability = ({step, setStep, profile }) => {
                         )
             }
             <form id="availability-form" onSubmit={handleSubmit(handleNext)} className="">
-                <div className="w-1/2">
+                <div className="md:w-1/2">
                     <div className="flex justify-start mb-2">
                         <button type='button' onClick={appendField} className='btn btn-outline btn-primary btn-sm'>
                             <MdAdd className='mr-1 text-lg' /> Add Day
                         </button>
                     </div>
-                    <div className="">
+                    <div className="w-full">
                         {
                             fields.map((field, idx) => {
                                 return (
-                                    <div key={field.id} className="text-left flex items-center gap-5">
-                                        <div className="w-52">
+                                        <div key={field.id} className="w-full text-left flex items-center gap-5">
+                                            <div className="min-w-52">
                                                 <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>Day</h3>
                                                 <Select 
                                                     control={control} 

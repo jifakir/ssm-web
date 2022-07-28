@@ -44,7 +44,7 @@ const States = ({step, setStep, profile}) => {
                 <h1 className="text-lg my-2">Please select all states where you are licensed to provide counseling</h1>
                 <div className="space-y-5">
                     {
-                        <div className="w-1/2">
+                        <div className="md:max-w-xs">
                             <Select 
                                 control={control} 
                                 data={{

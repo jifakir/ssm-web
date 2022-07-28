@@ -17,9 +17,9 @@ const About = () => {
         <div className="">
            <div className="relative w-full h-[400px] xs:h-[250px] sm:h-[400px] md:h-[550px]">
                 <div className="relative w-full h-full overflow-hidden">
-                    <Image src={'/img/about-hero.png'} alt={'Hero Image'} layout="fill" objectFit='cover'  />
+                    <Image src={'/img/about-hero.png'} alt={'Hero Image'} className="object-cover object-[20%_top]" layout="fill"  />
                 </div>
-                <div className="bg-gradient-to-b from-transparent to-secondary/60 absolute w-full h-full top-0  font-sterio sm:translate-x-0 text-5xl sm:text-6xl font-medium md:font-normal md:text-7xl text-primary z-10 text-center md:text-right leading-[50px] md:leading-[93px]">
+                <div className="bg-gradient-to-b from-white/70 to-secondary/70 absolute w-full h-full top-0  font-sterio sm:translate-x-0 text-4xl xxs:text-5xl sm:text-6xl font-medium md:font-normal md:text-7xl text-primary z-10 text-center md:text-right leading-[50px] md:leading-[93px]">
                     <div className="w-full h-full flex justify-center md:justify-end items-center">
                         <div className="md:text-right md:mr-20">
                             <h2>We want you to</h2>

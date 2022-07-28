@@ -37,9 +37,16 @@ const JoinAsTherapist = () => {
     };
 
     const handleSubscribe = async (plan) => {
-        if(!isLoggedIn) return setOpen(!open);
-        dispatch(saveSubsDetails(plan));
-        router.push('/therapist/questionnaire');
+        if(!isLoggedIn){
+            setOpen(!open);
+            return window.scrollTo({
+                top: 10,
+                behavior: 'smooth',
+              });
+        }else{
+            dispatch(saveSubsDetails(plan));
+            router.push('/therapist/questionnaire');
+        }
     };
 
     useEffect(() => {
@@ -78,7 +85,7 @@ const JoinAsTherapist = () => {
     return (
         <div className="px-[10%]">
             <Login open={open} setOpen={setOpen} redirectTo="/therapist"   />
-            <div className="">
+            <div className={`${open ? 'hidden' : 'block'}`}>
                 <h1 className="font-sterio text-3xl xs:text-4xl sm:text-5xl text-center mt-16">
                     Join As a Therapist
                 </h1>
@@ -91,7 +98,7 @@ const JoinAsTherapist = () => {
                     </p>
                 </div>
             </div>
-            <div className="my-16 md:flex justify-between gap-5">
+            <div className={`my-16 md:flex justify-between gap-5 ${open ? 'hidden' : 'block'}`}>
                 <div className="md:w-1/2 border-2 border-primary rounded-md">
                     <div className="p-5 text-center">
                         <div className="">
@@ -126,7 +133,7 @@ const JoinAsTherapist = () => {
                             <p className="">30-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => handleSubscribe(plan2)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-xl md:text-2xl" />
+                    <Button onClick={() => handleSubscribe(plan2)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-xl md:mt-1 md:text-2xl" />
                 </div>
             </div>
         </div>

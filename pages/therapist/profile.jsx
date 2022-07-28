@@ -16,6 +16,7 @@ import Details from '../../components/Therapist/Details';
 import Loader from '../../components/UI/Loader';
 import Availability from '../../components/Therapist/Availibilties';
 import MyersBriggs from '../../components/Therapist/Personality';
+import Subsciption from '../../components/Therapist/Subscription';
 
 
 
@@ -84,7 +85,7 @@ const TherapistProfile = () => {
                 <div className="flex flex-col items-center justify-center lg:w-1/3 lg:block">
                     <h1 className="font-sterio text-4xl">Therapist Profile</h1>
                     <h4 className="py-3 text-2xl">{profile?.full_name}</h4>
-                    <div className="w-60 border rounded-lg overflow-hidden">
+                    <div className="w-60 border-2 border-primary rounded-lg overflow-hidden">
                         <div>
                             <div className="relative h-56">
                                 {
@@ -114,6 +115,9 @@ const TherapistProfile = () => {
                     {/* Availability */}
                     <div className="mt-6">
                         <Availability profile={profile} />
+                    </div>
+                    <div className="">
+                        <Subsciption profile={profile} />
                     </div>
                 </div>
             </div>

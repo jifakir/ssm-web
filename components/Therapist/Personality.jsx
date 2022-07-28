@@ -39,7 +39,10 @@ const MyersBriggs = ({profile}) => {
                 {
                     form ? 
                     <MdClose onClick={() => setForm(false)} className="text-red-500" /> : 
-                    <MdEdit onClick={() => setForm(true)} />
+                    <div className="">
+                        <MdEdit onClick={() => setForm(true)} className="hidden md:block" />
+                        <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
+                    </div>
                 }
             </div>
             {

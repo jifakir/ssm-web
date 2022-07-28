@@ -61,7 +61,10 @@ const Footer = () => {
 
     return (
         <footer className="relative bg-neutral/30 py-4 overflow-hidden bg-gradient-to-r from-transparent via-neutral/40 to-transparent">
-            <div className="absolute -z-10 -top-5">
+            <div className="md:hidden absolute -z-10 top-0 left-0 w-full h-full">
+                <Image src={'/img/footerbgmobile.svg'} layout="fill" objectFit='cover'  alt={"Footer Bg"} />
+            </div>
+            <div className="hidden md:block absolute -z-10 -top-5">
                 <Image src={'/img/footerbg.svg'} alt={"Footer Bg"} width={686} height={450} />
             </div>
             <div className="px-[2%] lg:flex justify-between">
@@ -86,14 +89,14 @@ const Footer = () => {
                             }
                         </ul>
                     </div>
-                    <div className=" md:w-1/2 md:pr-10">
+                    <div className="md:w-1/2 md:pr-10">
                         <form onSubmit={handleSubmit(onSubmitHandler)} className="">
                             <h5 className="text-[15px] font-semibold text-center md:text-left">
                                 Stay in touch with us!
                             </h5>
-                            <div className="sm:flex justify-center items-start gap-2 mt-5 md:mt-2">
+                            <div className="sm:w-[80%] md:w-auto mx-auto sm:flex justify-center items-start gap-2 mt-5 md:mt-2">
                                 
-                                <div className="w-2/3 sm:w-auto mx-auto">
+                                <div className="w-2/3 sm:w-full mx-auto">
                                     <TextInput 
                                         control={control} 
                                         name='email'
@@ -108,7 +111,7 @@ const Footer = () => {
                                         />
                                 </div>
                                 <div className="mt-5 sm:mt-0 text-center">
-                                    <Button title={'SUBMIT'} fontSize="w-1/2 text-lg sm:text-xl"/>
+                                    <Button title={'SUBMIT'} fontSize="w-1/2 md:w-auto text-lg sm:text-xl"/>
                                 </div>
                             </div>
                         </form>
