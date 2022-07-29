@@ -6,24 +6,28 @@ import Hero from '../components/Home/Hero'
 import Button from '../components/UI/Button'
 import HowItWorks from '../components/Home/HowItWorks';
 import {url} from '../utils/flickr';
-import Landing from '../pages/landing';
+import Landing from './welcome';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from 'next/router'
-import Script from 'next/script'
+import FlickerCard from '../components/FlickerCard'
+import Loader from '../components/UI/Loader'
 
 export default function Home() {
-  const [filcker, setFlick] = useState(null);
-  const router = useRouter();
-  console.log(filcker)
-  useEffect(() => {
-    axios.get(url).then((result) => result).then(data => setFlick(data)).catch(err=> console.log(err));
-  },[])
 
   const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
-  if(showHomePage==='true'){
-    return router.push('https://www.startsayingmore.com/');
+
+  const router = useRouter();
+
+  if(showHomePage === 'true'){
+    router.push('/welcome');
+    return;
   }
+
+  if(showHomePage == null){
+    return <Loader />
+  }
+  
   return (
     <div className='w-full'>
       <Script  src="https://cdn2.woxo.tech/a.js#62c40614ec33d95e7c27e46a" async data-usrc/>
@@ -39,9 +43,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-        {/* HOW IT WORKS */}
         <HowItWorks />
-        {/* FIND A THERAPIST BUTTON AND WHO WE ARE */}
         <div className="mt-10 flex justify-center">
           <Link href={'/patient'} passHref>
             <Button title={'Find A Therapist'} btnLg fontSize={'text-lg md:text-2xl'}  />
@@ -57,6 +59,7 @@ export default function Home() {
         </div>
       </div>
       <div className="mb-16">
+<<<<<<< HEAD
       <div
   loading="lazy"
   data-mc-src="88d1d45b-7899-43f1-a878-fd3c98111fc8#null"></div>
@@ -69,6 +72,9 @@ export default function Home() {
             ))
           }
         </div> */}
+=======
+        <FlickerCard />
+>>>>>>> responsiveness
       </div>
     </div>
   )
