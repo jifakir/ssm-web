@@ -12,6 +12,7 @@ import axios from 'axios';
 import Router, { useRouter } from 'next/router'
 import FlickerCard from '../components/FlickerCard'
 import Loader from '../components/UI/Loader'
+import Script from 'next/script'
 
 export default function Home() {
 
