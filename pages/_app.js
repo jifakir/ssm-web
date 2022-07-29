@@ -17,14 +17,17 @@ const persistor = persistStore(store);
 function MyApp({ Component, pageProps }) {
 
   const router = useRouter();
-  const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
-
+  
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} >
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            {
+              router.pathname === '/welcome' ?
+                <Component {...pageProps} />:
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+            }
       </PersistGate>
     </Provider>
   )

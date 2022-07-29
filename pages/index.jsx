@@ -10,22 +10,24 @@ import Landing from './welcome';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from 'next/router'
+import FlickerCard from '../components/FlickerCard'
+import Loader from '../components/UI/Loader'
 
 export default function Home() {
 
-  const [filcker, setFlick] = useState(null);
   const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
-  const router = useRouter();
-  
-  useEffect(() => {
-    axios.get(url).then((result) => result).then(data => setFlick(data)).catch(err=> console.log(err));
-  },[])
 
-  
-  if(showHomePage==='true'){
-    return router.push('/welcome');
+  const router = useRouter();
+
+  if(showHomePage === 'true'){
+    router.push('/welcome');
+    return;
   }
 
+  if(showHomePage == null){
+    return <Loader />
+  }
+  
   return (
     <div className='w-full'>
       <Hero />
@@ -56,15 +58,7 @@ export default function Home() {
         </div>
       </div>
       <div className="mb-16">
-        <div className="px-[5%] md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
-          {
-            filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
-              <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-32 lg:h-52" key={idx}>
-                <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} alt="Pic" layout='fill' objectFit='cover' />
-              </div>
-            ))
-          }
-        </div>
+        <FlickerCard />
       </div>
     </div>
   )
