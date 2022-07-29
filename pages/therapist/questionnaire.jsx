@@ -145,22 +145,13 @@ const Questionnaire = () => {
 
     useEffect(()=>{
         refetch();
-    },[]);
+    },[refetch]);
     
     useEffect(() => {
         if(!isLoggedIn){
             router.push('/');
         }
-        // if(isSuccess){
-        //     components.map((com, idx) => {
-        //         console.log(com.status);
-        //         console.log(data.registration_status);
-        //         if(com.status === data.registration_status){
-        //             console.log('Triggered SetStep')
-        //             setStep(idx + 1);
-        //         }
-        //     })
-        // }
+        
     },[isSuccess, isLoggedIn, router]);
 
     const percent = Math.round((step/(components.length - 1))*100);

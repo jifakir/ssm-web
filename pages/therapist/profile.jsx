@@ -53,13 +53,13 @@ const TherapistProfile = () => {
         if(isSuccess && !profile?.is_subscribed){
             router.push('/therapist/questionnaire');
         }
-    },[]);
+    },[isSuccess, profile?.is_subscribed, refetch, router]);
 
     useEffect(()=> {
         if(!isLoggedIn){
             router.push("/");
         }
-    },[isLoggedIn]);
+    },[isLoggedIn, router]);
 
     if(isLoading){
         return (
