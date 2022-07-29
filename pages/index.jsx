@@ -6,23 +6,26 @@ import Hero from '../components/Home/Hero'
 import Button from '../components/UI/Button'
 import HowItWorks from '../components/Home/HowItWorks';
 import {url} from '../utils/flickr';
-import Landing from '../pages/landing';
+import Landing from './welcome';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Router, { useRouter } from 'next/router'
 
 export default function Home() {
+
   const [filcker, setFlick] = useState(null);
+  const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
   const router = useRouter();
-  console.log(filcker)
+  
   useEffect(() => {
     axios.get(url).then((result) => result).then(data => setFlick(data)).catch(err=> console.log(err));
   },[])
 
-  const showHomePage = process.env.NEXT_PUBLIC_SHOW_LANDING;
+  
   if(showHomePage==='true'){
-    return router.push('https://www.startsayingmore.com/');
+    return router.push('/welcome');
   }
+
   return (
     <div className='w-full'>
       <Hero />
@@ -37,9 +40,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-        {/* HOW IT WORKS */}
         <HowItWorks />
-        {/* FIND A THERAPIST BUTTON AND WHO WE ARE */}
         <div className="mt-10 flex justify-center">
           <Link href={'/patient'} passHref>
             <Button title={'Find A Therapist'} btnLg fontSize={'text-lg md:text-2xl'}  />
