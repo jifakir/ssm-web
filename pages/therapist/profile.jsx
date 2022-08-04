@@ -80,8 +80,9 @@ const TherapistProfile = () => {
     const { personality_type: { mind, energy, nature, tactics, identity } } = profile;
     
     return (
-        <div className="w-[90%] mx-auto mb-10 md:mt-10">
-            <div className="md:hidden py-10">
+    <div className="">
+        <div className="-top-5">
+            <div className="md:hidden">
                 <Select
                     control={control}
                     data={{
@@ -94,6 +95,9 @@ const TherapistProfile = () => {
                         ]
                     }} />
             </div>
+        </div>
+        <div className="w-[90%] mx-auto mb-10 md:mt-10">
+            
             <div className="lg:flex gap-5">
                 <div className="flex flex-col items-center justify-center lg:w-1/3 lg:block">
                     <h1 className="font-sterio text-4xl">Therapist Profile</h1>
@@ -132,6 +136,7 @@ const TherapistProfile = () => {
                 </div>
             </div>
         </div>
+    </div>
     )
 }
 
