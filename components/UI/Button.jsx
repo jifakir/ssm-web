@@ -2,7 +2,11 @@ import React from 'react';
 
 
 
-const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disabled, type, onClick, className, ...rest}) => {
+const Button = ({
+    children, btnQnr, title, fontSize,
+    btnOutline, btnLg, btnSecondary, 
+    disabled, type, onClick, 
+    className, ...rest}) => {
     
     return ( btnQnr ?
             (<><button
@@ -60,8 +64,12 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     disabled:cursor-not-allowed
                     uppercase
                     ${
+                        btnOutline &&
+                        'border-[3px] border-secondary hover:border-secondary/10'
+                    }
+                    ${
                         btnSecondary ?
-                        'border-[3px] bg-transparent border-secondary hover:border-secondary/10':
+                        ' bg-transparent ':
                         'bg-secondary'
                     }
                     ${

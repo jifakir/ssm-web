@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Drawer from 'react-modern-drawer';
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md';
 import { FaRegUser, FaUser } from 'react-icons/fa';
 import { CgMenu } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,8 +41,11 @@ const Header = () => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [tab, setTab] = React.useState(0);
     const [open, setOpen] = React.useState(false);
+    const [profile, setProfile] = React.useState(false);
+
     const { isLoggedIn } = useSelector(state => state.auth);
     const { data, isSuccess} = useFetchTherapistQuery();
+
     const dispatch = useDispatch();
 
     const signOutHandler = () => {
@@ -62,12 +66,12 @@ const Header = () => {
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <Link href={'/'} className="cursor-pointer" passHref>
-                        <div className="hidden lg:block relative cursor-pointer w-[80px] h-[73px] md:w-[126px] md:h-[102px]">
+                        <div className="hidden md:block relative cursor-pointer w-[80px] h-[73px] md:w-[126px] md:h-[102px]">
                             <Image src={'/img/ssmlogo.svg'} alt={'Logo'} layout={'fill'} />
                         </div>
                     </Link>
                     <Link href={'/'} className="cursor-pointer" passHref>
-                        <div className="lg:hidden relative cursor-pointer w-[160px] h-[52px] py-10">
+                        <div className="md:hidden relative cursor-pointer w-[160px] h-[52px] py-10">
                             <Image src={'/img/logomobile.svg'} alt={'Logo'} layout={'fill'} />
                         </div>
                     </Link>
@@ -75,7 +79,7 @@ const Header = () => {
                         {
                             menuList.map( (menu, idx) => <li 
                                 key={`menu_item_${idx}`} 
-                                className="cursor-pointer text-[20px] hover:underline hover:text-secondary transition-all duration-300 ease-out">
+                                className="cursor-pointer text-lg lg:text-[20px] hover:underline hover:text-secondary transition-all duration-300 ease-out">
                                     <Link href={menu.linkUrl}>
                                         {menu.title}
                                     </Link>
@@ -83,27 +87,63 @@ const Header = () => {
                         }
                     </ul>
                 </div>
-                <div className="justify-self-end">
-                    <div onClick={signOutHandler} className="hidden lg:block text-[20px]">
+                <div className="relative justify-self-end">
+                    <div className="hidden lg:block text-3xl">
                         {
                             !isLoggedIn ?
                             (
-                            <div >
+                            <div onClick={() => setProfile(state => !state)}>
                                 <a className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
-                                    <FaUser className='text-3xl' />
-                                    <h4 className="pl-1">
-                                        Provider Login
-                                    </h4>
+                                    <FaUser  />
+                                    {
+                                        profile ?
+                                        <MdOutlineKeyboardArrowUp />:
+                                        <MdOutlineKeyboardArrowDown  />
+                                    }
                                 </a>
                             </div>
                             ):
-                            <div className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
-                                <FaRegUser className='text-3xl' />
-                                <h4 className="pl-1">
-                                    Sign out
-                                </h4>
-                            </div>
+                            <a onClick={() => setProfile(state => !state)} className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
+                                <FaUser  />
+                                    {
+                                        profile ?
+                                        <MdOutlineKeyboardArrowUp />:
+                                        <MdOutlineKeyboardArrowDown  />
+                                    }
+                            </a>
                         }
+                    </div>
+                    <div className={`${profile ? 'block' : 'hidden'} absolute w-max top-full right-0 rounded-md shadow-md z-10 overflow-hidden`}>
+                        <div className="bg-white">
+                            {
+                                !isLoggedIn ?
+                                (
+                                <>
+                                    <div className="w-full px-4 py-2.5 text-[15px] bg-secondary/50 border-b border-black">
+                                        <h1 className="">Select Profile Type</h1>
+                                    </div>
+                                    <div className="px-4 py-2.5 text-[20px]">
+                                        <h1 className="">Therapist</h1>
+                                        <h1 className="">Patient</h1>
+                                    </div>
+                                </>
+                                ):
+                                (
+                                <>
+                                    <div className="px-4 py-2.5 text-[20px]">
+                                        <Link href={'/therapist/profile'}>
+                                            <a>
+                                                Profile
+                                            </a>
+                                        </Link>
+                                        <h1 onClick={() => dispatch(logOut())} className='cursor-pointer'>
+                                            Signout
+                                        </h1>
+                                    </div>
+                                </>
+                                )
+                            }
+                        </div>
                     </div>
                     <div className="lg:hidden cursor-pointer">
                         <CgMenu onClick={toggleDrawer} className="text-4xl text-primary" />

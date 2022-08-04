@@ -9,9 +9,8 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storageSession from 'redux-persist/lib/storage/session';
 import logger from 'redux-logger';
-
 import authReducer from "./reducers/authReducer";
 import subscriptionSlice from "./reducers/subscriptionSlice";
 import { ssmApi }  from './api/ssmApi';
@@ -21,7 +20,7 @@ import { ssmApi }  from './api/ssmApi';
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage,
+  storage: storageSession,
   blacklist: [ssmApi.reducerPath]
 }
 

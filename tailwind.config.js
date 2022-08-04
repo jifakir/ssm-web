@@ -18,7 +18,9 @@ module.exports = {
         'sterio': ['Afternoon in Stereo']
       },
       backgroundImage: {
-        welcome: "url('/img/welcome.png')"
+        welcome: "url('/img/welcome.png')",
+        welcome_mobile: "url('/img/comming_soon.png')",
+        welcome_tab: "url('/img/welcome_bg_tab.png')",
       }
     },
   },

@@ -163,12 +163,13 @@ const Questionnaire = () => {
         // }
     },[isSuccess, isLoggedIn, router]);
 
-    const percent = Math.round((step/(components.length - 1))*100);
     
-    if(!subscription){
+    if(!subscription || !isLoggedIn){
         return router.push('/therapist');
     }
-    
+
+    const percent = Math.round((step/(components.length - 1))*100);
+
     return (
     <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px]px-[5%] md:pt-[100px] md:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div className={`mt-16 ${step === 0 ? 'block' : 'block'}`}>
@@ -206,7 +207,7 @@ const Questionnaire = () => {
                 </div>
             </div>
             {/* Form Inner */}
-            <div className="text-center mt-8 md:mt-10">
+            <div className="text-center mt-8 xl:mt-10">
                 {
                     components.map((comp, idx) => {
 

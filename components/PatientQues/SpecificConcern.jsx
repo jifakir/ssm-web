@@ -5,39 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Select from '../UI/Select';
 import Button from '../UI/Button';
-
-
-const data = {
-        title: 'Do you have specific concerns to discuss with your therapist? (select all that apply)',
-        name: 'specific_concerns',
-        required: true,
-        options: [
-            {
-                label: 'Changes in my behavior',
-                value: 'Changes in my behaviour  '
-            },
-            {
-                label: 'Life events  ',
-                value: 'Life events'
-            },
-            {
-                label: 'Potential or diagnosed disorder  ',
-                value: 'Potential or diagnosed disorder  '
-            },
-            {
-                label: 'Relationship issues  ',
-                value: 'Relationship issues  '
-            },
-            {
-                label: 'Life goals  ',
-                value: 'Life goals  '
-            },
-            {
-                label: 'Prefer not to say  ',
-                value: 'Prefer not to say  '
-            },
-        ]
-    };
+import { specific_concerns } from '../data';
 
 const Language = ({ step, setStep, profile }) => {
     
@@ -58,8 +26,8 @@ const Language = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="specific_concerns-form" onSubmit={handleSubmit(handleNext)} className="text-left text-sm">
-                
-                <Checkbox data={data} register={register} errors={errors} />
+                <h1 className="text-left my-2 text-lg">Do you have specific concerns to discuss with your therapist? (select all that apply)</h1>
+                <Checkbox data={specific_concerns} control={control} register={register} errors={errors} />
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 
