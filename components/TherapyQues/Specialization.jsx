@@ -6,42 +6,7 @@ import Select from '../../components/UI/Select';
 import Checkbox from '../UI/Checkbox';
 import { useEffect } from 'react';
 import { BiLoaderAlt } from 'react-icons/bi';
-
-const data = {
-    title: 'Do you specialize in any type of therapy? (Select all that apply)',
-    name: 'therapy_specializations',
-    options: [
-        {
-            label: 'Psychodynamic therapy',
-            value: 'psychodynamictherapy'
-        },
-        {
-            label: 'Cognitive behavioral therapy',
-            value: 'Cognitive behavioral therapy'
-        },
-        {
-            label: 'Behavioral therapy',
-            value: 'Behavioral therapy'
-        },
-        {
-            label: 'Humanistic therapy',
-            value: 'Humanistic therapy'
-        },
-        {
-            label: 'Substance abuse counseling',
-            value: 'Substance abuse counseling'
-        },
-        {
-            label: 'Emotion-Focused Therapy (EFT)',
-            value: 'Not applicable'
-        },
-        {
-            label: 'Prefer not to say',
-            value: 'not_preferred'
-        },
-    ]
-};
-
+import { therapy_specializations } from '../data';
 
 const Specialization = ({ step, setStep, profile }) => {
 
@@ -72,11 +37,10 @@ const Specialization = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="specialization-form" onSubmit={handleSubmit(handleNext)} className="">
-                
+                <h1 className="text-lg text-left my-2">Do you specialize in any type of therapy? (Select all that apply)</h1>
                 <div className="w-full text-left">
-                    <Checkbox control={control} register={register} errors={errors} data={data} />
+                    <Checkbox control={control} register={register} errors={errors} data={therapy_specializations} />
                 </div>
-                    
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>
                 <Button 

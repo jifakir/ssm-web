@@ -3,37 +3,20 @@ import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
-
-const data = {
-    title: 'Do you prefer virtual or in-person sessions?',
-    name: 'session_type',
-    options: [
-        {
-            label: 'Virtual',
-            value: 'virtual'
-        },
-        {
-            label: 'In-person',
-            value: 'in_person'
-        },
-        {
-            label: 'No preference',
-            value: 'not_prefer'
-        },
-    ]
-};
-
+import { session_type } from '../data';
 
 const SessionFee = ({ step, setStep, profile }) => {
 
 
-    const { register, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { session_type: profile?.session_type }})
+    const { register, handleSubmit, control, watch, formState: { errors} } = useForm({defaultValues: { session_type: profile?.session_type }})
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { session_type } = data;
-        await updatePatient({ id: profile?.id, session_type, registration_status: 'entered-session_type' });
+        await updatePatient({ 
+            id: profile?.id, 
+            ...data, 
+            registration_status: 'entered-session_type' });
         setStep(step + 1);
 
     };
@@ -48,9 +31,14 @@ const SessionFee = ({ step, setStep, profile }) => {
     return (
         <>
             <form id="session_type-form" onSubmit={handleSubmit(handleNext)} className="">
-                <div className="form-control w-full max-w-xs">
+                <div className="form-control w-full">
+                    <h1 className="text-lg my-2 text-left">Do you prefer virtual or in-person sessions?</h1>
                     <div className="form-control w-full max-w-xs">
-                        <Radio register={register} errors={errors} data={data} />
+                        <Radio 
+                            control={control} 
+                            register={register} 
+                            errors={errors} 
+                            data={session_type} />
                     </div>
                 </div>
             </form>

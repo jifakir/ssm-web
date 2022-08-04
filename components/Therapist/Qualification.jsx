@@ -6,7 +6,7 @@ import { MdOutlineClose, MdAdd, MdEdit } from 'react-icons/md';
 import { FaGraduationCap, FaRegAddressCard } from 'react-icons/fa';
 import Button from '../UI/Button';
 import Checkbox from '../UI/Checkbox';
-import { titles } from './data';
+import { titles } from '../data';
 import { useForm } from 'react-hook-form';
 import { useUpdateTherapistMutation, useUploadLicenseMutation } from '../../store/api/ssmApi';
 
@@ -71,17 +71,18 @@ const Qualification = ({profile}) => {
     },[isSuccess,licenseSuccess]);
 
     return (
-    <div className='relative'>
-        <div className="absolute -top-5 right-0 text-2xl text-secondary cursor-pointer">
+    <div className='mt-5 md:mt-0 relative px-4 py-2.5 md:py-5 border-[1.5px] md:border-0 rounded-md md:rounded-none md:border-b-2 border-primary md:border-black'>
+        <h2 className="font-medium text-primary">Professional Information</h2>
+        <div className="absolute top-0 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
             {
                 form ? 
                 <MdOutlineClose onClick={() => setForm(false)} /> : 
-                <div className="">
-                    <MdEdit onClick={() => setForm(true)} className="hidden md:block" />
+                <div onClick={() => setForm(true)} className="">
+                    <MdEdit className="hidden md:block" />
                     <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                 </div>
             }
-        </div> 
+        </div>
         {form ?
         <form onSubmit={handleSubmit(handleNext)} className="">
             <div className="flex items-center my-5">
@@ -91,7 +92,7 @@ const Qualification = ({profile}) => {
                     Education
                 </div>
             </div>
-            <div className="flex gap-5">
+            <div className="flex flex-col md:flex-row gap-5">
                 {
                     fields.map((itm, idx) => {
                         return (
@@ -148,8 +149,9 @@ const Qualification = ({profile}) => {
                         <Button
                             type="button"
                             onClick={() => inputRef.current.click()}
-                            title={'UPLOAD'} btnQnr>
-                            <MdAdd />
+                            title={'UPLOAD'} btnOutline btnSecondary
+                            className={'w-full md:w-auto'} >
+                            <MdAdd className='hidden md:block' />
                         </Button>
                     </div>
                     <div className="">
@@ -177,26 +179,26 @@ const Qualification = ({profile}) => {
                     <Button title={'Submit'} btnQnr />
                 </div>
         </form>:
-        <div className="">
-        <div className="flex justify-start items-center">
-            <div className="flex font-semibold justify-center text-primary">
-                <FaGraduationCap className='text-xl' />
-                <h2 className="pl-2">Education</h2>
+        <div className="mt-5 text-sm md:text-base">
+            <div className="flex justify-start items-start md:items-center">
+                <div className="flex font-semibold justify-center text-primary">
+                    <FaGraduationCap className='text-xl hidden md:block' />
+                    <h2 className="md:pl-2">Education</h2>
+                </div>
+                <div className=" pl-5">
+                        {profile?.education?.map((edu, idx) => (
+                            <h4 key={idx} className="">
+                                {edu.degree + ', ' + edu.major + ', ' + edu.school_name}
+                            </h4>
+                        ))}
+                </div>
             </div>
-            <div className=" pl-5">
-                    {profile?.education?.map((edu, idx) => (
-                        <h4 key={idx} className="">
-                            {edu.degree + ', ' + edu.major + ', ' + edu.school_name}
-                        </h4>
-                    ))}
-            </div>
-        </div>
             <div className="flex justify-start py-5">
                 <div className="flex items-center font-semibold justify-center text-primary">
                     <div className="text-xl">
-                        <FaRegAddressCard />
+                        <FaRegAddressCard className='hidden md:block' />
                     </div>
-                    <h2 className="pl-3">License</h2>
+                    <h2 className="md:pl-3">License</h2>
                 </div>
                 <div className="pl-5 flex-1">
                             <h4 className="">
@@ -208,10 +210,10 @@ const Qualification = ({profile}) => {
             </div>
             <div className="flex items-center justify-start py-2">
                 <div className="flex font-semibold justify-center text-primary">
-                    <div className="text-2xl">
+                    <div className="text-2xl hidden md:block">
                         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><desc></desc><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="15" cy="15" r="3"></circle><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5"></path><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73"></path><line x1="6" y1="9" x2="18" y2="9"></line><line x1="6" y1="12" x2="9" y2="12"></line><line x1="6" y1="15" x2="8" y2="15"></line></svg>
                     </div>
-                <h2 className="pl-2">Title(s)</h2>
+                <h2 className="md:pl-2">Title(s)</h2>
                 </div>
                 <div className="pl-5 flex-1">
                         <h4 className="">

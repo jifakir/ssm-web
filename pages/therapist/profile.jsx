@@ -17,6 +17,7 @@ import Loader from '../../components/UI/Loader';
 import Availability from '../../components/Therapist/Availibilties';
 import MyersBriggs from '../../components/Therapist/Personality';
 import Subsciption from '../../components/Therapist/Subscription';
+import Select from '../../components/UI/Select';
 
 
 
@@ -30,8 +31,7 @@ const TherapistProfile = () => {
     const [availibility, setAvailability] = useState(false);
     const inputRef = useRef();
     const router = useRouter();
-
-    const {control} = useForm();
+    const { control } = useForm();
     const { isLoggedIn } = useSelector(state => state.auth);
     const {data:profile, refetch, isLoading, isSuccess, isError} = useFetchTherapistQuery({},{
         refetchOnMountOrArgChange: true
@@ -80,7 +80,20 @@ const TherapistProfile = () => {
     const { personality_type: { mind, energy, nature, tactics, identity } } = profile;
     
     return (
-        <div className="w-[90%] mx-auto my-10">
+        <div className="w-[90%] mx-auto mb-10 md:mt-10">
+            <div className="md:hidden py-10">
+                <Select
+                    control={control}
+                    data={{
+                        name: 'handle',
+                        options: [
+                            {
+                                label: 'Label',
+                                value: 'value'
+                            }
+                        ]
+                    }} />
+            </div>
             <div className="lg:flex gap-5">
                 <div className="flex flex-col items-center justify-center lg:w-1/3 lg:block">
                     <h1 className="font-sterio text-4xl">Therapist Profile</h1>
@@ -105,20 +118,17 @@ const TherapistProfile = () => {
                     <div className="">
                         <MyersBriggs profile={profile} />
                     </div>
+
                     {/* Date of Birth */}
-                   
                     <Details profile={profile} />
+
                     {/* Education Section */}
-                    <div className="relative py-10 border-b-2 border-black">
-                        <Qualification profile={profile} />
-                    </div>
+                    <Qualification profile={profile} />
+                    
                     {/* Availability */}
-                    <div className="mt-6">
-                        <Availability profile={profile} />
-                    </div>
-                    <div className="">
-                        <Subsciption profile={profile} />
-                    </div>
+                    <Availability profile={profile} />
+                    { /* Subscription */}
+                    <Subsciption profile={profile} />
                 </div>
             </div>
         </div>
