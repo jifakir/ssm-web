@@ -53,7 +53,8 @@ const Button = ({
                     leading-7
                     tracking-[0.055em]
                     text-primary
-                    py-4
+                    py-2
+                    md:py-4
                     hover:bg-secondary/50 
                     active:bg-neutral-focus
                     rounded
@@ -65,11 +66,11 @@ const Button = ({
                     uppercase
                     ${
                         btnOutline &&
-                        'border-[3px] border-secondary hover:border-secondary/10'
+                        'border-[3px] border-secondary hover:border-secondary/10 disabled:border-[#C0C0C0]'
                     }
                     ${
                         btnSecondary ?
-                        ' bg-transparent ':
+                        'bg-transparent ':
                         'bg-secondary'
                     }
                     ${
@@ -80,7 +81,7 @@ const Button = ({
                     ${className}
                     ${
                         fontSize ? fontSize : 'text-xl md:text-2xl'
-                    }`}>
+                    }`} disabled={disabled}>
                 <div className="flex justify-center items-center">
                 {children}
                 {title}

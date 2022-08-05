@@ -1,9 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
-// const user = typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('user_details'));
-const user = {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxNWEzNDBhLTI5MmYtNGU1MS04ZDBjLTMzOWZiNTExNTJiZiIsImZ1bGxfbmFtZSI6IkphaGlkdWwgSXNsYW0iLCJlbWFpbCI6ImdrLmphaGlkQGdtYWlsLmNvbSIsImlhdCI6MTY1MTI0MDU1MCwiZXhwIjoxNjUxMjQwNTgwfQ.Z3JbRHxA1WvNcIopNyBSj7jIlvrFXIQktDv3otfrIOI'}
-
 
 export const ssmApi = createApi({
     reducerPath: "ssmApi",
@@ -112,8 +109,11 @@ export const ssmApi = createApi({
                 body
             })
         }),
-        fetchSubscription: builder.query({
+        fetchSubscriptions: builder.query({
             query: () => `/subscriptions`
+        }),
+        fetchSubscriptionStatus: builder.query({
+            query: () => `/therapists/subscription-status`
         }),
         // Save card details
         saveCard: builder.mutation({
@@ -144,7 +144,7 @@ export const {
     useUploadLicenseMutation,
     useFetchSubscriptionPlanQuery,
     useSubscribeMutation,
-    useFetchSubscriptionQuery,
+    useFetchSubscriptionsQuery,
     useUploadPictureMutation,
     useSaveCardMutation,
     useMatchTherapistQuery } = ssmApi;
