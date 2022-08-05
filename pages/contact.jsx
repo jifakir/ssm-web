@@ -100,7 +100,6 @@ const Contact = () => {
                                 <div className="col-span-2">
                                     <TextInput
                                     type={'textarea'}
-                                    data={{name: '', type: 'textarea', title: '', pHolder: ''}}
                                     name='message'
                                     title='Message'
                                     pHolder='We’d love to hear from you!'

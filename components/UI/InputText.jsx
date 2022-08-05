@@ -19,7 +19,7 @@ const InputText = ({ control, name, rules, type, pHolder, inputLg, className,}) 
                     w-full border-2 hover:border-neutral 
                     shadow-sm focus:border-accent 
                     focus:outline-none bg-white 
-                    max-w-xs rounded ${className} ${error && 'input-error'}`} 
+                    rounded ${className} ${error && 'input-error'}`} 
                 >
                 </textarea>:
                 <input 

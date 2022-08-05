@@ -3,9 +3,9 @@ import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { GrCertificate } from 'react-icons/gr';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
-import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose } from 'react-icons/md';
+import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { BsGenderTrans, BsTelephone } from 'react-icons/bs';
-import { useFetchTherapistQuery, useUploadPictureMutation } from '../../store/api/ssmApi';
+import { useFetchSubscriptionsQuery, useFetchTherapistQuery, useUploadPictureMutation } from '../../store/api/ssmApi';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Input from '../../components/UI/TextInput';
@@ -23,6 +23,8 @@ import Select from '../../components/UI/Select';
 
 const TherapistProfile = () => {
 
+    const [option, setOption] = useState('Personal Information');
+    const [expand, setExpand] = useState(false);
     const [imgUrl, setImgUrl] = useState();
     const [briggs, setBriggs] = useState('efrj');
     const [factor, setFactor] = useState(false);
@@ -36,6 +38,7 @@ const TherapistProfile = () => {
     const {data:profile, refetch, isLoading, isSuccess, isError} = useFetchTherapistQuery({},{
         refetchOnMountOrArgChange: true
     });
+    const { data:subscriptions } = useFetchSubscriptionsQuery();
     const [uploadPicture,{ isLoading:pictureUploading }] = useUploadPictureMutation();
     
     const uploadHandler = async (e) => {
@@ -46,14 +49,19 @@ const TherapistProfile = () => {
 
     };
 
+    const optionHandler = (value) => {
+        setOption(value);
+        setExpand(false);
+    };
+
     // Side Effects
 
-    useEffect(() => {
-        refetch();
-        if(isSuccess && !profile?.is_subscribed){
-            router.push('/therapist/questionnaire');
-        }
-    },[]);
+    // useEffect(() => {
+    //     refetch();
+    //     if(isSuccess && !profile?.is_subscribed){
+    //         router.push('/therapist/questionnaire');
+    //     }
+    // },[]);
 
     useEffect(()=> {
         if(!isLoggedIn){
@@ -79,24 +87,31 @@ const TherapistProfile = () => {
 
     const { personality_type: { mind, energy, nature, tactics, identity } } = profile;
     
+    const options = ['Personal Information', 'Professional Information', 'Availability', 'Subscription Plan'];
+    
+
     return (
     <div className="">
-        <div className="-top-5">
-            <div className="md:hidden">
-                <Select
-                    control={control}
-                    data={{
-                        name: 'handle',
-                        options: [
-                            {
-                                label: 'Label',
-                                value: 'value'
-                            }
-                        ]
-                    }} />
+        <div className="border-b md:hidden">
+            <div onClick={() => setExpand(state => !state)} className="relative px-4 py-3.5 text-xl border-t-2 cursor-pointer">
+                {option}
+                <span className="absolute top-1/2 transform -translate-y-1/2 right-2">
+                    <MdOutlineKeyboardArrowDown className='text-3xl text-neutral' />
+                </span>
             </div>
+            <ul className={`transition-height duration-500 ease-in-out overflow-hidden ${expand ? 'h-[234px]' : 'h-0'}`}>
+                {
+                    
+                    options.map((v,idx) => <li 
+                        key={`dropdown_${idx}`}
+                        onClick={() => optionHandler(v)} 
+                        className="px-4 py-3.5 text-xl border-t-2 cursor-pointer">
+                            {v}
+                        </li>)
+                }
+            </ul>
         </div>
-        <div className="w-[90%] mx-auto mb-10 md:mt-10">
+        <div className="w-[90%] mx-auto my-10">
             
             <div className="lg:flex gap-5">
                 <div className="flex flex-col items-center justify-center lg:w-1/3 lg:block">
@@ -119,20 +134,22 @@ const TherapistProfile = () => {
                     </div>
                 </div>
                 <div className="pt-10 flex-1">
-                    <div className="">
+                    <div className={`${option === options[0] ? 'block' : 'hidden md:block'}`}>
                         <MyersBriggs profile={profile} />
+                        <Details profile={profile} />
                     </div>
-
-                    {/* Date of Birth */}
-                    <Details profile={profile} />
-
                     {/* Education Section */}
-                    <Qualification profile={profile} />
-                    
+                    <div className={`${option === options[1] ? 'block' : 'hidden md:block'}`}>
+                        <Qualification profile={profile} />
+                    </div>
                     {/* Availability */}
-                    <Availability profile={profile} />
+                    <div className={`${option === options[2] ? 'block' : 'hidden md:block'}`}>
+                        <Availability profile={profile} />
+                    </div>
                     { /* Subscription */}
-                    <Subsciption profile={profile} />
+                    <div className={`${option === options[3] ? 'block' : 'hidden md:block'}`}>
+                        <Subsciption profile={profile} />
+                    </div>
                 </div>
             </div>
         </div>
