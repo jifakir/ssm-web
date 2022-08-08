@@ -10,12 +10,12 @@ const Warning = ({yesHandler, noHandler}) => {
                 <h1 className="text-xl pb-4"> If you cancel, you will no longer be listed on our database. We want to continue to share your contact details with future patients. </h1>
                 <div className="my-4"> 
                     <Button
-                        onClick={yesHandler}
+                        onClick={noHandler}
                         title={`No, don't cancel`}
                         btnOutline />
                 </div>
                 <Button
-                    onClick={noHandler}
+                    onClick={yesHandler}
                     title={`yes, cancel`}
                     btnOutline 
                     btnSecondary />

@@ -71,11 +71,10 @@ const Language = ({ step, setStep, profile }) => {
 
     const handleNext = async (data) => {
         const { languages, speak_other_languages } = data;
-        if(!languages) return;
         await updateTherapist({
             id: profile?.id,
             speak_other_languages,
-            languages: languages.filter(v=> v), 
+            languages: languages ? languages.filter(v=> v) : [], 
             registration_status: 'entered-language' });
     };
 

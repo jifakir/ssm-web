@@ -136,7 +136,7 @@ const Header = () => {
                                                 Profile
                                             </a>
                                         </Link>
-                                        <h1 onClick={() => dispatch(logOut())} className='cursor-pointer'>
+                                        <h1 onClick={signOutHandler} className='cursor-pointer'>
                                             Signout
                                         </h1>
                                     </div>

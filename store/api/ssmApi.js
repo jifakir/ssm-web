@@ -16,7 +16,7 @@ export const ssmApi = createApi({
             return headers
           },
     }),
-    tagTypes: ['Therapist', 'SSM', 'Patient'],
+    tagTypes: ['Therapist', 'SSM', 'Patient', 'Subscription'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (body) => ({
@@ -107,13 +107,23 @@ export const ssmApi = createApi({
                 url: `/subscriptions`,
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ['Subscription']
         }),
         fetchSubscriptions: builder.query({
-            query: () => `/subscriptions`
+            query: () => `/subscriptions`,
+            providesTags: ['Subscription']
         }),
         fetchSubscriptionStatus: builder.query({
-            query: () => `/therapists/subscription-status`
+            query: () => `/therapists/subscription-status`,
+            providesTags: ['Subscription']
+        }),
+        cancelSubscription: builder.mutation({
+            query: ({ therapistId }) => ({
+                url: `/subscriptions/${therapistId}/cancel`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['Subscription']
         }),
         // Save card details
         saveCard: builder.mutation({
@@ -125,8 +135,13 @@ export const ssmApi = createApi({
             invalidatesTags: ['Therapist'],
         }),
         matchTherapist: builder.query({
-            query: ({patientId}) => `/patients/${patientId}/get-matches`
-        })
+            query: ({ patientId }) => `/patients/${patientId}/get-matches`
+        }),
+        fetchCardList: builder.query({
+            query: ({ therapistId }) => `/therapists/${therapistId}/payment-methods`,
+            providesTags: ['Subscription']
+        }),
+        
     })
 });
 
@@ -147,4 +162,7 @@ export const {
     useFetchSubscriptionsQuery,
     useUploadPictureMutation,
     useSaveCardMutation,
-    useMatchTherapistQuery } = ssmApi;
+    useMatchTherapistQuery,
+    useCancelSubscriptionMutation,
+    useFetchCardListQuery,
+    useFetchSubscriptionStatusQuery } = ssmApi;

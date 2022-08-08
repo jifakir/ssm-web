@@ -7,7 +7,7 @@ import Input from '../../UI/TextInput';
 
 const Feedback = ({submitHandler}) => {
 
-    const { control } = useForm({defaultValues: {feedback: ''}});
+    const { control, handleSubmit } = useForm({defaultValues: {feedback: ''}});
 
     return (
         <div className="my-5">
@@ -24,7 +24,7 @@ const Feedback = ({submitHandler}) => {
                     Please let us know below what we can do better.
                 </p>
             </div>
-            <form className="mt-5">
+            <form onSubmit={handleSubmit(submitHandler)} className="mt-5">
                 <Input
                     type={'textarea'}
                     control={control}

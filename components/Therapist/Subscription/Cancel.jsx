@@ -11,12 +11,12 @@ const Cancel = ({ yesHandler, noHandler }) => {
                 <h1 className="font-bold text-2xl pb-4">Are you sure you want to cancel?</h1>
                 <div className="my-4">
                     <Button
-                        onClick={yesHandler}
+                        onClick={noHandler}
                         title={`No, don't cancel`}
                         btnOutline />
                 </div>
                 <Button
-                    onClick={noHandler}
+                    onClick={yesHandler}
                     title={`yes, cancel`}
                     btnOutline 
                     btnSecondary />

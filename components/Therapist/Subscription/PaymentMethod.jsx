@@ -2,12 +2,19 @@ import React from 'react';
 import { useState } from 'react';
 import { MdClose, MdEdit } from 'react-icons/md';
 import { RiVisaLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
+import { useFetchCardListQuery } from '../../../store/api/ssmApi';
 import UpdatePayment from './UpdatePayment';
 
 
 const PaymentMethod = () => {
 
-    const [form, setForm] = useState();
+    const [form, setForm] = useState(false);
+
+    const { userDetails } = useSelector(state => state.auth);
+    const { data } = useFetchCardListQuery({ therapistId:userDetails.id });
+
+    const defaultCard = data?.find(card => card.is_default === true);
 
     return !form ? (
         <div className="relative mt-5 md:mt-0 border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary">
@@ -35,13 +42,13 @@ const PaymentMethod = () => {
                         </svg>
                         <RiVisaLine style={{ fill: "url(#blue-gradient)" }}  />
                     </span>
-                    <span className="pl-2 text-sm md:text-base">ending in 1234</span>
+                    <span className="pl-2 text-sm md:text-base">ending in {defaultCard?.metadata.last4}</span>
                 </p>
                 <p className="hidden md:block text-secondary-focus cursor-pointer underline underline-offset-2">Change Payment Method</p>
             </div>
         </div>
     ): (
-        <UpdatePayment />
+        <UpdatePayment cardDetails={data} />
     )
 }
 
