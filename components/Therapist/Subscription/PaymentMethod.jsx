@@ -44,7 +44,7 @@ const PaymentMethod = () => {
                     </span>
                     <span className="pl-2 text-sm md:text-base">ending in {defaultCard?.metadata.last4}</span>
                 </p>
-                <p className="hidden md:block text-secondary-focus cursor-pointer underline underline-offset-2">Change Payment Method</p>
+                <p onClick={() => setForm(true)} className="hidden md:block text-secondary-focus cursor-pointer underline underline-offset-2">Change Payment Method</p>
             </div>
         </div>
     ): (

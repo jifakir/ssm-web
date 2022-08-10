@@ -5,13 +5,14 @@ import { useForm } from 'react-hook-form';
 import Button from '../UI/Button';
 import Image from 'next/image';
 import { useSaveCardMutation } from '../../store/api/ssmApi';
+import { useEffect } from 'react';
 
 
-const PaymentForm = ({ onCancel }) => {
+const PaymentForm = ({ onCancel, setAdd }) => {
 
   const elements = useElements();
   const stripe = useStripe();
-  const [saveCard, {data, isSuccess,isLoading}] = useSaveCardMutation();
+  const [saveCard, { data, error, isSuccess, isLoading, isError }] = useSaveCardMutation();
   
   const { control } = useForm();
     const options = useMemo(() => ({
@@ -83,6 +84,16 @@ const PaymentForm = ({ onCancel }) => {
       await saveCard({payment_method_id: paymentMethod.id});
     };
 
+
+    useEffect(() => {
+      if(isSuccess){
+        setAdd(false);
+      }
+      if(isError){
+        console.log(`${error.data.message}`);
+      }
+      // eslint-disable-next-line
+    },[isSuccess, isError]);
 
     return (
         <div className="my-5 border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary">

@@ -19,7 +19,6 @@ const Status = ({form, setForm}) => {
     const { userDetails } = useSelector(state => state.auth);
 
     const { data } = useFetchSubscriptionStatusQuery();
-    const [cancelSubscription, {isLoading, isError, error}] = useCancelSubscriptionMutation();
 
     const handleCancel = () => {
         setCancel(false);
@@ -31,9 +30,6 @@ const Status = ({form, setForm}) => {
         setFeedback(true);
     };
 
-    const handleFeedback = () => {
-        cancelSubscription({therapistId: userDetails?.id});
-    };
 
     return (
         <div className="">
@@ -53,14 +49,14 @@ const Status = ({form, setForm}) => {
 
             {
                 feedback &&
-                <Feedback submitHandler={handleFeedback} />
+                <Feedback />
             }
 
             <div className={`relative mt-5 md:mt-0 border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary ${(cancel || warning || feedback) ? 'hidden' : 'block'}`}>
                 <div className="absolute md:hidden -top-2 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                     {
                         form ? 
-                        <MdClose onClick={() => setForm('')} className="text-red-500" /> : 
+                        <MdClose onClick={() => setForm('')} className="text-red-500 hidden md:block" /> : 
                         <div onClick={() => setForm('status')} className="">
                             <MdEdit className="hidden md:block" />
                             <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
@@ -75,7 +71,7 @@ const Status = ({form, setForm}) => {
                         <h2 className="text-sm font-semibold md:font-medium md:pl-2">Your plan is {data?.status} </h2>
                     </div>
                 </div>
-                <div className="mt-4 md:hidden">
+                <div className="mt-4">
                     {
                         data?.status === 'active' ?
                         <Button

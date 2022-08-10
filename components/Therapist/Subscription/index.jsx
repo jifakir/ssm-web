@@ -63,7 +63,7 @@ const Subsciption = ({profile}) => {
     
     return (
         <div className="mt-5 md:mt-0 relative md:px-4 py-2.5 md:py-5">
-            <div className="absolute hidden md:block top-1 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
+            {/* <div className="absolute hidden md:block top-1 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                 {
                     form ? 
                     <MdClose onClick={() => setForm(false)} className="text-red-500" /> : 
@@ -72,7 +72,7 @@ const Subsciption = ({profile}) => {
                         <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                     </div>
                 }
-            </div>
+            </div> */}
             <div className="">
                 {
                     <div className="md:grid lg:grid-cols-2 gap-5">
@@ -97,11 +97,6 @@ const Subsciption = ({profile}) => {
                     </div>
                 }
             </div>
-            {/* <Confirmed />
-            <Cancel />
-            <Warning />
-            <Feedback />
-            <WelcomeBack /> */}
         </div>
     )
 }
