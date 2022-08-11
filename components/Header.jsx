@@ -37,7 +37,7 @@ const menuList = [
 const Header = () => {
 
     const [isOpen, setIsOpen] = React.useState(false);
-    const [redirectTo, setRedirectTo] = React.useState(false);
+    const [redirectTo, setRedirectTo] = React.useState('/therapist/profile');
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [tab, setTab] = React.useState(0);
     const [open, setOpen] = React.useState(false);
@@ -60,9 +60,25 @@ const Header = () => {
         setDrawerOpen(!drawerOpen);
     };
 
+    const therapistLogin = () => {
+        if(data?.is_subscribed){
+            setRedirectTo('/therapist/profile');
+        }else{
+            setRedirectTo('/therapist/questionnaire');
+        }
+        setOpen(!open);
+        setProfile(false);
+    };
+
+    const patientLogin = () => {
+        setRedirectTo('/patient/profile');
+        setOpen(!open);
+        setProfile(false);
+    };
+
     return (
         <div className="w-full py-1 md:py-5 px-5 border-b-[10px] border-primary">
-            <Login open={open} setOpen={setOpen} redirectTo={data?.is_subscribed ? '/therapist/profile' : '/therapist/questionnaire'} />
+            <Login open={open} setOpen={setOpen} redirectTo={redirectTo} />
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <Link href={'/'} className="cursor-pointer" passHref>
@@ -123,8 +139,8 @@ const Header = () => {
                                         <h1 className="">Select Profile Type</h1>
                                     </div>
                                     <div className="px-4 py-2.5 text-[20px]">
-                                        <h1 className="">Therapist</h1>
-                                        <h1 className="">Patient</h1>
+                                        <h1 onClick={therapistLogin} className="cursor-pointer">Therapist</h1>
+                                        <h1 onClick={patientLogin} className="cursor-pointer">Patient</h1>
                                     </div>
                                 </>
                                 ):
@@ -136,7 +152,7 @@ const Header = () => {
                                                 Profile
                                             </a>
                                         </Link>
-                                        <h1 onClick={() => dispatch(logOut())} className='cursor-pointer'>
+                                        <h1 onClick={signOutHandler} className='cursor-pointer'>
                                             Signout
                                         </h1>
                                     </div>

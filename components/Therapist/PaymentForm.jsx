@@ -1,17 +1,20 @@
 import React, { useMemo } from 'react';
-import { CardCvcElement, CardExpiryElement, CardNumberElement, Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import { CardCvcElement, CardExpiryElement, CardNumberElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import Input from '../UI/TextInput';
 import { useForm } from 'react-hook-form';
 import Button from '../UI/Button';
 import Image from 'next/image';
+import { useSaveCardMutation } from '../../store/api/ssmApi';
+import { useEffect } from 'react';
 
 
-const PaymentForm = ({ onCancel }) => {
+const PaymentForm = ({ onCancel, setAdd }) => {
 
-    const { control } = useForm();
-    const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBKEY}`);
-
+  const elements = useElements();
+  const stripe = useStripe();
+  const [saveCard, { data, error, isSuccess, isLoading, isError }] = useSaveCardMutation();
+  
+  const { control } = useForm();
     const options = useMemo(() => ({
         showIcon: true,
         style: {
@@ -55,6 +58,43 @@ const PaymentForm = ({ onCancel }) => {
       []
     );
 
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+  
+      if (elements == null) {
+        return;
+      }
+  
+      if (!stripe || !elements) {
+        // Stripe.js has not loaded yet. Make sure to disable
+        // form submission until Stripe.js has loaded.
+        return;
+      }
+  
+      const {error, paymentMethod} = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardNumberElement)
+      });
+  
+      if(error){
+        setMessage(error.message);
+        return;
+      }
+      console.log("payment method: ",paymentMethod);
+      await saveCard({payment_method_id: paymentMethod.id});
+    };
+
+
+    useEffect(() => {
+      if(isSuccess){
+        setAdd(false);
+      }
+      if(isError){
+        console.log(`${error.data.message}`);
+      }
+      // eslint-disable-next-line
+    },[isSuccess, isError]);
+
     return (
         <div className="my-5 border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary">
             <h1 className="text-sm lg:text-xl font-medium text-primary">Add New Payment Method</h1>
@@ -77,49 +117,47 @@ const PaymentForm = ({ onCancel }) => {
                 </div>
               </div>
             </div>
-            <div className="space-y-2">
-                <Elements stripe={stripePromise}>
-                    <div className="">
-                        <h1 className='py-1 text-sm font-medium'>Name on card </h1>
-                        <Input
-                            control={control}
-                            name={'name'} />
-                    </div>
-                    <div className="">
-                        <h1 className='py-1 text-sm font-medium w-full'>Card number </h1>
-                        <CardNumberElement options={options} className="flex-1 border-2 
-                            hover:border-neutral 
-                            shadow-sm 
-                            focus:border-accent 
-                            focus:outline-none 
-                            bg-white
-                            cursor-pointer
-                            rounded py-2 px-4" />
-                    </div>
-                    <div className="">
-                        <h1 className='py-1 text-sm font-medium'>Expiration date </h1>
-                        <CardExpiryElement options={extraOptions} className="flex-1 border-2 
-                            hover:border-neutral 
-                            shadow-sm 
-                            focus:border-accent 
-                            focus:outline-none 
-                            bg-white
-                            cursor-pointer
-                            rounded py-2 px-4" />
-                    </div>
-                    <div className="">
-                        <h1 className='py-1 text-sm font-medium'>Security code </h1>
-                        <CardCvcElement options={extraOptions} className="flex-1 border-2 
-                            hover:border-neutral 
-                            shadow-sm 
-                            focus:border-accent 
-                            focus:outline-none 
-                            bg-white
-                            cursor-pointer
-                            rounded py-2 px-4" />
-                    </div>
-                </Elements>
-            </div>
+              <form onSubmit={handleSubmit} id="payment_form" className="space-y-2">
+                      <div className="">
+                          <h1 className='py-1 text-sm font-medium'>Name on card </h1>
+                          <Input
+                              control={control}
+                              name={'name'} />
+                      </div>
+                      <div className="">
+                          <h1 className='py-1 text-sm font-medium w-full'>Card number </h1>
+                          <CardNumberElement options={options} className="flex-1 border-2 
+                              hover:border-neutral 
+                              shadow-sm 
+                              focus:border-accent 
+                              focus:outline-none 
+                              bg-white
+                              cursor-pointer
+                              rounded py-2 px-4" />
+                      </div>
+                      <div className="">
+                          <h1 className='py-1 text-sm font-medium'>Expiration date </h1>
+                          <CardExpiryElement options={extraOptions} className="flex-1 border-2 
+                              hover:border-neutral 
+                              shadow-sm 
+                              focus:border-accent 
+                              focus:outline-none 
+                              bg-white
+                              cursor-pointer
+                              rounded py-2 px-4" />
+                      </div>
+                      <div className="">
+                          <h1 className='py-1 text-sm font-medium'>Security code </h1>
+                          <CardCvcElement options={extraOptions} className="flex-1 border-2 
+                              hover:border-neutral 
+                              shadow-sm 
+                              focus:border-accent 
+                              focus:outline-none 
+                              bg-white
+                              cursor-pointer
+                              rounded py-2 px-4" />
+                      </div>
+              </form>
             <div className="space-x-2 mt-3">
               <Button
                 onClick={onCancel}
@@ -129,7 +167,8 @@ const PaymentForm = ({ onCancel }) => {
               <Button
                 title={'Add'}
                 btnOutline
-                disabled={true} />
+                form={'payment_form'}
+                disabled={isLoading || !stripe || !elements} />
             </div>
         </div>
     )

@@ -16,7 +16,7 @@ export const ssmApi = createApi({
             return headers
           },
     }),
-    tagTypes: ['Therapist', 'SSM', 'Patient'],
+    tagTypes: ['Therapist', 'SSM', 'Patient', 'Subscription', 'Card'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (body) => ({
@@ -107,13 +107,24 @@ export const ssmApi = createApi({
                 url: `/subscriptions`,
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ['Subscription']
         }),
         fetchSubscriptions: builder.query({
-            query: () => `/subscriptions`
+            query: () => `/subscriptions`,
+            providesTags: ['Subscription']
         }),
         fetchSubscriptionStatus: builder.query({
-            query: () => `/therapists/subscription-status`
+            query: () => `/therapists/subscription-status`,
+            providesTags: ['Subscription']
+        }),
+        cancelSubscription: builder.mutation({
+            query: ({ subsId, feedback }) => ({
+                url: `/subscriptions/${subsId}/cancel`,
+                method: 'POST',
+                body: { feedback }
+            }),
+            invalidatesTags: ['Subscription', 'Card']
         }),
         // Save card details
         saveCard: builder.mutation({
@@ -122,11 +133,26 @@ export const ssmApi = createApi({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Therapist'],
+            invalidatesTags: ['Card'],
+        }),
+        changeDefaultCard: builder.mutation({
+            query: ({paymentMethod, therapistId}) => ({
+                url: `/therapists/${therapistId}/make-payment-method-default`,
+                method: 'POST',
+                body: {
+                    payment_method_id: paymentMethod
+                }
+            }),
+            invalidatesTags: ['Card']
         }),
         matchTherapist: builder.query({
-            query: ({patientId}) => `/patients/${patientId}/get-matches`
-        })
+            query: ({ patientId }) => `/patients/${patientId}/get-matches`
+        }),
+        fetchCardList: builder.query({
+            query: ({ therapistId }) => `/therapists/${therapistId}/payment-methods`,
+            providesTags: ['Subscription', 'Card']
+        }),
+        
     })
 });
 
@@ -147,4 +173,7 @@ export const {
     useFetchSubscriptionsQuery,
     useUploadPictureMutation,
     useSaveCardMutation,
-    useMatchTherapistQuery } = ssmApi;
+    useMatchTherapistQuery,
+    useCancelSubscriptionMutation,
+    useFetchCardListQuery,
+    useFetchSubscriptionStatusQuery } = ssmApi;

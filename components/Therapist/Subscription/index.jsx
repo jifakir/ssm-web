@@ -5,7 +5,7 @@ import { GrCertificate } from 'react-icons/gr';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
 import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose } from 'react-icons/md';
 import { BsBookmarks, BsGenderTrans, BsTelephone } from 'react-icons/bs';
-import { useFetchTherapistQuery } from '../../../store/api/ssmApi';
+import { useFetchSubscriptionsQuery, useFetchTherapistQuery } from '../../../store/api/ssmApi';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Input from '../../UI/TextInput';
@@ -32,7 +32,7 @@ import WelcomeBack from './WelcomeBack';
 
 const Subsciption = ({profile}) => {
 
-    const [form, setForm] = useState(false);
+    const [form, setForm] = useState('');
     const {control, handleSubmit} = useForm({
         defaultValues: {
             date_of_birth: profile?.date_of_birth,
@@ -42,6 +42,7 @@ const Subsciption = ({profile}) => {
         }
     });
 
+    const { data:subscriptions } = useFetchSubscriptionsQuery();
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const detailsSubmitHandler = async (data) => {
@@ -52,6 +53,7 @@ const Subsciption = ({profile}) => {
             registration_status: 'completed' });
     };
     
+    console.log(subscriptions);
 
     useEffect(() => {
         if(isSuccess){
@@ -61,7 +63,7 @@ const Subsciption = ({profile}) => {
     
     return (
         <div className="mt-5 md:mt-0 relative md:px-4 py-2.5 md:py-5">
-            <div className="absolute hidden md:block top-1 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
+            {/* <div className="absolute hidden md:block top-1 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                 {
                     form ? 
                     <MdClose onClick={() => setForm(false)} className="text-red-500" /> : 
@@ -70,13 +72,9 @@ const Subsciption = ({profile}) => {
                         <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                     </div>
                 }
-            </div>
+            </div> */}
             <div className="">
                 {
-                    form ?
-                    <form onSubmit={handleSubmit(detailsSubmitHandler)} className="">
-                        
-                    </form>:
                     <div className="md:grid lg:grid-cols-2 gap-5">
                         <div className="flex justify-start col-span-2">
                             <div className="flex font-semibold items-center justify-center text-primary">
@@ -84,20 +82,21 @@ const Subsciption = ({profile}) => {
                                 <h2 className="md:pl-2 hidden md:block">Subscription</h2>
                             </div>
                         </div>
-                        {/* ++++++++ Annual Subscription ++++++++ */}
-                        <SubscriptionItem />
+                        {/* ++++++++ Subscription Plan ++++++++ */}
+                        <div className={`${(form === '' || form === 'subscription') ? 'block' : 'hidden md:block'}`}>
+                            <SubscriptionItem form={form} setForm={setForm}  />
+                        </div>
                         {/* Payment method */}
-                        <PaymentMethod />
+                        <div className={`${(form === '' || form === 'payment') ? 'block' : 'hidden md:block'}`}>
+                            <PaymentMethod form={form} setForm={setForm} />
+                        </div>
                         {/* Status */}
-                        <Status />
+                        <div className={`${(form === '' || form === 'status') ? 'block' : 'hidden md:block'}`}>
+                            <Status form={form} setForm={setForm} />
+                        </div>
                     </div>
                 }
             </div>
-            {/* <Confirmed />
-            <Cancel />
-            <Warning />
-            <Feedback />
-            <WelcomeBack /> */}
         </div>
     )
 }
