@@ -15,8 +15,11 @@ const PaymentMethod = ({ form, setForm }) => {
 
     const defaultCard = data?.find(card => card.is_default === true);
 
-    return !form ? (
+    return (
         <div className="relative mt-5 md:mt-0 border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary">
+            {
+                form === 'payment' && <UpdatePayment cardDetails={data} setForm={setForm} />
+            }
             <div className="absolute md:hidden -top-2 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                 {
                     form ? 
@@ -43,11 +46,9 @@ const PaymentMethod = ({ form, setForm }) => {
                     </span>
                     <span className="pl-2 text-sm md:text-base">ending in {defaultCard?.metadata.last4}</span>
                 </p>
-                <p onClick={() => setForm(true)} className="hidden md:block text-secondary-focus cursor-pointer underline underline-offset-2">Change Payment Method</p>
+                <p onClick={() => setForm('payment')} className="hidden md:block text-secondary-focus cursor-pointer underline underline-offset-2">Change Payment Method</p>
             </div>
         </div>
-    ): (
-        <UpdatePayment cardDetails={data} setForm={setForm} />
     )
 }
 
