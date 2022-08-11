@@ -1,19 +1,10 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React, { useRef, useState } from 'react';
-import { GrCertificate } from 'react-icons/gr';
-import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
 import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose } from 'react-icons/md';
 import { BsGenderTrans, BsTelephone } from 'react-icons/bs';
-import { useFetchTherapistQuery } from '../../store/api/ssmApi';
-import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import Input from '../../components/UI/TextInput';
 import { useForm } from 'react-hook-form';
-import Select from '../../components/UI/Select';
-import Checkbox from '../../components/UI/Checkbox';
 import Radio from '../../components/UI/Radio';
-import {gender} from './data';
+import { gender } from '../data';
 import Button from '../../components/UI/Button';
 import { useEffect } from 'react';
 import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
@@ -47,21 +38,22 @@ const Details = ({profile}) => {
     },[isSuccess]);
     
     return (
-        <div className="relative py-5 border-b-2 border-black">
-                        <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
+        <div className="relative mt-5 md:mt-0 px-4 py-2.5 md:py-5 border-[1.5px] md:border-0 rounded-md md:rounded-none md:border-b-2 border-primary md:border-black">
+                        <div className="absolute top-0 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                             {
                                 details ? 
                                 <MdClose onClick={() => setdetails(false)} className="text-red-500" /> : 
-                                <div className="">
-                                    <MdEdit onClick={() => setdetails(true)} className="hidden md:block" />
-                                    <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
+                                <div onClick={() => setdetails(true)} className="">
+                                    <MdEdit className="hidden md:block" />
+                                    <span className="md:hidden text-sm underline underline-offset-4">Edit</span>
                                 </div>
                             }
                         </div>
+                        <h2 className="font-medium text-primary">Personal Information</h2>
                         <div className="pt-5">
                             {
                                 details ?
-                                <form onSubmit={handleSubmit(detailsSubmitHandler)} className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                <form onSubmit={handleSubmit(detailsSubmitHandler)} className="md:grid grid-cols-1 lg:grid-cols-2 gap-5">
                                     <div className="form-control w-full max-w-xs">
                                         <Input
                                             type={'date'} 
@@ -140,41 +132,24 @@ const Details = ({profile}) => {
                                                 className="w-48 absolute top-0 right-0" />
                                         </div>
                                     </div>
-                                    <div className="col-span-2">
+                                    <div className="mt-2 md:mt-0 col-span-2">
                                         <Button type={'submit'} title={'Update'} btnQnr />
                                     </div>
                                 </form>:
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                <div className="text-sm md:text-base grid grid-cols-1 lg:grid-cols-2 gap-5">
                                     <div className="flex items-center">
                                         <div className="flex font-semibold justify-center items-center text-primary">
-                                            <MdOutlineCake className='text-xl' />
-                                            <h2 className="pl-2">Date of Birth</h2>
+                                            <MdOutlineCake className='text-xl hidden md:block' />
+                                            <h2 className="md:pl-2">Date of Birth</h2>
                                         </div>
                                         <div className=" pl-5">
-                                            <h3 className="pl-5">{profile?.date_of_birth}</h3>
+                                            <h3 className="">{profile?.date_of_birth}</h3>
                                         </div>
                                     </div>
                                     <div className="flex items-center">
                                         <div className="flex font-semibold justify-center items-center text-primary">
-                                            <MdOutlineLocationOn className='text-xl' />
-                                            <h2 className="pl-2">Address</h2>
-                                        </div>
-                                        <div className=" pl-5">
-                                            
-                                                <h3 className="">{
-                                                    `${profile?.user_address.line1} 
-                                                    ${profile?.user_address.line2}
-                                                    ${profile?.user_address.city}
-                                                    ${profile?.user_address.state}
-                                                    ${profile?.user_address.zip_code}
-                                                    `
-                                                }</h3>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <div className="flex font-semibold justify-center items-center text-primary">
-                                            <BsTelephone className='text-xl' />
-                                            <h2 className="pl-2">Phone Number</h2>
+                                            <BsTelephone className='text-xl hidden md:block' />
+                                            <h2 className="md:pl-2">Phone Number</h2>
                                         </div>
                                         <div className="pl-5">
                                                 <h3 className="">{profile?.phone}</h3>
@@ -182,11 +157,28 @@ const Details = ({profile}) => {
                                     </div>
                                     <div className="flex items-center">
                                         <div className="flex font-semibold justify-center items-center text-primary">
-                                            <BsGenderTrans className='text-xl' />
-                                            <h2 className="pl-2">Gender</h2>
+                                            <BsGenderTrans className='text-xl hidden md:block' />
+                                            <h2 className="md:pl-2">Gender</h2>
                                         </div>
                                         <div className="pl-5">
                                             <h3 className="capitalize">{profile?.gender}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start md:items-center">
+                                        <div className="flex font-semibold justify-center items-center text-primary">
+                                            <MdOutlineLocationOn className='text-xl hidden md:block' />
+                                            <h2 className="md:pl-2">Address</h2>
+                                        </div>
+                                        <div className="pl-5">
+                                            
+                                                <h3 className="">{
+                                                    `${profile?.user_address.line1},
+                                                    ${profile?.user_address.line2},
+                                                    ${profile?.user_address.city},
+                                                    ${profile?.user_address.state}
+                                                    ${profile?.user_address.zip_code}
+                                                    `
+                                                }</h3>
                                         </div>
                                     </div>
                                 </div>

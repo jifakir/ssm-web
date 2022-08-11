@@ -1,9 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
-// const user = typeof window !== 'undefined' && JSON.parse(window.localStorage.getItem('user_details'));
-const user = {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjkxNWEzNDBhLTI5MmYtNGU1MS04ZDBjLTMzOWZiNTExNTJiZiIsImZ1bGxfbmFtZSI6IkphaGlkdWwgSXNsYW0iLCJlbWFpbCI6ImdrLmphaGlkQGdtYWlsLmNvbSIsImlhdCI6MTY1MTI0MDU1MCwiZXhwIjoxNjUxMjQwNTgwfQ.Z3JbRHxA1WvNcIopNyBSj7jIlvrFXIQktDv3otfrIOI'}
-
 
 export const ssmApi = createApi({
     reducerPath: "ssmApi",
@@ -19,7 +16,7 @@ export const ssmApi = createApi({
             return headers
           },
     }),
-    tagTypes: ['Therapist', 'SSM', 'Patient'],
+    tagTypes: ['Therapist', 'SSM', 'Patient', 'Subscription', 'Card'],
     endpoints: (builder) => ({
         login: builder.mutation({
             query: (body) => ({
@@ -110,10 +107,23 @@ export const ssmApi = createApi({
                 url: `/subscriptions`,
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ['Subscription']
         }),
-        fetchSubscription: builder.query({
-            query: () => `/subscriptions`
+        fetchSubscriptions: builder.query({
+            query: () => `/subscriptions`,
+            providesTags: ['Subscription']
+        }),
+        fetchSubscriptionStatus: builder.query({
+            query: () => `/therapists/subscription-status`,
+            providesTags: ['Subscription']
+        }),
+        cancelSubscription: builder.mutation({
+            query: ({ therapistId }) => ({
+                url: `/subscriptions/${therapistId}/cancel`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['Subscription', 'Card']
         }),
         // Save card details
         saveCard: builder.mutation({
@@ -122,11 +132,26 @@ export const ssmApi = createApi({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Therapist'],
+            invalidatesTags: ['Card'],
+        }),
+        changeDefaultCard: builder.mutation({
+            query: ({paymentMethod, therapistId}) => ({
+                url: `/therapists/${therapistId}/make-payment-method-default`,
+                method: 'POST',
+                body: {
+                    payment_method_id: paymentMethod
+                }
+            }),
+            invalidatesTags: ['Card']
         }),
         matchTherapist: builder.query({
-            query: ({patientId}) => `/patients/${patientId}/get-matches`
-        })
+            query: ({ patientId }) => `/patients/${patientId}/get-matches`
+        }),
+        fetchCardList: builder.query({
+            query: ({ therapistId }) => `/therapists/${therapistId}/payment-methods`,
+            providesTags: ['Subscription', 'Card']
+        }),
+        
     })
 });
 
@@ -144,7 +169,10 @@ export const {
     useUploadLicenseMutation,
     useFetchSubscriptionPlanQuery,
     useSubscribeMutation,
-    useFetchSubscriptionQuery,
+    useFetchSubscriptionsQuery,
     useUploadPictureMutation,
     useSaveCardMutation,
-    useMatchTherapistQuery } = ssmApi;
+    useMatchTherapistQuery,
+    useCancelSubscriptionMutation,
+    useFetchCardListQuery,
+    useFetchSubscriptionStatusQuery } = ssmApi;

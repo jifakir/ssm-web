@@ -88,13 +88,18 @@ const Footer = () => {
                                 ))
                             }
                         </ul>
+                        <div className="">
+                            <p className=" hidden md:block lg:hidden text-[10px] px-6 sm:text-xs text-center pt-12 sm:pt-8">
+                                Copyright &copy; 2020 Start Saying More, LLC. All Rights Reserved. | Privacy Policy | Terms &amp; Conditions
+                            </p>
+                        </div>
                     </div>
                     <div className="md:w-1/2 md:pr-10">
                         <form onSubmit={handleSubmit(onSubmitHandler)} className="">
-                            <h5 className="text-[15px] font-semibold text-center md:text-left">
+                            <h5 className="text-[15px] font-semibold text-center lg:text-left">
                                 Stay in touch with us!
                             </h5>
-                            <div className="sm:w-[80%] md:w-auto mx-auto sm:flex justify-center items-start gap-2 mt-5 md:mt-2">
+                            <div className="sm:w-[80%] md:w-auto mx-auto lg:flex justify-center items-start gap-2 mt-5 lg:mt-2">
                                 
                                 <div className="w-2/3 sm:w-full mx-auto">
                                     <TextInput 
@@ -110,12 +115,12 @@ const Footer = () => {
                                         inputLg
                                         />
                                 </div>
-                                <div className="mt-5 sm:mt-0 text-center">
-                                    <Button title={'SUBMIT'} fontSize="w-1/2 md:w-auto text-lg sm:text-xl"/>
+                                <div className="mt-5 lg:mt-0 text-center">
+                                    <Button title={'SUBMIT'} fontSize="w-1/2 sm:w-auto text-lg sm:text-xl"/>
                                 </div>
                             </div>
                         </form>
-                        <div className="mt-10 sm:mt-5 text-center md:text-left">
+                        <div className="mt-10 lg:mt-5 text-center lg:text-left">
                             <h5 className="text-[15px] font-semibold mb-2 md:mb-2">
                                 Quick Links
                             </h5>
@@ -133,7 +138,7 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="hidden sm:block lg:w-1/3 lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 md:flex lg:block text-center lg:text-left">
+                <div className="hidden lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 lg:block text-center lg:text-left">
                     <div className="md:w-1/2 lg:w-full">
                         <h5 className="relative text-[15px] font-semibold inline-block">
                             <span>Find A Therapist</span>
@@ -146,11 +151,11 @@ const Footer = () => {
                             </div>
                         </h5>
                         <p className="text-[15px] pt-4 pb-3">
-                        Are you ready to start your therapy journey? Match with one today!
+                            Are you ready to start your therapy journey? Match with one today!
                         </p>
                         <Link href={'/patient'} passHref>
                             <a >
-                                <Button title={'START SAYING MORE'} btnSecondary fontSize={'text-xl'} />
+                                <Button title={'START SAYING MORE'} btnSecondary btnOutline fontSize={'text-xl'} />
                             </a>
                         </Link>
                     </div>
@@ -169,13 +174,13 @@ const Footer = () => {
                             Interested in joining our directory?
                         </p>
                         <Link href={'/therapist'} passHref>
-                            <Button title={'REGISTER TODAY'} btnSecondary fontSize={'text-xl'} />
+                            <Button title={'REGISTER TODAY'} btnSecondary btnOutline fontSize={'text-xl'} />
                         </Link>
                     </div>
                 </div>
             </div>
             <div className="">
-                <p className="text-[10px] px-10 sm:px-0 sm:text-xs text-center pt-12 sm:pt-8">
+                <p className="md:hidden lg:block text-[10px] px-10 sm:px-0 sm:text-xs text-center pt-12 sm:pt-8">
                     Copyright &copy; 2020 Start Saying More, LLC. All Rights Reserved. | Privacy Policy | Terms &amp; Conditions
                 </p>
             </div>

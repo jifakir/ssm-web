@@ -4,21 +4,20 @@ import React, { useRef, useState } from 'react';
 import { GrCertificate } from 'react-icons/gr';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
 import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose } from 'react-icons/md';
-import { BsBookmarks, BsGenderTrans, BsTelephone } from 'react-icons/bs';
-import { useFetchTherapistQuery } from '../../store/api/ssmApi';
+import { BsGenderTrans, BsTelephone } from 'react-icons/bs';
+import {  useUpdatePatientMutation } from '../../store/api/ssmApi';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Input from '../../components/UI/TextInput';
+import Input from '../UI/TextInput';
 import { useForm } from 'react-hook-form';
-import Select from '../../components/UI/Select';
-import Checkbox from '../../components/UI/Checkbox';
-import Radio from '../../components/UI/Radio';
-import {gender} from './data';
-import Button from '../../components/UI/Button';
+import Select from '../UI/Select';
+import Checkbox from '../UI/Checkbox';
+import Radio from '../UI/Radio';
+import { gender } from '../data';
+import Button from '../UI/Button';
 import { useEffect } from 'react';
-import { useUpdateTherapistMutation } from '../../store/api/ssmApi';
 
-const Subsciption = ({profile}) => {
+const PersonalInfo = ({profile}) => {
 
     const [details, setdetails] = useState(false);
     const {control, handleSubmit} = useForm({
@@ -30,11 +29,11 @@ const Subsciption = ({profile}) => {
         }
     });
 
-    const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
+    const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const detailsSubmitHandler = async (data) => {
         if(!data) return;
-        await updateTherapist({ 
+        await updatePatient({ 
             id: profile?.id, 
             ...data,
             registration_status: 'completed' });
@@ -47,17 +46,18 @@ const Subsciption = ({profile}) => {
     },[isSuccess]);
     
     return (
-        <div className="relative py-5">
-                        <div className="absolute top-2 right-0 text-2xl text-secondary cursor-pointer">
+        <div className="relative mt-5 md:mt-0 px-4 py-2.5 md:py-5 border-[1.5px] md:border-0 rounded-md md:rounded-none md:border-b-2 border-primary md:border-black">
+                        <div className="absolute top-0 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                             {
                                 details ? 
                                 <MdClose onClick={() => setdetails(false)} className="text-red-500" /> : 
                                 <div className="">
-                                    <MdEdit onClick={() => setdetails(false)} className="hidden md:block" />
+                                    <MdEdit onClick={() => setdetails(true)} className="hidden md:block" />
                                     <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                                 </div>
                             }
                         </div>
+                        <h2 className="font-medium">Personal Information</h2>
                         <div className="pt-5">
                             {
                                 details ?
@@ -144,21 +144,56 @@ const Subsciption = ({profile}) => {
                                         <Button type={'submit'} title={'Update'} btnQnr />
                                     </div>
                                 </form>:
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                                <div className="flex justify-start">
-                                    <div className="flex font-semibold items-center justify-center text-primary">
-                                        <BsBookmarks className='text-xl' />
-                                        <h2 className="pl-2">Subscription</h2>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                    <div className="flex items-center">
+                                        <div className="flex font-semibold justify-center items-center text-primary">
+                                            <MdOutlineCake className='text-xl' />
+                                            <h2 className="pl-2">Date of Birth</h2>
+                                        </div>
+                                        <div className=" pl-5">
+                                            <h3 className="pl-5">{profile?.date_of_birth}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="flex font-semibold justify-center items-center text-primary">
+                                            <MdOutlineLocationOn className='text-xl' />
+                                            <h2 className="pl-2">Address</h2>
+                                        </div>
+                                        <div className=" pl-5">
+                                            
+                                                <h3 className="">{
+                                                    `${profile?.user_address.line1} 
+                                                    ${profile?.user_address.line2}
+                                                    ${profile?.user_address.city}
+                                                    ${profile?.user_address.state}
+                                                    ${profile?.user_address.zip_code}
+                                                    `
+                                                }</h3>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="flex font-semibold justify-center items-center text-primary">
+                                            <BsTelephone className='text-xl' />
+                                            <h2 className="pl-2">Phone Number</h2>
+                                        </div>
+                                        <div className="pl-5">
+                                                <h3 className="">{profile?.phone}</h3>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <div className="flex font-semibold justify-center items-center text-primary">
+                                            <BsGenderTrans className='text-xl' />
+                                            <h2 className="pl-2">Gender</h2>
+                                        </div>
+                                        <div className="pl-5">
+                                            <h3 className="capitalize">{profile?.gender}</h3>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="text-success">
-                                    On progress!
-                                </div>
+                                }
                             </div>
-                            }
                         </div>
-                    </div>
     )
 }
 
-export default Subsciption;
+export default PersonalInfo;

@@ -13,18 +13,18 @@ const Landing = () => {
     };
 
     return (
-        <div className="fixed left-0 top-0 z-10 w-full min-h-screen bg-no-repeat bg-fixed bg-cover h-screen bg-welcome_mobile md:bg-welcome overflow-hidden">
+        <div className="fixed left-0 top-0 z-10 w-full min-h-screen bg-no-repeat bg-fixed bg-cover h-screen bg-welcome_mobile md:bg-welcome_tab lg:bg-welcome overflow-hidden">
             <div className="absolute hidden md:block w-full bottom-7 md:right-10">
                 <p className="text-white text-xs md:text-base text-center md:text-right">Artwork by Reyna Noriega</p>
             </div>
-            <div className="w-[80%] mx-auto h-full flex md:items-center">
-                <div className="flex flex-col justify-between items-center md:items-start">
-                    <div className="mt-9 md:mt-0 relative md:mb-14 w-[100px] md:w-[147px] h-[90px] md:h-[118px]">
+            <div className="w-[80%] md:w-auto mx-auto md:mx-8 h-full flex lg:items-center">
+                <div className="flex flex-col justify-between md:justify-start items-center md:items-start">
+                    <div className="mt-9 md:mt-14 relative md:mb-14 w-[100px] md:w-[147px] h-[90px] md:h-[118px]">
                         <Image src={'/img/whitelogo.png'} layout="fill" alt="Welcome" />
                     </div>
-                    <div className="">
-                        <h1 className="font-sterio text-primary text-center md:text-left text-5xl md:text-[64px] md:leading-[64px]">We can’t wait to<br/> connect you!</h1>
-                        <p className="py-5 md:py-9 text-center md:text-left text-xs md:text-base leading-6 text-[#191847]">
+                    <div className="mt-32">
+                        <h1 className="font-sterio text-primary text-center md:text-left text-5xl md:text-5xl lg:text-[68px] lg:leading-[64px]">We can’t wait to<br className='md:hidden'/> connect you!</h1>
+                        <p className="py-5 md:py-4 text-center md:text-left text-xs md:text-base leading-6 text-[#191847]">
                             Sign up for our newsletter to learn more 
                             about what we do and<br className='hidden md:block'/> to stay up to date 
                             on when we will be ready to connect you!​

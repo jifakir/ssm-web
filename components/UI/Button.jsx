@@ -2,7 +2,11 @@ import React from 'react';
 
 
 
-const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disabled, type, onClick, className, ...rest}) => {
+const Button = ({
+    children, btnQnr, title, fontSize,
+    btnOutline, btnLg, btnSecondary, 
+    disabled, type, onClick, 
+    className, ...rest}) => {
     
     return ( btnQnr ?
             (<><button
@@ -49,7 +53,8 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     leading-7
                     tracking-[0.055em]
                     text-primary
-                    py-4
+                    py-2
+                    md:py-4
                     hover:bg-secondary/50 
                     active:bg-neutral-focus
                     rounded
@@ -60,8 +65,12 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     disabled:cursor-not-allowed
                     uppercase
                     ${
+                        btnOutline &&
+                        'border-[3px] border-secondary hover:border-secondary/10 disabled:border-[#C0C0C0]'
+                    }
+                    ${
                         btnSecondary ?
-                        'border-[3px] bg-transparent border-secondary hover:border-secondary/10':
+                        'bg-transparent ':
                         'bg-secondary'
                     }
                     ${
@@ -72,7 +81,7 @@ const Button = ({children, btnQnr, title, fontSize, btnLg, btnSecondary, disable
                     ${className}
                     ${
                         fontSize ? fontSize : 'text-xl md:text-2xl'
-                    }`}>
+                    }`} disabled={disabled}>
                 <div className="flex justify-center items-center">
                 {children}
                 {title}

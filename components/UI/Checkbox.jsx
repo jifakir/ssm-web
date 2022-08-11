@@ -2,15 +2,15 @@ import React from 'react';
 import InputText from './InputText';
 import { useController } from 'react-hook-form';
 
-const Checkbox = ({data, register, control, errors, ...rest}) => {
+const Checkbox = ({data, register, control, ...rest}) => {
 
     const { options, title, name, required} = data;
-    const { field, fieldState } = useController({control, name});
+    const { field, fieldState:{ error } } = useController({control, name});
     const [value, setValue] = React.useState(field.value || []);
 
     return (
         <div className="">
-            <h1 className="text-lg my-5">{title}</h1>
+            <h1 className={`text-lg my-5 ${title ? 'block' : 'hidden'}`}>{title}</h1>
             {
                 options.map(( option, idx ) => (
                 <div className="form-control text-sm" key={idx}>
@@ -29,9 +29,9 @@ const Checkbox = ({data, register, control, errors, ...rest}) => {
                             type="checkbox" 
                             checked={value.includes(option.value)}
                             value={option.value} 
-                            className={`checkbox checkbox-secondary ${errors[name] ? 'checkbox-error' : ''}`} />
+                            className={`checkbox checkbox-secondary ${error ? 'checkbox-error' : ''}`} />
                         
-                        <span className={`px-2 ${errors[name] && 'text-error'}`}>{option.label}</span>
+                        <span className={`px-2 ${error && 'text-error'}`}>{option.label}</span>
                         <InputText
                         control={control}
                         name={'other'}

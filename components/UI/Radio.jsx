@@ -12,10 +12,10 @@ const RadioInput = ({data, control,}) => {
     
     return (
         <>
-            <h1 className="pl-1 text-left my-2">{title}</h1>
+            <h1 className={`pl-1 text-left my-2 ${title ? 'block' : 'hidden'}`}>{title}</h1>
             {
                 options.map(( option, idx ) => (
-                <div className="form-control" key={idx}>
+                <div className="text-sm form-control" key={idx}>
                     <label className="label cursor-pointer justify-start">
                         <input 
                             ref={field.ref}

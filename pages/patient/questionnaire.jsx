@@ -230,9 +230,9 @@ const Questionnaire = () => {
     const percent = Math.round((step/components.length)*100);
    
     return (
-    <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px]px-[5%] md:pt-[100px] md:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+    <div className={`px-[5%] pt-14 md:pt-16 xl:pt-[100px] xl:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
         <div >
-            <h1 className="text-center sm:text-left text-5xl sm:text-[54px] font-sterio text-[#331447]">{
+            <h1 className="text-center xl:text-left text-5xl md:text-[32px] xl:text-[54px] font-sterio text-[#331447]">{
                 step === (components.length - 1) ?
                 'Thank you!':
                 'Welcome'
@@ -240,10 +240,10 @@ const Questionnaire = () => {
             </h1>
             {
                 step === (components.length - 1) ?
-                <p className="mt-8 text-center sm:text-left">
+                <p className="mt-8 text-center xl:text-left">
                     Thank you for completing our match survey! Please share your email address with us, and we will send over your top matches.
                 </p>:
-                <p className="mt-8 text-center sm:text-left">
+                <p className="mt-8 text-center xl:text-left">
                 Congratulations on starting your 
                 journey! We have created a detailed questionnaire 
                 to help us match you with a therapist in our directory. 
@@ -278,7 +278,7 @@ const Questionnaire = () => {
                 </div>
             </div>
             {/* Form Inner */}
-            <div className="text-center mt-8 sm:mt-16">
+            <div className="text-center mt-8 md:mt-9 xl:mt-16">
                 {
                     isLoading ? <div className="flex justify-center items-center h-28"><ImSpinner9 className='text-2xl text-secondary animate-spin' /> </div> : components.map((comp, idx) => {
 
