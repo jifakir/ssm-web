@@ -82,18 +82,18 @@ const Subsciption = ({profile}) => {
                                 <h2 className="md:pl-2 hidden md:block">Subscription</h2>
                             </div>
                         </div>
-                        {/* ++++++++ Annual Subscription ++++++++ */}
-                        {
-                            (form === '' || form === 'subscription') && <SubscriptionItem form={form} setForm={setForm}  />
-                        }
+                        {/* ++++++++ Subscription Plan ++++++++ */}
+                        <div className={`${(form === '' || form === 'subscription') ? 'block' : 'hidden md:block'}`}>
+                            <SubscriptionItem form={form} setForm={setForm}  />
+                        </div>
                         {/* Payment method */}
-                        {
-                            (form === '' || form === 'payment') && <PaymentMethod form={form} setForm={setForm} />
-                        }
+                        <div className={`${(form === '' || form === 'payment') ? 'block' : 'hidden md:block'}`}>
+                            <PaymentMethod form={form} setForm={setForm} />
+                        </div>
                         {/* Status */}
-                        {
-                            (form === '' || form === 'status') && <Status form={form} setForm={setForm} />
-                        }
+                        <div className={`${(form === '' || form === 'status') ? 'block' : 'hidden md:block'}`}>
+                            <Status form={form} setForm={setForm} />
+                        </div>
                     </div>
                 }
             </div>

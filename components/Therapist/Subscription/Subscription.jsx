@@ -8,9 +8,8 @@ import Spinner from '../../UI/Loader';
 import Confirmed from './Confirmed';
 import { useEffect } from 'react';
 
-const SubscriptionItem = () => {
+const SubscriptionItem = ({ form, setForm }) => {
 
-    const [form, setForm] = useState(false);
     const [confirmed, setConfirm] = useState(false);
 
     const { data:subscriptionPlans, isLoading } = useFetchSubscriptionPlanQuery();
@@ -38,12 +37,12 @@ const SubscriptionItem = () => {
     return (
         <div className="">
             {
-                form ? (
-                    <div className={`
+                form === 'subscription' ? (
+                    <div onClick={() => setForm('')} className={`
                     md:fixed bottom-0 md:h-screen md:min-h-screen 
                     transition-all duration-500 ease-in-out top-0 
                     left-0 z-50 md:bg-primary/60 w-full flex justify-center items-center overscroll-contain`}>
-                        <div className="w-full md:w-[350px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
+                        <div onClick={(e) => e.stopPropagation()} className="w-full md:w-[350px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
                             {
                                 confirmed ? 
                                 <Confirmed clickedOk={handleConfirmation} />:
@@ -76,8 +75,8 @@ const SubscriptionItem = () => {
                     <div className="absolute top-1 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                         {
                             form ? 
-                            <MdClose onClick={() => setForm(false)} className="text-red-500" /> : 
-                            <div onClick={() => setForm(true)} className="">
+                            <MdClose onClick={() => setForm('')} className="text-red-500" /> : 
+                            <div onClick={() => setForm('subscription')} className="">
                                 <MdEdit className="hidden md:block" />
                                 <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                             </div>

@@ -7,9 +7,8 @@ import { useFetchCardListQuery } from '../../../store/api/ssmApi';
 import UpdatePayment from './UpdatePayment';
 
 
-const PaymentMethod = () => {
+const PaymentMethod = ({ form, setForm }) => {
 
-    const [form, setForm] = useState(false);
 
     const { userDetails } = useSelector(state => state.auth);
     const { data } = useFetchCardListQuery({ therapistId:userDetails.id });
@@ -21,8 +20,8 @@ const PaymentMethod = () => {
             <div className="absolute md:hidden -top-2 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                 {
                     form ? 
-                    <MdClose onClick={() => setForm(false)} className="text-red-500" /> : 
-                    <div onClick={() => setForm(true)} className="">
+                    <MdClose onClick={() => setForm('')} className="text-red-500" /> : 
+                    <div onClick={() => setForm('payment')} className="">
                         <MdEdit className="hidden md:block" />
                         <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                     </div>
@@ -48,7 +47,7 @@ const PaymentMethod = () => {
             </div>
         </div>
     ): (
-        <UpdatePayment cardDetails={data} />
+        <UpdatePayment cardDetails={data} setForm={setForm} />
     )
 }
 

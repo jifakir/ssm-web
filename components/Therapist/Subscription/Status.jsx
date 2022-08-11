@@ -30,6 +30,7 @@ const Status = ({form, setForm}) => {
         setFeedback(true);
     };
 
+    console.log(data);
 
     return (
         <div className="">
@@ -49,7 +50,7 @@ const Status = ({form, setForm}) => {
 
             {
                 feedback &&
-                <Feedback />
+                <Feedback setForm={setForm} />
             }
 
             <div className={`relative mt-5 md:mt-0 border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary ${(cancel || warning || feedback) ? 'hidden' : 'block'}`}>

@@ -1,19 +1,27 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { useCancelSubscriptionMutation, useFetchSubscriptionsQuery } from '../../../store/api/ssmApi';
 import Button from '../../UI/Button';
 import Input from '../../UI/TextInput';
 
 
 
-const Feedback = () => {
+const Feedback = ({ setForm }) => {
 
     const { control, handleSubmit } = useForm({defaultValues: {feedback: ''}});
     const { data } = useFetchSubscriptionsQuery();
     const [cancelSubscription, {isLoading, isError, error}] = useCancelSubscriptionMutation();
 
-    const handleFeedback = () => {
-        cancelSubscription({therapistId: userDetails?.id});
+    const { isLoggedIn, userDetails } = useSelector(state => state.auth);
+    console.log("Subsc", data);
+    const handleFeedback = ({feedback}) => {
+        const subscription = data ? data[0].id : ''
+        if(!subscription){
+            console.log('Does not exist');
+        }
+        cancelSubscription({subsId: subscription, feedback});
+        setForm(false);
     };
 
     return (
@@ -41,6 +49,9 @@ const Feedback = () => {
                             type={'textarea'}
                             control={control}
                             name={'feedback'}
+                            rules={{
+                                required: 'This field is requried'
+                            }}
                             className="min-w-full" />
                         <div className="mt-2 text-center">
                             <Button

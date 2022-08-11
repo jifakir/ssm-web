@@ -119,9 +119,10 @@ export const ssmApi = createApi({
             providesTags: ['Subscription']
         }),
         cancelSubscription: builder.mutation({
-            query: ({ therapistId }) => ({
-                url: `/subscriptions/${therapistId}/cancel`,
+            query: ({ subsId, feedback }) => ({
+                url: `/subscriptions/${subsId}/cancel`,
                 method: 'POST',
+                body: { feedback }
             }),
             invalidatesTags: ['Subscription', 'Card']
         }),

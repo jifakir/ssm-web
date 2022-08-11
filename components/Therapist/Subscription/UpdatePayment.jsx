@@ -16,7 +16,7 @@ const CreditCard = ({ brand, cardNumber }) => (
         </div>
 )
 
-const UpdatePayment = ({ cardDetails }) => {
+const UpdatePayment = ({ cardDetails, setForm }) => {
 
     const [add, setAdd] = useState(false);
     const [stripePromise, setStripePromise] = useState(() => loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBKEY}`));
@@ -37,11 +37,11 @@ const UpdatePayment = ({ cardDetails }) => {
     })
 
     return (
-        <div className={`
+        <div onClick={() => setForm('')} className={`
         md:fixed bottom-0 md:h-screen md:min-h-screen 
         transition-all duration-500 ease-in-out top-0 
         left-0 z-50 md:bg-primary/60 w-full flex justify-center items-center overscroll-contain`}>
-        <div className="w-full md:w-[450px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
+        <div onClick={(e) => e.stopPropagation()} className="w-full md:w-[450px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
             <div className="w-full">
                 {
                     add ?
