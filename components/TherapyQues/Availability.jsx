@@ -37,7 +37,7 @@ const Availability = ({step, setStep, profile }) => {
         isSuccess:subsSuccess }] = useSubscribeMutation();
 
     const { data:isSubscribed } = useFetchSubscriptionsQuery();
-    const { id } = useSelector(state => state.subscription);
+    const { subscription } = useSelector(state => state);
     
     const { fields, append, remove } = useFieldArray({
         control,
@@ -72,7 +72,7 @@ const Availability = ({step, setStep, profile }) => {
             return;
         }
         if(isSuccess){
-            subscribe({subscription_plan_id: id});
+            subscribe({subscription_plan_id: subscription?.id});
         }
 
     },[isSuccess]);

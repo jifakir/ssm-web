@@ -162,11 +162,10 @@ const Questionnaire = () => {
         //     })
         // }
     },[isSuccess, isLoggedIn, router]);
-
     
-    if(!subscription || !isLoggedIn){
-        return router.push('/therapist');
-    }
+    // if(!subscription || !isLoggedIn){
+    //     return router.push('/therapist');
+    // }
 
     const percent = Math.round((step/(components.length - 1))*100);
 

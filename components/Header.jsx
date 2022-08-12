@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../store/reducers/authReducer';
 import Login from './Auth/Login';
 import { useFetchTherapistQuery } from '../store/api/ssmApi';
-import { useEffect } from 'react';
 
 const menuList = [
     {
@@ -49,11 +48,9 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const signOutHandler = () => {
-        if(isLoggedIn){
-            dispatch(logOut())
-        }else{
-            setOpen(state => !state);
-        }
+        dispatch(logOut());
+        setOpen(false);
+        setProfile(false);
     };
     
     const toggleDrawer = () => {
@@ -61,6 +58,7 @@ const Header = () => {
     };
 
     const therapistLogin = () => {
+        
         if(data?.is_subscribed){
             setRedirectTo('/therapist/profile');
         }else{
@@ -152,7 +150,7 @@ const Header = () => {
                                                 Profile
                                             </a>
                                         </Link>
-                                        <h1 onClick={signOutHandler} className='cursor-pointer'>
+                                        <h1 onClick={() => signOutHandler()} className='cursor-pointer'>
                                             Signout
                                         </h1>
                                     </div>

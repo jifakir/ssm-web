@@ -176,4 +176,5 @@ export const {
     useMatchTherapistQuery,
     useCancelSubscriptionMutation,
     useFetchCardListQuery,
-    useFetchSubscriptionStatusQuery } = ssmApi;
+    useFetchSubscriptionStatusQuery,
+    useChangeDefaultCardMutation } = ssmApi;
