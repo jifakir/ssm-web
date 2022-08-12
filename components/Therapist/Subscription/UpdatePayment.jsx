@@ -5,13 +5,15 @@ import React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiVisaLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
+import { useChangeDefaultCardMutation } from '../../../store/api/ssmApi';
 import Button from '../../UI/Button';
 import RadioInput from '../../UI/Radio';
 import PaymentForm from '../PaymentForm';
 
 const CreditCard = ({ brand, cardNumber }) => (
         <div className="flex items-center">
-            <Image src={`/img/${brand === 'visa' ? 'visa.svg' : brand === 'mastercard' ? 'mastercard.svg' : 'discover.svg'}`} alt="Card Logo" width={41} height={32} />
+            <Image src={`/img/${brand === 'visa' ? 'visa.svg' : brand === 'mastercard' ? 'mastercard.svg' : brand === 'amex' ? 'amex.svg' : 'discover.svg'}`} alt="Card Logo" width={41} height={32} />
             <span className='pl-2'>ending {cardNumber}</span>
         </div>
 )
@@ -21,7 +23,10 @@ const UpdatePayment = ({ cardDetails, setForm }) => {
     const [add, setAdd] = useState(false);
     const [stripePromise, setStripePromise] = useState(() => loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBKEY}`));
 
-    const { control } = useForm({
+    const { userDetails } = useSelector(state => state.auth);
+    const [changeDefaultCard, result] = useChangeDefaultCardMutation();
+
+    const { watch, handleSubmit, control } = useForm({
         defaultValues: {
             card: cardDetails.find(card => card.is_default === true).id
         }
@@ -36,6 +41,10 @@ const UpdatePayment = ({ cardDetails, setForm }) => {
             }
     })
 
+    const onSubmit = (data) => {
+        changeDefaultCard({ therapistId: userDetails.id, payment_method_id: ''});
+    };
+
     return (
         <div onClick={() => setForm('')} className={`
         md:fixed bottom-0 md:h-screen md:min-h-screen 
@@ -49,7 +58,7 @@ const UpdatePayment = ({ cardDetails, setForm }) => {
                         <PaymentForm setAdd={setAdd} onCancel={() => setAdd(false)} />
                     </Elements>
                     :
-                    <form className="mt-5  border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary">
+                    <form onSubmit={handleSubmit(onSubmit)} className="mt-5  border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary">
                         <h1 className="text-sm lg:text-xl font-medium text-primary">Update Payment Method</h1>
                         <div className="text-sm mt-4">
                             <h2 className="my-1 text-sm md:text-base">Select the default payment method</h2>
@@ -66,7 +75,7 @@ const UpdatePayment = ({ cardDetails, setForm }) => {
                             title={'Save'}
                             className={'w-full'}
                             fontSize="text-2xl"
-                            disabled={true}
+                            disabled={watch('card') === cardDetails.find(card => card.is_default === true).id}
                             />
                     </form>
                 }
