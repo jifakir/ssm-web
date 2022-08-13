@@ -12,7 +12,7 @@ const data = {
     options: [
         {
             label: '0-5 years',
-            value: '0-5'
+            value: '1-5'
         },
         {
             label: '6-10 years',
