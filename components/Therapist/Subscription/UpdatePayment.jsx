@@ -2,6 +2,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Image from 'next/image';
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiVisaLine } from 'react-icons/ri';
@@ -10,13 +11,8 @@ import { useChangeDefaultCardMutation } from '../../../store/api/ssmApi';
 import Button from '../../UI/Button';
 import RadioInput from '../../UI/Radio';
 import PaymentForm from '../PaymentForm';
+import CreditCard from './CreditCard';
 
-const CreditCard = ({ brand, cardNumber }) => (
-        <div className="flex items-center">
-            <Image src={`/img/${brand === 'visa' ? 'visa.svg' : brand === 'mastercard' ? 'mastercard.svg' : brand === 'amex' ? 'amex.svg' : 'discover.svg'}`} alt="Card Logo" width={41} height={32} />
-            <span className='pl-2'>ending {cardNumber}</span>
-        </div>
-)
 
 const UpdatePayment = ({ cardDetails, setForm }) => {
 
@@ -41,10 +37,14 @@ const UpdatePayment = ({ cardDetails, setForm }) => {
             }
     })
 
-    const onSubmit = (data) => {
-        changeDefaultCard({ therapistId: userDetails.id, payment_method_id: ''});
+    const onSubmit = ({ card }) => {
+        console.log(card);
+        changeDefaultCard({ therapistId: userDetails.id, payment_method_id: card});
     };
 
+    useEffect(() => {
+
+    },[])
     return (
         <div onClick={() => setForm('')} className={`
         md:fixed bottom-0 md:h-screen md:min-h-screen 

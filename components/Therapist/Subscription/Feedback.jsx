@@ -14,22 +14,24 @@ const Feedback = ({ setForm }) => {
     const [cancelSubscription, {isLoading, isError, error}] = useCancelSubscriptionMutation();
 
     const { isLoggedIn, userDetails } = useSelector(state => state.auth);
+
     console.log("Subsc", data);
-    const handleFeedback = ({feedback}) => {
+
+    const handleFeedback = async ({feedback}) => {
         const subscription = data ? data[0].id : ''
         if(!subscription){
             console.log('Does not exist');
         }
-        cancelSubscription({subsId: subscription, feedback});
+        await cancelSubscription({subsId: subscription, feedback});
         setForm(false);
     };
 
     return (
-        <div className={`
+        <div onClick={() => setForm(false)} className={`
             md:fixed bottom-0 md:h-screen md:min-h-screen 
             transition-all duration-500 ease-in-out top-0 
             left-0 z-50 md:bg-primary/60 w-full flex justify-center items-center overscroll-contain`}>
-            <div className="w-full md:w-[450px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
+            <div onClick={(e) => e.stopPropagation()} className="w-full md:w-[450px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
                 <div className="my-5">
                     <div className="text-center">
                         <h1 className="font-sterio text-3xl">We&apos;re sorry to see you go!</h1>
