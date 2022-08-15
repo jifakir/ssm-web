@@ -28,6 +28,7 @@ import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import { ImSpinner9 } from 'react-icons/im';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Loader from '../../components/UI/Loader';
 
 
 const Questionnaire = () => {
@@ -36,7 +37,7 @@ const Questionnaire = () => {
     const [progress, setProgress] = React.useState(0);
 
     const { auth:{ isLoggedIn }, subscription } = useSelector(state => state);
-    const {data, refetch, isSuccess, isError} = useFetchTherapistQuery();
+    const {data, refetch, isSuccess, isLoading, isError} = useFetchTherapistQuery();
 
     const router = useRouter();
     const components = [
@@ -166,6 +167,10 @@ const Questionnaire = () => {
     // if(!subscription || !isLoggedIn){
     //     return router.push('/therapist');
     // }
+
+    if(isLoading){
+        return <Loader />
+    }
 
     const percent = Math.round((step/(components.length - 1))*100);
 
