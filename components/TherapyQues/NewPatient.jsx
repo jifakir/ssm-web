@@ -83,7 +83,7 @@ const NewPatient = ({ step, setStep, profile }) => {
                             data={data} />
                     </div>
                 </div>
-                <div className={`w-full mt-5 ${!watch('accept_new_patients') ? 'block' : 'hidden'}`}>
+                <div className={`w-full mt-5 ${watch('accept_new_patients') === false ? 'block' : 'hidden'}`}>
                     <h1 className="text-lg my-2 text-left">Will you accpet new patients in future?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 

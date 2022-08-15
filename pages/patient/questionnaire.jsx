@@ -247,9 +247,8 @@ const Questionnaire = () => {
                 Congratulations on starting your 
                 journey! We have created a detailed questionnaire 
                 to help us match you with a therapist in our directory. 
-                You will need to provide your Myers-Briggs Personality Test f
-                actors, so please be sure you have completed that test. If you h
-                ave not completed the Personality Test, please do so&nbsp;
+                You will need to provide your Myers-Briggs Personality Test factors, so please be sure you have completed that test. If you 
+                have not completed the Personality Test, please do so&nbsp;
                 <Link href={'http://16personalities.com'}>
                     <a className='text-secondary font-medium underline'>here</a>
                 </Link> . It shouldn&apos;t take longer than 20 minutes!

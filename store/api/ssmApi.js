@@ -119,9 +119,10 @@ export const ssmApi = createApi({
             providesTags: ['Subscription']
         }),
         cancelSubscription: builder.mutation({
-            query: ({ therapistId }) => ({
-                url: `/subscriptions/${therapistId}/cancel`,
+            query: ({ subsId, feedback }) => ({
+                url: `/subscriptions/${subsId}/cancel`,
                 method: 'POST',
+                body: { feedback }
             }),
             invalidatesTags: ['Subscription', 'Card']
         }),
@@ -135,11 +136,11 @@ export const ssmApi = createApi({
             invalidatesTags: ['Card'],
         }),
         changeDefaultCard: builder.mutation({
-            query: ({paymentMethod, therapistId}) => ({
+            query: ({payment_method_id, therapistId}) => ({
                 url: `/therapists/${therapistId}/make-payment-method-default`,
                 method: 'POST',
                 body: {
-                    payment_method_id: paymentMethod
+                    payment_method_id
                 }
             }),
             invalidatesTags: ['Card']
@@ -175,4 +176,5 @@ export const {
     useMatchTherapistQuery,
     useCancelSubscriptionMutation,
     useFetchCardListQuery,
-    useFetchSubscriptionStatusQuery } = ssmApi;
+    useFetchSubscriptionStatusQuery,
+    useChangeDefaultCardMutation } = ssmApi;

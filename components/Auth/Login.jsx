@@ -1,17 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
-import GoogleButton from 'react-google-button'
+import React, { useEffect } from 'react';
+import GoogleButton from 'react-google-button';
 import { useForm } from 'react-hook-form';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdOutlineClose } from 'react-icons/md';
 import { useSignupMutation, useLoginMutation, useGoogleLoginMutation } from '../../store/api/ssmApi';
 import { GoogleLogin } from 'react-google-login';
-import Button from '../UI/Button';
 import TextInput from '../UI/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-
 
 const Login = ({open, setOpen, redirectTo}) => {
 
@@ -20,7 +17,14 @@ const Login = ({open, setOpen, redirectTo}) => {
     const { isLoggedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
-    const { reset, control, handleSubmit } = useForm();
+    const { reset, control, handleSubmit } = useForm({
+        defaultValues: {
+            full_name: '',
+            email: '',
+            password: '',
+        }
+    });
+
     const [login, { data, isError, isSuccess, isLoading, error }] = useLoginMutation();
     const [signup, {data:signupData, isSuccess:signupSuccess, isLoading:signupLoading, isError:signupError, error:serror }] = useSignupMutation();
     const [googleLogin, result] = useGoogleLoginMutation();
@@ -31,6 +35,7 @@ const Login = ({open, setOpen, redirectTo}) => {
         console.log(accessToken);
         await googleLogin({token: accessToken});
     };
+
     const onSubmitHandler = async (data) => {
         await login(data);
         reset();
@@ -51,14 +56,17 @@ const Login = ({open, setOpen, redirectTo}) => {
         reset();
     };
 
-
     useEffect(() => {
         
         if(isSuccess){
+            reset();
             dispatch(logIn({...data}));
             router.push(redirectTo);
         }
+        // eslint-disable-next-line 
+    },[isSuccess]);
 
+    useEffect(()=> {
         if(signupSuccess){
             dispatch(logIn({...signupData}));
             if(redirectTo==='/therapist/profile'){
@@ -67,14 +75,15 @@ const Login = ({open, setOpen, redirectTo}) => {
                 router.push(redirectTo);
             }
         }
+        // eslint-disable-next-line 
+    },[signupSuccess]);
 
+    useEffect(()=> {
         if(isLoggedIn){
             setOpen(false);
         }
-
-    },[isSuccess, signupSuccess, data, isLoggedIn]);
-
-
+        // eslint-disable-next-line 
+    },[isLoggedIn])
     
     return (
         <div className={`${open ? 'block' : 'hidden'} sm:fixed bottom-0 sm:h-screen sm:min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>

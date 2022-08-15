@@ -94,7 +94,7 @@ const Religion = ({ step, setStep, profile }) => {
                         <Radio control={control} rules={{required: 'Religion is required.'}} data={data} />
                     </div>
                 </div>
-                <div className={`w-full mt-8 ${!watch('religion') || watch('religion') === 'none' ? 'hidden' : 'block'}`}>
+                <div className={`w-full mt-8 ${!watch('religion') || watch('religion') === 'none' || watch('religion') === 'atheism' ? 'hidden' : 'block'}`}>
                     <h1 className="text-lg my-2 text-left">Do you offer religion in your sessions?</h1>
                     <div className="form-control w-full max-w-xs">
                         <Radio 
