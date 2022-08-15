@@ -136,11 +136,11 @@ export const ssmApi = createApi({
             invalidatesTags: ['Card'],
         }),
         changeDefaultCard: builder.mutation({
-            query: ({paymentMethod, therapistId}) => ({
+            query: ({payment_method_id, therapistId}) => ({
                 url: `/therapists/${therapistId}/make-payment-method-default`,
                 method: 'POST',
                 body: {
-                    payment_method_id: paymentMethod
+                    payment_method_id
                 }
             }),
             invalidatesTags: ['Card']

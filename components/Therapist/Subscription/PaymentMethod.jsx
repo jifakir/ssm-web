@@ -4,6 +4,7 @@ import { MdClose, MdEdit } from 'react-icons/md';
 import { RiVisaLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 import { useFetchCardListQuery } from '../../../store/api/ssmApi';
+import CreditCard from './CreditCard';
 import UpdatePayment from './UpdatePayment';
 
 
@@ -35,16 +36,9 @@ const PaymentMethod = ({ form, setForm }) => {
             </div>
             <div className="mt-[16px] md:mt-[18px]">
                 <p className="flex items-center">
-                    <span className="text-4xl leading-none">
-                        <svg width="0" height="0">
-                            <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
-                                <stop stopColor="#222357" offset="0%" />
-                                <stop stopColor="#254AA5" offset="100%" />
-                            </linearGradient>
-                        </svg>
-                        <RiVisaLine style={{ fill: "url(#blue-gradient)" }}  />
-                    </span>
-                    <span className="pl-2 text-sm md:text-base">ending in {defaultCard?.metadata.last4}</span>
+                        <CreditCard 
+                            brand={defaultCard?.metadata.brand} 
+                            cardNumber={defaultCard?.metadata.last4} />
                 </p>
                 <p onClick={() => setForm('payment')} className="hidden md:block text-secondary-focus cursor-pointer underline underline-offset-2">Change Payment Method</p>
             </div>

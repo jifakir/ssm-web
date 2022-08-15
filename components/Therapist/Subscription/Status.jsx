@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { MdClose, MdEdit } from 'react-icons/md';
 import { RiVisaLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
-import { useCancelSubscriptionMutation, useFetchSubscriptionStatusQuery } from '../../../store/api/ssmApi';
+import { useCancelSubscriptionMutation, useFetchSubscriptionsQuery, useFetchSubscriptionStatusQuery } from '../../../store/api/ssmApi';
 import Button from '../../UI/Button';
 import Cancel from './Cancel';
 import Feedback from './Feedback';
@@ -19,6 +19,9 @@ const Status = ({form, setForm}) => {
     const { userDetails } = useSelector(state => state.auth);
 
     const { data } = useFetchSubscriptionStatusQuery();
+    const { data:subscription } = useFetchSubscriptionsQuery();
+
+    console.log(subscription);
 
     const handleCancel = () => {
         setCancel(false);
@@ -29,8 +32,6 @@ const Status = ({form, setForm}) => {
         setWarning(false);
         setFeedback(true);
     };
-
-    console.log(data);
 
     return (
         <div className="">
@@ -50,7 +51,7 @@ const Status = ({form, setForm}) => {
 
             {
                 feedback &&
-                <Feedback setForm={setForm} />
+                <Feedback setForm={setFeedback} />
             }
 
             <div className={`relative mt-5 md:mt-0 border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary ${(cancel || warning || feedback) ? 'hidden' : 'block'}`}>
@@ -83,7 +84,8 @@ const Status = ({form, setForm}) => {
                             title={'Cancel'}
                             className="w-full"
                             btnOutline 
-                            btnSecondary />:
+                            btnSecondary
+                            disabled={true} />:
                         <Button
                             title={'Subscribe'}
                             className="w-full"
