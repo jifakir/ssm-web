@@ -2,23 +2,27 @@ import React from 'react';
 import TextInput from '../UI/TextInput';
 import Button from '../UI/Button';
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 
 const Newsletter = ({ status, message, onValidated }) => {
 
-    const { control, handleSubmit} = useForm({
+    const { control, reset, handleSubmit} = useForm({
         defaultValues: {
             email: ""
         }
     });
 
-    const onSubmitHandler = ({email}) => {
-        console.log(email);
-        onValidated({ EMAIL: email });
+    const onSubmitHandler = async ({email}) => {
+        await onValidated({ EMAIL: email });
     }
 
-    console.log("Status: ", status);
-    console.log("Message: ", message);
+    useEffect(() => {
+        if(status === 'success'){
+            reset();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[status]);
 
     return (
         <form onSubmit={handleSubmit(onSubmitHandler)} className="">
@@ -45,6 +49,7 @@ const Newsletter = ({ status, message, onValidated }) => {
                     <Button title={'SUBMIT'} fontSize="w-1/2 sm:w-auto text-lg sm:text-xl"/>
                 </div>
             </div>
+            <p className="text-xs text-success pt-1">{ message }</p>
         </form>
     )
 }
