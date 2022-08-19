@@ -1,10 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import TextInput from './UI/TextInput';
-import Button from './UI/Button';
+import TextInput from '../UI/TextInput';
+import Button from '../UI/Button';
 import { AiFillInstagram, AiFillFacebook, AiOutlineTwitter, AiFillLinkedin } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
+import Newsletter from './Newsletter';
 
 const linksData = [
     {
@@ -54,10 +56,7 @@ const menuList = [
 
 const Footer = () => {
 
-    const { control, handleSubmit} = useForm();
-    const onSubmitHandler = (data) => {
-        console.log(data);
-    }
+    const mailChimpUrl = process.env.NEXT_PUBLIC_MAILCHIMP_URL;
 
     return (
         <footer className="relative bg-neutral/30 py-4 overflow-hidden bg-gradient-to-r from-transparent via-neutral/40 to-transparent">
@@ -95,31 +94,17 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="md:w-1/2 md:pr-10">
-                        <form onSubmit={handleSubmit(onSubmitHandler)} className="">
-                            <h5 className="text-[15px] font-semibold text-center lg:text-left">
-                                Stay in touch with us!
-                            </h5>
-                            <div className="sm:w-[80%] md:w-auto mx-auto lg:flex justify-center items-start gap-2 mt-5 lg:mt-2">
-                                
-                                <div className="w-2/3 sm:w-full mx-auto">
-                                    <TextInput 
-                                        control={control} 
-                                        name='email'
-                                        pHolder='Email Address'
-                                        rules={{ 
-                                            required: "Email is required", 
-                                            pattern: {
-                                                value: /^\S+@\S+$/i,
-                                                message: 'Please, enter a valid email'
-                                            }}}
-                                        inputLg
-                                        />
-                                </div>
-                                <div className="mt-5 lg:mt-0 text-center">
-                                    <Button title={'SUBMIT'} fontSize="w-1/2 sm:w-auto text-lg sm:text-xl"/>
-                                </div>
-                            </div>
-                        </form>
+                        <MailchimpSubscribe
+                            url={mailChimpUrl}
+                            render={(props) => {
+                                const { subscribe, status, message } = props || {};
+                                return (
+                                    <Newsletter
+                                     status={status}
+                                     message={message}
+                                     onValidated={ formData => subscribe( formData ) } />
+                                )
+                            }} />
                         <div className="mt-10 lg:mt-5 text-center lg:text-left">
                             <h5 className="text-[15px] font-semibold mb-2 md:mb-2">
                                 Quick Links
