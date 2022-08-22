@@ -21,6 +21,7 @@ const SubscriptionItem = ({ form, setForm }) => {
         if(result.isSuccess){
             setForm(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[result]);
 
     if(isLoading || subsLoading) return <Spinner className="text-3xl text-primary" />
@@ -83,7 +84,7 @@ const SubscriptionItem = ({ form, setForm }) => {
                         }
                     </div>
                     <div className="">
-                        <h2 className="font-semibold text-sm md:text-base text-primary md:text-black">{currentPlan?.plan_name}</h2>
+                        <h2 className="font-semibold text-sm md:text-base text-primary">{currentPlan?.plan_name}</h2>
                     </div>
                     <div className="mt-4 md:mt-[18px] leading-7 text-sm md:text-base">
                         <p className="font-medium">${currentPlan?.price} billed annually</p>

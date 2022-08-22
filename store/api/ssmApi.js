@@ -152,7 +152,10 @@ export const ssmApi = createApi({
             query: ({ therapistId }) => `/therapists/${therapistId}/payment-methods`,
             providesTags: ['Subscription', 'Card']
         }),
-        
+        referUrl: builder.query({
+            query: (therapistId) => `therapists/${therapistId}/referral-link`,
+            providesTags: ['Therapist']
+        }),
     })
 });
 
@@ -177,4 +180,5 @@ export const {
     useCancelSubscriptionMutation,
     useFetchCardListQuery,
     useFetchSubscriptionStatusQuery,
-    useChangeDefaultCardMutation } = ssmApi;
+    useChangeDefaultCardMutation,
+    useReferUrlQuery } = ssmApi;
