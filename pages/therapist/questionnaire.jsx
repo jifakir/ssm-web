@@ -160,7 +160,7 @@ const Questionnaire = () => {
     // }
 
     if(isLoading){
-        return <Loader />
+        return <Loader />;
     }
 
     const percent = Math.round((step/(components.length - 1))*100);

@@ -29,6 +29,7 @@ import Cancel from './Cancel';
 import Warning from './Warning';
 import Feedback from './Feedback';
 import WelcomeBack from './WelcomeBack';
+import Referral from './Referral';
 
 const Subsciption = ({profile}) => {
 
@@ -75,9 +76,9 @@ const Subsciption = ({profile}) => {
             </div> */}
             <div className="">
                 {
-                    <div className="md:grid lg:grid-cols-2 gap-5">
-                        <div className="flex justify-start col-span-2">
-                            <div className="flex font-semibold items-center justify-center text-primary">
+                    <div className="md:grid lg:grid-cols-3 gap-5">
+                        <div className="flex justify-start col-span-3">
+                            <div className="flex font-semibold items-center justify-center text-black">
                                 <BsBookmarks className='text-xl hidden md:block' />
                                 <h2 className="md:pl-2 hidden md:block">Subscription</h2>
                             </div>
@@ -90,9 +91,15 @@ const Subsciption = ({profile}) => {
                         <div className={`${(form === '' || form === 'payment') ? 'block' : 'hidden md:block'}`}>
                             <PaymentMethod form={form} setForm={setForm} />
                         </div>
+                        <div className={`hidden md:block ${(form === '' || form === 'payment') ? 'block' : 'hidden md:block'}`}>
+                            <Referral profile={profile} />
+                        </div>
                         {/* Status */}
                         <div className={`${(form === '' || form === 'status') ? 'block' : 'hidden md:block'}`}>
                             <Status form={form} setForm={setForm} />
+                        </div>
+                        <div className={`mt-4 md:hidden ${(form === '' || form === 'payment') ? 'block' : 'hidden md:block'}`}>
+                            <Referral profile={profile} />
                         </div>
                     </div>
                 }

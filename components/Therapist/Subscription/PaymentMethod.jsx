@@ -32,7 +32,7 @@ const PaymentMethod = ({ form, setForm }) => {
                 }
             </div>
             <div className="">
-                <h2 className="font-semibold text-sm md:text-base text-primary md:text-black">Payment Method</h2>
+                <h2 className="font-semibold text-sm md:text-base text-primary">Payment Method</h2>
             </div>
             <div className="mt-[16px] md:mt-[18px]">
                 <p className="flex items-center">
