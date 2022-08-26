@@ -9,9 +9,10 @@ import TextInput from '../UI/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
-import Therapist from './Therapist';
+import Modal from '../UI/Modal';
 
-const Login = ({open, setOpen, redirectTo}) => {
+
+const Therapist = ({ showSignup, open, setOpen }) => {
 
     const [showPass, setShowPass] = React.useState(false);
     const [tab, setTab] = React.useState(0);
@@ -48,7 +49,8 @@ const Login = ({open, setOpen, redirectTo}) => {
     };
 
     const openHandler = () => {
-        setOpen(!open);
+        setOpen(false);
+        setTab(null);
         reset();
     };
 
@@ -57,25 +59,30 @@ const Login = ({open, setOpen, redirectTo}) => {
         reset();
     };
 
+    const redirectHandler = () => {
+        setOpen(false);
+        router.push('/therapist');
+    };
+
     useEffect(() => {
         
         if(isSuccess){
             reset();
             const { token, user } = data;
-            dispatch(logIn({ token, ...user }));
-            router.push(redirectTo);
+            dispatch(logIn({ token, ...user, role: 1 }));
+            router.push("/therapist/profile");
         }
+
         // eslint-disable-next-line 
     },[isSuccess]);
 
     useEffect(()=> {
         if(signupSuccess){
-            dispatch(logIn({...signupData}));
-            if(redirectTo==='/therapist/profile'){
-                router.push('/therapist')
-            }else{
-                router.push(redirectTo);
-            }
+            reset();
+            const { user, token } = signupData;
+            dispatch(logIn({ ...user, token, role: 1}));
+            setOpen(false);
+            router.push('/therapist');
         }
         // eslint-disable-next-line 
     },[signupSuccess]);
@@ -85,49 +92,145 @@ const Login = ({open, setOpen, redirectTo}) => {
             setOpen(false);
         }
         // eslint-disable-next-line 
-    },[isLoggedIn])
-    
-    return (
-        <div className={`${open ? 'block' : 'hidden'} sm:fixed bottom-0 sm:h-screen sm:min-h-screen transition-all duration-500 ease-in-out top-0 left-0 z-50 bg-primary/60 w-full`}>
-            <div className="overflow-y-scroll h-full w-full flex justify-center items-center">
-            {
-                (isLoading && !isError) &&
+    },[isLoggedIn]);
+
+    return (<Modal open={open}>
+        {
+            (isLoading && !isError) &&
+            <div className="bg-white">
+                <div className="px-10 py-5">
+                    <p className="text-center text-sm font-bold">
+                        Thank you for logging!<br/>
+                    </p>
+                    <p className="mt-5 text-center">
+                        You will now be redirected to<br/>
+                        your profile
+                    </p>
+                </div>
+            </div> 
+        }
+        {
+            (signupLoading && !signupError) &&
                 <div className="bg-white">
-                    <div className="px-10 py-5">
+                    <div className="px-10 py-5 text-center">
                         <p className="text-center text-sm font-bold">
-                            Thank you for logging!<br/>
+                            Thank you for creating your account!<br/>
                         </p>
-                        <p className="mt-5 text-center">
-                            You will now be redirected to<br/>
-                            {
-                                redirectTo === '/therapist/profile' ? 
-                                'your profile':
-                                'complete our questionnaire.'
-                            }
+                        <p className="mt-5">
+                            You will now be redirected to<br/> 
+                            complete our questionnaire.
                         </p>
                     </div>
-                </div> 
-            }
-            {
-                (signupLoading && !signupError) &&
-                    <div className="bg-white">
-                        <div className="px-10 py-5 text-center">
-                            <p className="text-center text-sm font-bold">
-                                Thank you for creating your account!<br/>
-                            </p>
-                            <p className="mt-5">
-                                You will now be redirected to<br/> complete our questionnaire.
-                            </p>
+                </div>
+        }
+        {(tab === 0 && !isLoading) && (
+            <form onSubmit={handleSubmit(onSubmitHandler)} className="sm:my-10 rounded-none sm:rounded bg-white card sm:w-[415px] shadow-lg px-8 py-5">
+                <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
+                    <MdOutlineClose />
+                </div>
+                <div className="card-body items-center text-center">
+                    <GoogleLogin
+                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
+                            theme='dark'
+                            render={(renderProps) => (
+                                <GoogleButton 
+                                    onClick={renderProps.onClick} 
+                                    disabled={renderProps.disabled}
+                                    label="LOGIN WITH GOOGLE" />
+                            )}
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                            className="rounded-lg cursor-pointer text-center"
+                            style={{padding: '16px'}}
+                        />
+                    <div className="mt-3">
+                        <h1 className="text-2xl font-medium">or</h1>
+                    </div>
+                    <div className={isError ? 'block' : 'hidden'}>
+                        {
+                            isError && <p className="text-xs text-accent font-bold">{error.data?.message}</p>
+                        }
+                    </div>
+                    <div className="form-control w-full max-w-xs">
+                        <TextInput
+                            control={control}
+                            pHolder={'startsayingmore@gmail.com'}
+                            name={'email'}
+                            title={'Email'}
+                            rules={{
+                                required: 'Email is required', 
+                                pattern: {
+                                    value: /^\S+@\S+$/i,
+                                    message: "Please, enter a valid email"
+                                }}}
+                            />
+                    </div>
+                    <div className="relative form-control w-full max-w-xs">
+                        <TextInput
+                            type={showPass ? 'text' : 'password'}
+                            pHolder="Passoword"
+                            title={'Password'}
+                            name={'password'}
+                            control={control}
+                            rules={{
+                                required: 'Password required', 
+                                minLength: {
+                                    value: 8,
+                                    message: "Password must be 8 characters long"}}} />
+                        <div 
+                            onClick={() => setShowPass(!showPass)} 
+                            className="absolute right-3 top-[52px] sm:top-16 cursor-pointer">
+                            {
+                                showPass ? <BsEye /> : <BsEyeSlash />
+                            }
                         </div>
                     </div>
-            }
+                    <div className="w-full card-actions pt-5">
+                        <button 
+                        type='submit'
+                            className={`
+                                w-full
+                                bg-secondary
+                                text-2xl
+                                tracking-[0.055em]
+                                text-primary
+                                py-1
+                                hover:bg-secondary/50 
+                                active:bg-neutral-focus
+                                rounded
+                                gap-2
+                                px-5
+                                md:px-8
+                                font-semibold
+                                disabled:bg-[#C0C0C0]
+                                disabled:text-[#3E3643]
+                                disabled:cursor-not-allowed
+                                uppercase border-[3px]':
+                                `}>
+                                    continue
+                                </button>
+                    </div>
+                    <div className="text-sm mt-4">
+                        <p className="font-medium">
+                            Do not have an account? 
+                            <span 
+                            onClick={()=> showSignup ? tabHandler(1) : redirectHandler()} 
+                            className="text-blue-700 font-bold cursor-pointer pl-1">Sign up</span></p>
+                    </div>
+                    <div className="text-xs">
+                        <p className="">
+                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, 
+                            tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                             justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
+                        </p>
+                    </div>
+                </div>
+            </form>
+        )}
 
-            {
-                (tab === 0 && !isLoading) ? 
-                <div className=""><Therapist showSignup /></div> : 
-                (tab === 1 && !signupLoading) ?
-                (
-                    <div  className="sm:my-10 sm:rounded bg-white card w-full sm:w-[415px] shadow-lg px-8 py-5">
+        {(tab === 1 && !signupLoading) && (
+            <div  className="sm:my-10 sm:rounded bg-white card w-full sm:w-[415px] shadow-lg px-8 py-5">
                         <div onClick={openHandler} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
                             <MdOutlineClose />
                         </div>
@@ -243,12 +346,9 @@ const Login = ({open, setOpen, redirectTo}) => {
                             </div>
                         </div>
                     </div>
-                ) : 
-                ''
-            }
-            </div>
-        </div>
+        )}
+    </Modal>
     )
 }
 
-export default Login;
+export default Therapist;

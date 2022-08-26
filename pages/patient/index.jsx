@@ -1,7 +1,4 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { useFetchTherapistQuery } from '../../store/api/ssmApi';
-import Login from '../../components/Auth/Login';
 import { useSelector } from 'react-redux';
 
 
@@ -11,6 +8,7 @@ import Button from '../../components/UI/Button';
 import HowItWorks from '../../components/Home/HowItWorks';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Patient from '../../components/Auth/Patient';
 
 
 
@@ -20,9 +18,8 @@ const Therapist = () => {
     const [open , setOpen] = React.useState(false);
 
     const { isLoggedIn } = useSelector(state => state.auth);
-    const { data, isLoading, isError } = useFetchTherapistQuery();
-
     const router = useRouter();
+
     const loginHandler = () => {
         if(!isLoggedIn){
             setOpen(!open);
@@ -33,7 +30,7 @@ const Therapist = () => {
 
     return (
         <div className="">
-            <Login open={open} setOpen={setOpen} redirectTo={'/patient/questionnaire'}/>
+            <Patient open={open} setOpen={setOpen} />
             <div className={`w-[90%] xs:w-[80%] lg:w-[65%] mx-auto ${open ? 'hidden sm:block' : 'block sm:block'}`}>
                 <div className="my-5 md:my-16">
                     <h1 className="font-sterio text-4xl md:text-5xl text-center mt-10">Find a Therapist</h1>

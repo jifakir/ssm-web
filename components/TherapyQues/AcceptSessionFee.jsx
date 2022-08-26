@@ -54,6 +54,7 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
             accept_session_fee: profile?.accept_session_fee,
             session_fee: profile?.session_fee
         }});
+    
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
@@ -78,6 +79,7 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
         if(isSuccess){
             setStep(step + 1);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isSuccess]);
 
     return (

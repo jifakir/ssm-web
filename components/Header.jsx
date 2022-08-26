@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../store/reducers/authReducer';
 import Login from './Auth/Login';
 import { useFetchTherapistQuery } from '../store/api/ssmApi';
+import Therapist from './Auth/Therapist';
 
 const menuList = [
     {
@@ -36,13 +37,15 @@ const menuList = [
 const Header = () => {
 
     const [isOpen, setIsOpen] = React.useState(false);
+    const [therapist, setTherapist] = React.useState(false);
+    const [patient, setPatient] = React.useState(false);
     const [redirectTo, setRedirectTo] = React.useState('/therapist/profile');
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [tab, setTab] = React.useState(0);
     const [open, setOpen] = React.useState(false);
     const [profile, setProfile] = React.useState(false);
 
-    const { isLoggedIn } = useSelector(state => state.auth);
+    const { isLoggedIn, userDetails } = useSelector(state => state.auth);
     const { data, isSuccess} = useFetchTherapistQuery();
 
     const dispatch = useDispatch();
@@ -64,19 +67,19 @@ const Header = () => {
         }else{
             setRedirectTo('/therapist/questionnaire');
         }
-        setOpen(!open);
+        setTherapist(state => !state);
         setProfile(false);
     };
 
     const patientLogin = () => {
-        setRedirectTo('/patient/profile');
-        setOpen(!open);
+        setPatient(state => !state);
         setProfile(false);
     };
 
     return (
         <div className="w-full py-1 md:py-5 px-5 border-b-[10px] border-primary">
-            <Login open={open} setOpen={setOpen} redirectTo={redirectTo} />
+            <Therapist open={therapist} setOpen={setTherapist} />
+            <Therapist open={patient} setOpen={setPatient} />
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <Link href={'/'} className="cursor-pointer" passHref>
@@ -145,7 +148,7 @@ const Header = () => {
                                 (
                                 <>
                                     <div className="px-4 py-2.5 text-[20px]">
-                                        <Link href={'/therapist/profile'}>
+                                        <Link href={`${ userDetails?.role === 1 ? '/therapist/profile' : '/patient/profile'}`}>
                                             <a>
                                                 Profile
                                             </a>

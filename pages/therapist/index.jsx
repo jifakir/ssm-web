@@ -10,6 +10,7 @@ import { BiLoaderAlt  } from 'react-icons/bi';
 import Stripe from '../../components/Stripe';
 import { saveSubsDetails } from '../../store/reducers/subscriptionSlice';
 import { logOut } from '../../store/reducers/authReducer';
+import Therapist from '../../components/Auth/Therapist';
 
 
 const JoinAsTherapist = () => {
@@ -30,7 +31,6 @@ const JoinAsTherapist = () => {
 
     const loginHandler = () => {
         if(!isLoggedIn){
-            
         }else{  
             router.push('/therapist/questionnaire');
         }
@@ -50,9 +50,6 @@ const JoinAsTherapist = () => {
     };
 
     useEffect(() => {
-        // if(isLoggedIn){
-        //     router.push('/therapist/questionnaire');
-        // }
         if(subsError){
             if(error.status == 422){
                 router.push('/therapist/questionnaire')
@@ -63,9 +60,9 @@ const JoinAsTherapist = () => {
             }
         }
         if(subsSuccess){
-            
             router.push('/therapist/questionnaire');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[subsError, subsSuccess]);
 
     if(isLoading){
@@ -84,7 +81,7 @@ const JoinAsTherapist = () => {
 
     return (
         <div className="px-[10%]">
-            <Login open={open} setOpen={setOpen} redirectTo="/therapist"   />
+            <Therapist showSignup open={open} setOpen={setOpen} />
             <div className={`${open ? 'hidden' : 'block'}`}>
                 <h1 className="font-sterio text-3xl xs:text-4xl sm:text-5xl text-center mt-16">
                     Join As a Therapist
