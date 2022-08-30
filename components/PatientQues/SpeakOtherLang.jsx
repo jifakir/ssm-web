@@ -4,6 +4,7 @@ import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import Checkbox from '../UI/Checkbox';
+import { useEffect } from 'react';
 
 const langData = {
     title: 'What other language(s) do you speak?',
@@ -73,14 +74,14 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
             prefer_other_language: profile?.prefer_other_language,
             languages: profile?.languages,
         }});
-    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { speak_other_languages, prefer_other_language, languages } = data;
-        if(speak_other_languages == null) return;
-        await updatePatient({id: profile?.id, speak_other_languages, prefer_other_language, languages, registration_status: 'entered-speak_other_languages' });
-        setStep(step + 1);
+        let form = {speak_other_languages};
+        if(speak_other_languages) form = data;
+        await updatePatient({id: profile?.id, ...form, registration_status: 'entered-speak_other_languages' });
 
     };
 
@@ -90,6 +91,12 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
 
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess])
     return (
         <>
             <form id="other-lang-form" onSubmit={handleSubmit(handleNext)} className="">

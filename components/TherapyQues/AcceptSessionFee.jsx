@@ -5,6 +5,7 @@ import Button from '../UI/Button';
 import InputText from '../UI/InputText';
 import Radio from '../UI/Radio';
 import { BiLoaderAlt } from 'react-icons/bi';
+import InputRange from '../UI/InputRange';
 
 
 const data = {
@@ -52,18 +53,22 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
     const { control, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
             accept_session_fee: profile?.accept_session_fee,
-            session_fee: profile?.session_fee
+            session_fee: typeof profile?.session_fee === 'number' ? 
+            profile.session_fee.toString().split('.')
+            .map(num => Number(num)) : [100, 500]
         }});
+    
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const handleNext = async (data) => {
 
         const { accept_session_fee, session_fee } = data;
-        if(accept_session_fee == null) return;
+        if(accept_session_fee && !session_fee) return;
+        
         await updateTherapist({
             id: profile?.id, 
             accept_session_fee, 
-            session_fee, 
+            session_fee: accept_session_fee ? Number(session_fee.join('.')) : 1, 
             registration_status: 'entered-accept_session_fee' 
         });
     };
@@ -78,6 +83,7 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
         if(isSuccess){
             setStep(step + 1);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isSuccess]);
 
     return (
@@ -85,17 +91,18 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
             <form id="accept-session-fee" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="form-control w-full">
-                    <h1 className="text-lg my-2 text-left">Do you accept session Fee?</h1>
+                    <h1 className="text-lg my-2 text-left">Do you offer a sliding scale?</h1>
                         <Radio control={control} rules={{required: 'Accept Session Fee is required.'}} data={data} />
                     </div>
                     <div className={`${watch('accept_session_fee') ? 'block' : 'hidden'} mt-10`}>
-                        <h1 className="my-2 text-left">How much do you charge per session?</h1>
+                        <h1 className="my-2 text-left">Sliding scale</h1>
                         <div className="form-control w-full max-w-xs text-left">
                             {/* <Select control={control} data={Feedata} /> */}
-                            <InputText
+                            {/* <InputText
                                 control={control}
                                 pHolder={'Enter your fees'}
-                                name={'session_fee'} />
+                                name={'session_fee'} /> */}
+                            <InputRange control={control} name={'session_fee'} />
                         </div>
                     </div>
                 </div>
@@ -110,7 +117,7 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="accept-session-fee" 
                     btnQnr
-                    disabled={watch('accept_session_fee') == null} >
+                    disabled={watch('accept_session_fee') == null || (watch('accept_session_fee') && !watch('session_fee'))} >
                     {
                         isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
                     }

@@ -40,7 +40,7 @@ import InpersonFuture from '../../components/PatientQues/InpersonFuture';
 import HasInsurance from '../../components/PatientQues/HasInsurance';
 import Link from 'next/link';
 import Thankyou from '../../components/PatientQues/Thankyou';
-
+import Spinner from '../../components/UI/Loader';
 
 const Questionnaire = () => {
 
@@ -226,6 +226,9 @@ const Questionnaire = () => {
         // }
     },[isSuccess, isLoggedIn, router]);
 
+    if(isLoading && step === 0){
+        return <Spinner />;
+    }
 
     const percent = Math.round((step/components.length)*100);
    

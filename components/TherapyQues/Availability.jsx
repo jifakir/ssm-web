@@ -109,8 +109,9 @@ const Availability = ({step, setStep, profile }) => {
             }
             <form id="availability-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="md:w-1/2">
+                    <h1 className="text-lg my-2 text-left">Provide your current availability</h1>
                     <div className="flex justify-start mb-2">
-                        <button type='button' onClick={appendField} className='btn btn-outline btn-primary btn-sm'>
+                        <button type='button' onClick={appendField} className='btn btn-outline btn-secondary btn-sm'>
                             <MdAdd className='mr-1 text-lg' /> Add Day
                         </button>
                     </div>
@@ -126,13 +127,13 @@ const Availability = ({step, setStep, profile }) => {
                                                     data={{name: `availabilities.${idx}.day`, options: week}} />
                                             </div>
                                             <div className=" w-40">
-                                                <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>M-Start Time</h3>
+                                                <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>Start Time</h3>
                                                 <Select 
                                                     control={control} 
                                                     data={{name: `availabilities.${idx}.start_time`, options: amTime}} />
                                             </div>
                                             <div className=" w-40">
-                                                <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>M-End Time</h3>
+                                                <h3 className={`my-2 ${idx=== 0 ? 'block' : 'hidden'}`}>End Time</h3>
                                                 <Select 
                                                     control={control} 
                                                     data={{name: `availabilities.${idx}.end_time`, options: pmTime}} />

@@ -40,6 +40,7 @@ const Questionnaire = () => {
     const {data, refetch, isSuccess, isLoading, isError} = useFetchTherapistQuery();
 
     const router = useRouter();
+
     const components = [
         {
             component: <Button btnQnr btnLg title={'GET STARTED'} onClick={() => setStep(step + 1)} />,
@@ -146,20 +147,27 @@ const Questionnaire = () => {
 
     useEffect(()=>{
         refetch();
-    },[refetch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
     
     useEffect(() => {
         if(!isLoggedIn){
             router.push('/');
         }
-        
-    },[isSuccess, isLoggedIn, router]);
+    },[isLoggedIn, router]);
     
+    useEffect(() => {
+        if(!subscription){
+            router.push('/therapist');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[subscription]);
+
     // if(!subscription || !isLoggedIn){
     //     return router.push('/therapist');
     // }
 
-    if(isLoading){
+    if(isLoading && step === 0){
         return <Loader />;
     }
 

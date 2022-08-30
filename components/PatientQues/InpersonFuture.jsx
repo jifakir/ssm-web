@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../../components/UI/Radio';
+import { useEffect } from 'react';
+
 const data = {
     name: 'session_type',
     options: [
@@ -16,7 +18,7 @@ const data = {
         },
         {
             label: 'No preference',
-            value: 'no_preference'
+            value: 'none'
         },
     ]
 };
@@ -47,16 +49,16 @@ const InpersonFuture = ({ step, setStep, profile }) => {
             will_like_virtual: profile?.will_like_virtual
         }
     });
-    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
+        const { session_type } = data;
+        let form = {session_type};
+        if(session_type !== 'none') form = data;
         await updatePatient({
             id: profile?.id, 
-            ...data,
+            ...form,
             registration_status: 'entered-session_type' });
-
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
@@ -65,6 +67,12 @@ const InpersonFuture = ({ step, setStep, profile }) => {
 
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess])
     
     return (
         <>

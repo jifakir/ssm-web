@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
@@ -55,14 +56,14 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
                 has_tried_counseling: profile?.has_tried_counseling,
                 counseling_experience: profile?.counseling_experience
             } });
-    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { has_tried_counseling, counseling_experience } = data;
-        await updatePatient({ id: profile?.id, has_tried_counseling,counseling_experience, registration_status: 'entered-spirit-session' });
-        
-        setStep(step + 1);
+        let form = {has_tried_counseling};
+        if(has_tried_counseling) form = data;
+        await updatePatient({ id: profile?.id, ...form, registration_status: 'entered-spirit-session' });
 
     };
 
@@ -72,6 +73,12 @@ const PreferSpirituality = ({ step, setStep, profile }) => {
 
     };
 
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess]);
     
     return (
         <>
