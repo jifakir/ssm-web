@@ -89,7 +89,7 @@ const Orientation = ({ step, setStep, profile}) => {
                     data={data} />
                     <p className="text-accent text-xs font-bold py-1 text-left">{isError && error?.message || error?.data?.message}</p>
                 </div>
-                <div className={`w-full mt-5 ${watch('sexual_orientation') === 'straight' ? 'hidden' : 'block'}`}>
+                <div className={`w-full mt-5 ${watch('sexual_orientation') === 'straight' || watch('sexual_orientation') == null ? 'hidden' : 'block'}`}>
                     <h1 className="text-lg my-2 text-left">Are you interested in a provider that specializes in LGBTQ+ issues?</h1>
                     <div className="form-control w-full max-w-xs">
                         <RadioInput 
@@ -109,7 +109,7 @@ const Orientation = ({ step, setStep, profile}) => {
                     title={'Next'} 
                     form="orientationform" 
                     btnQnr
-                    disabled={watch('sexual_orientation') !== 'straight' ? watch('has_sexual_preference') == null : watch('sexual_orientation')} />
+                    disabled={watch('sexual_orientation') === 'straight' ? watch('sexual_orientation') == null : watch('has_sexual_preference') == null} />
             </div>
         </>
     )

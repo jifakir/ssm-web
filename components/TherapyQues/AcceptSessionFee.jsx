@@ -53,7 +53,9 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
     const { control, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
             accept_session_fee: profile?.accept_session_fee,
-            session_fee: typeof profile?.session_fee === 'string' ? profile.session_fee.split('-') : [100, 500]
+            session_fee: typeof profile?.session_fee === 'number' ? 
+            profile.session_fee.toString().split('.')
+            .map(num => Number(num)) : [100, 500]
         }});
     
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
@@ -62,10 +64,11 @@ const AcceptSessionFee = ({ step, setStep, profile }) => {
 
         const { accept_session_fee, session_fee } = data;
         if(accept_session_fee && !session_fee) return;
+        
         await updateTherapist({
             id: profile?.id, 
             accept_session_fee, 
-            session_fee: accept_session_fee ? session_fee.join('-') : 1, 
+            session_fee: accept_session_fee ? Number(session_fee.join('.')) : 1, 
             registration_status: 'entered-accept_session_fee' 
         });
     };

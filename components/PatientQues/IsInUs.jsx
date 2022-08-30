@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
@@ -33,24 +34,28 @@ const IsInUs = ({ step, setStep, profile }) => {
         is_in_us: profile?.is_in_us,
         user_address: profile?.user_address
     }});
-    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { is_in_us, user_address: {line1, line2, city, state, zip_code} } = data;
-        if(is_in_us == null) return;
+        let form = {is_in_us};
+        if(is_in_us){
+            form = {
+                is_in_us, 
+                user_address: {
+                    line1: line1 ? line1 : '',
+                    line2: line2 ? line2 : '',
+                    city: city ? city : '',
+                    state: state ? state : '',
+                    zip_code: zip_code ? zip_code : '', 
+                    }
+            }
+        }
         await updatePatient({
             id: profile?.id, 
-            is_in_us, 
-            user_address: {
-                line1: line1 ? line1 : '',
-                line2: line2 ? line2 : '',
-                city: city ? city : '',
-                state: state ? state : '',
-                zip_code: zip_code ? zip_code : '', 
-                },
+            ...form,
             registration_status: 'entered-is_in_us' });
-        setStep(step + 1);
     };
 
     const handleBack = () => {
@@ -59,10 +64,15 @@ const IsInUs = ({ step, setStep, profile }) => {
 
     };
 
-
+    useEffect(() => {
+        if(isSuccess){
+            setStep( step + 1);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess]);
     return (
     <>
-        <form id="is_in_us" onSubmit={handleSubmit(handleNext)} className="">
+        <form id="isinusform" onSubmit={handleSubmit(handleNext)}>
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">Do you live in the United States?</h1>
                 <div className="form-control w-full max-w-xs">
@@ -126,8 +136,8 @@ const IsInUs = ({ step, setStep, profile }) => {
                 btnSecondary
                  />
             <Button 
-                title={'Next'} 
-                form="is_in_us"
+                title={'Next'}
+                form="isinusform"
                 btnQnr
                 disabled={watch('is_in_us')==null} />
         </div>

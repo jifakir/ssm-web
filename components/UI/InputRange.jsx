@@ -2,7 +2,7 @@ import React from 'react';
 import { useController } from 'react-hook-form';
 import { Range, getTrackBackground } from "react-range";
 
-const STEP = 0.1;
+const STEP = 1;
 const MIN = 0;
 const MAX = 1000;
 
