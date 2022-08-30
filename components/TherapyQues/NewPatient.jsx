@@ -69,7 +69,8 @@ const NewPatient = ({ step, setStep, profile }) => {
         if(isSuccess){
             setStep(step + 1);
         }
-    },[isSuccess])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess]);
     
     return (
         <>
@@ -103,7 +104,7 @@ const NewPatient = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="new-patient-form"
                     btnQnr
-                    disabled={watch('accept_new_patients')==null} >
+                    disabled={watch('accept_new_patients')==null || (watch('accept_new_patients') && !watch('accept_in_future') == null)} >
                     {
                         isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
                     }

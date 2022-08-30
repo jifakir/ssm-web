@@ -12,10 +12,10 @@ import { useRouter } from 'next/router';
 import Modal from '../UI/Modal';
 
 
-const Therapist = ({ showSignup, open, setOpen }) => {
+const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
 
     const [showPass, setShowPass] = React.useState(false);
-    const [tab, setTab] = React.useState(0);
+    const [tab, setTab] = React.useState(defaultTab || 0 );
     const { isLoggedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
 

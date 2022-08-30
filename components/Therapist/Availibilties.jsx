@@ -74,8 +74,9 @@ const Availability = ({profile }) => {
            {form ?
             <form onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
+                    <h1 className="text-lg my-2 text-left">Provide your current availability</h1>
                     <div className="flex justify-start mb-2">
-                        <button type='button' onClick={appendField} className='btn btn-outline btn-primary btn-sm'>
+                        <button type='button' onClick={appendField} className='btn btn-outline btn-secondary btn-sm'>
                             <MdAdd className='mr-1 text-lg' /> Add Day
                         </button>
                     </div>

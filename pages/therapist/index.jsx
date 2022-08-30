@@ -81,7 +81,7 @@ const JoinAsTherapist = () => {
 
     return (
         <div className="px-[10%]">
-            <Therapist showSignup open={open} setOpen={setOpen} />
+            <Therapist showSignup open={open} setOpen={setOpen} defaultTab={1} />
             <div className={`${open ? 'hidden' : 'block'}`}>
                 <h1 className="font-sterio text-3xl xs:text-4xl sm:text-5xl text-center mt-16">
                     Join As a Therapist
