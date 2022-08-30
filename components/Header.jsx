@@ -10,6 +10,7 @@ import { logOut } from '../store/reducers/authReducer';
 import Login from './Auth/Login';
 import { useFetchTherapistQuery } from '../store/api/ssmApi';
 import Therapist from './Auth/Therapist';
+import Patient from './Auth/Patient';
 
 const menuList = [
     {
@@ -79,7 +80,7 @@ const Header = () => {
     return (
         <div className="w-full py-1 md:py-5 px-5 border-b-[10px] border-primary">
             <Therapist open={therapist} setOpen={setTherapist} />
-            <Therapist open={patient} setOpen={setPatient} />
+            <Patient open={patient} setOpen={setPatient} />
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <Link href={'/'} className="cursor-pointer" passHref>
