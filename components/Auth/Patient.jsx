@@ -167,7 +167,7 @@ const Patient = ({ open, setOpen }) => {
                     <div className="relative form-control w-full max-w-xs">
                         <TextInput
                             type={showPass ? 'text' : 'password'}
-                            pHolder="Passoword"
+                            pHolder="Password"
                             title={'Password'}
                             name={'password'}
                             control={control}
@@ -283,7 +283,7 @@ const Patient = ({ open, setOpen }) => {
                                 <div className="relative form-control w-full max-w-xs">
                                     <TextInput
                                         type={showPass ? 'text' : 'password'}
-                                        pHolder="Passoword"
+                                        pHolder="Password"
                                         title={'Password'}
                                         name={'password'}
                                         control={control}

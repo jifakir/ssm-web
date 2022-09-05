@@ -169,7 +169,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                     <div className="relative form-control w-full max-w-xs">
                         <TextInput
                             type={showPass ? 'text' : 'password'}
-                            pHolder="Passoword"
+                            pHolder="Password"
                             title={'Password'}
                             name={'password'}
                             control={control}
@@ -286,7 +286,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                 <div className="relative form-control w-full max-w-xs">
                                     <TextInput
                                         type={showPass ? 'text' : 'password'}
-                                        pHolder="Passoword"
+                                        pHolder="Password"
                                         title={'Password'}
                                         name={'password'}
                                         control={control}
