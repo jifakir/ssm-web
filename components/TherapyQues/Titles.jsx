@@ -67,7 +67,7 @@ const Titles = ({ step, setStep, profile }) => {
         if(isSuccess){
             setStep(step + 1)
         }
-    },[isSuccess]);
+    },[isSuccess, setStep, step]);
 
     return (
         <>
