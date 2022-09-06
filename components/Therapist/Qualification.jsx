@@ -68,7 +68,7 @@ const Qualification = ({profile}) => {
             setImage(licenseData.license);
             setMessage('License uploaded successfully!')
         }
-    },[isSuccess,licenseSuccess]);
+    },[isSuccess, licenseData.license, licenseSuccess]);
 
     return (
     <div className='mt-5 md:mt-0 relative px-4 py-2.5 md:py-5 border-[1.5px] md:border-0 rounded-md md:rounded-none md:border-b-2 border-primary md:border-black'>
