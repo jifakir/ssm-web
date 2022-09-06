@@ -170,7 +170,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                         <h1 className="text-left pb-2">Password</h1>
                         <TextInput
                             type={showPass ? 'text' : 'password'}
-                            pHolder="Passoword"
+                            pHolder="Password"
                             name={'password'}
                             control={control}
                             rules={{
@@ -280,7 +280,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                     <h1 className="text-left pb-2">Password</h1>
                                     <TextInput
                                         type={showPass ? 'text' : 'password'}
-                                        pHolder="Passoword"
+                                        pHolder="Password"
                                         name={'password'}
                                         control={control}
                                         rules={{
