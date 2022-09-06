@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
@@ -14,13 +15,14 @@ const PreferGender = ({ step, setStep, profile }) => {
                 has_gender_preference: profile?.has_gender_preference,
                 gender_preference: profile?.gender_preference
             }});
-    const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const [updatePatient, {data, isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { has_gender_preference, gender_preference } = data;
-        if(has_gender_preference == null) return;
-        await updatePatient({id: profile?.id, has_gender_preference, gender_preference, registration_status: 'entered-gender preference' });
+        let form = { has_gender_preference };
+        if(gender_preference) form = { has_gender_preference, gender_preference };
+        await updatePatient({id: profile?.id, ...form, registration_status: 'entered-gender preference' });
         setStep(step + 1);
     };
 
@@ -29,7 +31,12 @@ const PreferGender = ({ step, setStep, profile }) => {
         setStep(step - 1);
 
     };
-
+    useEffect(() => {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess])
     return (
         <>
             <form id='perfer-gender-form' onSubmit={handleSubmit(handleNext)} className="">

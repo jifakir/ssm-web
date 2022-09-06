@@ -15,7 +15,7 @@ const data = {
         },
         {
             label: 'In-Person only',
-            value: 'in_person'
+            value: 'in-person'
         },
         {
             label: 'Both',

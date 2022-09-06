@@ -118,6 +118,14 @@ export const ssmApi = createApi({
             query: () => `/therapists/subscription-status`,
             providesTags: ['Subscription']
         }),
+        changeSubscription: builder.mutation({
+            query: ({subsId, planId}) => ({
+                url: `/subscriptions/${subsId}/change-plan`,
+                method: 'POST',
+                body: { subscription_plan_id: planId }
+            }),
+            invalidatesTags: ['Subscription']
+        }),
         cancelSubscription: builder.mutation({
             query: ({ subsId, feedback }) => ({
                 url: `/subscriptions/${subsId}/cancel`,
@@ -181,4 +189,5 @@ export const {
     useFetchCardListQuery,
     useFetchSubscriptionStatusQuery,
     useChangeDefaultCardMutation,
+    useChangeSubscriptionMutation,
     useReferUrlQuery } = ssmApi;

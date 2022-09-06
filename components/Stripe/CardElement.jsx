@@ -101,6 +101,7 @@ const CardForm = () => {
     if(isSuccess){
       router.push(process.env.NEXT_PUBLIC_STRIPE_RETURN);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[isSuccess]);
 
   return (
@@ -129,7 +130,7 @@ const CardForm = () => {
       }
       {/* <PaymentElement /> */}
       <p className="text-[10px] text-primary/50 mt-5">
-        By providing the card details you are allowing start saying more LLC, 
+        By providing the card details you are allowing Start Saying More LLC, 
         to charge you after completing the free trial.
       </p>
       <Button className={'mt-2'} btnQnr disabled={isLoading || !stripe || !elements} id="submit">

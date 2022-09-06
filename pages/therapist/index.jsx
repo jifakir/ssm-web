@@ -39,6 +39,7 @@ const JoinAsTherapist = () => {
     const handleSubscribe = async (plan) => {
         if(!isLoggedIn){
             setOpen(!open);
+            dispatch(saveSubsDetails(plan));
             return window.scrollTo({
                 top: 10,
                 behavior: 'smooth',

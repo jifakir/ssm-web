@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiVisaLine } from 'react-icons/ri';
+import { MdOutlineClose } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { useChangeDefaultCardMutation } from '../../../store/api/ssmApi';
 import Button from '../../UI/Button';
@@ -50,8 +51,11 @@ const UpdatePayment = ({ cardDetails, setForm }) => {
         md:fixed bottom-0 md:h-screen md:min-h-screen 
         transition-all duration-500 ease-in-out top-0 
         left-0 z-50 md:bg-primary/60 w-full flex justify-center items-center overscroll-contain`}>
-        <div onClick={(e) => e.stopPropagation()} className="w-full md:w-[450px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
+        <div onClick={(e) => e.stopPropagation()} className="relative w-full md:w-[450px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
             <div className="w-full">
+                <div onClick={() => setForm('')} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
+                    <MdOutlineClose />
+                </div>
                 {
                     add ?
                     <Elements stripe={stripePromise} >

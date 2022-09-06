@@ -62,11 +62,11 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
 
         const { has_race_preference, race_preference } = data;
-        if(has_race_preference == null) return;
+        let form = { has_race_preference };
+        if(race_preference) form = { has_race_preference, race_preference };
         await updatePatient({
             id: profile?.id, 
-            has_race_preference, 
-            race_preference: race_preference || '', 
+            ...form,
             registration_status: 'entered-has_race_preference' });
 
         setStep(step + 1);

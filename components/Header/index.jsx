@@ -6,11 +6,30 @@ import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icon
 import { FaRegUser, FaUser } from 'react-icons/fa';
 import { CgMenu } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../store/reducers/authReducer';
-import Login from './Auth/Login';
-import { useFetchTherapistQuery } from '../store/api/ssmApi';
-import Therapist from './Auth/Therapist';
-import Patient from './Auth/Patient';
+import { logOut } from '../../store/reducers/authReducer';
+import Login from '../Auth/Login';
+import { useFetchTherapistQuery } from '../../store/api/ssmApi';
+import Therapist from '../Auth/Therapist';
+import Patient from '../Auth/Patient';
+import { useDetectClickOutside } from 'react-detect-click-outside';
+import DropdownBody from './Dropdown';
+import Dropdown from 'rc-dropdown';
+
+const UserOutline = ({className}) => (
+    <div className={className}>
+        <svg stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path d="M272 304h-96C78.8 304 0 382.8 0 480c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32C448 382.8 369.2 304 272 304zM48.99 464C56.89 400.9 110.8 352 176 352h96c65.16 0 119.1 48.95 127 112H48.99zM224 256c70.69 0 128-57.31 128-128c0-70.69-57.31-128-128-128S96 57.31 96 128C96 198.7 153.3 256 224 256zM224 48c44.11 0 80 35.89 80 80c0 44.11-35.89 80-80 80S144 172.1 144 128C144 83.89 179.9 48 224 48z"/>
+        </svg>
+    </div>
+);
+
+const UserFill = ({className}) => (
+    <div className={className}>
+        <svg stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
+        </svg>
+    </div>
+);
 
 const menuList = [
     {
@@ -45,10 +64,10 @@ const Header = () => {
     const [tab, setTab] = React.useState(0);
     const [open, setOpen] = React.useState(false);
     const [profile, setProfile] = React.useState(false);
-
+    
     const { isLoggedIn, userDetails } = useSelector(state => state.auth);
     const { data, isSuccess} = useFetchTherapistQuery();
-
+    
     const dispatch = useDispatch();
 
     const signOutHandler = () => {
@@ -76,6 +95,15 @@ const Header = () => {
         setPatient(state => !state);
         setProfile(false);
     };
+
+    const showProfileHandler = () => {
+        setProfile(!profile);
+        console.log("Event triggred!")
+    }
+
+    const onVisibleChange = (v) => {
+        setProfile(v);
+    }
 
     return (
         <div className="w-full py-1 md:py-5 px-5 border-b-[10px] border-primary">
@@ -107,11 +135,11 @@ const Header = () => {
                 </div>
                 <div className="relative justify-self-end">
                     <div className="hidden lg:block text-3xl">
-                        {
+                        {/* {
                             !isLoggedIn ?
                             (
                             <div onClick={() => setProfile(state => !state)}>
-                                <a className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
+                                <a className={`cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary`}>
                                     <FaUser  />
                                     {
                                         profile ?
@@ -120,49 +148,60 @@ const Header = () => {
                                     }
                                 </a>
                             </div>
-                            ):
-                            <a onClick={() => setProfile(state => !state)} className="cursor-pointer transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary">
-                                <FaUser  />
+                            ): */}
+                            <Dropdown
+                                onVisibleChange={onVisibleChange}
+                                visible={profile}
+                                overlay={<DropdownBody 
+                                    isLoggedIn={isLoggedIn}
+                                    userDetails={userDetails}
+                                    therapistLogin={therapistLogin}
+                                    patientLogin={patientLogin}
+                                    signOutHandler={signOutHandler}
+                                    profile={profile}
+                                    setProfile={setProfile}
+                                    showProfileHandler={showProfileHandler}
+                                  />}
+                                trigger={['click']} >
+                                <div id="grand-parent" onClick={showProfileHandler} className={`cursor-pointer text-4xl transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary ${profile && 'text-secondary'}`}>
+                                    {profile ?
+                                    <div className='flex items-center'>  
+                                        <UserOutline className={`w-7 h-7`} />
+                                        <MdOutlineKeyboardArrowUp />
+                                    </div>:
+                                    <div className='flex items-center'>
+                                        <UserFill className={`w-7 h-7`} />
+                                        <MdOutlineKeyboardArrowDown  />
+                                    </div>}
+                                </div>
+                            </Dropdown>
+                            {/* <button onClick={() => setProfile(state => !state)} className={`cursor-pointer text-4xl transition-all duration-300 ease-out flex items-center hover:underline hover:text-secondary ${profile && 'text-secondary'}`}>
+                                
                                     {
                                         profile ?
-                                        <MdOutlineKeyboardArrowUp />:
-                                        <MdOutlineKeyboardArrowDown  />
+                                        <>  
+                                            <UserOutline className={`w-7 h-7`} />
+                                            <MdOutlineKeyboardArrowUp />
+                                        </>:
+                                        <>
+                                            <UserFill className={`w-7 h-7`} />
+                                            <MdOutlineKeyboardArrowDown  />
+                                        </>
                                     }
-                            </a>
-                        }
+                            </button> */}
+                        {/* } */}
                     </div>
-                    <div className={`${profile ? 'block' : 'hidden'} absolute w-max top-full right-0 rounded-md shadow-md z-10 overflow-hidden`}>
-                        <div className="bg-white">
-                            {
-                                !isLoggedIn ?
-                                (
-                                <>
-                                    <div className="w-full px-4 py-2.5 text-[15px] bg-secondary/50 border-b border-black">
-                                        <h1 className="">Select Profile Type</h1>
-                                    </div>
-                                    <div className="px-4 py-2.5 text-[20px]">
-                                        <h1 onClick={therapistLogin} className="cursor-pointer">Therapist</h1>
-                                        <h1 onClick={patientLogin} className="cursor-pointer">Patient</h1>
-                                    </div>
-                                </>
-                                ):
-                                (
-                                <>
-                                    <div className="px-4 py-2.5 text-[20px]">
-                                        <Link href={`${ userDetails?.role === 1 ? '/therapist/profile' : '/patient/profile'}`}>
-                                            <a>
-                                                Profile
-                                            </a>
-                                        </Link>
-                                        <h1 onClick={() => signOutHandler()} className='cursor-pointer'>
-                                            Signout
-                                        </h1>
-                                    </div>
-                                </>
-                                )
-                            }
-                        </div>
-                    </div>
+                    {/* {
+                        profile && <DropdownBody
+                        isLoggedIn={isLoggedIn}
+                        userDetails={userDetails}
+                        therapistLogin={therapistLogin}
+                        patientLogin={patientLogin}
+                        signOutHandler={signOutHandler}
+                        profile={profile}
+                        setProfile={setProfile}
+                        showProfileHandler={showProfileHandler} />
+                    } */}
                     <div className="lg:hidden cursor-pointer">
                         <CgMenu onClick={toggleDrawer} className="text-4xl text-primary" />
                     </div>

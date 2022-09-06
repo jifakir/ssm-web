@@ -50,7 +50,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
 
     const openHandler = () => {
         setOpen(false);
-        setTab(null);
+        setTab(0);
         reset();
     };
 
@@ -82,7 +82,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
             const { user, token } = signupData;
             dispatch(logIn({ ...user, token, role: 1}));
             setOpen(false);
-            router.push('/therapist');
+            router.push('/therapist/questionnaire');
         }
         // eslint-disable-next-line 
     },[signupSuccess]);
@@ -136,7 +136,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                 <GoogleButton 
                                     onClick={renderProps.onClick} 
                                     disabled={renderProps.disabled}
-                                    label="LOGIN WITH GOOGLE" />
+                                    label="SIGN IN WITH GOOGLE" />
                             )}
                             onSuccess={responseGoogle}
                             onFailure={responseGoogle}
@@ -153,11 +153,11 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                         }
                     </div>
                     <div className="form-control w-full max-w-xs">
+                        <h1 className="text-left pb-2">Email</h1>
                         <TextInput
                             control={control}
                             pHolder={'startsayingmore@gmail.com'}
                             name={'email'}
-                            title={'Email'}
                             rules={{
                                 required: 'Email is required', 
                                 pattern: {
@@ -166,11 +166,11 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                 }}}
                             />
                     </div>
-                    <div className="relative form-control w-full max-w-xs">
+                    <div className="mt-6 relative form-control w-full max-w-xs">
+                        <h1 className="text-left pb-2">Password</h1>
                         <TextInput
                             type={showPass ? 'text' : 'password'}
                             pHolder="Passoword"
-                            title={'Password'}
                             name={'password'}
                             control={control}
                             rules={{
@@ -180,7 +180,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                     message: "Password must be 8 characters long"}}} />
                         <div 
                             onClick={() => setShowPass(!showPass)} 
-                            className="absolute right-3 top-[52px] sm:top-16 cursor-pointer">
+                            className="absolute right-3 top-[52px] sm:top-[44px] cursor-pointer">
                             {
                                 showPass ? <BsEye /> : <BsEyeSlash />
                             }
@@ -218,13 +218,6 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                             onClick={()=> showSignup ? tabHandler(1) : redirectHandler()} 
                             className="text-blue-700 font-bold cursor-pointer pl-1">Sign up</span></p>
                     </div>
-                    <div className="text-xs">
-                        <p className="">
-                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, 
-                            tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-                             justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-                        </p>
-                    </div>
                 </div>
             </form>
         )}
@@ -245,7 +238,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                     render={(renderProps) => (
                                         <GoogleButton 
                                             onClick={renderProps.onClick}
-                                            label="SIGN UP GOOGLE" />
+                                            label="SIGN UP WITH GOOGLE" />
                                     )}
                                     onSuccess={responseGoogle}
                                     onFailure={responseGoogle}
@@ -261,20 +254,20 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                             </div>
                             <form onSubmit={handleSubmit(onSignupHandler)}>
                                 <div className="form-control w-full max-w-xs">
+                                    <h1 className="text-left pb-2">Name</h1>
                                     <TextInput
                                         control={control}
                                         pHolder={'startsayingmore'}
                                         name={'full_name'}
-                                        title={'Name'}
                                         rules={{ required: 'Name is required' }}
                                         />
                                 </div>
-                                <div className="form-control w-full max-w-xs">
+                                <div className="mt-6 form-control w-full max-w-xs">
+                                    <h1 className="text-left pb-2">Email</h1>
                                     <TextInput
                                         control={control}
                                         pHolder={'startsayingmore@gmail.com'}
                                         name={'email'}
-                                        title={'Email'}
                                         rules={{
                                             required: 'Email is required', 
                                             pattern: {
@@ -283,11 +276,11 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                             }}}
                                         />
                                 </div>
-                                <div className="relative form-control w-full max-w-xs">
+                                <div className="mt-6 relative form-control w-full max-w-xs">
+                                    <h1 className="text-left pb-2">Password</h1>
                                     <TextInput
                                         type={showPass ? 'text' : 'password'}
                                         pHolder="Passoword"
-                                        title={'Password'}
                                         name={'password'}
                                         control={control}
                                         rules={{
@@ -298,13 +291,13 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                             }} />
                                     <div 
                                         onClick={() => setShowPass(!showPass)} 
-                                        className="absolute right-3 top-16 cursor-pointer">
+                                        className="absolute right-3 top-[44px] cursor-pointer">
                                         {
                                             showPass ? <BsEye /> : <BsEyeSlash />
                                         }
                                     </div>
                                 </div>
-                                <div className="w-full card-actions pt-5">
+                                <div className="w-full card-actions pt-6">
                                 <button 
                                     type='submit'
                                         className={`
@@ -339,9 +332,6 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                     <span 
                                     onClick={()=> tabHandler(0)}
                                     className="text-blue-700 font-bold cursor-pointer pl-1">Login</span>
-                                </p>
-                                <p className="">
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
                                 </p>
                             </div>
                         </div>

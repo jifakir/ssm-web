@@ -161,7 +161,7 @@ const Details = ({profile}) => {
                                             <h2 className="md:pl-2">Gender</h2>
                                         </div>
                                         <div className="pl-5">
-                                            <h3 className="capitalize">{profile?.gender}</h3>
+                                            <h3 className="capitalize">{ gender.options.find(v => v.value === profile?.gender)?.label }</h3>
                                         </div>
                                     </div>
                                     <div className="flex items-start md:items-center">

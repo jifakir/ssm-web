@@ -14,7 +14,7 @@ const Button = ({
                 type={type ? type : 'submit'}
                 {...rest} 
                 className={`
-                    text-2xl
+                    text-[1.3rem]
                     leading-7
                     tracking-[0.055em]
                     text-primary

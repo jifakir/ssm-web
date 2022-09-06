@@ -7,29 +7,37 @@ import Checkbox from '../UI/Checkbox';
 import { useEffect } from 'react';
 
 const langData = {
-    title: 'What other language(s) do you speak?',
+    title: 'What form of counseling are you interested in?',
     name: 'languages',
     required: true,
     options: [
         {
-            label: 'Spanish',
-            value: 'spanish'
+            label: 'Psychodynamic therapy',
+            value: 'psychodynamic'
         },
         {
-            label: 'French',
-            value: 'french'
+            label: 'Cognitive behavioral therapy',
+            value: 'congnitive'
         },
         {
-            label: 'Kreyol',
-            value: 'kreyol'
+            label: 'Behavioral therapy',
+            value: 'behavioral'
         },
         {
-            label: 'Yoruba',
-            value: 'yoruba'
+            label: 'Humanistic therapy',
+            value: 'humanistic'
         },
         {
-            label: 'Igbo',
-            value: 'igbo'
+            label: 'Substance abuse counseling',
+            value: 'substance'
+        },
+        {
+            label: 'Emotion-Focused Therapy (EFT)',
+            value: 'emotion_f_t'
+        },
+        {
+            label: 'Not Applicable',
+            value: 'not_applicable'
         },
         {
             label: 'Other',
@@ -38,7 +46,7 @@ const langData = {
     ]
 };
 const data = {
-    name: 'speak_other_languages',
+    name: 'specific_form',
     options: [
         {
             label: 'Yes',
@@ -51,38 +59,22 @@ const data = {
     ]
 };
 
-const sessdata = {
-    name: 'prefer_other_language',
-    options: [
-        {
-            label: 'Yes',
-            value: true
-        },
-        {
-            label: 'No',
-            value: false
-        },
-    ]
-};
-
-
-const PreferOtherLang = ({ step, setStep, profile }) => {
+const FormOfCounselling = ({ step, setStep, profile }) => {
 
     const { control, register, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
-            speak_other_languages: profile?.speak_other_languages,
+            counseling_areas: profile?.counseling_areas,
             prefer_other_language: profile?.prefer_other_language,
-            languages: profile?.languages,
         }});
     const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
-        const { speak_other_languages, prefer_other_language, languages } = data;
-        let form = {speak_other_languages};
-        if(languages && languages.length > 0) form = { speak_other_languages, languages};
-        if(prefer_other_language) form = { speak_other_languages, languages};
+        const { specific_form, counseling_areas } = data;
+        let form = {specific_form};
+        if(specific_form) form = { specific_form, counseling_areas};
         await updatePatient({id: profile?.id, ...form, registration_status: 'entered-speak_other_languages' });
+        setStep(step + 1);
 
     };
 
@@ -98,26 +90,21 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
             setStep(step + 1);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[isSuccess])
+    },[isSuccess]);
+
     return (
         <>
-            <form id="other-lang-form" onSubmit={handleSubmit(handleNext)} className="">
+            <form id="form-lang-form" onSubmit={handleSubmit(handleNext)} className="">
                 <div className="w-full">
                     <div className="">
-                        <h1 className="text-lg my-2 text-left">Do you speak any other languages?</h1>
+                        <h1 className="text-lg my-2 text-left">Are you interested in any specific form of counseling?</h1>
                         <div className="form-control w-full max-w-xs">
                             <Radio control={control} data={data} />
                         </div>
                     </div>
-                    <div className={`text-left mt-5 ${watch('speak_other_languages') ? 'block' : 'hidden'}`}>
+                    <div className={`text-left mt-5 ${watch('specific_form') ? 'block' : 'hidden'}`}>
                         
                         <Checkbox control={control} data={langData} register={register} errors={errors} />
-                        <div className="mt-5">
-                            <h1 className="text-lg my-2 text-left">Would you prefer to have sessions in another language?</h1>
-                            <div className="form-control w-full max-w-xs">
-                                <Radio control={control} data={sessdata} />
-                            </div>
-                        </div>
                     </div>
                 </div>
             </form>
@@ -129,12 +116,12 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
                     btnSecondary />
                 <Button 
                     title={'Next'} 
-                    form="other-lang-form" 
+                    form="form-lang-form" 
                     btnQnr
-                    disabled={watch('speak_other_languages') == null} />
+                    disabled={watch('specific_form') == null} />
             </div>
         </>
     )
 }
 
-export default PreferOtherLang;
+export default FormOfCounselling;

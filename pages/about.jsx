@@ -19,7 +19,7 @@ const About = () => {
                 <div className="relative w-full h-full overflow-hidden">
                     <Image src={'/img/about-hero.png'} alt={'Hero Image'} className="object-cover object-[20%_top]" layout="fill"  />
                 </div>
-                <div className="bg-gradient-to-b from-white/70 to-secondary/70 absolute w-full h-full top-0  font-sterio sm:translate-x-0 text-4xl xxs:text-5xl sm:text-6xl font-medium md:font-normal md:text-7xl text-primary z-10 text-center md:text-right leading-[50px] md:leading-[93px]">
+                <div className="bg-gradient-to-b from-white/70 to-secondary/70 md:from-transparent md:to-transparent absolute w-full h-full top-0  font-sterio sm:translate-x-0 text-4xl xxs:text-5xl sm:text-6xl font-medium md:font-normal md:text-7xl text-primary z-10 text-center md:text-right leading-[50px] md:leading-[93px]">
                     <div className="w-full h-full flex justify-center md:justify-end items-center">
                         <div className="md:text-right md:mr-20">
                             <h2>We want you to</h2>
@@ -58,14 +58,54 @@ const About = () => {
                         </div>
                     </div>
                 </div>
+                <div className="mt-[64px]">
+                    <div className="flex flex-col lg:flex-row">
+                        <div className="lg:pr-10 pt-2 lg:pt-[74px] flex justify-center">
+                            <div className="relative">
+                                <Image 
+                                    src={'/img/duran.jpg'} 
+                                    alt="Co-Founder Photo" 
+                                    width={428} 
+                                    height={454}
+                                    objectFit="cover"
+                                    objectPosition="top" />
+                            </div>
+                        </div>
+                        <div className="lg:w-3/5">
+                            <h2 className="text-3xl font-bold mt-5 lg:mt-0 text-center lg:text-left">Giselle Duran</h2>
+                            <h3 className="text-xl sm:text-2xl text-center lg:text-left mt-2">Creative Director &amp; Co-founder</h3>
+                            <div className="mt-5 md:mt-4 text-sm md:text-base text-center lg:text-left">
+                                <p className="">
+                                    Giselle joined Start Saying More as the brand 
+                                    and website designer for the business. Her personal 
+                                    relationship with therapy began in 2019 with couples 
+                                    therapy and then again in 2020 with individual therapy. 
+                                    As a first-generation Dominican American, therapy was not a
+                                    regular discussion in the household; emotions and frustrations 
+                                    had to be held in and figured out internally. 
+                                    Thanks to friends like Olamide, therapy became a 
+                                    less taboo subject matter and something that Giselle 
+                                    realized she could benefit from. Once she began her mental health journey, 
+                                    she was able to begin working on herself which translated into working on her 
+                                    relationships with others. With her own experience under her belt, 
+                                    Giselle is wanting to help others seeking their own internal clarity 
+                                    find the mental health provider that is going to make a difference in their lives. 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div className="w-[90%] mx-auto my-10 md:my-16">
                 <h3 className="text-2xl text-center lg:text-left">Connect with us on social media!</h3>
-                <div className="md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
+                <div className="md:px-0 my-5 md:grid grid-cols-5 md:gap-4.5 space-y-5 md:space-y-0">
                     {
                         filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
-                        <div className="relative w-full h-52 sm:h-72 md:w-50 md:h-32 lg:h-52" key={idx}>
-                            <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} alt="Pic" layout='fill' objectFit='cover' />
+                        <div className="relative w-2/3 h-52 sm:h-56" key={idx}>
+                            <Image src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} 
+                                alt="Pic"
+                                objectFit='cover'
+                                layout='fill' />
                         </div>
                         ))
                     }
