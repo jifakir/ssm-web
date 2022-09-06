@@ -17,19 +17,20 @@ const Landing = () => {
             <div className="absolute hidden md:block w-full bottom-7 md:right-10">
                 <p className="text-white text-xs md:text-base text-center md:text-right">Artwork by Reyna Noriega</p>
             </div>
-            <div className="w-[80%] md:w-auto mx-auto md:mx-8 h-full flex lg:items-center">
-                <div className="flex flex-col justify-between md:justify-start items-center md:items-start">
-                    <div className="mt-9 md:mt-14 relative md:mb-14 w-[100px] md:w-[147px] h-[90px] md:h-[118px]">
+            <div className="w-[80%] md:w-auto mx-auto md:ml-24 h-full">
+                <div className="h-full flex flex-col justify-between md:justify-start items-center md:items-start">
+                    <div className="mt-9 md:mt-10 relative md:mb-0 w-[100px] md:w-[147px] h-[90px] md:h-[118px]">
                         <Image src={'/img/whitelogo.png'} layout="fill" alt="Welcome" />
                     </div>
-                    <div className="mt-32">
-                        <h1 className="font-sterio text-primary text-center md:text-left text-5xl md:text-5xl lg:text-[68px] lg:leading-[64px]">We can’t wait to<br className='md:hidden'/> connect you!</h1>
-                        <p className="py-5 md:py-4 text-center md:text-left text-xs md:text-base leading-6 text-[#191847]">
+                    <div className="md:mt-16">
+                        <h1 className="font-sterio text-primary text-center md:text-left text-5xl md:text-5xl lg:text-[68px] lg:leading-[64px]">
+                            We can’t wait to<br className=''/> connect you!</h1>
+                        <p className="mt-8 py-5 md:py-4 text-center md:text-left text-xs md:text-base leading-6 text-[#191847]">
                             Sign up for our newsletter to learn more 
                             about what we do and<br className='hidden md:block'/> to stay up to date 
                             on when we will be ready to connect you!​
                         </p>
-                        <form onSubmit={handleSubmit(submitHandler)} className="flex flex-col md:flex-row items-center gap-2">
+                        <form onSubmit={handleSubmit(submitHandler)} className="mt-3 mr-5 flex flex-col md:flex-row items-center gap-2">
                             <Input control={control}
                                 name={'email_address'}
                                 pHolder={'Email'}
@@ -50,7 +51,7 @@ const Landing = () => {
                                     bg-primary
                                     uppercase
                                     px-2
-                                    py-1
+                                    py-[5px]
                                     hover:bg-primary/90 
                                     active:bg-accent-focus
                                     rounded

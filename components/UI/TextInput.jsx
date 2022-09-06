@@ -32,6 +32,7 @@ const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, na
                     input min-h-40 h-40 input-bordered 
                     w-full border-2 hover:border-neutral 
                     shadow-sm focus:border-accent
+                    border-[#C4C4C4]
                     focus:outline-none bg-white 
                     max-w-xs rounded ${className} ${errors[name] && 'input-error'}`} 
                 >
@@ -43,7 +44,8 @@ const Input = ({ titleStyle, inputLg, title, className, type, pHolder, rules, na
                     className={`
                     w-full
                     ${!inputLg ? 'px-4 py-2 text-sm' : 'p-4 text-base'}
-                    border-2 
+                    border-2
+                    border-[#C4C4C4]
                     hover:border-neutral 
                     shadow-sm 
                     focus:border-accent 

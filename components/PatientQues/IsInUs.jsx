@@ -32,13 +32,14 @@ const IsInUs = ({ step, setStep, profile }) => {
     const { control, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
         is_in_us: profile?.is_in_us,
+        location: '',
         user_address: profile?.user_address
     }});
     const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
-
-        const { is_in_us, user_address: {line1, line2, city, state, zip_code} } = data;
+        console.log(data);
+        const { location, is_in_us, user_address: {line1, line2, city, state, zip_code} } = data;
         let form = {is_in_us};
         if(is_in_us){
             form = {
@@ -52,6 +53,7 @@ const IsInUs = ({ step, setStep, profile }) => {
                     }
             }
         }
+
         await updatePatient({
             id: profile?.id, 
             ...form,
@@ -70,17 +72,34 @@ const IsInUs = ({ step, setStep, profile }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isSuccess]);
+
+    console.log(watch('location'));
+
     return (
     <>
-        <form id="isinusform" onSubmit={handleSubmit(handleNext)}>
+        <form id='address-form' onSubmit={handleSubmit(handleNext)}>
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">Do you live in the United States?</h1>
                 <div className="form-control w-full max-w-xs">
                     <Radio control={control} data={data} />
                 </div>
             </div>
+            <div className={`w-full mt-5 ${!watch('is_in_us') ? 'block' : 'hidden'}`}>
+                <h1 className="my-5 text-left text-xs text-error">
+                    Unfortunately, we are not currently matching outside of the United States. 
+                    <br/>We’re sorry for the incocnvenience, and we hope to connect you soon.
+                </h1>
+                <h1 className="text-lg my-5 text-left">Please let us know where you are located so we know where to go next</h1>
+                <div className="form-control w-full max-w-xs">
+                    <TextInput
+                        control={control}
+                        name={'location'}
+                        pHolder={'Your location'}
+                            />
+                </div>
+            </div>
             <div className={`w-full mt-5 ${watch('is_in_us') ? 'block' : 'hidden'}`}>
-                <h1 className="text-lg my-5 text-left">Provide your address?</h1>
+                <h1 className="text-lg my-5 text-left">Please share your current address with us for matching purposes</h1>
                 <div className="form-control w-full space-y-2">
                     <div className="form-control w-full max-w-xs">
                         <TextInput
@@ -136,8 +155,8 @@ const IsInUs = ({ step, setStep, profile }) => {
                 btnSecondary
                  />
             <Button 
+                form="address-form"
                 title={'Next'}
-                form="isinusform"
                 btnQnr
                 disabled={watch('is_in_us')==null} />
         </div>

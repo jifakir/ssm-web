@@ -23,7 +23,7 @@ const data = {
             value: 'hispanic'
         },
         {
-            label: 'white',
+            label: 'White',
             value: 'white'
         },
         {

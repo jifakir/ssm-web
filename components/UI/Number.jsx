@@ -15,7 +15,8 @@ const PhonNumber = ({control,name, rules, className}) => {
                       format="###-###-####"
                       mask={"_"}
                       className={`input input-bordered 
-                      w-full border-2 hover:border-neutral 
+                      w-full border-2 hover:border-neutral
+                      border-[#C4C4C4]
                       shadow-sm focus:border-accent
                       focus:outline-none bg-white
                       rounded ${className} ${error && 'input-error'}`}

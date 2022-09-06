@@ -14,7 +14,7 @@ const data = {
         },
         {
             label: 'In-person only',
-            value: 'in_person'
+            value: 'in-person'
         },
         {
             label: 'No preference',
@@ -54,7 +54,7 @@ const InpersonFuture = ({ step, setStep, profile }) => {
     const handleNext = async (data) => {
         const { session_type } = data;
         let form = {session_type};
-        if(session_type !== 'none') form = data;
+        if(session_type === 'virtual') form = data;
         await updatePatient({
             id: profile?.id, 
             ...form,
@@ -86,10 +86,10 @@ const InpersonFuture = ({ step, setStep, profile }) => {
                         <h1 className="text-lg my-2 text-left">Will you someday want to transition to in-person sessions?</h1>
                         <Radio control={control} data={willData} />
                     </div>
-                    <div className={`mt-5 ${watch('session_type') === 'in_person' ? 'block' : 'hidden'}`}>
+                    {/* <div className={`mt-5 ${watch('session_type') === 'in_person' ? 'block' : 'hidden'}`}>
                         <h1 className="text-lg my-2 text-left">Will you someday want to transition to virtual sessions?</h1>
                         <Radio control={control} data={willData} />
-                    </div>
+                    </div> */}
                 </div>
             </form>
             <div className={`flex gap-5 py-5 mt-9`}>

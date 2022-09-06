@@ -65,7 +65,10 @@ const Orientation = ({ step, setStep, profile}) => {
     const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
     
     const handleNext = async ({sexual_orientation, has_sexual_preference}) => {
-        await updatePatient({id: profile?.id, sexual_orientation, has_sexual_preference, registration_status: 'entered-sexual_orientation' });
+        let form = { sexual_orientation };
+        if(has_sexual_preference) form = { sexual_orientation, has_sexual_preference };
+        await updatePatient({
+            id: profile?.id, ...form, registration_status: 'entered-sexual_orientation' });
         setStep(step + 1);
 
     };

@@ -59,16 +59,16 @@ const Footer = () => {
     const mailChimpUrl = process.env.NEXT_PUBLIC_MAILCHIMP_URL;
 
     return (
-        <footer className="relative bg-neutral/30 py-4 overflow-hidden bg-gradient-to-r from-transparent via-neutral/40 to-transparent">
+        <footer className="relative bg-neutral/30 pb-4 overflow-hidden bg-gradient-to-r from-transparent via-neutral/40 to-transparent">
             <div className="md:hidden absolute -z-10 top-0 left-0 w-full h-full">
-                <Image src={'/img/footerbgmobile.svg'} layout="fill" objectFit='cover'  alt={"Footer Bg"} />
+                <Image src={'/img/footerbgmobile.svg'} layout="fill" objectFit='fit'  alt={"Footer Bg"} />
             </div>
-            <div className="hidden md:block absolute -z-10 -top-5">
+            {/* <div className="hidden md:block absolute -z-10 -top-5">
                 <Image src={'/img/footerbg.svg'} alt={"Footer Bg"} width={686} height={450} />
-            </div>
-            <div className="px-[2%] lg:flex justify-between">
-                <div className="lg:w-2/3 md:flex justify-between items-center">
-                    <div className="md:w-1/2 py-10 px-5 sm:px-0">
+            </div> */}
+            <div className="w-full lg:flex">
+                <div className="lg:w-2/5 md:flex justify-between items-center bg-footer_bg bg-contain bg-top-left">
+                    <div className="md:w-full py-10 px-5 sm:px-0">
                         <div className="w-full px-20 flex justify-center">
                             <Image src={'/img/seclogo.svg'} alt="Footer Logo" width={326} height={106} />
                         </div>
@@ -93,7 +93,9 @@ const Footer = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="md:w-1/2 md:pr-10">
+                </div>
+                <div className="pb-20 w-3/5 flex">
+                    <div className="md:w-1/2 md:pr-10 mt-10">
                         <MailchimpSubscribe
                             url={mailChimpUrl}
                             render={(props) => {
@@ -122,50 +124,51 @@ const Footer = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div className="hidden lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 lg:block text-center lg:text-left">
-                    <div className="md:w-1/2 lg:w-full">
-                        <h5 className="relative text-[15px] font-semibold inline-block">
-                            <span>Find A Therapist</span>
-                            <div className="absolute -top-4 -right-5">
-                                <Image 
-                                    width={46} 
-                                    height={49} 
-                                    src={'/img/speechbubble.svg'} 
-                                    alt="Seech" />
-                            </div>
-                        </h5>
-                        <p className="text-[15px] pt-4 pb-3">
-                            Are you ready to start your therapy journey? Match with one today!
-                        </p>
-                        <Link href={'/patient'} passHref>
-                            <a >
-                                <Button title={'START SAYING MORE'} btnSecondary btnOutline fontSize={'text-xl'} />
-                            </a>
-                        </Link>
-                    </div>
-                    <div className="md:w-1/2 lg:w-full mt-5 sm:mt-6 lg:mt-6">
-                        <h5 className="relative inline-block text-[15px] font-semibold">
-                            <span>Join As A Therapist</span>
-                            <div className="absolute -top-1 -right-5">
-                                <Image 
-                                    width={59} 
-                                    height={40} 
-                                    src={'/img/lip.svg'} 
-                                    alt="Seech" />
-                            </div>
-                        </h5>
-                        <p className="text-[15px] pt-4 pb-3">
-                            Interested in joining our directory?
-                        </p>
-                        <Link href={'/therapist'} passHref>
-                            <Button title={'REGISTER TODAY'} btnSecondary btnOutline fontSize={'text-xl'} />
-                        </Link>
+                    <div className="lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 lg:block text-center lg:text-left">
+                        <div className="md:w-1/2 lg:w-full pr-5">
+                            <h5 className="relative text-[15px] font-semibold inline-block">
+                                <span>Find A Therapist</span>
+                                <div className="absolute -z-10 -top-4 -right-5">
+                                    <Image 
+                                        width={46} 
+                                        height={49} 
+                                        src={'/img/speechbubble.svg'} 
+                                        alt="Seech" />
+                                </div>
+                            </h5>
+                            <p className="text-[15px] pt-4 pb-3">
+                                Are you ready to start your<br className=''/> therapy journey? Match with
+                                <br/> one today!
+                            </p>
+                            <Link href={'/patient'} passHref>
+                                <a >
+                                    <Button title={'START SAYING MORE'} btnSecondary btnOutline fontSize={'text-xl'} />
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="md:w-1/2 lg:w-full mt-5 sm:mt-6 lg:mt-6">
+                            <h5 className="relative inline-block text-[15px] font-semibold">
+                                <span>Join As A Therapist</span>
+                                <div className="absolute -z-10 -top-1 -right-5">
+                                    <Image 
+                                        width={59} 
+                                        height={40} 
+                                        src={'/img/lip.svg'} 
+                                        alt="Seech" />
+                                </div>
+                            </h5>
+                            <p className="text-[15px] pt-4 pb-3">
+                                Interested in joining our <br/>directory?
+                            </p>
+                            <Link href={'/therapist'} passHref>
+                                <Button title={'REGISTER TODAY'} btnSecondary btnOutline fontSize={'text-xl'} />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="">
-                <p className="md:hidden lg:block text-[10px] px-10 sm:px-0 sm:text-xs text-center pt-12 sm:pt-8">
+            <div className="absolute w-full bottom-5">
+                <p className="md:hidden lg:block text-[10px] px-10 sm:px-0 sm:text-xs text-center pt-12 sm:pt-0">
                     Copyright &copy; 2020 Start Saying More, LLC. All Rights Reserved. | Privacy Policy | Terms &amp; Conditions
                 </p>
             </div>

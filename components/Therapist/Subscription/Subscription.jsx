@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { MdClose, MdEdit } from 'react-icons/md';
-import { useFetchSubscriptionPlanQuery, useFetchSubscriptionsQuery, useSubscribeMutation } from '../../../store/api/ssmApi';
+import { MdOutlineClose, MdEdit } from 'react-icons/md';
+import { useChangeSubscriptionMutation, useFetchSubscriptionPlanQuery, useFetchSubscriptionsQuery, useSubscribeMutation } from '../../../store/api/ssmApi';
 import Button  from '../../UI/Button';
 import Spinner from '../../UI/Loader';
 import Confirmed from './Confirmed';
@@ -15,7 +15,7 @@ const SubscriptionItem = ({ form, setForm }) => {
     const { data:subscriptionPlans, isLoading } = useFetchSubscriptionPlanQuery();
     const { data:subscriptions, isLoading:subsLoading } = useFetchSubscriptionsQuery();
 
-    const [subscirbe, result] = useSubscribeMutation();
+    const [changeSubscription, result] = useChangeSubscriptionMutation();
 
     useEffect(() => {
         if(result.isSuccess){
@@ -31,9 +31,11 @@ const SubscriptionItem = ({ form, setForm }) => {
     const altPlan = subscriptionPlans.find(pln => pln.id !== plan.subscription_plan_id);
     
     const handleConfirmation = () => {
-        setForm(false);
+        setForm('');
         setConfirm(false);
     };
+
+    const { isError:changeError, error:changeErr } = result;
 
     return (
         <div className="">
@@ -43,11 +45,14 @@ const SubscriptionItem = ({ form, setForm }) => {
                     md:fixed bottom-0 md:h-screen md:min-h-screen 
                     transition-all duration-500 ease-in-out top-0 
                     left-0 z-50 md:bg-primary/60 w-full flex justify-center items-center overscroll-contain`}>
-                        <div onClick={(e) => e.stopPropagation()} className="w-full md:w-[350px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
+                        <div onClick={(e) => e.stopPropagation()} className="relative w-full md:w-[350px] h-auto md:px-10 py-10 flex justify-center items-center bg-white rounded-md">
                             {
                                 confirmed ? 
                                 <Confirmed clickedOk={handleConfirmation} />:
                                 <div className="w-full">
+                                    <div onClick={() => setForm('')} className="absolute top-3 right-3 text-3xl font-bold cursor-pointer hover:text-error">
+                                        <MdOutlineClose />
+                                    </div>
                                     <div className="w-full my-5 border-[1.5px] pb-2.5 md:border-0 rounded-md md:rounded-none border-primary overflow-hidden">
                                         <h2 className='text-center bg-neutral text-sm font-semibold py-1'>Your current plan</h2>
                                         <div className="px-2">
@@ -61,9 +66,10 @@ const SubscriptionItem = ({ form, setForm }) => {
                                             <h1 className="text-sm pt-2 lg:text-xl font-medium text-primary">{altPlan?.plan_name} Subscription</h1>
                                             <h3 className="text-sm py-3 font-medium">${ altPlan?.price }/mo</h3>
                                             <Button
-                                                onClick={() => subscirbe({ subscription_plan_id: altPlan.id })}
+                                                onClick={() => changeSubscription({ subsId: plan?.id, planId: altPlan.id })}
                                                 title={'Select'}
                                                 className="w-full md:w-auto md:mx-auto" />
+                                            <p className="text-error text-xs mt-2">{changeErr?.data?.message}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +79,7 @@ const SubscriptionItem = ({ form, setForm }) => {
                 ):
                 (
                 <div className="w-full border-[1.5px] px-2 py-2 md:border-0 rounded-md md:rounded-none border-primary">
-                    <div className="absolute top-1 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
+                    {/* <div className="absolute top-1 md:top-2 right-2 md:right-0 text-2xl text-secondary cursor-pointer">
                         {
                             form ? 
                             <MdClose onClick={() => setForm('')} className="text-red-500" /> : 
@@ -82,7 +88,7 @@ const SubscriptionItem = ({ form, setForm }) => {
                                 <span className="md:hidden text-sm font-medium underline underline-offset-4">Edit</span>
                             </div>
                         }
-                    </div>
+                    </div> */}
                     <div className="">
                         <h2 className="font-semibold text-sm md:text-base text-primary">{currentPlan?.plan_name}</h2>
                     </div>

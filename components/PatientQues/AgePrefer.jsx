@@ -4,8 +4,6 @@ import { useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 
-
-
 const preferData = {
     name: 'has_age_preference',
     options: [

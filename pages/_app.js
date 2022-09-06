@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import store from '../store/configureStore';
 import '../styles/globals.css';
 import 'react-modern-drawer/dist/index.css';
+import 'rc-dropdown/assets/index.css';
 
 
 import "swiper/css";

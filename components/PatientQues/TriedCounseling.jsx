@@ -23,24 +23,24 @@ const consildata = {
     name: 'counseling_experience',
     options: [
         {
-            label: 'Not Important',
-            value: 'not_important'
+            label: 'Not Good',
+            value: 'not_good'
         },
         {
-            label: 'Somewhat Important',
-            value: 'somewhat_important'
+            label: 'Somewhat Good',
+            value: 'somewhat_good'
         },
         {
-            label: 'Important',
+            label: 'Good',
             value: 'important'
         },
         {
-            label: 'Very Important',
-            value: 'very_important'
+            label: 'Very Good',
+            value: 'very_good'
         },
         {
-            label: 'Extremely Important',
-            value: 'extremely_important'
+            label: 'Extremely Good',
+            value: 'extremely_good'
         },
     ]
 };

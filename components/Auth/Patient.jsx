@@ -50,7 +50,7 @@ const Patient = ({ open, setOpen }) => {
 
     const openHandler = () => {
         setOpen(false);
-        setTab(null);
+        setTab(0);
         reset();
     };
 
@@ -216,13 +216,6 @@ const Patient = ({ open, setOpen }) => {
                             onClick={()=> tabHandler(1)} 
                             className="text-blue-700 font-bold cursor-pointer pl-1">Sign up</span></p>
                     </div>
-                    <div className="text-xs">
-                        <p className="">
-                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, 
-                            tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-                             justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
-                        </p>
-                    </div>
                 </div>
             </form>
         )}
@@ -336,9 +329,6 @@ const Patient = ({ open, setOpen }) => {
                                     <span 
                                     onClick={()=> tabHandler(0)}
                                     className="text-blue-700 font-bold cursor-pointer pl-1">Login</span>
-                                </p>
-                                <p className="">
-                                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod.
                                 </p>
                             </div>
                         </div>

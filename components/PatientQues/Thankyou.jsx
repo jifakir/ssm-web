@@ -12,15 +12,18 @@ import { useSelector } from 'react-redux';
 const Thankyou = ({ step, setStep, profile }) => {
 
     const [modal, setModal] = useState(false);
-    const { control, handleSubmit, watch, formState: { errors} } = useForm();
-    const [updatePatient, {data, isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const { control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: {
+            email: profile?.email
+        }
+    });
+    const [updatePatient, {data, isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
 
         const { email_address } = data;
         if(!email_address) return;
-        // await updatePatient({id: profile?.id, email_address, registration_status: 'entered-email' });
-        setModal(true);
+        await updatePatient({id: profile?.id, email_address, registration_status: 'completed' });
     };
 
     const handleBack = () => {
@@ -32,11 +35,14 @@ const Thankyou = ({ step, setStep, profile }) => {
     const router = useRouter();
 
     useEffect(() => {
-        if(modal){
-            const timeout = setTimeout(() => router.push('/patient/match-therapist'),5000);
+        if(isSuccess){
+            setModal(true);
+            const timeout = setTimeout(() => router.push('/patient/profile'),5000);
             return () => clearTimeout(timeout);
         }
-    },[modal]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess]);
+    
     return (
         <>
             <form id='thankyou-form' onSubmit={handleSubmit(handleNext)} className="">

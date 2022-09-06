@@ -63,10 +63,10 @@ const PatientProfile = () => {
     }
 
     const { registration_status, personality_type } = profile;
-    if(registration_status !== 'completed'){
-        router.push('/patient/questionnaire');
-        return;
-    }
+    // if(registration_status !== 'completed'){
+    //     router.push('/patient/questionnaire');
+    //     return;
+    // }
     const { mind, energy, nature, tactics, identity } = personality_type;
     return (
         <div className="w-[90%] mx-auto my-10">

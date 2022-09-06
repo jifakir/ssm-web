@@ -20,6 +20,11 @@ export default function Home() {
 
   const router = useRouter();
 
+
+  useEffect(() => {
+    console.log("Route: ", router.pathname);
+  },[router]);
+  
   if(showHomePage === 'true'){
     router.push('/welcome');
     return;

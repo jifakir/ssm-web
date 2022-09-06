@@ -22,6 +22,7 @@ const Status = ({form, setForm}) => {
     const { data:subscription } = useFetchSubscriptionsQuery();
 
     console.log(subscription);
+    console.log("Status: ", data);
 
     const handleCancel = () => {
         setCancel(false);
@@ -74,6 +75,11 @@ const Status = ({form, setForm}) => {
                     </div>
                 </div>
                 <div className="mt-4">
+                    <Button
+                        onClick={() => setForm('subscription')}
+                        title={'Update'}
+                        className="w-full mb-5"
+                        btnOutline />
                     {
                         data?.status === 'active' ?
                         <Button

@@ -24,7 +24,7 @@ const MatchSurvey = ({profile}) => {
             gender: profile?.gender,
             is_spiritual_biased: profile?.is_spiritual_biased,
             is_religion_biased: profile?.is_religion_biased,
-            age_preference: `${profile?.age_preference.head}-${profile?.age_preference.tail}`,
+            age_preference: `${profile?.age_preference?.head}-${profile?.age_preference?.tail}`,
             session_type: profile?.session_type,
             race_preference: profile?.race_preference,
             specific_concerns: profile?.specific_concerns,
@@ -116,7 +116,7 @@ const MatchSurvey = ({profile}) => {
                                         <div className="pl-5">
                                             {
                                                 !form ? 
-                                                <h3 className="pl-5">{`${profile?.age_preference.head}-${profile?.age_preference.tail}`}</h3>:
+                                                <h3 className="pl-5">{profile?.age_preference && `${profile?.age_preference?.head}-${profile?.age_preference?.tail}`}</h3>:
                                                 <div className="form-control w-full max-w-xs">
                                                     <Radio 
                                                         control={control}
@@ -172,9 +172,7 @@ const MatchSurvey = ({profile}) => {
                                                 !form ? 
                                                 <div className="">
                                                     {
-                                                        profile?.specific_concerns
-                                                        .map((itm, idx) => {
-
+                                                        profile?.specific_concerns?.map((itm, idx) => {
                                                             return (
                                                                 <h3 key={`specific_${idx}`} className="pl-5">
                                                                     {itm} 
@@ -215,14 +213,14 @@ const MatchSurvey = ({profile}) => {
                                         <div className="pl-5">
                                             {
                                                 !form ? 
-                                                <h3 className="pl-5">{profile?.therapy_specializations}</h3>:
+                                                <h3 className="pl-5">{profile?.counseling_areas}</h3>:
                                                 <div className="form-control w-full max-w-xs">
                                                     <Checkbox 
                                                         control={control}
                                                         rules={{
                                                             required: 'Gender is required.'
                                                         }} 
-                                                        data={therapy_specializations} />
+                                                        data={counseling_areas} />
                                                 </div>
                                             }
                                         </div>

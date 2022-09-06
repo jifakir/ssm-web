@@ -15,7 +15,8 @@ const InputText = ({ control, name, rules, type, pHolder, inputLg, className,}) 
                     {...field}
                     placeholder={pHolder}
                     className={`
-                    input min-h-40 h-40 input-bordered 
+                    input min-h-40 h-40 input-bordered
+                    
                     w-full border-2 hover:border-neutral 
                     shadow-sm focus:border-accent 
                     focus:outline-none bg-white 
@@ -27,9 +28,11 @@ const InputText = ({ control, name, rules, type, pHolder, inputLg, className,}) 
                     placeholder={pHolder}
                     type={type ? type : 'text'}
                     className={`
+                    input
                     w-full
                     ${!inputLg ? 'px-4 py-2 text-sm' : 'p-4 text-base'}
-                    border-2 
+                    border-2
+                    border-[#C4C4C4] 
                     hover:border-neutral 
                     shadow-sm 
                     focus:border-accent 
