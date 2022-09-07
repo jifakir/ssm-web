@@ -5,7 +5,6 @@ import { FiChevronDown } from 'react-icons/fi';
 const Accordion = ({ data: {title, description} }) => {
 
     const [open, setOpen] = useState(false);
-    console.log(open);
 
     return (
         <div className="collapse collapse-arrow border-t-2 border-secondary">
