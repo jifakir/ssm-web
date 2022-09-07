@@ -43,7 +43,7 @@ const Referral = ({ profile }) => {
                         bg-white
                         cursor-pointer
                         rounded"
-                        value={"https://ssm-web.vercel.app/" + data?.referral_link.slice(-7) || ''} 
+                        value={"https://www.startsayingmore.com/" + data?.referral_link.slice(-7) || ''} 
                         readOnly />
                 </div>
             </div>
