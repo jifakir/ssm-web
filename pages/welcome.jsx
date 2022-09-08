@@ -2,11 +2,14 @@ import Image from 'next/image';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../components/UI/TextInput';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
 
 
 
 const Landing = () => {
 
+    const mailChimpUrl = process.env.NEXT_PUBLIC_MAILCHIMP_URL;
+    
     const {control, handleSubmit} = useForm();
     const submitHandler = (data) => {
         console.log(data);
@@ -30,7 +33,12 @@ const Landing = () => {
                             about what we do and<br className='hidden md:block'/> to stay up to date 
                             on when we will be ready to connect you!​
                         </p>
-                        <form onSubmit={handleSubmit(submitHandler)} className="mt-3 mr-5 flex flex-col md:flex-row items-center gap-2">
+                        <MailchimpSubscribe
+                            url={mailChimpUrl}
+                            render={(props) => {
+                                const { subscribe, status, message } = props || {};
+                                return (
+                        <form onSubmit={handleSubmit(subscribe)} className="mt-3 mr-5 flex flex-col md:flex-row items-center gap-2">
                             <Input control={control}
                                 name={'email_address'}
                                 pHolder={'Email'}
@@ -70,7 +78,9 @@ const Landing = () => {
                                     SIGN UP
                                 </div>
                             </button>
-                        </form>
+                        </form>)
+                         }}
+                        />
                     </div>
                     <div className="w-full bottom-7 mb-7 md:hidden">
                         <p className="text-white text-xs md:text-base text-center md:text">Artwork by Reyna Noriega</p>
