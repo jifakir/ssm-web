@@ -20,7 +20,7 @@ const FlickerCard = () => {
   }
   return  (<div
     loading="lazy"
-    data-mc-src="f9c6ff78-bf25-4935-b528-b14708b249a9#instagram"></div>)
+    data-mc-src="88ec8575-62d6-4b60-9db9-22d62d8c21da#instagram"></div>
 
     // return (
     //     <div className="px-[5%] md:px-[10%] my-5 md:flex gap-5 md:gap-5 space-y-5 md:space-y-0">
