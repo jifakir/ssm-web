@@ -37,10 +37,17 @@ const Landing = () => {
                             url={mailChimpUrl}
                             render={(props) => {
                                 const { subscribe, status, message } = props || {};
+                                console.log('status', status)
+                                console.log('message', message)
                                 return (
-                        <form onSubmit={handleSubmit(subscribe)} className="mt-3 mr-5 flex flex-col md:flex-row items-center gap-2">
-                            <Input control={control}
+                        <form onSubmit={handleSubmit(data => {
+                            console.log('submit data', data)
+                            subscribe({EMAIL: data.email_address})
+                        })}>
+                          <div className="mt-3 mr-5 flex flex-col md:flex-row items-center gap-2">
+                          <Input control={control}
                                 name={'email_address'}
+                                
                                 pHolder={'Email'}
                                 className="text-base mb-2 md:mb-0"
                                 rules={{
@@ -75,9 +82,11 @@ const Landing = () => {
                                     min-w-[156px]`}
                                     >
                                 <div className="flex justify-center items-center">
-                                    SIGN UP
+                                    {status==='success'? 'SUCCESS': 'SIGN UP'}
                                 </div>
                             </button>
+                          </div>
+                          <div>{message}</div>
                         </form>)
                          }}
                         />

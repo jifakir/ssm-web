@@ -104,7 +104,9 @@ const Footer = () => {
                                     <Newsletter
                                      status={status}
                                      message={message}
-                                     onValidated={ formData => subscribe( formData ) } />
+                                     onValidated={ formData => {
+                                        console.log('formData', formData)
+                                        subscribe( formData )} } />
                                 )
                             }} />
                         <div className="mt-10 lg:mt-5 text-center lg:text-left">
