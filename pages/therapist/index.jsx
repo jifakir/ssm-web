@@ -108,7 +108,7 @@ const JoinAsTherapist = () => {
                             <p className="pb-3 text-sm md:text-lg">per month</p>
                         </div>
                         <div className="">
-                            <p className="text-sm md:text-base">30-day free trial</p>
+                            <p className="text-sm md:text-base">60-day free trial</p>
                         </div>
                     </div>
                     <Button onClick={() => handleSubscribe(monthlyPlan)} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-xl md:text-2xl" />
@@ -128,7 +128,7 @@ const JoinAsTherapist = () => {
                         </div>
                         <div className="">
                             <h5 className="text-primary pb-2">Save $120</h5>
-                            <p className="">30-day free trial</p>
+                            <p className="">60-day free trial</p>
                         </div>
                     </div>
                     <Button onClick={() => handleSubscribe(yearlyPlan)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-xl md:mt-1 md:text-2xl" />
