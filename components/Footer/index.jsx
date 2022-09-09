@@ -104,7 +104,9 @@ const Footer = () => {
                                     <Newsletter
                                      status={status}
                                      message={message}
-                                     onValidated={ formData => subscribe( formData ) } />
+                                     onValidated={ formData => {
+                                        console.log('formData', formData)
+                                        subscribe( formData )} } />
                                 )
                             }} />
                         <div className="mt-10 lg:mt-5 text-center lg:text-left">
@@ -125,7 +127,7 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 lg:block text-center lg:text-left">
-                        <div className="md:w-1/2 lg:w-full pr-5">
+                        {/* <div className="md:w-1/2 lg:w-full pr-5">
                             <h5 className="relative text-[15px] font-semibold inline-block">
                                 <span>Find A Therapist</span>
                                 <div className="absolute -z-10 -top-4 -right-5">
@@ -145,7 +147,7 @@ const Footer = () => {
                                     <Button title={'START SAYING MORE'} btnSecondary btnOutline fontSize={'text-xl'} />
                                 </a>
                             </Link>
-                        </div>
+                        </div> */}
                         <div className="md:w-1/2 lg:w-full mt-5 sm:mt-6 lg:mt-6">
                             <h5 className="relative inline-block text-[15px] font-semibold">
                                 <span>Join As A Therapist</span>

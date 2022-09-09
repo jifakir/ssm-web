@@ -67,7 +67,7 @@ const TherapistProfile = () => {
         if(!isLoggedIn){
             router.push("/");
         }
-    },[isLoggedIn]);
+    },[isLoggedIn, router]);
 
     if(isLoading){
         return (

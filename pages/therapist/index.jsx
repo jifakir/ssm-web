@@ -78,8 +78,8 @@ const JoinAsTherapist = () => {
         )
     }
 
-    const [plan1, plan2] = data;
-
+    const monthlyPlan = data.find(d=> d.recurring_interval === 'month')
+    const yearlyPlan = data.find(d=> d.recurring_interval === 'year')
     return (
         <div className="px-[10%]">
             <Therapist showSignup open={open} setOpen={setOpen} defaultTab={1} />
@@ -100,18 +100,18 @@ const JoinAsTherapist = () => {
                 <div className="md:w-1/2 border-2 border-primary rounded-md">
                     <div className="p-5 text-center">
                         <div className="">
-                            <h1 className="text-2xl md:text-3xl font-bold">{plan1.plan_name}</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold">{monthlyPlan.plan_name}</h1>
                             <p className="text-sm md:text-base">Membership</p>
                         </div>
                         <div className="my-16">
-                            <h1 className="text-4xl md:text-5xl font-bold"><sup className='font-normal text-2xl md:text-3xl'>$</sup>{plan1.price}</h1>
+                            <h1 className="text-4xl md:text-5xl font-bold"><sup className='font-normal text-2xl md:text-3xl'>$</sup>{monthlyPlan.price}</h1>
                             <p className="pb-3 text-sm md:text-lg">per month</p>
                         </div>
                         <div className="">
-                            <p className="text-sm md:text-base">30-day free trial</p>
+                            <p className="text-sm md:text-base">60-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => handleSubscribe(plan1)} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-xl md:text-2xl" />
+                    <Button onClick={() => handleSubscribe(monthlyPlan)} title={'Subscribe Now'} className="w-full btn-secondary rounded-t-none text-xl md:text-2xl" />
                 </div>
                 <div className="relative md:w-1/2 border-2 border-primary rounded-md mt-10 md:mt-0">
                     <div className="absolute bottom-full text-xs md:text-base font-semibold md:font-medium left-1/2 bg-neutral px-3 py-0.5 transform -translate-x-1/2">
@@ -128,10 +128,10 @@ const JoinAsTherapist = () => {
                         </div>
                         <div className="">
                             <h5 className="text-primary pb-2">Save $120</h5>
-                            <p className="">30-day free trial</p>
+                            <p className="">60-day free trial</p>
                         </div>
                     </div>
-                    <Button onClick={() => handleSubscribe(plan2)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-xl md:mt-1 md:text-2xl" />
+                    <Button onClick={() => handleSubscribe(yearlyPlan)} title={'Subscribe Now'} className="w-full rounded-t-none btn-secondary text-xl md:mt-1 md:text-2xl" />
                 </div>
             </div>
         </div>

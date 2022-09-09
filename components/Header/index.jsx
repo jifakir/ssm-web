@@ -36,10 +36,10 @@ const menuList = [
         title: 'Home',
         linkUrl: '/'
     },
-    {
-        title: 'Find A Therapist',
-        linkUrl: '/patient'
-    },
+    // {
+    //     title: 'Find A Therapist',
+    //     linkUrl: '/patient'
+    // },
     {
         title: 'Join As A Therapist',
         linkUrl: '/therapist'

@@ -28,6 +28,7 @@ const MatchSurvey = ({profile}) => {
             session_type: profile?.session_type,
             race_preference: profile?.race_preference,
             specific_concerns: profile?.specific_concerns,
+            conunseling_areas: profile?.counseling_areas,
             therapy_specializations: profile?.therapy_specializations
         }
     });
@@ -46,7 +47,7 @@ const MatchSurvey = ({profile}) => {
                 head,
                 tail
             },
-            specific_concerns: data.specific_concerns.filter(v=>v),
+            specific_concerns: data.specific_concerns?.filter(v=>v),
             registration_status: 'completed' });
     };
 
@@ -205,7 +206,7 @@ const MatchSurvey = ({profile}) => {
                                             }
                                         </div>
                                     </div>
-                                    <div className="flex ">
+                                    {profile?.counseling_areas && <div className="flex ">
                                         <div className="font-base text-primary">
                                             {/* <MdOutlineCake className='text-xl' /> */}
                                             <h2 className="">Counseling Areas</h2>
@@ -220,11 +221,11 @@ const MatchSurvey = ({profile}) => {
                                                         rules={{
                                                             required: 'Gender is required.'
                                                         }} 
-                                                        data={counseling_areas} />
+                                                        data={profile?.counseling_areas} />
                                                 </div>
                                             }
                                         </div>
-                                    </div>
+                                    </div>}
                                 </div>
                                 <div className={`flex justify-center gap-5 mt-10 ${form ? 'block' : 'hidden'}`}>
                                     <Button 
