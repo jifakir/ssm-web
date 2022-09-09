@@ -2,15 +2,12 @@ import Image from 'next/image';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../components/UI/TextInput';
-
-
+import WelcomeForm from '../components/WelcomeForm';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
 
 const Landing = () => {
 
-    const {control, handleSubmit} = useForm();
-    const submitHandler = (data) => {
-        console.log(data);
-    };
+    const mailChimpUrl = process.env.NEXT_PUBLIC_MAILCHIMP_URL;
 
     return (
         <div className="fixed left-0 top-0 z-10 w-full min-h-screen bg-no-repeat bg-fixed bg-cover h-screen bg-welcome_mobile md:bg-welcome_tab lg:bg-welcome overflow-hidden">
@@ -30,47 +27,17 @@ const Landing = () => {
                             about what we do and<br className='hidden md:block'/> to stay up to date 
                             on when we will be ready to connect you!​
                         </p>
-                        <form onSubmit={handleSubmit(submitHandler)} className="mt-3 mr-5 flex flex-col md:flex-row items-center gap-2">
-                            <Input control={control}
-                                name={'email_address'}
-                                pHolder={'Email'}
-                                className="text-base mb-2 md:mb-0"
-                                rules={{
-                                    required: 'Email is required.',
-                                    pattern: {
-                                        value: /^\S+@\S+$/i,
-                                        message: 'Enter a valid email address'
-                                    }
-                                }} />
-                            <button
-                                type={'submit'} 
-                                className={`
-                                    text-2xl
-                                    leading-7
-                                    tracking-[0.055em]
-                                    bg-primary
-                                    uppercase
-                                    px-2
-                                    py-[5px]
-                                    hover:bg-primary/90 
-                                    active:bg-accent-focus
-                                    rounded
-                                    gap-2
-                                    font-semibold
-                                    disabled:bg-[#C0C0C0]
-                                    disabled:text-[#3E3643]
-                                    disabled:cursor-not-allowed
-                                    border-[3px] 
-                                    border-primary 
-                                    text-white 
-                                    hover:border-primary/10
-                                    min-w-[156px]`}
-                                    >
-                                <div className="flex justify-center items-center">
-                                    SIGN UP
-                                </div>
-                            </button>
-                        </form>
+                        <MailchimpSubscribe
+                            url={mailChimpUrl}
+                            render={(props) => {
+                                const { subscribe, status, message } = props || {};
+                                return (
+                                    <WelcomeForm
+                                     status={status}
+                                     message={message}
+                                     onValidated={ formData => subscribe( formData ) } />
+                                )
+                            }} />
                     </div>
                     <div className="w-full bottom-7 mb-7 md:hidden">
                         <p className="text-white text-xs md:text-base text-center md:text">Artwork by Reyna Noriega</p>

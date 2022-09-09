@@ -45,9 +45,11 @@ const Newsletter = ({ status, message, onValidated }) => {
                         inputLg
                         />
                 </div>
+
                 <div className="mt-5 lg:mt-0 text-center">
                     <Button title={'SUBMIT'} fontSize="w-1/2 sm:w-auto text-lg sm:text-xl"/>
                 </div>
+                
             </div>
             <p className="text-xs text-success pt-1">{ message }</p>
         </form>
