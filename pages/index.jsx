@@ -35,6 +35,9 @@ export default function Home() {
   
   return (
     <div className='w-full'>
+      <Head>
+        <title>Home - Start Saying More</title>
+      </Head>
       <Hero />
       <div className="w-[90%] md:w-[80%] lg:w-[65%] mx-auto">
         <div className="w-full lg:flex items-center justify-between my-10 md:my-16">

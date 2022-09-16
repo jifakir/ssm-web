@@ -18,7 +18,8 @@ import Availability from '../../components/Therapist/Availibilties';
 import MyersBriggs from '../../components/Therapist/Personality';
 import Subsciption from '../../components/Therapist/Subscription';
 import Select from '../../components/UI/Select';
-
+import Button from '../../components/UI/Button';
+import Head from 'next/head';
 
 
 const TherapistProfile = () => {
@@ -64,9 +65,12 @@ const TherapistProfile = () => {
     // },[]);
 
     useEffect(()=> {
+
         if(!isLoggedIn){
             router.push("/");
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isLoggedIn]);
 
     if(isLoading){
@@ -85,13 +89,25 @@ const TherapistProfile = () => {
         )
     }
 
-    const { personality_type: { mind, energy, nature, tactics, identity } } = profile;
+    if(!profile?.is_subscribed){
+        return (
+            <div className="w-full flex justify-center items-center h-60">
+                <div className="text-center">
+                    <p className="text-lg mb-5 text-primary">You need to complete questionnaire and subscription first</p>
+                    <Link href={'/therapist'} passHref><Button > Go to subscribe </Button></Link>
+                </div>
+            </div>
+        )
+    }
     
     const options = ['Personal Information', 'Professional Information', 'Availability', 'Subscription Plan'];
     
 
     return (
     <div className="">
+        <Head>
+            <title>Therapist - Start Saying More</title>
+        </Head>
         <div className="border-b md:hidden">
             <div onClick={() => setExpand(state => !state)} className="relative px-4 py-3.5 text-xl border-t-2 cursor-pointer">
                 {option}
@@ -123,7 +139,11 @@ const TherapistProfile = () => {
                                 {
                                     pictureUploading ?
                                     <Loader />:
-                                    <Image src={profile?.profile_picture ? profile?.profile_picture : '/img/profile.png'} layout="fill" alt="Profile" />
+                                    <Image 
+                                        src={profile?.profile_picture ? profile?.profile_picture : '/img/profile.png'} 
+                                        layout="fill"
+                                        objectFit='cover' 
+                                        alt="Profile" />
                                 }
                             </div>
                         </div>

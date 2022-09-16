@@ -29,12 +29,13 @@ import { ImSpinner9 } from 'react-icons/im';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Loader from '../../components/UI/Loader';
+import Head from 'next/head';
 
 
 const Questionnaire = () => {
 
     const [ step, setStep ] = React.useState(0);
-    const [progress, setProgress] = React.useState(0);
+    const [subscribed, setSubscribed] = React.useState(0);
 
     const { auth:{ isLoggedIn }, subscription } = useSelector(state => state);
     const {data, refetch, isSuccess, isLoading, isError} = useFetchTherapistQuery();
@@ -103,7 +104,6 @@ const Questionnaire = () => {
             component: <Religion profile={data} step={step} setStep={setStep} />,
             status: "entered-religion",
         },
-        
         {
             component: <SpiritPerson profile={data} step={step} setStep={setStep} />,
             status: "entered-spirituality",
@@ -112,7 +112,6 @@ const Questionnaire = () => {
             component: <Language profile={data} step={step} setStep={setStep} />,
             status: "entered-lang",
         },
-        
         {
             component: <NewPatient profile={data} step={step} setStep={setStep} />,
             status: "entered-patient",
@@ -143,11 +142,15 @@ const Questionnaire = () => {
             status: "entered-availability",
         },
     ];
+    
+    useEffect( ()=> {
 
-
-    useEffect(()=>{
         refetch();
+        if(data?.is_subscribed){
+            setSubscribed(true);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
+
     },[]);
     
     useEffect(() => {
@@ -175,6 +178,9 @@ const Questionnaire = () => {
 
     return (
     <div className={`px-[5%] pt-14 sm:pt-[100px] sm:min-h-[816px]px-[5%] md:pt-[100px] md:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+        <Head>
+            <title>Questionnaire - Start Saying More</title>
+        </Head>
         <div className={`mt-16 ${step === 0 ? 'block' : 'block'}`}>
             <h1 className="text-center md:text-left text-[32px]  md:text-[54px] font-sterio text-[#331447]">Welcome</h1>
             <p className="mt-8 text-sm text-center md:text-left">
@@ -212,6 +218,10 @@ const Questionnaire = () => {
             {/* Form Inner */}
             <div className="text-center mt-8 xl:mt-10">
                 {
+                    subscribed ? 
+                    <p className="text-sm text-error">
+                        Oops! Looks like you have already subscribed to a plan! Please navigate to your profile page to make any updates on your subscripioin or personal details.
+                    </p> : 
                     components.map((comp, idx) => {
 
                         return (

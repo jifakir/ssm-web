@@ -23,12 +23,15 @@ const Login = () => {
     const [login, { data, isError, isSuccess, isLoading, error }] = useLoginMutation();
     const [googleLogin, result] = useGoogleLoginMutation();
     const router = useRouter();
+    
     const responseGoogle = async (data) => {
         const {accessToken} = data;
         console.log(accessToken);
         await googleLogin({token: accessToken});
     };
+
     console.log("Google Login: ", result);
+
     const onSubmitHandler = async (data) => {
         await login(data);
         reset();
@@ -39,6 +42,7 @@ const Login = () => {
     }
 
     if(isLoading){
+
         return (
             <div className="bg-neutral">
                 <div className="px-10 py-5">

@@ -9,6 +9,7 @@ import HowItWorks from '../../components/Home/HowItWorks';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Patient from '../../components/Auth/Patient';
+import Head from 'next/head';
 
 
 
@@ -30,6 +31,9 @@ const Therapist = () => {
 
     return (
         <div className="">
+            <Head>
+                <title>Match - Start Saying More</title>
+            </Head>
             <Patient open={open} setOpen={setOpen} />
             <div className={`w-[90%] xs:w-[80%] lg:w-[65%] mx-auto ${open ? 'hidden sm:block' : 'block sm:block'}`}>
                 <div className="my-5 md:my-16">

@@ -51,7 +51,7 @@ const Availability = ({profile }) => {
     
     };
 
-    const isFilledUp = watch('availabilities').every((itm, idx) => itm.day && itm.start_time && itm.end_time);
+    const isFilledUp = watch('availabilities')?.every((itm, idx) => itm.day && itm.start_time && itm.end_time);
 
     useEffect(() => {
         if(isSuccess){
@@ -138,7 +138,7 @@ const Availability = ({profile }) => {
                     {
                         week.map((itm, idx) => {
 
-                            const itmDay = profile?.availabilities.find(v => v.day === itm.value);
+                            const itmDay = profile?.availabilities?.find(v => v.day === itm.value);
                             
                             return (
                                 <div key={idx} className="flex items-center md:block text-sm md:text-base md:border-r-2 pr-5 last:border-r-0">

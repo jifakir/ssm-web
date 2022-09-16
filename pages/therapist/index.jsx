@@ -11,6 +11,7 @@ import Stripe from '../../components/Stripe';
 import { saveSubsDetails } from '../../store/reducers/subscriptionSlice';
 import { logOut } from '../../store/reducers/authReducer';
 import Therapist from '../../components/Auth/Therapist';
+import Head from 'next/head';
 
 
 const JoinAsTherapist = () => {
@@ -82,6 +83,9 @@ const JoinAsTherapist = () => {
 
     return (
         <div className="px-[10%]">
+            <Head>
+                <title>Join - Start Saying More</title>
+            </Head>
             <Therapist showSignup open={open} setOpen={setOpen} defaultTab={1} />
             <div className={`${open ? 'hidden' : 'block'}`}>
                 <h1 className="font-sterio text-3xl xs:text-4xl sm:text-5xl text-center mt-16">
@@ -93,6 +97,9 @@ const JoinAsTherapist = () => {
                     </p>
                     <p className="mt-5">
                         We benefit both sides. Patients connect with professionals and build confidence and know-how to seek therapy in their future. We want to make finding a therapist easy and fun. By joining our website, you’re on your way to helping individuals find their future therapist, and potentially changing someone&apos;s life!
+                    </p>
+                    <p className="">
+                        Start Saying More, LLC is in no way affiliated with the Myers-Briggs foundation or 16personalities.com. We are simply utilizing the website for the purpose of attaining personality type factors for matching.
                     </p>
                 </div>
             </div>

@@ -33,9 +33,9 @@ const Patient = ({ open, setOpen }) => {
     const router = useRouter();
 
     const responseGoogle = async (data) => {
-        const {accessToken} = data;
-        console.log(accessToken);
-        await googleLogin({token: accessToken});
+        const {accessToken, tokenId} = data;
+        console.log(data);
+        await googleLogin({token: tokenId});
     };
 
     const onSubmitHandler = async (data) => {
@@ -211,7 +211,7 @@ const Patient = ({ open, setOpen }) => {
                     </div>
                     <div className="text-sm mt-4">
                         <p className="font-medium">
-                            Do not have an account? 
+                            Don&apos;t have an account? 
                             <span 
                             onClick={()=> tabHandler(1)} 
                             className="text-blue-700 font-bold cursor-pointer pl-1">Sign up</span></p>

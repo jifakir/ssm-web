@@ -80,10 +80,10 @@ const PreferOtherLang = ({ step, setStep, profile }) => {
 
         const { speak_other_languages, prefer_other_language, languages } = data;
         let form = {speak_other_languages};
-        if(languages && languages.length > 0) form = { speak_other_languages, languages};
-        if(prefer_other_language) form = { speak_other_languages, languages};
+        if(languages && languages.length > 0) form = { speak_other_languages, languages: languages.filter(itm => itm)};
+        if(prefer_other_language) form = { speak_other_languages, prefer_other_language, languages: languages.filter(itm => itm)};
         await updatePatient({id: profile?.id, ...form, registration_status: 'entered-speak_other_languages' });
-
+    
     };
 
     const handleBack = () => {

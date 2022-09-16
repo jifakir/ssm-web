@@ -4,6 +4,7 @@ import Button from '../components/UI/Button';
 import {url} from '../utils/flickr';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Head from 'next/head';
 
 const About = () => {
 
@@ -15,6 +16,9 @@ const About = () => {
 
     return (
         <div className="">
+            <Head>
+                <title className="">About - Start Saying More</title>
+            </Head>
            <div className="relative w-full h-[400px] xs:h-[250px] sm:h-[400px] md:h-[550px]">
                 <div className="relative w-full h-full overflow-hidden">
                     <Image src={'/img/about-hero.png'} alt={'Hero Image'} className="object-cover object-[20%_top]" layout="fill"  />

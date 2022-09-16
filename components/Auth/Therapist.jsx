@@ -33,9 +33,9 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
     const router = useRouter();
 
     const responseGoogle = async (data) => {
-        const {accessToken} = data;
-        console.log(accessToken);
-        await googleLogin({token: accessToken});
+        const {accessToken, tokenId} = data;
+        console.log(data);
+        await googleLogin({token: tokenId});
     };
 
     const onSubmitHandler = async (data) => {
@@ -134,8 +134,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                             theme='dark'
                             render={(renderProps) => (
                                 <GoogleButton 
-                                    onClick={renderProps.onClick} 
-                                    disabled={renderProps.disabled}
+                                    onClick={renderProps.onClick}
                                     label="SIGN IN WITH GOOGLE" />
                             )}
                             onSuccess={responseGoogle}
@@ -213,7 +212,7 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                     </div>
                     <div className="text-sm mt-4">
                         <p className="font-medium">
-                            Do not have an account? 
+                            Don&apos;t have an account? 
                             <span 
                             onClick={()=> showSignup ? tabHandler(1) : redirectHandler()} 
                             className="text-blue-700 font-bold cursor-pointer pl-1">Sign up</span></p>

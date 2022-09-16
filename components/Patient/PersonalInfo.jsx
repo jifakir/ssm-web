@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
 import { GrCertificate } from 'react-icons/gr';
+import { IoMdTransgender } from 'react-icons/io5';
 import { FaEdit, FaGraduationCap, FaHeadSideVirus, FaSpinner } from 'react-icons/fa';
 import { MdAccessTime, MdOutlineUpdate, MdEdit, MdOutlineCake, MdOutlineLocationOn, MdClose } from 'react-icons/md';
 import { BsGenderTrans, BsTelephone } from 'react-icons/bs';
@@ -13,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import Select from '../UI/Select';
 import Checkbox from '../UI/Checkbox';
 import Radio from '../UI/Radio';
-import { gender } from '../data';
+import { gender, sexual_orientation } from '../data';
 import Button from '../UI/Button';
 import { useEffect } from 'react';
 
@@ -40,9 +41,11 @@ const PersonalInfo = ({profile}) => {
     };
 
     useEffect(() => {
+
         if(isSuccess){
             setdetails(false);
         }
+
     },[isSuccess]);
     
     return (
@@ -173,11 +176,11 @@ const PersonalInfo = ({profile}) => {
                                     </div>
                                     <div className="flex items-center">
                                         <div className="flex font-semibold justify-center items-center text-primary">
-                                            <BsTelephone className='text-xl' />
-                                            <h2 className="pl-2">Phone Number</h2>
+                                            <BsGenderTrans className='text-xl' />
+                                            <h2 className="pl-2">Sexuality</h2>
                                         </div>
                                         <div className="pl-5">
-                                                <h3 className="">{profile?.phone}</h3>
+                                            <h3 className="">{sexual_orientation.options.find(itm => itm.value === profile?.sexual_orientation)?.label}</h3>
                                         </div>
                                     </div>
                                     <div className="flex items-center">

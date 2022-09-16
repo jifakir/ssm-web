@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 const langData = {
     title: 'What form of counseling are you interested in?',
-    name: 'languages',
+    name: 'counseling_areas',
     required: true,
     options: [
         {
@@ -45,6 +45,7 @@ const langData = {
         },
     ]
 };
+
 const data = {
     name: 'specific_form',
     options: [
@@ -64,7 +65,7 @@ const FormOfCounselling = ({ step, setStep, profile }) => {
     const { control, register, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
             counseling_areas: profile?.counseling_areas,
-            prefer_other_language: profile?.prefer_other_language,
+            specific_form: profile?.specific_form,
         }});
     const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 

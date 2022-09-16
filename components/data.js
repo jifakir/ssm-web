@@ -34,6 +34,38 @@ export const titles = {
     ]
 };
 
+export const sexual_orientation = {
+    name: 'sexual_orientation',
+    required: true,
+    options: [
+        {
+            label: 'Straight',
+            value: 'straight'
+        },
+        {
+            label: 'Lesbian',
+            value: 'lesbian'
+        },
+        {
+            label: 'Gay',
+            value: 'gay'
+        },
+        {
+            label: 'Bi-Sexual',
+            value: 'Assexual'
+        },
+        {
+            label: 'Pansexual',
+            value: 'pansexual'
+        },
+        {
+            label: 'Prefer not to answer',
+            value: 'not_prefer'
+        },
+    ]
+};
+
+
 export const gender = {
     name: 'gender',
     options: [

@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import Button from '../components/UI/Button';
 import TextInput from '../components/UI/TextInput';
 import PhoneNumber from '../components/UI/Number';
+import Head from 'next/head';
 
 
 const Contact = () => {
@@ -35,6 +36,9 @@ const Contact = () => {
 
     return (
         <main className="">
+            <Head>
+                <title>Contact - Start Saying More</title>
+            </Head>
             <div className="w-[90%] mx-auto my-5 sm:my-8 lg:my-16 flex flex-col lg:flex-row lg:gap-[50px]">
                 <div className="lg:w-1/2 order-2 lg:order-none">
                     <div className="text-center md:text-left">

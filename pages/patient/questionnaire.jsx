@@ -8,7 +8,7 @@ import Gender from '../../components/PatientQues/Gender';
 import Personality from '../../components/PatientQues/Personality';
 import TriedCounseling from '../../components/PatientQues/TriedCounseling';
 import MaxFee from '../../components/PatientQues/MaxFee';
-// import BirthDate from '../../components/PatientQues/BirthDate';
+import SpecificConcern from '../../components/PatientQues/SpecificConcern';
 import Religion from '../../components/PatientQues/Religion';
 import IsSpiritual from '../../components/PatientQues/IsSpiritual';
 import Orientation from '../../components/PatientQues/Orientation';
@@ -30,6 +30,7 @@ import Link from 'next/link';
 import Thankyou from '../../components/PatientQues/Thankyou';
 import Spinner from '../../components/UI/Loader';
 import FormOfCounselling from '../../components/PatientQues/FormOfCounselling';
+import Head from 'next/head';
 
 const Questionnaire = () => {
 
@@ -136,6 +137,10 @@ const Questionnaire = () => {
             status: "entered-form_of_counselling",
         },
         {
+            component: <SpecificConcern profile={data} step={step} setStep={setStep} />,
+            status: "entered-form_specific_concern",
+        },
+        {
             component: <IsInUs profile={data} step={step} setStep={setStep} />,
             status: "entered-is_in_us",
         },
@@ -171,6 +176,9 @@ const Questionnaire = () => {
    
     return (
     <div className={`px-[5%] pt-14 md:pt-16 xl:pt-[100px] xl:min-h-[816px] ${step === 0 ? 'bg-gradient-to-b from-[#FFFFFF] via-[#6F348D]/20 to-[#6F348D]/90': ''}`}>
+        <Head>
+            <title>Questionnnaire - Start Saying More</title>
+        </Head>
         <div >
             <h1 className="text-center xl:text-left text-5xl md:text-[32px] xl:text-[54px] font-sterio text-[#331447]">{
                 step === (components.length - 1) ?

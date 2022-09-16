@@ -75,7 +75,7 @@ const Experience = ({ step, setStep, profile }) => {
                     </div>
                     <h1 className="my-2 text-left mt-5">Upload License ID</h1>
                     <div className="flex my-2">
-                        <input ref={inputRef} accept="image/jpg, image/png, application/pdf" onChange={uploadHandler} type="file" className="hidden" />
+                        <input ref={inputRef} accept="image/jpg, image/jpeg, image/png, application/pdf" onChange={uploadHandler} type="file" className="hidden" />
                         <Button
                             type="button"
                             onClick={() => inputRef.current.click()}

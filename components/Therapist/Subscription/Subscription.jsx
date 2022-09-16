@@ -27,8 +27,8 @@ const SubscriptionItem = ({ form, setForm }) => {
     if(isLoading || subsLoading) return <Spinner className="text-3xl text-primary" />
     
     const [plan] = subscriptions;
-    const currentPlan = subscriptionPlans.find(pln => pln.id === plan.subscription_plan_id);
-    const altPlan = subscriptionPlans.find(pln => pln.id !== plan.subscription_plan_id);
+    const currentPlan = subscriptionPlans?.find(pln => pln.id === plan?.subscription_plan_id);
+    const altPlan = subscriptionPlans?.find(pln => pln.id !== plan?.subscription_plan_id);
     
     const handleConfirmation = () => {
         setForm('');

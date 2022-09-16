@@ -3,25 +3,30 @@ import Checkbox from '../../components/UI/Checkbox';
 import { useForm } from 'react-hook-form';
 
 import { useUpdatePatientMutation } from '../../store/api/ssmApi';
-import Select from '../UI/Select';
 import Button from '../UI/Button';
 import { specific_concerns } from '../data';
+import { useEffect } from 'react';
 
 const Language = ({ step, setStep, profile }) => {
     
     const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { languages: profile?.languages }});
-    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
-        const { languages } = data;
-        if(!languages) return;
-        await updateTherapist({id: profile?.id, ...data, registration_status: 'entered-language' });
+        const { specific_concerns } = data;
+        await updatePatient({id: profile?.id, specific_concerns: specific_concerns.filter(cn => cn), registration_status: 'entered-language' });
         setStep(step + 1);
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
+
+    useEffect(() => {
+        if(isSuccess){
+
+        }
+    },[isSuccess]);
 
     return (
         <>

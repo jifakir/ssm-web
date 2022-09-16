@@ -23,7 +23,7 @@ const MyersBriggs = ({profile}) => {
         await updateTherapist({id: profile?.id, personality_type: {...data}, registration_status: 'entered-personality' });
     };
 
-    const { mind, energy, nature, tactics, identity} = profile?.personality_type;
+    const { personality_type } = profile;
 
     useEffect(()=> {
         if(isSuccess){
@@ -70,11 +70,11 @@ const MyersBriggs = ({profile}) => {
                             {
                                 profile?.personality_type ?
                                 (
-                                    mind.split('')[0] +
-                                    energy.split('')[0] +
-                                    nature.split('')[0] +
-                                    tactics.split('')[0] + "-"+
-                                    identity.split('')[0]
+                                    personality_type.mind.split('')[0] +
+                                    personality_type.energy.split('')[0] +
+                                    personality_type.nature.split('')[0] +
+                                    personality_type.tactics.split('')[0] + "-"+
+                                    personality_type.identity.split('')[0]
                                 ):
                                 ''
                             }

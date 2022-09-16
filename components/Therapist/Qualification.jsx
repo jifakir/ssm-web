@@ -217,7 +217,7 @@ const Qualification = ({profile}) => {
                 </div>
                 <div className="pl-5 flex-1">
                         <h4 className="">
-                            {profile?.titles.map(v => {
+                            {profile?.titles?.map(v => {
                                 return v.toUpperCase() + ' '
                             })} 
                         </h4>

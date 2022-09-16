@@ -34,11 +34,11 @@ const menuList = [
     },
     {
         title: 'About',
-        linkUrl: '/'
+        linkUrl: '/about'
     },
     {
         title: 'Contact',
-        linkUrl: '/'
+        linkUrl: '/contact'
     },
     {
         title: 'FAQs',

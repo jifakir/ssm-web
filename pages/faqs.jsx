@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React from 'react';
 import Accordion from '../components/Accordion';
 
@@ -32,6 +33,9 @@ const Faq = () => {
 
     return (
         <div className="w-[85%] mx-auto my-16">
+            <Head>
+                <title>FAQs - Start Saying More</title>
+            </Head>
             <h1 className="font-sterio text-center text-5xl">Frequently Asked Questions</h1>
             <div className="mt-16">
                 {

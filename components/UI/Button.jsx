@@ -52,7 +52,7 @@ const Button = ({
                 className={`
                     leading-7
                     tracking-[0.055em]
-                    text-primary
+                    text-[#4C2961]
                     py-2
                     md:py-4
                     hover:bg-secondary/50 

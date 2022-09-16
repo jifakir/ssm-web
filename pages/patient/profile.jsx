@@ -9,6 +9,7 @@ import Loader from '../../components/UI/Loader';
 import MyersBriggs from '../../components/Therapist/Personality';
 import PersonalInfo from '../../components/Patient/PersonalInfo';
 import MatchSurvey from '../../components/Patient/MatchSurvey';
+import Head from 'next/head';
 
 
 
@@ -70,9 +71,12 @@ const PatientProfile = () => {
     const { mind, energy, nature, tactics, identity } = personality_type;
     return (
         <div className="w-[90%] mx-auto my-10">
+            <Head>
+                <title>Patient - Start Saying More</title>
+            </Head>
             <div className="lg:flex gap-5">
                 <div className="flex flex-col items-center justify-center lg:w-1/3 lg:block">
-                    <h1 className="font-sterio text-4xl">Therapist Profile</h1>
+                    <h1 className="font-sterio text-4xl">Patient Profile</h1>
                     <h4 className="py-3 text-2xl">{profile?.full_name}</h4>
                     <div className="w-60 border-2 border-primary rounded-lg overflow-hidden">
                         <div>
