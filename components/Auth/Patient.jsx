@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
 import Modal from '../UI/Modal';
+import { useGoogleLogin } from '@react-oauth/google';
 
 
 const Patient = ({ open, setOpen }) => {
@@ -35,8 +36,18 @@ const Patient = ({ open, setOpen }) => {
     const responseGoogle = async (data) => {
         const {accessToken, tokenId} = data;
         console.log(data);
+        if(!data) return;
         await googleLogin({token: tokenId});
     };
+
+    const googleSignin = useGoogleLogin({
+        flow: 'auth-code',
+        onSuccess: async res => {
+            console.log("Res: ", res);
+            await googleLogin({token: res.code})
+        },
+        onError: err => console.log(err)
+    });
 
     const onSubmitHandler = async (data) => {
         await login(data);
@@ -127,21 +138,9 @@ const Patient = ({ open, setOpen }) => {
                     <MdOutlineClose />
                 </div>
                 <div className="card-body items-center text-center">
-                    <GoogleLogin
-                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                            theme='dark'
-                            render={(renderProps) => (
-                                <GoogleButton 
-                                    onClick={renderProps.onClick} 
-                                    disabled={renderProps.disabled}
-                                    label="LOGIN WITH GOOGLE" />
-                            )}
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            cookiePolicy={'single_host_origin'}
-                            className="rounded-lg cursor-pointer text-center"
-                            style={{padding: '16px'}}
-                        />
+                    <GoogleButton 
+                        onClick={() => googleSignin()}
+                        label="LOGIN WITH GOOGLE" />
                     <div className="mt-3">
                         <h1 className="text-2xl font-medium">or</h1>
                     </div>

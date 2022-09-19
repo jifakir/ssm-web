@@ -1,5 +1,6 @@
 import Layout from '../layouts/Layout';
 import { Provider } from 'react-redux';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react'
 import store from '../store/configureStore';
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor} >
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_CLIENT_ID}>
             {
               router.pathname === '/welcome' ?
                 <Component {...pageProps} />:
@@ -29,6 +31,7 @@ function MyApp({ Component, pageProps }) {
                   <Component {...pageProps} />
                 </Layout>
             }
+          </GoogleOAuthProvider>
       </PersistGate>
     </Provider>
   )

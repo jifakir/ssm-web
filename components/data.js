@@ -561,3 +561,43 @@ export const amTime = [
         value: '12:30am',
     },
 ];
+
+export const counseling_areas = {
+    title: 'What form of counseling are you interested in?',
+    name: 'counseling_areas',
+    required: true,
+    options: [
+        {
+            label: 'Psychodynamic therapy',
+            value: 'psychodynamic'
+        },
+        {
+            label: 'Cognitive behavioral therapy',
+            value: 'congnitive'
+        },
+        {
+            label: 'Behavioral therapy',
+            value: 'behavioral'
+        },
+        {
+            label: 'Humanistic therapy',
+            value: 'humanistic'
+        },
+        {
+            label: 'Substance abuse counseling',
+            value: 'substance'
+        },
+        {
+            label: 'Emotion-Focused Therapy (EFT)',
+            value: 'emotion_f_t'
+        },
+        {
+            label: 'Not Applicable',
+            value: 'not_applicable'
+        },
+        {
+            label: 'Other',
+            value: 'other'
+        },
+    ]
+};

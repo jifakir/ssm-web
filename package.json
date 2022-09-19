@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.2.8",
     "@reduxjs/toolkit": "^1.8.1",
     "@stripe/react-stripe-js": "^1.9.0",
     "@stripe/stripe-js": "^1.32.0",
@@ -16,6 +17,7 @@
     "axios": "^0.27.2",
     "daisyui": "^2.13.6",
     "dayjs": "^1.11.4",
+    "i18n-iso-countries": "^7.5.0",
     "logger": "^0.0.1",
     "next": "12.1.4",
     "rc-dropdown": "^4.0.1",

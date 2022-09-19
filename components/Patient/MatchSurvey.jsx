@@ -12,14 +12,14 @@ import { useForm } from 'react-hook-form';
 import Select from '../UI/Select';
 import Checkbox from '../UI/Checkbox';
 import Radio from '../UI/Radio';
-import { age_preference, gender, is_religion_biased, is_spiritual_biased, race_preference, session_type, specific_concerns, therapy_specializations } from '../data';
+import { age_preference, gender, counseling_areas, is_religion_biased, is_spiritual_biased, race_preference, session_type, specific_concerns, therapy_specializations } from '../data';
 import Button from '../UI/Button';
 import { useEffect } from 'react';
 
 const MatchSurvey = ({profile}) => {
 
     const [form, setForm] = useState(false);
-    const {control, handleSubmit} = useForm({
+    const {control, formState: { isDirty }, handleSubmit} = useForm({
         defaultValues: {
             gender: profile?.gender,
             is_spiritual_biased: profile?.is_spiritual_biased,
@@ -86,7 +86,7 @@ const MatchSurvey = ({profile}) => {
                                                         rules={{
                                                             required: 'Gender is required.'
                                                         }} 
-                                                        data={gender} />
+                                                        data={{name: 'gender_preference', options: gender.options}} />
                                                 </div>
                                             }
                                         </div>
@@ -150,7 +150,7 @@ const MatchSurvey = ({profile}) => {
                                         <div className="pl-5">
                                             {
                                                 !form ? 
-                                                <h3 className="pl-5 capitalize">{profile?.race_preference}</h3>:
+                                                <h3 className="pl-5 capitalize">{race_preference.options.find(itm => itm.value === profile?.race_preference)?.label}</h3>:
                                                 <div className="form-control w-full max-w-xs">
                                                     <Radio 
                                                         control={control}
@@ -228,7 +228,7 @@ const MatchSurvey = ({profile}) => {
                                 </div>
                                 <div className={`flex justify-center gap-5 mt-10 ${form ? 'block' : 'hidden'}`}>
                                     <Button 
-                                        title={'Resend Matches'}
+                                        title={isDirty ? 'Regenerate Matches' : 'Resend Matches'}
                                         fontSize="text-3xl"
                                         btnOutline >
                                             {

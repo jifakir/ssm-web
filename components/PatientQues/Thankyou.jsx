@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useUpdatePatientMutation } from '../../store/api/ssmApi';
+import { useMatchTherapistQuery, useUpdatePatientMutation } from '../../store/api/ssmApi';
 import Button from '../UI/Button';
 import TextInput from '../../components/UI/TextInput';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import { MdClose } from 'react-icons/md';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+
 
 const Thankyou = ({ step, setStep, profile }) => {
 
@@ -18,7 +19,7 @@ const Thankyou = ({ step, setStep, profile }) => {
         }
     });
     const [updatePatient, {data, isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
-
+    const { data:matchData } = useMatchTherapistQuery({patientId: profile?.id});
     const handleNext = async (data) => {
 
         const { email_address } = data;

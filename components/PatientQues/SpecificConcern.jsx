@@ -9,7 +9,9 @@ import { useEffect } from 'react';
 
 const Language = ({ step, setStep, profile }) => {
     
-    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({defaultValues: { languages: profile?.languages }});
+    const { register, control, handleSubmit, watch, formState: { errors} } = useForm({
+        defaultValues: { specific_concerns: profile?.specific_concerns }
+    });
     const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
@@ -44,7 +46,7 @@ const Language = ({ step, setStep, profile }) => {
                     title={'Next'} 
                     form="specific_concerns-form" 
                     btnQnr
-                    disabled={!watch('languages')} />
+                    disabled={!watch('specific_concerns')} />
             </div>
         </>
     )

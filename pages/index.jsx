@@ -21,7 +21,9 @@ export default function Home() {
 
 
   useEffect(() => {
-    console.log("Route: ", router.pathname);
+    console.log("Route: ", router.query);
+    const { referral_code } = router.query;
+    if(referral_code) router.push('/therapist');
   },[router]);
   
   if(showHomePage === 'true'){

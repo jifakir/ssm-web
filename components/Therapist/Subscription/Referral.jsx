@@ -12,7 +12,8 @@ const Referral = ({ profile }) => {
 
     const copyToClipboard = () => {
         if(!data) return console.log("Failed!");
-        navigator.clipboard.writeText(data?.referral_link);
+        const [url, query] = data?.referral_link.split('?');
+        navigator.clipboard.writeText(`${url}therapist/?${query}`);
         setTooltip('Copied!');
     }
 

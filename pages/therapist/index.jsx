@@ -98,7 +98,7 @@ const JoinAsTherapist = () => {
                     <p className="mt-5">
                         We benefit both sides. Patients connect with professionals and build confidence and know-how to seek therapy in their future. We want to make finding a therapist easy and fun. By joining our website, you’re on your way to helping individuals find their future therapist, and potentially changing someone&apos;s life!
                     </p>
-                    <p className="">
+                    <p className="mt-5">
                         Start Saying More, LLC is in no way affiliated with the Myers-Briggs foundation or 16personalities.com. We are simply utilizing the website for the purpose of attaining personality type factors for matching.
                     </p>
                 </div>

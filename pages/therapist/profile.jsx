@@ -57,12 +57,12 @@ const TherapistProfile = () => {
 
     // Side Effects
 
-    // useEffect(() => {
-    //     refetch();
-    //     if(isSuccess && !profile?.is_subscribed){
-    //         router.push('/therapist/questionnaire');
-    //     }
-    // },[]);
+    useEffect(() => {
+        refetch();
+        if(isSuccess && !profile?.is_subscribed){
+            router.push('/therapist/questionnaire');
+        }
+    },[]);
 
     useEffect(()=> {
 
@@ -135,7 +135,7 @@ const TherapistProfile = () => {
                     <h4 className="py-3 text-2xl">{profile?.full_name}</h4>
                     <div className="w-60 border-2 border-primary rounded-lg overflow-hidden">
                         <div>
-                            <div className="relative h-56">
+                            <div className="relative h-56 w-52">
                                 {
                                     pictureUploading ?
                                     <Loader />:

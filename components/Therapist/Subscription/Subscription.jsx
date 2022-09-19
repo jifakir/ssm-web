@@ -106,13 +106,13 @@ const SubscriptionItem = ({ form, setForm }) => {
                                 {dayjs(currentPlan?.start).format('MM/DD/YYYY')}
                             </p>
                             <p className="">
-                                <span className="font-medium">Auto-review: </span>
-                                
+                                <span className="font-medium">Auto-renews: {dayjs(currentPlan?.end_at).format('MM/DD/YYYY')}</span>
                             </p>
                             </>:
                             <p className="">
                                 <span className="font-medium">Next Billing Date: </span>
-                                August 1, 2023
+                                {/* August 1, 2023 */}
+                                {dayjs(currentPlan?.end_at).format('MM/DD/YYYY')}
                             </p>
                         }
                     </div>

@@ -32,15 +32,6 @@ const PatientProfile = () => {
 
     };
 
-    // Side Effects
-
-    useEffect(() => {
-        refetch();
-        if(isSuccess && !profile?.is_subscribed){
-            router.push('/therapist/questionnaire');
-        }
-    },[]);
-
     useEffect(()=> {
         if(!isLoggedIn){
             router.push("/");
@@ -84,7 +75,11 @@ const PatientProfile = () => {
                                 {
                                     pictureUploading ?
                                     <Loader />:
-                                    <Image src={profile?.profile_picture ? profile?.profile_picture : '/img/profile.png'} layout="fill" alt="Profile" />
+                                    <Image 
+                                        src={profile?.profile_picture ? profile?.profile_picture : '/img/profile.png'} 
+                                        layout="fill" 
+                                        alt="Profile"
+                                        objectPosition={'center'} />
                                 }
                             </div>
                         </div>

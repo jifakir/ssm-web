@@ -91,7 +91,7 @@ const Status = ({form, setForm}) => {
                             className="w-full"
                             btnOutline 
                             btnSecondary
-                            disabled={true} />:
+                            disabled={subscription[0].metadata.hasOwnProperty('will_cancel_at_period_end')} />:
                         <Button
                             title={'Subscribe'}
                             className="w-full"

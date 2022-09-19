@@ -24,7 +24,7 @@ const PersonalInfo = ({profile}) => {
     const {control, handleSubmit} = useForm({
         defaultValues: {
             date_of_birth: profile?.date_of_birth,
-            phone: profile?.phone,
+            sexual_orientation: profile?.sexual_orientation,
             gender: profile?.gender,
             user_address: profile?.user_address
         }

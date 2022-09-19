@@ -87,7 +87,11 @@ const Education = ({step, setStep, profile}) => {
                                     name={`education.${idx}.school_name`}
                                     pHolder={'School'}
                                     rules={{
-                                        required: "School is required."
+                                        required: "School is required.",
+                                        pattern: {
+                                            value: /^[A-Z][a-z]*(\s[A-Z][a-z]*)+$/g,
+                                            message: 'Invalid school name'
+                                        }
                                     }}  />
                             </div>
                         )

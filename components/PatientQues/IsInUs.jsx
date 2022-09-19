@@ -6,7 +6,9 @@ import Button from '../UI/Button';
 import Radio from '../UI/Radio';
 import Select from '../UI/Select';
 import TextInput from '../UI/TextInput';
+import countries from 'i18n-iso-countries';
 
+countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
 
 const data = {
     name: 'is_in_us',
@@ -39,7 +41,7 @@ const IsInUs = ({ step, setStep, profile }) => {
 
     const handleNext = async (data) => {
         console.log(data);
-        const { location, is_in_us, user_address: {line1, line2, city, state, zip_code} } = data;
+        const { location, is_in_us, user_address: {line1, country, line2, city, state, zip_code} } = data;
         let form = {is_in_us};
         if(is_in_us){
             form = {
@@ -50,6 +52,7 @@ const IsInUs = ({ step, setStep, profile }) => {
                     city: city ? city : '',
                     state: state ? state : '',
                     zip_code: zip_code ? zip_code : '', 
+                    country: country ? country : 'us', 
                     }
             }
         }
@@ -73,8 +76,9 @@ const IsInUs = ({ step, setStep, profile }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isSuccess]);
 
-    console.log(watch('location'));
-
+    const countryList = countries.getNames('en');
+    const options = Object.keys(countryList).map(key => ({ label: countryList[key], value: key }));
+    console.log(options);
     return (
     <>
         <form id='address-form' onSubmit={handleSubmit(handleNext)}>
@@ -90,12 +94,9 @@ const IsInUs = ({ step, setStep, profile }) => {
                     <br/>We’re sorry for the incocnvenience, and we hope to connect you soon.
                 </h1>
                 <h1 className="text-lg my-5 text-left">Please let us know where you are located so we know where to go next</h1>
-                <div className="form-control w-full max-w-xs">
-                    <TextInput
-                        control={control}
-                        name={'location'}
-                        pHolder={'Your location'}
-                            />
+                <div className="form-control w-full max-w-xs text-left">
+                    <Select control={control} 
+                    data={{ name: 'user_address.country', options }} />
                 </div>
             </div>
             <div className={`w-full mt-5 ${watch('is_in_us') ? 'block' : 'hidden'}`}>

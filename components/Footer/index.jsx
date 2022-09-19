@@ -67,7 +67,7 @@ const Footer = () => {
                 <Image src={'/img/footerbg.svg'} alt={"Footer Bg"} width={686} height={450} />
             </div> */}
             <div className="w-full lg:flex">
-                <div className="lg:w-2/5 md:flex justify-between items-center bg-footer_bg bg-contain bg-top-left">
+                <div className="lg:w-2/5 md:flex justify-between items-center md:bg-footer_bg bg-contain bg-top-left">
                     <div className="md:w-full py-10 px-5 sm:px-0">
                         <div className="w-full px-20 flex justify-center">
                             <Image src={'/img/seclogo.svg'} alt="Footer Logo" width={326} height={106} />
@@ -94,7 +94,7 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <div className="pb-20 w-3/5 flex">
+                <div className="pb-20 md:w-3/5 md:flex">
                     <div className="md:w-1/2 md:pr-10 mt-10">
                         <MailchimpSubscribe
                             url={mailChimpUrl}
@@ -124,7 +124,7 @@ const Footer = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className="lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 lg:block text-center lg:text-left">
+                    <div className="hidden md:block lg:border-l border-primary sm:pl-10 mt-5 sm:mt-10 lg:block text-center lg:text-left">
                         <div className="md:w-1/2 lg:w-full pr-5">
                             <h5 className="relative text-[15px] font-semibold inline-block">
                                 <span>Find A Therapist</span>

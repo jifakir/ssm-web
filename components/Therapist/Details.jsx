@@ -173,7 +173,7 @@ const Details = ({profile}) => {
                                             
                                                 <h3 className="">{
                                                     `${profile?.user_address?.line1},
-                                                    ${profile?.user_address?.line2},
+                                                    ${profile?.user_address?.line2 ? profile?.user_address?.line2 + ',' : ''}
                                                     ${profile?.user_address?.city},
                                                     ${profile?.user_address?.state}
                                                     ${profile?.user_address?.zip_code}
