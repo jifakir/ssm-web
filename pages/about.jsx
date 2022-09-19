@@ -5,6 +5,7 @@ import {url} from '../utils/flickr';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
+import FlickerCard from '../components/FlickerCard';
 
 const About = () => {
 
@@ -102,19 +103,11 @@ const About = () => {
             </div>
             <div className="w-[90%] mx-auto my-10 md:my-16">
                 <h3 className="text-2xl text-center lg:text-left">Connect with us on social media!</h3>
-                <div className="mt-3 pb-5 md:flex gap-5 md:gap-4.5 space-y-5 md:space-y-0">
-                    {
-                        filcker?.data?.photos.photo?.slice(0,5).map((photo, idx) => (
-                        <div className="relative w-full h-52 sm:h-72 md:w-60 md:h-32 lg:h-56" key={idx}>
-                            <Image 
-                                src={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_b.jpg`} 
-                                alt="Pic" 
-                                layout='fill' 
-                                objectFit='cover' />
-                        </div>
-                        ))
-                    }
-                </div>
+                <FlickerCard />
+            <div className="mb-16">
+        
+      </div>
+
             </div>
         </div>
     )

@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link'
-import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineClose } from 'react-icons/md';
 import { BsEyeSlash, BsEye } from 'react-icons/bs';
@@ -24,10 +23,6 @@ const Form = ({ setSubmitted }) => {
     const onSubmitHandler = async (data) => {
         await signup(data);
     }
-
-    const responseGoogle = (response) => {
-        console.log(response);
-      }
 
 
     React.useEffect(() => {
@@ -58,15 +53,7 @@ const Form = ({ setSubmitted }) => {
                         {/* <FcGoogle className='text-xl'/>
                         Signup with Google */}
                     {/* </button> */}
-                    <GoogleLogin
-                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                            buttonText="Signup with google"
-                            theme='dark'
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            cookiePolicy={'single_host_origin'}
-                            className="w-full rounded-lg cursor-pointer text-center bg-blue-500"
-                        />
+                    
                     <div className="mt-3">
                         <h1 className="text-2xl font-medium">or</h1>
                     </div>

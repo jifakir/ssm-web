@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Script from 'next/script'
 import InstagramEmbed from 'react-instagram-embed';
 import Stripe from '../components/Stripe';
 import Qualification from '../components/Therapist/Qualification';
@@ -22,6 +23,12 @@ const Test = () => {
     console.log(watch());
     
     return (
+      <>
+      <Script  src="https://cdn2.woxo.tech/a.js#62c40614ec33d95e7c27e46a" async data-usrc/>
+      <div
+  loading="lazy"
+  data-mc-src="88d1d45b-7899-43f1-a878-fd3c98111fc8#null"></div>
+
         <div className="min-h-screen w-[50%] mx-auto my-10">
                 
                 <TestAvail />
@@ -40,6 +47,7 @@ const Test = () => {
                     onFailure={() => {}}
                      /> */}
         </div>
+        </>
     )
 }
 

@@ -71,11 +71,11 @@ const Therapist = () => {
                     </div>
                 </div>
                 <HowItWorks />
-                <div className="mt-10 flex justify-center">
+                {/* <div className="mt-10 flex justify-center">
                     <Button
                         onClick={loginHandler} 
                         title={'Find A Therapist'} />
-                </div>
+                </div> */}
                 <div className="my-10 md:my-16">
                     <h1 className="my-5 md:my-10 font-bold text-lg sm:text-2xl md:text-3xl text-center">Therapy is more successful when you feel supported</h1>
                     <div className="text-sm md:text-base text-center md:text-left">

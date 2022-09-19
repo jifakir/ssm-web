@@ -36,7 +36,7 @@ const SubscriptionItem = ({ form, setForm }) => {
     };
 
     const { isError:changeError, error:changeErr } = result;
-
+    console.log('current plan', currentPlan)
     return (
         <div className="">
             {
@@ -93,17 +93,17 @@ const SubscriptionItem = ({ form, setForm }) => {
                         <h2 className="font-semibold text-sm md:text-base text-primary">{currentPlan?.plan_name}</h2>
                     </div>
                     <div className="mt-4 md:mt-[18px] leading-7 text-sm md:text-base">
-                        <p className="font-medium">${currentPlan?.price} billed annually</p>
+                        <p className="font-medium">${currentPlan?.price} billed {currentPlan.plan_name}</p>
                         {
                             plan?.subscription_status === "trialing" ?
                             <>
                             <p className="">
                                 <span className="font-medium">Trial End Date: </span>
-                                {dayjs(currentPlan?.end_at).format('MM/DD/YYYY')}
+                                {dayjs(plan?.end_at).format('MM/DD/YYYY')}
                             </p>
                             <p className="">
                                 <span className="font-medium">Initial Billing Date: </span>
-                                {dayjs(currentPlan?.start).format('MM/DD/YYYY')}
+                                {dayjs(plan?.start_at).add(61, 'day').format('MM/DD/YYYY')}
                             </p>
                             <p className="">
                                 <span className="font-medium">Auto-renews: {dayjs(currentPlan?.end_at).format('MM/DD/YYYY')}</span>

@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdOutlineClose } from 'react-icons/md';
 import { useSignupMutation, useLoginMutation, useGoogleLoginMutation } from '../store/api/ssmApi';
-import { GoogleLogin } from 'react-google-login';
 import Button from '../components/UI/Button';
 import TextInput from '../components/UI/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,13 +23,6 @@ const Login = () => {
     const [googleLogin, result] = useGoogleLoginMutation();
     const router = useRouter();
     
-    const responseGoogle = async (data) => {
-        const {accessToken} = data;
-        console.log(accessToken);
-        await googleLogin({token: accessToken});
-    };
-
-    console.log("Google Login: ", result);
 
     const onSubmitHandler = async (data) => {
         await login(data);
@@ -70,15 +62,6 @@ const Login = () => {
                 </div>
                 <div className="card-body items-center text-center">
                     
-                    <GoogleLogin
-                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                            buttonText="Login with Google"
-                            theme='dark'
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            cookiePolicy={'single_host_origin'}
-                            className="w-full rounded-lg cursor-pointer text-center"
-                        />
                     <div className="">
                         <h1 className="text-2xl mt-5 font-medium">or</h1>
                     </div>

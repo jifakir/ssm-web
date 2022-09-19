@@ -32,7 +32,7 @@ const Contact = () => {
             const timeout = setTimeout(() => setSubmit(false),5000);
             return () => clearTimeout(timeout);
         }
-    },[submit]);
+    },[reset, submit]);
 
     return (
         <main className="">
