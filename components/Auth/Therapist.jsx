@@ -4,12 +4,12 @@ import { useForm } from 'react-hook-form';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdOutlineClose } from 'react-icons/md';
 import { useSignupMutation, useLoginMutation, useGoogleLoginMutation } from '../../store/api/ssmApi';
-import { GoogleLogin } from 'react-google-login';
 import TextInput from '../UI/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
 import Modal from '../UI/Modal';
+import { useGoogleLogin } from '@react-oauth/google';
 
 
 const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
@@ -37,6 +37,17 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
         console.log(data);
         await googleLogin({token: tokenId});
     };
+
+
+    const googleSignin = useGoogleLogin({
+        flow: 'auth-code',
+        onSuccess: async res => {
+            console.log("Res: ", res);
+            await googleLogin({token: res.code})
+        },
+        onError: err => console.log(err)
+    });
+
 
     const onSubmitHandler = async (data) => {
         await login(data);
@@ -129,20 +140,9 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                     <MdOutlineClose />
                 </div>
                 <div className="card-body items-center text-center">
-                    <GoogleLogin
-                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                            theme='dark'
-                            render={(renderProps) => (
-                                <GoogleButton 
-                                    onClick={renderProps.onClick}
-                                    label="SIGN IN WITH GOOGLE" />
-                            )}
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            cookiePolicy={'single_host_origin'}
-                            className="rounded-lg cursor-pointer text-center"
-                            style={{padding: '16px'}}
-                        />
+                    <GoogleButton 
+                        onClick={() => googleSignin()}
+                        label="LOGIN WITH GOOGLE" />
                     <div className="mt-3">
                         <h1 className="text-2xl font-medium">or</h1>
                     </div>
@@ -231,18 +231,9 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
                                 {/* <FcGoogle className='text-xl'/>
                                 Signup with Google */}
                             {/* </button> */}
-                            <GoogleLogin
-                                    clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                                    theme='dark'
-                                    render={(renderProps) => (
-                                        <GoogleButton 
-                                            onClick={renderProps.onClick}
-                                            label="SIGN UP WITH GOOGLE" />
-                                    )}
-                                    onSuccess={responseGoogle}
-                                    onFailure={responseGoogle}
-                                    cookiePolicy={'single_host_origin'}
-                                />
+                            <GoogleButton 
+                                onClick={() => googleSignin()}
+                                label="LOGIN WITH GOOGLE" />
                             <div className="mt-3">
                                 <h1 className="text-2xl font-medium">or</h1>
                             </div>

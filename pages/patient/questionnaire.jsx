@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Email from '../../components/PatientQues/Email';
 import Name from '../../components/PatientQues/Name';
 import Phone from '../../components/PatientQues/Phone';
+import DoB from '../../components/PatientQues/DoB';
 import AgePrefer from '../../components/PatientQues/AgePrefer';
 import Gender from '../../components/PatientQues/Gender';
 import Personality from '../../components/PatientQues/Personality';
@@ -57,10 +58,10 @@ const Questionnaire = () => {
             component: <Gender profile={data} step={step} setStep={setStep} />,
             status: "entered-gender",
         },
-        // {
-        //     component: <Phone profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-phone",
-        // },
+        {
+            component: <DoB profile={data} step={step} setStep={setStep} />,
+            status: "entered-phone",
+        },
         
         {
             component: <PreferGender profile={data} step={step} setStep={setStep} />,

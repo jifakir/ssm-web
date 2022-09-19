@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { MdOutlineClose } from 'react-icons/md';
 import { useSignupMutation, useLoginMutation, useGoogleLoginMutation } from '../../store/api/ssmApi';
-import { GoogleLogin } from 'react-google-login';
 import TextInput from '../UI/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/reducers/authReducer';
@@ -228,18 +227,9 @@ const Patient = ({ open, setOpen }) => {
                                 {/* <FcGoogle className='text-xl'/>
                                 Signup with Google */}
                             {/* </button> */}
-                            <GoogleLogin
-                                    clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                                    theme='dark'
-                                    render={(renderProps) => (
-                                        <GoogleButton 
-                                            onClick={renderProps.onClick}
-                                            label="SIGN UP GOOGLE" />
-                                    )}
-                                    onSuccess={responseGoogle}
-                                    onFailure={responseGoogle}
-                                    cookiePolicy={'single_host_origin'}
-                                />
+                            <GoogleButton 
+                                onClick={() => googleSignin()}
+                                label="LOGIN WITH GOOGLE" />
                             <div className="mt-3">
                                 <h1 className="text-2xl font-medium">or</h1>
                             </div>

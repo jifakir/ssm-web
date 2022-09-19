@@ -7,11 +7,9 @@ import { FaRegUser, FaUser } from 'react-icons/fa';
 import { CgMenu } from 'react-icons/cg';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../store/reducers/authReducer';
-import Login from '../Auth/Login';
 import { useFetchTherapistQuery } from '../../store/api/ssmApi';
 import Therapist from '../Auth/Therapist';
 import Patient from '../Auth/Patient';
-import { useDetectClickOutside } from 'react-detect-click-outside';
 import DropdownBody from './Dropdown';
 import Dropdown from 'rc-dropdown';
 
