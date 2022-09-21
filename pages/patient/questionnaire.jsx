@@ -71,10 +71,10 @@ const Questionnaire = () => {
             component: <Age profile={data} step={step} setStep={setStep} />,
             status: "entered-age",
         },
-        // {
-        //     component: <AgePrefer profile={data} step={step} setStep={setStep} />,
-        //     status: "entered-age-preference",
-        // },
+        {
+            component: <AgePrefer profile={data} step={step} setStep={setStep} />,
+            status: "entered-age-preference",
+        },
         {
             component: <Race profile={data} step={step} setStep={setStep} />,
             status: "entered-race",

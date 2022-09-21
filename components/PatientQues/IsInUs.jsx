@@ -78,7 +78,7 @@ const IsInUs = ({ step, setStep, profile }) => {
 
     const countryList = countries.getNames('en');
     const options = Object.keys(countryList).map(key => ({ label: countryList[key], value: key }));
-    console.log(options);
+    
     return (
     <>
         <form id='address-form' onSubmit={handleSubmit(handleNext)}>
@@ -88,7 +88,7 @@ const IsInUs = ({ step, setStep, profile }) => {
                     <Radio control={control} data={data} />
                 </div>
             </div>
-            <div className={`w-full mt-5 ${!watch('is_in_us') ? 'block' : 'hidden'}`}>
+            <div className={`w-full mt-5 ${watch('is_in_us') === false ? 'block' : 'hidden'}`}>
                 <h1 className="my-5 text-left text-xs text-error">
                     Unfortunately, we are not currently matching outside of the United States. 
                     <br/>We’re sorry for the incocnvenience, and we hope to connect you soon.

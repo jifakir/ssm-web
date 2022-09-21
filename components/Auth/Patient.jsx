@@ -9,12 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
 import Modal from '../UI/Modal';
-import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 
 
 const Patient = ({ open, setOpen }) => {
 
     const [showPass, setShowPass] = React.useState(false);
+    const [google, setGoogle] = React.useState(0);
     const [tab, setTab] = React.useState(0);
     const { isLoggedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
@@ -29,24 +30,12 @@ const Patient = ({ open, setOpen }) => {
 
     const [login, { data, isError, isSuccess, isLoading, error }] = useLoginMutation();
     const [signup, {data:signupData, isSuccess:signupSuccess, isLoading:signupLoading, isError:signupError, error:serror }] = useSignupMutation();
-    const [googleLogin, result] = useGoogleLoginMutation();
+    const [googleLogin, { data:googleData, isSuccess:googleSuccess }] = useGoogleLoginMutation();
     const router = useRouter();
 
-    const responseGoogle = async (data) => {
-        const {accessToken, tokenId} = data;
-        console.log(data);
-        if(!data) return;
-        await googleLogin({token: tokenId});
-    };
-
-    const googleSignin = useGoogleLogin({
-        flow: 'auth-code',
-        onSuccess: async res => {
-            console.log("Res: ", res);
-            await googleLogin({token: res.code})
-        },
-        onError: err => console.log(err)
-    });
+    const googleSignin = async (res) => {
+        await googleLogin({token: res.credential})
+    }
 
     const onSubmitHandler = async (data) => {
         await login(data);
@@ -96,6 +85,20 @@ const Patient = ({ open, setOpen }) => {
     },[signupSuccess]);
 
     useEffect(()=> {
+        if(googleSuccess){
+            const { user, token } = googleData;
+            dispatch(logIn({ ...user, token, role: 2}));
+            setOpen(false);
+            if(google === 0){
+                router.push('/patient/profile');
+            }else{
+                router.push('/patient/questionnaire');
+            }
+        }
+        // eslint-disable-next-line 
+    },[googleSuccess]);
+
+    useEffect(()=> {
         if(isLoggedIn){
             setOpen(false);
         }
@@ -137,9 +140,22 @@ const Patient = ({ open, setOpen }) => {
                     <MdOutlineClose />
                 </div>
                 <div className="card-body items-center text-center">
-                    <GoogleButton 
+                    {/* <GoogleButton 
                         onClick={() => googleSignin()}
-                        label="LOGIN WITH GOOGLE" />
+                        label="LOGIN WITH GOOGLE" /> */}
+                    <GoogleLogin
+                        theme='filled_blue'
+                        logo_alignment='left'
+                        text='signin_with'
+                        onSuccess={ async (res) => {
+                            setGoogle(0);
+                            await googleLogin({token: res.credential})
+                        }}
+                        onError={() => {
+                        console.log('Login Failed');
+                        }}
+                    />
+
                     <div className="mt-3">
                         <h1 className="text-2xl font-medium">or</h1>
                     </div>
@@ -227,9 +243,18 @@ const Patient = ({ open, setOpen }) => {
                                 {/* <FcGoogle className='text-xl'/>
                                 Signup with Google */}
                             {/* </button> */}
-                            <GoogleButton 
-                                onClick={() => googleSignin()}
-                                label="LOGIN WITH GOOGLE" />
+                            <GoogleLogin
+                                theme='filled_blue'
+                                logo_alignment='left'
+                                text='signup_with'
+                                onSuccess={ async (res) => {
+                                    setGoogle(1);
+                                    await googleLogin({token: res.credential})
+                                }}
+                                onError={() => {
+                                console.log('Login Failed');
+                                }}
+                            />
                             <div className="mt-3">
                                 <h1 className="text-2xl font-medium">or</h1>
                             </div>
