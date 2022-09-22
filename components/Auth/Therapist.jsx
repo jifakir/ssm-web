@@ -85,12 +85,12 @@ const Therapist = ({ showSignup, open, setOpen, defaultTab }) => {
     useEffect(()=> {
         if(googleSuccess){
             const { user, token } = googleData;
-            dispatch(logIn({ ...user, token, role: 2}));
+            dispatch(logIn({ ...user, token, role: 1}));
             setOpen(false);
-            if(google === 0){
-                router.push('/patient/profile');
+            if(tab === 0){
+                router.push('/therapist/profile');
             }else{
-                router.push('/patient/questionnaire');
+                router.push('/therapist/questionnaire');
             }
         }
         // eslint-disable-next-line 

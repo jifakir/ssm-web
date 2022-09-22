@@ -79,7 +79,7 @@ const Hero = () => {
                                                 bg-secondary
                                                 leading-7
                                                 tracking-[0.055em]
-                                                text-primary
+                                                text-[#4C2961]
                                                 py-2
                                                 md:py-3
                                                 lg:py-4

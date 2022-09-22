@@ -165,11 +165,11 @@ const PersonalInfo = ({profile}) => {
                                         <div className=" pl-5">
                                             
                                                 <h3 className="">{
-                                                    `${profile?.user_address.line1} 
-                                                    ${profile?.user_address.line2}
-                                                    ${profile?.user_address.city}
-                                                    ${profile?.user_address.state}
-                                                    ${profile?.user_address.zip_code}
+                                                    `${profile?.user_address?.line1 ?? ''} 
+                                                    ${profile?.user_address?.line2 ?? ''}
+                                                    ${profile?.user_address?.city ?? ''}
+                                                    ${profile?.user_address?.state ?? ''}
+                                                    ${profile?.user_address?.zip_code ?? ''}
                                                     `
                                                 }</h3>
                                         </div>
@@ -180,7 +180,7 @@ const PersonalInfo = ({profile}) => {
                                             <h2 className="pl-2">Sexuality</h2>
                                         </div>
                                         <div className="pl-5">
-                                            <h3 className="">{sexual_orientation.options.find(itm => itm.value === profile?.sexual_orientation)?.label}</h3>
+                                            <h3 className="">{sexual_orientation?.options.find(itm => itm.value === profile?.sexual_orientation)?.label}</h3>
                                         </div>
                                     </div>
                                     <div className="flex items-center">

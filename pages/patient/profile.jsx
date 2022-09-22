@@ -10,6 +10,7 @@ import MyersBriggs from '../../components/Therapist/Personality';
 import PersonalInfo from '../../components/Patient/PersonalInfo';
 import MatchSurvey from '../../components/Patient/MatchSurvey';
 import Head from 'next/head';
+import Button from '../../components/UI/Button';
 
 
 
@@ -19,7 +20,7 @@ const PatientProfile = () => {
     const router = useRouter();
 
     const { isLoggedIn } = useSelector(state => state.auth);
-    const {data:profile, refetch, isLoading, isSuccess, isError} = useFetchPatientQuery({},{
+    const {data:profile, refetch, isLoading, isSuccess, isError, error} = useFetchPatientQuery({},{
         refetchOnMountOrArgChange: true
     });
     const [uploadPicture,{ isLoading:pictureUploading }] = useUploadPictureMutation();
@@ -48,8 +49,16 @@ const PatientProfile = () => {
 
     if(isError){
         return (
-            <div className="text-center h-72 min-h-72">
-                <h1>Something went wrong reload please.</h1>
+            <div className="text-center h-72 min-h-72 flex justify-center items-center">
+                {
+                    error.status === 404 ? (
+                        <div className="text-center">
+                            <p className="text-lg mb-5 font-medium text-primary">You need to complete questionnaire!</p>
+                            <Link href={'/patient/questionnaire'} passHref><Button > Go to Questionnaire </Button></Link>
+                        </div>
+                    ):
+                    (<h1 className='text-primary'>Something went wrong reload please.</h1>)
+                }
             </div>
         )
     }
@@ -59,7 +68,6 @@ const PatientProfile = () => {
     //     router.push('/patient/questionnaire');
     //     return;
     // }
-    const { mind, energy, nature, tactics, identity } = personality_type;
     return (
         <div className="w-[90%] mx-auto my-10">
             <Head>
