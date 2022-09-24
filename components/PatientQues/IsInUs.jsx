@@ -34,14 +34,13 @@ const IsInUs = ({ step, setStep, profile }) => {
     const { control, handleSubmit, watch, formState: { errors} } = useForm({
         defaultValues: {
         is_in_us: profile?.is_in_us,
-        location: '',
-        user_address: profile?.user_address
+        user_address: {...profile?.user_address, country: profile?.user_address?.country ?? 'us'}
     }});
     const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
 
     const handleNext = async (data) => {
         console.log(data);
-        const { location, is_in_us, user_address: {line1, country, line2, city, state, zip_code} } = data;
+        const { is_in_us, user_address: {line1, country, line2, city, state, zip_code} } = data;
         let form = {is_in_us};
         if(is_in_us){
             form = {
@@ -52,8 +51,13 @@ const IsInUs = ({ step, setStep, profile }) => {
                     city: city ? city : '',
                     state: state ? state : '',
                     zip_code: zip_code ? zip_code : '', 
-                    country: country ? country : 'us', 
+                    country: 'us', 
                     }
+            }
+        }else {
+            form = {
+                is_in_us,
+                user_address: { country }
             }
         }
 
@@ -81,7 +85,7 @@ const IsInUs = ({ step, setStep, profile }) => {
     
     return (
     <>
-        <form id='address-form' onSubmit={handleSubmit(handleNext)}>
+        <form id='is-in-us-form' onSubmit={handleSubmit(handleNext)}>
             <div className="w-full">
                 <h1 className="text-lg my-2 text-left">Do you live in the United States?</h1>
                 <div className="form-control w-full max-w-xs">
@@ -95,11 +99,12 @@ const IsInUs = ({ step, setStep, profile }) => {
                 </h1>
                 <h1 className="text-lg my-5 text-left">Please let us know where you are located so we know where to go next</h1>
                 <div className="form-control w-full max-w-xs text-left">
-                    <Select control={control} 
-                    data={{ name: 'user_address.country', options }} />
+                    <Select 
+                        control={control} 
+                        data={{ name: 'user_address.country', options }} />
                 </div>
             </div>
-            <div className={`w-full mt-5 ${watch('is_in_us') ? 'block' : 'hidden'}`}>
+            {watch('is_in_us') && <div className={`w-full mt-5`}>
                 <h1 className="text-lg my-5 text-left">Please share your current address with us for matching purposes</h1>
                 <div className="form-control w-full space-y-2">
                     <div className="form-control w-full max-w-xs">
@@ -146,7 +151,7 @@ const IsInUs = ({ step, setStep, profile }) => {
                             className="w-48 absolute top-0 right-0" />
                     </div>
                 </div>
-            </div>
+            </div>}
         </form>
         <div className={`flex gap-5 py-5 mt-9`}>
             <Button 
@@ -156,10 +161,10 @@ const IsInUs = ({ step, setStep, profile }) => {
                 btnSecondary
                  />
             <Button 
-                form="address-form"
+                form="is-in-us-form"
                 title={'Next'}
                 btnQnr
-                disabled={watch('is_in_us')==null} />
+                 />
         </div>
     </>
     )

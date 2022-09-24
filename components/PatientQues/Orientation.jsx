@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdatePatientMutation, useUpdateTherapistMutation } from '../../store/api/ssmApi';
 import RadioInput from '../UI/Radio';
 import Button from '../UI/Button';
+import { useEffect } from 'react';
 
 
 const data = {
@@ -62,22 +63,25 @@ const Orientation = ({ step, setStep, profile}) => {
                 sexual_orientation: profile?.sexual_orientation,
                 has_sexual_preference: profile?.has_sexual_preference}});
     
-    const [updatePatient, { isSucces, isLoading, isError, error }] = useUpdatePatientMutation();
+    const [updatePatient, { isSuccess, isLoading, isError, error }] = useUpdatePatientMutation();
     
     const handleNext = async ({sexual_orientation, has_sexual_preference}) => {
         let form = { sexual_orientation };
-        if(has_sexual_preference) form = { sexual_orientation, has_sexual_preference };
+        if(sexual_orientation) form = { sexual_orientation, has_sexual_preference };
         await updatePatient({
             id: profile?.id, ...form, registration_status: 'entered-sexual_orientation' });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
         setStep(step - 1);
     };
 
-
+    useEffect(()=> {
+        if(isSuccess){
+            setStep(step + 1);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isSuccess])
     
     return (
         <>

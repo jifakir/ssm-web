@@ -73,10 +73,8 @@ const FormOfCounselling = ({ step, setStep, profile }) => {
 
         const { specific_form, counseling_areas } = data;
         let form = {specific_form};
-        if(specific_form) form = { specific_form, counseling_areas};
+        if(specific_form) form = { counseling_areas };
         await updatePatient({id: profile?.id, ...form, registration_status: 'entered-speak_other_languages' });
-        setStep(step + 1);
-
     };
 
     const handleBack = () => {
