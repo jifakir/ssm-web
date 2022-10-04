@@ -50,7 +50,7 @@ const menuList = [
     },
     {
         title: 'Emergency Resources',
-        linkUrl: '/'
+        linkUrl: '/emergency'
     },
 ];
 
