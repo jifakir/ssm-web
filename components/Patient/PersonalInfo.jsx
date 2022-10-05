@@ -17,6 +17,7 @@ import Radio from '../UI/Radio';
 import { gender, sexual_orientation } from '../data';
 import Button from '../UI/Button';
 import { useEffect } from 'react';
+import RadioInput from '../UI/Radio';
 
 const PersonalInfo = ({profile}) => {
 
@@ -77,15 +78,10 @@ const PersonalInfo = ({profile}) => {
                                             className="cursor-pointer" />
                                     </div>
                                     <div className="form-control w-full max-w-xs">
-                                        <Input
+                                        <h1 className="my-2 text-left">Sexuality</h1>
+                                        <RadioInput
                                             control={control}
-                                            name={'phone'}
-                                            title={"Phone Number"}
-                                            pHolder={'000-000-0000'}
-                                            rules={{
-                                                pattern: /\d/i
-                                            }}
-                                            className="cursor-pointer" />
+                                            data={sexual_orientation} />
                                     </div>
                                     <div className="w-full mt-5">
                                         <h1 className="my-2 text-left">What is your gender?</h1>
@@ -189,7 +185,7 @@ const PersonalInfo = ({profile}) => {
                                             <h2 className="pl-2">Gender</h2>
                                         </div>
                                         <div className="pl-5">
-                                            <h3 className="capitalize">{profile?.gender}</h3>
+                                            <h3 className="capitalize">{gender.options.find(itm => itm.value === profile?.gender)?.label}</h3>
                                         </div>
                                     </div>
                                 </div>

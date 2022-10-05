@@ -236,11 +236,11 @@ export const session_type = {
         },
         {
             label: 'In-person',
-            value: 'in_person'
+            value: 'in-person'
         },
         {
             label: 'No preference',
-            value: 'not_prefer'
+            value: 'none'
         },
     ]
 };

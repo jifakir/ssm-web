@@ -231,12 +231,14 @@ const MatchSurvey = ({profile}) => {
                                     <Button 
                                         title={isDirty ? 'Regenerate Matches' : 'Resend Matches'}
                                         fontSize="text-3xl"
+                                        type={'submit'}
                                         btnOutline >
                                             {
                                                 isLoading ? <BiLoaderAlt className="animate-spin text-2xl mr-2" /> : ''
                                             }
                                     </Button>
                                     <Button
+                                        onClick={() => setForm(false)}
                                         title={'Cancel'}
                                         btnSecondary
                                         fontSize={'text-3xl'}

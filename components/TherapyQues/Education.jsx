@@ -13,14 +13,15 @@ import { useEffect } from 'react';
 
 const Education = ({step, setStep, profile}) => {
 
-    const [qualifyNum, setQualifyNum] = React.useState(1);
-
-    const {  control, handleSubmit, watch, } = useForm({defaultValues: {education: profile?.education || [{major: '', degree: '', school_name: ''}]}});
+    const {  control, handleSubmit, watch, formState: {errors} } = useForm({
+        defaultValues: {
+            education: profile?.education || [{major: '', degree: '', school_name: ''}]}
+        });
     const {  fields, append, remove } = useFieldArray({
         control,
         name: "education"
       });
-    
+    console.log(errors);
     const [updateTherapist, { isSuccess, isLoading, isError, error }] = useUpdateTherapistMutation();
 
     const isFilledUp = watch('education').every((itm, idx) => itm.major && itm.degree && itm.school_name)
@@ -47,7 +48,6 @@ const Education = ({step, setStep, profile}) => {
     return (
     <>
         <form id="education-form" onSubmit={handleSubmit(handleNext)} className="">
-
             <div className="flex flex-col md:flex-row md:items-center my-5">
                 <h1 className="text-lg mr-5 text-left">Please add your education</h1>
                 <div onClick={handleAppend} className="btn btn-primary btn-outline btn-sm text-sm mt-5 md:mt-0">
@@ -86,18 +86,11 @@ const Education = ({step, setStep, profile}) => {
                                     control={control}
                                     name={`education.${idx}.school_name`}
                                     pHolder={'School'}
-                                    rules={{
-                                        required: "School is required.",
-                                        pattern: {
-                                            value: /^[A-Z][a-z]*(\s[A-Z][a-z]*)+$/g,
-                                            message: 'Invalid school name'
-                                        }
-                                    }}  />
+                                      />
                             </div>
                         )
                     })
                 }
-
             </div>
         </form>
         <div className={`flex gap-5 py-5 mt-9`}>

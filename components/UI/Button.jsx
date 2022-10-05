@@ -48,6 +48,7 @@ const Button = ({
             </button></>):
             (<><button 
                 onClick={onClick} 
+                type={type ? type : 'button'}
                 {...rest} 
                 className={`
                     leading-7
@@ -83,8 +84,8 @@ const Button = ({
                         fontSize ? fontSize : 'text-xl md:text-2xl'
                     }`} disabled={disabled}>
                 <div className="flex justify-center items-center">
-                {children}
-                {title}
+                    {children}
+                    {title}
                 </div>
             </button></>)
     )
